@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+      style="@style/nowCardStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="fill_horizontal"
+      android:minWidth="2dp"
+      
+      tools:context=".OrderInfoActivity"
+      android:fillViewport="true" >
+ 
+ 
+
+	       <TextView
+	           android:id="@+id/ItemsTitle"
+	           style="@style/CardTitle"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:layout_alignParentLeft="true"
+	           android:layout_alignParentRight="true"
+	           android:layout_alignParentTop="true"
+	           android:layout_marginLeft="0dp"	           
+	           android:layout_marginTop="0dp"	         
+	           android:paddingLeft="3dp"
+	           android:paddingTop="1dp"
+	           android:text="@string/items_slide_title" />
+	       
+          <TableLayout
+                android:stretchColumns="2"
+		        android:id="@+id/items_list"
+		        android:layout_width="fill_parent"
+		        android:layout_marginTop="23dp"
+		        android:layout_height="wrap_content"
+		        android:divider="#b5b5b5"
+		        android:shrinkColumns="*"
+		         />
+
+ 
+
+</RelativeLayout>

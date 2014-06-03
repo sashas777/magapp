@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+ android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="#FFFFFF"
+  >
+  	 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="492dp"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+ 
+    	<EditText
+	android:id="@+id/editText1"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_alignParentLeft="true"
+	android:layout_alignParentTop="true"
+	android:layout_marginLeft="10dp"
+	android:layout_marginTop="20dp"
+	android:ems="10"
+	android:inputType="date" >
+	<requestFocus />
+	</EditText>
+
+	<ImageButton
+	    android:id="@+id/imageButton1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/editText1"
+	    android:layout_toRightOf="@+id/editText1"
+	     android:background="@android:color/transparent"
+	    android:cropToPadding="true"
+	    android:contentDescription="@string/imageViewDescription"
+	    android:src="@drawable/ic_datepicker" />
+ 
+ 
+      <TableLayout
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentRight="true"
+ 		 android:layout_marginTop="25dp" 
+          android:id="@+id/tbl_orders"
+            android:layout_below="@+id/editText1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" >
+
+        </TableLayout>
+
+ 
+
+        </RelativeLayout >
+ 
+ 
+</ScrollView>

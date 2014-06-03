@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layout_weight="1"
+    android:paddingTop="10dp" >
+
+    <TableLayout
+        android:id="@+id/myTableLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:shrinkColumns="1" >
+	 	 <TableRow>
+	 	     <TextView
+                android:id="@+id/ItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_span="2"                
+                android:textStyle="bold"
+                android:singleLine="false"
+                android:textColor="#040404"
+                android:typeface="sans" />
+	     </TableRow> 
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/list_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|left"
+                android:layout_weight="1"
+                android:contentDescription="@string/imageViewDescription"                
+                android:src="@drawable/loader" />
+
+            <TextView
+                android:id="@+id/ItemInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:paddingLeft="1dp"
+                android:singleLine="false"
+                android:textColor="#040404"
+                android:typeface="sans" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/Options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:singleLine="false"
+                android:textColor="#040404" />
+
+            <TextView
+                android:id="@+id/Price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:singleLine="false"
+                android:textColor="#040404" />
+        </TableRow>
+    </TableLayout>
+
+</TableRow>

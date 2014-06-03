@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top"
+    android:fillViewport="true" >
+
+    <com.example.magapp.NowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#e3e3e3">
+
+         <RelativeLayout
+             style="@style/nowCardStyle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="fill_horizontal"
+             android:minWidth="2dp"
+             tools:context=".OrderInfoActivity" >
+
+	       <TextView
+	           android:id="@+id/title2"
+	           style="@style/CardTitle"
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:layout_alignParentLeft="true"
+	           android:layout_alignParentRight="true"
+	           android:layout_alignParentTop="true"
+	           android:layout_marginLeft="0dp"	           
+	           android:layout_marginTop="0dp"
+	           android:layout_weight="1"
+	           android:paddingLeft="3dp"
+	           android:paddingTop="1dp"
+	           android:text="@string/account_slide_title" />
+	       
+            <TextView
+	            android:id="@+id/CustomerName"
+	            android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	            android:layout_alignLeft="@+id/title2"
+	            android:layout_below="@+id/title2"
+	            android:layout_marginTop="10dp"
+	            android:text="@string/customer_name_field" />
+	        
+        <TextView
+            android:id="@+id/CustomerEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/CustomerName"
+            
+            android:layout_marginTop="10dp"
+            android:text="@string/email_field" />
+
+        <TextView
+            android:id="@+id/customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/CustomerName"
+            android:layout_alignBottom="@+id/CustomerName"
+            android:layout_marginLeft="22dp"
+            android:layout_toRightOf="@+id/CustomerName" />
+
+        <TextView
+            android:id="@+id/customer_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/CustomerEmail"
+            android:layout_alignBottom="@+id/CustomerEmail"
+            android:layout_alignLeft="@+id/customer_name"
+            android:layout_toRightOf="@+id/CustomerEmail" />
+        
+        <TextView
+            android:id="@+id/CustomerGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/CustomerEmail"
+            
+            android:layout_marginTop="10dp"
+            android:text="@string/customer_group_field" />
+                
+        <TextView
+            android:id="@+id/customer_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/CustomerGroup"
+            android:layout_alignBottom="@+id/CustomerGroup"
+            android:layout_alignLeft="@+id/customer_name"
+            android:layout_toRightOf="@+id/CustomerGroup" />        
+
+    </RelativeLayout>
+        
+        
+    </com.example.magapp.NowLayout>
+
+</ScrollView>
