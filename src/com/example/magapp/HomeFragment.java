@@ -40,20 +40,23 @@ public class HomeFragment extends Fragment {
 
 	private XYPlot mySimpleXYPlot;
 	private View rootView;
-	
+    //private	SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("dd-MM");
+	private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hh:mma");
 	 @Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	      Bundle savedInstanceState) {
 		 rootView =  inflater.inflate(R.layout.home, null);
-	       Number[] orders_num = {5, 8, 9, 2, 5};
-	       Number[] order_dates = {
-	        		1359698502,  // Feb
-	        		1362117702, // Mar
-	        		1364792502, // April
-	                1367384502, // May
-	                1370062902,  // Jun	              
-	        		};
-	        
+		 OrdersDateFormat = new SimpleDateFormat("hh:mma");
+	       Number[] orders_num = {5, 8, 9, 2, 5,2,3};
+	        Number[] order_dates = {
+	        		1367913023,  //3 50
+	        		1367920223, // 5 50 
+	        		1367923823, // 6 50 
+	        		1367931023, // 8 50			     	    	 
+	        		1367934023,  //9 40  
+	        		1367934023, // 10 40
+	        		1367941823 // 11 50           
+ 	        };	     	    
 		 AddOrdersPlot(orders_num,order_dates);
 		 AddOrdersSpinner();
  	
@@ -72,29 +75,35 @@ public class HomeFragment extends Fragment {
 	    OrdersPlotOptions.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 	        public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
-	            //int item = OrdersPlotOptions.getSelectedItemPosition();
-	        //	Log.e("Sashas", Integer.toString(position));	
+	           
 	        	if (position==0) {
-	     	       Number[] orders_num = {5, 8, 9, 2, 5};
-	     	      Number[] order_dates = {
-	    	        		1359698502,  // Feb
-	    	        		1362117702, // Mar
-	    	        		1364792502, // April
-	    	                1367384502, // May
-	    	                1370062902,  // Jun	              
-	    	        		};
+	        		OrdersDateFormat = new SimpleDateFormat("hh:mma");
+	     	       Number[] orders_num = {5, 8, 9, 2, 5,2,3};
+	    	        Number[] order_dates = {
+	    	        		1367913023,  //3 50
+	    	        		1367920223, // 5 50 
+	    	        		1367923823, // 6 50 
+	    	        		1367931023, // 8 50			     	    	 
+	    	        		1367934023,  //9 40  
+	    	        		1367934023, // 10 40
+	    	        		1367941823 // 11 50           
+	       	        };	     	       
+	     	     
 	    	        
 	    		 AddOrdersPlot(orders_num,order_dates);
 	        	}
 	        	if (position==1) {
-	        		   Number[] orders_num = {1, 2, 3, 4, 6};
-	       	        Number[] order_dates = {
-	       	        		1370062902,  // Jul
-	       	        		1375333302, // Aug
-	       	        		1378011702, // Sep
-	       	        		1380603702, // Oct
-	       	        		1383282102,  // Dec	       	              
-	       	        };
+	        		OrdersDateFormat = new SimpleDateFormat("dd-MM");
+	        		   Number[] orders_num = {5, 8, 9, 2, 5,2,3};
+		    	        Number[] order_dates = {
+			     	    		 1367290270,  // April 30
+			     	    		1367380223, // May 1
+			     	    		1367466623, // May 2
+			     	    		1367553023, // May 3
+			     	    		1367639423,  // May 4	  
+			     	    		1367725823, // May 5
+			     	    		1367898623 // May 7    	              
+		       	        };	
 	       	     AddOrdersPlot(orders_num,order_dates);
 	        
 	        	}
@@ -158,23 +167,22 @@ public class HomeFragment extends Fragment {
 	       
 	        mySimpleXYPlot.addSeries(series2, formatter);
 	   
-	        mySimpleXYPlot.setDomainValueFormat(new Format() {	 	       
-	            // create a simple date format that draws on the year portion of our timestamp.
-	            // see http://download.oracle.com/javase/1.4.2/docs/api/java/text/SimpleDateFormat.html
-	            // for a full description of SimpleDateFormat.
-	            
-	 
+	        mySimpleXYPlot.setDomainValueFormat(new Format() {	 	        	            
+	        	private static final long serialVersionUID = 1L; 
 	            @Override
 	            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-	            	SimpleDateFormat dateFormat = new SimpleDateFormat("d-MMMM");
+ 
 	                // because our timestamps are in seconds and SimpleDateFormat expects milliseconds
 	                // we multiply our timestamp by 1000:
-	                long timestamp = ((Number) obj).longValue() * 1000;
-//	            /    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-	                Date date = new Date(timestamp);
-	               // Log.e("Sashas",((Number) obj).toString());
-	              //  Log.e("Sashas",dateFormat.format(date));
-	                return dateFormat.format(date, toAppendTo, pos);
+	              //  long timestamp = new java.util.Date(((Number) obj).longValue()*1000);		
+	               
+	              //  java.util.Date date = new Date(timestamp);
+
+	                OrdersDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));	 
+	            	//long timestamp = ((Number) obj).longValue()*1000;
+	            	
+	               java.util.Date date=new java.util.Date(((Number) obj).longValue()*1000);	         
+	                return OrdersDateFormat.format(date, toAppendTo, pos);
 	            }
 	 
 	            @Override
