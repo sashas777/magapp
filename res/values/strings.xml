@@ -24,7 +24,13 @@
 	<string name="items_slide_title">Items Ordered</string>
 	<string name="customer_ip_field">Customer Ip:</string>
 	<string name="imageViewDescription">Image</string>
-  
-
+ 	<string name="Orders">Orders</string>
+ 	<string name="Amounts">Amounts</string>
+ 	<string name="Revenue">Revenue</string>
+ 	<string name="Tax">Tax</string>
+ 	<string name="Shipping">Shipping</string>
+ 	<string name="Qty">Qty</string>
+ 	<string name="PricePlaceholder">$0</string>
+ 	<string name="NumberPlaceholder">0</string>
    
 </resources>
