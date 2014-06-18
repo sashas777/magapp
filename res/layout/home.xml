@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollViewHome"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+<RelativeLayout 
+    android:layout_width="wrap_content"   
+    
+    android:layout_height="wrap_content" >
+ 
     <RelativeLayout
         android:id="@+id/OrdersLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginTop="20px" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" >
 
         <TextView
             android:id="@+id/OrdersChartTitle"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+             
             android:gravity="center_horizontal|bottom"
-            android:paddingBottom="5px"
+            android:paddingBottom="5dp"
             android:text="@string/Orders"
             android:textSize="15sp" />
-
         <Spinner
             android:id="@+id/OrdersPlotOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"           
+            android:layout_height="30dp"
             android:layout_above="@+id/OrdersPlot"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/OrdersChartTitle" />
-
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right" 
+              />
         <com.androidplot.xy.XYPlot
             android:id="@+id/OrdersPlot"
             android:layout_width="fill_parent"
-            android:layout_height="200px"
+            android:layout_height="200dp"
             android:layout_below="@+id/OrdersChartTitle"
             androidPlot.BackgroundPaint.Color="#FFFFFF"
             androidPlot.graphWidget.BackgroundPaint.color="#FFFFFF"
@@ -50,6 +52,8 @@
             androidPlot.graphWidget.gridPaddingRight="10"
             androidPlot.graphWidget.gridPaddingTop="10"
             androidPlot.graphWidget.marginBottom="10dp"
+            androidPlot.graphWidget.rangeLabelPaint.textSize="8dp"
+            androidPlot.graphWidget.domainLabelPaint.textSize="8dp"
             androidPlot.graphWidget.marginRight="10dp"
             androidPlot.graphWidget.plotPaddingTop="10"
             androidPlot.legendWidget.positionMetrics.anchor="left_top" />
@@ -58,10 +62,8 @@
             android:id="@+id/OrdersStats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/OrdersPlot"
-            android:layout_gravity="center|center_horizontal"
-            android:layout_marginTop="5dip"
-            android:layout_weight="1"
+            android:layout_below="@+id/OrdersPlot"           
+            android:layout_marginTop="5dip"            
             android:background="@drawable/table_border"
             android:shrinkColumns="1" >
 
@@ -73,10 +75,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|center_horizontal"
                     android:layout_weight="1"
-                    android:paddingLeft="10px"
+                    android:paddingLeft="5dp"
                     android:text="@string/Revenue"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
@@ -88,7 +90,7 @@
                     android:layout_weight="1"
                     android:text="@string/Tax"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
@@ -101,7 +103,7 @@
                     android:singleLine="false"
                     android:text="@string/Shipping"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
@@ -114,7 +116,7 @@
                     android:singleLine="false"
                     android:text="@string/Qty"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
             </TableRow>
@@ -171,6 +173,9 @@
                     android:typeface="sans" />
             </TableRow>
         </TableLayout>
+
+ 
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -178,36 +183,34 @@
         android:layout_below="@+id/OrdersLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:layout_marginTop="20px" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp" 
+         
+        >
 
         <TextView
             android:id="@+id/AmountsChartTitle"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"         
             android:gravity="center_horizontal|bottom"
-            android:paddingBottom="5px"
+            android:paddingBottom="5dp"
             android:text="@string/Amounts"
             android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/AmountsPlotOptions"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_above="@+id/AmountsPlot"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/AmountsChartTitle" />
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right" />
 
         <com.androidplot.xy.XYPlot
             android:id="@+id/AmountsPlot"
             android:layout_width="fill_parent"
-            android:layout_height="200px"
+            android:layout_height="200dp"
             android:layout_below="@+id/AmountsChartTitle"
             androidPlot.BackgroundPaint.Color="#FFFFFF"
             androidPlot.graphWidget.BackgroundPaint.color="#FFFFFF"
@@ -220,8 +223,11 @@
             androidPlot.graphWidget.gridPaddingBottom="5"
             androidPlot.graphWidget.gridPaddingRight="10"
             androidPlot.graphWidget.gridPaddingTop="10"
+             
             androidPlot.graphWidget.marginBottom="10dp"
             androidPlot.graphWidget.marginRight="10dp"
+            androidPlot.graphWidget.rangeLabelPaint.textSize="7dp"
+            androidPlot.graphWidget.domainLabelPaint.textSize="8dp"            
             androidPlot.graphWidget.plotPaddingTop="10"
             androidPlot.legendWidget.positionMetrics.anchor="left_top" />
 
@@ -230,9 +236,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/AmountsPlot"
-            android:layout_gravity="center|center_horizontal"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="5dip"
-            android:layout_weight="1"
             android:background="@drawable/table_border"
             android:shrinkColumns="1" >
 
@@ -244,10 +249,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|center_horizontal"
                     android:layout_weight="1"
-                    android:paddingLeft="10px"
+                    android:paddingLeft="5dp"
                     android:text="@string/Revenue"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
@@ -259,7 +264,7 @@
                     android:layout_weight="1"
                     android:text="@string/Tax"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
@@ -272,7 +277,7 @@
                     android:singleLine="false"
                     android:text="@string/Shipping"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
 
@@ -285,7 +290,7 @@
                     android:singleLine="false"
                     android:text="@string/Qty"
                     android:textColor="#040404"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
                     android:typeface="sans" />
             </TableRow>
@@ -343,5 +348,6 @@
             </TableRow>
         </TableLayout>
     </RelativeLayout>    
-    
+ 
 </RelativeLayout>
+  </ScrollView> 

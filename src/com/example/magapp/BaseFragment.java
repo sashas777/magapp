@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,16 +61,19 @@ public class BaseFragment extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+    	
+    		if (api_session==null) {  
+				Bundle vars= getIntent().getExtras();			
+				api_session = vars.getString("api_session");
+				api_url = vars.getString("api_url");
+				connection_params=vars;
+    	   }
     	  FragmentManager fragmentManager = getFragmentManager();
     	  
         // update the main content by replacing fragments    	  
     	  Fragment screen=new Fragment();
     	  switch (position) {
-          case 0:
-        	 /* fragmentManager.beginTransaction()
-              .replace(R.id.container, new HomeActivity())
-              .addToBackStack(null)
-              .commit();*/
+          case 0: 
         	  screen=new HomeFragment();
               break;
           case 1:

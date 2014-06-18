@@ -59,7 +59,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), 
-              R.layout.custom_spinner_row,actions);              
+              R.layout.custom_spinner_row_white,actions);              
         
         getActionBar().setListNavigationCallbacks(mSpinnerAdapter , this);   
          
