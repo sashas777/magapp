@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
-import android.R;
+ 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;

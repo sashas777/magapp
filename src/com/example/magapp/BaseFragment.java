@@ -1,8 +1,7 @@
 package com.example.magapp;
 
  
-
-import android.R;
+ 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;

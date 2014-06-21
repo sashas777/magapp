@@ -58,7 +58,7 @@ public class LoginActivity extends Activity {
 		  String saved_username=null; 
 		  String saved_password =null;
 		  
-		   if (accounts.length>0) {	
+		   if (accounts.length>0) {	 
 			  Account account=accounts[0];
 			  api_username=account.name;	
 			  api_password=manager.getPassword(account);
@@ -77,7 +77,7 @@ public class LoginActivity extends Activity {
 	    public boolean onCreateOptionsMenu(Menu menu)
 	    {	  
 	    	MenuInflater inflater = getMenuInflater();	    
-	    	inflater.inflate(R.menu.menu_login, menu);
+	    	inflater.inflate(R.menu.login_menu, menu);
 	    	return true;
 	    }
 	 
