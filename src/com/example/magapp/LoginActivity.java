@@ -8,6 +8,8 @@ import org.xmlrpc.android.XMLRPCException;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -19,12 +21,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends Activity implements OnItemSelectedListener {
 
 	private XMLRPCClient client;
 	private URI uri;
@@ -39,7 +45,7 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_login);		 
+		setContentView(R.layout.fragment_credentials);		 
 		
 		  
 		
@@ -70,7 +76,7 @@ public class LoginActivity extends Activity {
 			  save.setText("Replace saved information");
 			  save.toggle();
 		  } 
-		 
+		   AddAccountsSpinner();
 	}
  
 	 @Override
@@ -84,10 +90,17 @@ public class LoginActivity extends Activity {
 	   @Override
 	    public boolean onOptionsItemSelected(MenuItem item)
 	    { 	
-		   if(item.getItemId() == 0){	    		 
+	    	  FragmentManager fragmentManager = getFragmentManager();  	  
+	      	  Fragment screen=new Fragment();
+		   if(item.getItemId() == R.id.accounts){	    	
+			   screen=new HomeFragment();
 	    		ShowMessage("accounts");
 	    		return true;
-	    	}
+	    	}		    
+	    	/*  fragmentManager.beginTransaction()
+	          .replace(R.id.container,screen)           
+	          .addToBackStack(null)
+	          .commit();*/
 	      
 	    	return false;
 	    }
@@ -193,6 +206,31 @@ public class LoginActivity extends Activity {
 		    	}
 	    	}	     
 	}
+	  
+	  public void AddAccountsSpinner(){
+			 Spinner AccountsOptions = (Spinner) findViewById(R.id.AccountList);
+			 String[] accounts = new String[] {"Last 24 Hours"};
+ 
+			 	
+			 	ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(this,
+			 		    android.R.layout.simple_spinner_item, accounts);
+			 		  adapter_state
+			 		    .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			 	
+					AccountsOptions.setAdapter(adapter_state);
+					AccountsOptions.setOnItemSelectedListener(this);
 
+		 } 
+	  public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
+	        //	if (AmountsData!=null) {
+	        	/*	 switch (position) {
+	                 case 0:
+	                	 ShowMessage("asd");
+	                     break;  	                     
+	        		 }		*/        		
+	        		
+	        //	}		        	
+	        }
+	  public void onNothingSelected(AdapterView<?> arg0) { }
 }
  
