@@ -193,13 +193,15 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 				return orders;
 			} catch (XMLRPCException e) {
 				Log.e("Sashas", e.getMessage());
-				return null;
+				return e;
 			}
 		}
 
 		@Override
 		protected void onPostExecute(Object result) {
-			if (result != null) {
+			if (result instanceof XMLRPCException ) {				 			 
+				ShowMessage( result.toString());		
+			} else {
 				// for(Object o : result) {
 				HashMap map = (HashMap) result;
 				FillData(map);

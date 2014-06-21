@@ -13,10 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
+import android.R;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
@@ -295,18 +298,38 @@ public class SalesActivity extends Fragment implements OnClickListener  {
 				return orders;
 			} catch (XMLRPCException e) {
 				Log.e("Sashas", e.getMessage());
-				return null;
+				return new Object[] {e};
 			}
 		}
 
 		@Override
 		protected void onPostExecute(Object[] result) {
-			if (result != null) {				 
+			if (result[0] instanceof XMLRPCException ) {				 				    
+				ShowMessage( result[0].toString());		
+				
+				String regex_script = "\\[code (.*?)\\]";
+				 Pattern p = Pattern.compile(regex_script); 
+				 String error_msg=result[0].toString();
+				 Matcher m = p.matcher(error_msg);
+				 String error_code="0";
+				 if (m.find())
+				 {
+					//  Log.e("Sashas", m.group(1)); 
+					  error_code=m.group(1).toString();
+					 
+				 }
+				 
+				  
+							
+			} else {
 				SortRows(result);
 			}
 		}
 
 	
 	}
+	  public void ShowMessage(String text) {
+		  Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
+	  }
 }
 

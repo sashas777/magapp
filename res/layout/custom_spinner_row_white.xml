@@ -2,7 +2,7 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android" 
     android:id="@android:id/text1"
      android:color="#FFFFFF" 
- 	style="?android:attr/spinnerItemStyle"
+ 	style="?android:attr/spinnerDropDownItemStyle"
  	android:textColor="#ffffff"
     android:singleLine="true"
     android:layout_width="fill_parent"

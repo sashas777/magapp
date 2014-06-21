@@ -27,6 +27,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidplot.Plot;
 import com.androidplot.ui.AnchorPosition;
@@ -321,17 +322,22 @@ public class HomeFragment extends Fragment {
 					return charts_info;
 				} catch (XMLRPCException e) {
 					Log.e("Sashas", e.getMessage());
-					return null;
+					return e;
 				}
 			}
 
 			@Override
 			protected void onPostExecute(Object result) {
-				if (result != null) {				 
+				if (result instanceof XMLRPCException ) {				 			 
+					ShowMessage( result.toString());		
+				} else {		 
 					 SetChartData(result);
 				}
 			}
 
 		
 		}
+	  public void ShowMessage(String text) {
+		  Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
+	  }
 }
