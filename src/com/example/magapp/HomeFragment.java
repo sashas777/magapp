@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,8 @@ public class HomeFragment extends Fragment {
 	public String api_url;
 	private XMLRPCClient client;
 	private URI uri;
+	private ProgressBar progressBar;
+	private ProgressBar progressBar2;
 	
 	 @Override
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -310,6 +313,16 @@ public class HomeFragment extends Fragment {
 	 }
 	 
 	 class ChartsTask extends AsyncTask<String, Void, Object> {
+		  protected void onPreExecute()
+		    {			 
+			  progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+			  progressBar.setVisibility(View.VISIBLE);
+			  progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+			  progressBar2.setVisibility(View.VISIBLE);			  
+			  super.onPreExecute();
+		               
+		    };  		 
+		 
 			protected Object doInBackground(String... request_type) {
 				 				 			 								 
 				Vector params=new Vector();
@@ -328,6 +341,8 @@ public class HomeFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(Object result) {
+				progressBar.setVisibility(View.INVISIBLE);
+				progressBar2.setVisibility(View.INVISIBLE);
 				if (result instanceof XMLRPCException ) {				 			 
 					ShowMessage( result.toString());		
 				} else {		 

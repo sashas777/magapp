@@ -6,6 +6,7 @@ import java.util.HashMap;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -72,6 +73,16 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);		 
 		 String selected_account_name = settings.getString("selected_account_name",null);	    		 
 		 Integer selected_index=-1;
+		 
+		 if ( accounts.length==0) {
+			 FragmentManager fragmentManager = getFragmentManager();  	  
+			 fragmentManager.beginTransaction()
+	         .replace(R.id.container,new AddAccountFragment())           
+	         .addToBackStack(null)
+	         .commit();
+			 return selected_index;
+		 }
+		 
 		 for (int i=0; i < accounts.length; i++) {
 			 HashMap<String, String> map = new HashMap<String, String>();
 			  Account account=accounts[i];			   
@@ -88,6 +99,13 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		 return selected_index;
 	 }
  
+	 @Override
+		public void onResume() {
+			 super.onResume(); 
+			 getActivity().invalidateOptionsMenu();
+		    return; 
+		}
+	 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
@@ -97,6 +115,12 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	     SharedPreferences.Editor editor = settings.edit();
 	     editor.putString("selected_account_name", AccountNames[dataList.getCheckedItemPosition()]);
 	     editor.commit();
+	     
+		 FragmentManager fragmentManager = getFragmentManager();  	  
+		 fragmentManager.beginTransaction()
+         .replace(R.id.container,new LoginFragment())           
+         .addToBackStack(null)
+         .commit();
 		 
 	}
 	
@@ -136,13 +160,20 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		     SharedPreferences.Editor editor = settings.edit();
 		     editor.putString("selected_account_name", null);
 		     editor.commit();			 
-			 adapter.setSelectedIndex(-1);	
-			  
+			 adapter.setSelectedIndex(-1);	 		  
 		 } 
 		 adapter.remove(position);
 		 
 		 adapter.notifyDataSetChanged();
 		 dataList.invalidateViews();
+		 getActivity().invalidateOptionsMenu();
+		 if ( accounts.length==0) {
+			 FragmentManager fragmentManager = getFragmentManager();  	  
+			 fragmentManager.beginTransaction()
+	         .replace(R.id.container,new AddAccountFragment())           
+	         .addToBackStack(null)
+	         .commit();			 
+		 }
 		  		 
 	}
 }

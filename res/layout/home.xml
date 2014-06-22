@@ -3,12 +3,12 @@
     android:id="@+id/ScrollViewHome"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    
+ 
 <RelativeLayout 
-    android:layout_width="wrap_content"   
-    
+    android:layout_width="wrap_content"       
     android:layout_height="wrap_content" >
  
+       
     <RelativeLayout
         android:id="@+id/OrdersLayout"
         android:layout_width="match_parent"
@@ -16,7 +16,9 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp" >
-
+  
+      
+    
         <TextView
             android:id="@+id/OrdersChartTitle"
             android:layout_width="wrap_content"
@@ -174,8 +176,17 @@
             </TableRow>
         </TableLayout>
 
- 
-
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/OrdersPlot"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp" 
+            android:gravity="center_vertical|center_horizontal"
+            android:indeterminate="false"
+            android:indeterminateBehavior="cycle" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -185,8 +196,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp" 
-         
+        android:layout_marginTop="20dp"          
         >
 
         <TextView
@@ -347,7 +357,21 @@
                     android:typeface="sans" />
             </TableRow>
         </TableLayout>
-    </RelativeLayout>    
+         <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/AmountsPlot"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="60dp" 
+            android:gravity="center_vertical|center_horizontal"
+            android:indeterminate="false"
+            android:indeterminateBehavior="cycle" />
+    </RelativeLayout>        
+    
+        </RelativeLayout>
+  
  
-</RelativeLayout>
-  </ScrollView> 
+  </ScrollView>
+ 

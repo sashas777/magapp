@@ -7,6 +7,7 @@ import org.xmlrpc.android.XMLRPCException;
 
 import Login.AccountsFragment;
 import Login.AddAccountFragment;
+import Login.LoginFragment;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -30,22 +31,29 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity  {
 
+	/*
 	private XMLRPCClient client;
 	private URI uri;
-	private TextView textView;
+	 
 	private String  session;
 	private String url;
 	private String api_username=null;
-	private String api_password=null;
+	private String api_password=null;*/
 	private String accountType = "com.example.magapp";
 	private String desired_preferense_file="magapp";
-	
+	//private Menu options_menu;
+	//private TextView textView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);		 
 		
-		  
+		FragmentManager fragmentManager = getFragmentManager();  	  
+	  	Fragment screen=new LoginFragment();
+	  	fragmentManager.beginTransaction()
+	    .replace(R.id.container,screen)           
+	    .addToBackStack(null)
+	    .commit();   
 		/*
 		SharedPreferences settings = getSharedPreferences(desired_preferense_file, 0);		 
 	    String store_url = settings.getString("website_url","http://");	    
@@ -77,26 +85,40 @@ public class LoginActivity extends Activity  {
 		 
 	}
  
+ 
+	
 	 @Override
 	    public boolean onCreateOptionsMenu(Menu menu)
 	    {	  
+		  
+		 	AccountManager manager = AccountManager.get(this);	
+		 	Account[]  accounts = manager.getAccountsByType(accountType);
+		 
 	    	MenuInflater inflater = getMenuInflater();	    
 	    	inflater.inflate(R.menu.login_menu, menu);
-	    	return true;
+	    	MenuItem item_down = menu.findItem(R.id.accounts);
+	    	 if ( accounts.length==0) 		    	 
+		        item_down.setVisible(false);
+	    	 else
+	    		 item_down.setVisible(true);
+	    	 
+	         return true;
 	    }
 	 
 	   @Override
 	    public boolean onOptionsItemSelected(MenuItem item)
 	    { 	
+		   	  
 	    	  FragmentManager fragmentManager = getFragmentManager();  	  
 	      	  Fragment screen=new Fragment();
+ 		 	
 	      	  switch (item.getItemId()) {
-			case R.id.accounts:
-				screen=new AccountsFragment();
+			case R.id.accounts:  
+					screen=new AccountsFragment(); 				 
 				break;
 
 			case R.id.add_account:
-				screen=new AddAccountFragment();
+					screen=new AddAccountFragment();
 				break;
 				
 			default:
@@ -110,13 +132,8 @@ public class LoginActivity extends Activity  {
 	      
 	    	return false;
 	    }
-	public void OpenWebsiteInfo(View v) {
-		 Intent intent = new Intent();
-	        intent.setAction(Intent.ACTION_VIEW);
-	        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-	        intent.setData(Uri.parse("http://extensions.sashas.org"));
-	        startActivity(intent);
-	}
+ 
+	/*
 	  public void LoginonClick1(View v) {
 		  boolean hasErrors = false; 
 		  TextView ApiUsername = (TextView) this.findViewById(R.id.username);  
@@ -145,7 +162,7 @@ public class LoginActivity extends Activity  {
 		  if (hasErrors) {  
 	            return;  
 	        }  
-		   /*Accounts*/
+		   /*Accounts*//*
 		  AccountManager manager = AccountManager.get(this);	
 	 
 		  if (save.isChecked()) {			 	
@@ -160,7 +177,7 @@ public class LoginActivity extends Activity  {
 			  api_password=password;			  
 			  ShowMessage("Your account saved and secured");
 		  }
-	      /*Accounts*/  
+	      /*Accounts*/ /* 
 	        
 		  SharedPreferences settings = getSharedPreferences(desired_preferense_file, 0);
 	      SharedPreferences.Editor editor = settings.edit();
@@ -174,11 +191,12 @@ public class LoginActivity extends Activity  {
 	       LoginTask task=new LoginTask();
 	       task.execute(api_username,api_password);
 	  }
-
+*/
 	  public void ShowMessage(String text) {
 		  Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	  }
 	  
+	  /*
 	  public void ShowSales() {
 		 Intent Base = new Intent(this,BaseFragment.class);
 		 Base.putExtra("api_session",session);
@@ -186,32 +204,7 @@ public class LoginActivity extends Activity  {
 		 this.startActivity(Base);
 		 finish();
 	  }
-	  
-	  class LoginTask extends AsyncTask<String, Void, String> {  
-	    protected String doInBackground(String... credentials) {	
-	     	    	 
-	      try {           
-	        	 session = (String) client.call("login",credentials[0], credentials[1]);        	
-	        	 return session;	
-	        } catch (XMLRPCException e) {   
-	         	Log.e("Sashas",e.getMessage());	      
-	         	session=e.getMessage().toString();	          	    	     	     
-	       }  	catch (Exception e) { 
-	         	Log.e("Sashas",e.getMessage());	         		     
-	         	session=e.getMessage().toString();
-	        }	     
-	      return session;	
-	    }	     
-	    @Override
-	      protected void onPostExecute(String result) {
-		    	if (result.contains(" ")) {
-		    		ShowMessage(result);		    		 
-		    	}else {
-		    		ShowMessage("Authorization successful");
-		    		ShowSales();
-		    	}
-	    	}	     
-	}
+	  */
 	  
  
 }

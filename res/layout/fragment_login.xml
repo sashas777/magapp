@@ -2,139 +2,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#FFFFFF"
-     tools:context="com.example.sashasmagentomanager.LoginActivity"
-    >
-    <FrameLayout
-        android:id="@+id/container"
+    android:gravity="top"
+    tools:context="com.example.sashasmagentomanager.LoginActivity" >
+ 
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+         android:layout_alignParentTop="true"
+       android:scaleType="fitStart"
+        android:src="@drawable/login_background" />
+    
     <ImageView
         android:id="@+id/Logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-         android:contentDescription="@string/imageViewDescription"
-        android:src="@drawable/logo" />
- 
-    
+        android:contentDescription="@string/imageViewDescription"
+        android:src="@drawable/logo2" />
+
     <TextView
         android:id="@+id/WelcomeMessage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Logo"
-        android:layout_marginTop="24dp"
+        android:layout_above="@+id/LoginWithAccount"
+        android:layout_marginTop="5dp"
         android:gravity="top|center"
-        android:text="Please enter your site url and API credentials to start" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="sans"
+        android:text="@string/login_message" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/ApiKey"
-        android:layout_alignLeft="@+id/url"
-        android:layout_below="@+id/username"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/ApiKey"
-        android:ems="10"
-        android:inputType="textPassword" />
-
-    <TextView
-        android:id="@+id/Username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/WebsiteUrl"
-        android:layout_below="@+id/WebsiteUrl"
-        android:layout_marginTop="30dp"
-        android:text="Username:" />
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/Username"
-        android:layout_alignLeft="@+id/url"
-        android:layout_below="@+id/url"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/Username"
-        android:ems="10"
-        android:inputType="text" >
-
-        <requestFocus />
-    </EditText>
-
-    <TextView
-        android:id="@+id/WebsiteUrl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-         
-        android:layout_below="@+id/WelcomeMessage"
-        android:layout_marginTop="30dp"
-        android:text="Website Url:" />
-
-    <EditText
-        android:id="@+id/url"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/WebsiteUrl"
-        android:layout_below="@id/WelcomeMessage"
-        android:layout_marginLeft="50dp"
-        android:layout_toRightOf="@id/WebsiteUrl"
-        android:ems="10"
-        android:inputType="textPassword|textUri"
-        android:text="http://" />
-
-    <TextView
-        android:id="@+id/ApiKey"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/WebsiteUrl"
-        android:layout_below="@+id/Username"
-        android:layout_marginTop="30dp"
-        android:text="@string/add_account_api_key" />
     <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
+        android:id="@+id/LoginWithAccount"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="75dp"
+        android:paddingRight="75dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/password"
-        android:layout_alignRight="@+id/password"
-        android:layout_below="@+id/save_pass"
-        android:layout_marginTop="10dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"         
+        android:layout_above="@+id/AddAccount"
+        android:layout_centerVertical="false"
+        android:layout_marginBottom="15dp"
+         android:layout_marginTop="15dp"
         android:background="@drawable/shape"
-        android:onClick="LoginonClick"
-        android:text="@string/save_button_field"
+        android:text="@string/login_with_existing"
+        android:textColor="#FFFFFF" />    
+    
+    <Button
+        android:id="@+id/AddAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:padding="17dp"
+        android:text="@string/add_select_account"
         android:textColor="#FFFFFF" />
 
-    <ImageView
-        android:id="@+id/Banner1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/button1"
-        android:onClick="OpenWebsiteInfo"
-         android:contentDescription="@string/imageViewDescription"
-        android:src="@drawable/banner" />
-
-    <CheckBox
-        android:id="@+id/save_pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/password"
-        android:layout_alignTop="@+id/password"
-        android:layout_below="@+id/password"
-        android:layout_centerVertical="false"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/Logo"
-        android:checked="true"
-        android:text="@string/save" />
-
+    
+    <RelativeLayout  
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical|center_horizontal">    
+	    <ProgressBar
+	        android:id="@+id/progressBar1"
+	        style="?android:attr/progressBarStyleLarge"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	       android:gravity="center_vertical|center_horizontal"
+	        android:indeterminate="true"
+	        android:visibility="invisible"
+	        android:indeterminateBehavior="cycle" />
+ 	</RelativeLayout>
  
 
 </RelativeLayout>

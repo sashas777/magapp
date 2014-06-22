@@ -34,23 +34,45 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 			rootView  = inflater.inflate(R.layout.fragment_add_account, null);		 
 			Button SaveAccButton = (Button) rootView.findViewById(R.id.save_acc);
 		    SaveAccButton.setOnClickListener(this);
+			Button BackButton = (Button) rootView.findViewById(R.id.create_account_back_screen);
+			BackButton.setOnClickListener(this);
 			return rootView;
 	}
 
-
+	 @Override
+		public void onResume() {
+			 super.onResume(); 
+			 getActivity().invalidateOptionsMenu();
+		    return; 
+		}
+	 
 	@Override
 	public void onClick(View v) {
+		 AccountManager manager = AccountManager.get(getActivity());	
+		 Account[]  accounts = manager.getAccountsByType(accountType);
+		 
 		 switch (v.getId()) {
 		case R.id.save_acc:
 			AddAccount();
 			break;
-
+		case R.id.create_account_back_screen: {	
+			 if ( accounts.length==0) {
+				 FragmentManager fragmentManager = getFragmentManager();  	  
+				 fragmentManager.beginTransaction()
+		         .replace(R.id.container,new LoginFragment())           
+		         .addToBackStack(null)
+		         .commit();				
+			 }else 
+				 getFragmentManager().popBackStack();	
+		}
+			break;
 		default:
 			break;
 		}
 			 
 	}
 	
+ 
 	  public void AddAccount() {
 		  boolean hasErrors = false; 
 		  
@@ -106,6 +128,7 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
          .replace(R.id.container,screen)           
          .addToBackStack(null)
          .commit(); 
+      	 
 	  }
 	 
 	  public void ShowMessage(String text) {

@@ -113,15 +113,31 @@
 
     <Button
         android:id="@+id/save_acc"
-        android:padding="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/password" 
         android:layout_marginTop="10dp"
         android:background="@drawable/shape"
-        android:gravity="center"
+        android:gravity="left"
+        android:padding="15dp"
+        android:layout_toLeftOf="@+id/create_account_back_screen"
         android:text="@string/save_button_field"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/create_account_back_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/save_acc"
+        android:layout_alignBottom="@+id/save_acc"         
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/shape"
+        android:gravity="right"
+        android:padding="15dp"
+        android:text="@string/back_button_field"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 

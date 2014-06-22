@@ -42,4 +42,9 @@
  	<string name="add_account_url_placeholder">http://</string>
  	
  	<string name="menu_delete">Remove</string>
+ 	
+ 	<string name="login_message">Create new magento account or login using existing one.</string>
+ 	<string name="login_with_existing">Login</string> 
+ 	<string name="add_select_account">Create new account</string>  
+ 	<string name="back_button_field">Back</string>
 </resources>
