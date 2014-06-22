@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.magapp.R;
 
-public class AccountsAdapter extends BaseAdapter {
+public class AccountsAdapter extends BaseAdapter  {
 
 	private Activity activity;
 	private ArrayList<HashMap<String, String>> data;
@@ -32,8 +33,8 @@ public class AccountsAdapter extends BaseAdapter {
         return data.size();
     }
  
-    public Object getItem(int position) {
-        return position;
+    public Object getItem(int position) {     
+        return data.get(position);
     }
  
     public long getItemId(int position) {
@@ -44,13 +45,15 @@ public class AccountsAdapter extends BaseAdapter {
         selectedIndex = index;
     }
     
+    public void remove(int index){
+    	data.remove(index);
+    }
+    
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
-        if(convertView==null) {
-        	 LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            vi = inflater.inflate(R.layout.accounts_list_item, null);
-        }
-     
+        if(convertView==null) {        	
+            vi =  inflater.inflate(R.layout.accounts_list_item, null);                
+        }     
         
         TextView account_name = (TextView)vi.findViewById(R.id.account_name); // title
         TextView account_url = (TextView)vi.findViewById(R.id.url); // artist name
@@ -70,8 +73,9 @@ public class AccountsAdapter extends BaseAdapter {
             else{
             	r.setChecked(false);
             }
-     
+      
         return vi;
     }
+     
     
 }

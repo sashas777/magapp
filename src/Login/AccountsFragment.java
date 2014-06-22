@@ -24,7 +24,7 @@ import android.widget.ListView;
 
 import com.example.magapp.R;
 
-public class AccountsFragment  extends Fragment    implements  OnItemClickListener, OnItemLongClickListener  {
+public class AccountsFragment  extends Fragment    implements  OnItemClickListener  {
 	
 	 ListView dataList;
 	 View rootView;
@@ -50,28 +50,18 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
             dataList.setAdapter(adapter);
 			 
             dataList.setOnItemClickListener(this);
-            dataList.setOnItemLongClickListener(this);
-            
+           
             if (selected_index>=0) {
             	 
             	 adapter.setSelectedIndex(selected_index);
         		 adapter.notifyDataSetChanged();
             }
             
-            registerForContextMenu(dataList);
+             registerForContextMenu(dataList);
             
 			return rootView;
 	}
-	 
-	 public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,long arg3)
-     {
-
-		 Log.e("Sashas", "checked: " +arg2);
-		  
-        // adapter.notifyDataSetChanged();
-         //adapter.notifyDataSetInvalidated();
-         return true;
-     }
+ 
 	 
 	 public Integer AddAcountItems(){
 		 
@@ -111,9 +101,10 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	}
 	
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 	      super.onCreateContextMenu(menu, v, menuInfo);
 	      if (v.getId()==R.id.AccountsList) {
+	    	  menu.setHeaderTitle("Options");
 	          MenuInflater inflater = getActivity().getMenuInflater();
 	          inflater.inflate(R.menu.accounts_context_menu, menu);
 	      }
@@ -124,10 +115,34 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	      AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 	      switch(item.getItemId()) {
 	          case R.id.menu_delete:
-	        // remove stuff here
+	        	  	RemoveAccount(info.position);
+	        	  	//Log.e("Sashas", "checked: " + info.position);
 	                return true;
 	          default:
 	                return super.onContextItemSelected(item);
 	      }
+	}
+	
+	public void RemoveAccount(int position) {
+	 
+		 String name_for_delete=AccountNames[position];
+		 
+		 AccountManager manager = AccountManager.get(getActivity());	
+		 Account[]  accounts = manager.getAccountsByType(accountType);		 	 		
+		 manager.removeAccount(accounts[position], null, null);
+		  
+		 if (dataList.getCheckedItemPosition()==position) {
+			 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
+		     SharedPreferences.Editor editor = settings.edit();
+		     editor.putString("selected_account_name", null);
+		     editor.commit();			 
+			 adapter.setSelectedIndex(-1);	
+			  
+		 } 
+		 adapter.remove(position);
+		 
+		 adapter.notifyDataSetChanged();
+		 dataList.invalidateViews();
+		  		 
 	}
 }
