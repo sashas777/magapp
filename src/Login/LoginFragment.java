@@ -49,6 +49,23 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 			LoginButton.setOnClickListener(this);
 			AddAccountButton.setOnClickListener(this);
 			
+			/*
+			 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);		 
+			 String selected_account_name = settings.getString("selected_account_name",null); 
+			 AccountManager manager = AccountManager.get(getActivity());	
+			 Account[]  accounts = manager.getAccountsByType(accountType);
+			 
+			 for (int i=0; i < accounts.length; i++) {			 
+				  Account account=accounts[i];			   
+				 if (selected_account_name.equals(account.name))  {
+					  api_username=manager.getUserData(account, "username");
+					  api_password=manager.getPassword(account);
+					  url=manager.getUserData(account, "store_url");				  
+					  break;
+				 }
+					 		 
+			  }		 
+			*/
 			/*Login is account specified*/
 			return rootView;
 	}
