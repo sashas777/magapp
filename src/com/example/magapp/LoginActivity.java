@@ -5,6 +5,8 @@ import java.net.URI;
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
+import Login.AccountsFragment;
+import Login.AddAccountFragment;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -21,16 +23,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity implements OnItemSelectedListener {
+public class LoginActivity extends Activity  {
 
 	private XMLRPCClient client;
 	private URI uri;
@@ -45,10 +43,10 @@ public class LoginActivity extends Activity implements OnItemSelectedListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_credentials);		 
+		setContentView(R.layout.activity_login);		 
 		
 		  
-		
+		/*
 		SharedPreferences settings = getSharedPreferences(desired_preferense_file, 0);		 
 	    String store_url = settings.getString("website_url","http://");	    
 	    EditText url_element = (EditText) findViewById(R.id.url);
@@ -56,10 +54,10 @@ public class LoginActivity extends Activity implements OnItemSelectedListener {
 	    	url_element.setText(store_url);	 
 	    	    	   
 		/*parameters*/
-	    session=null;
+	  /*  session=null;
 	    
 	    /*Accounts*/
-	    AccountManager manager = AccountManager.get(this);	
+	 /*   AccountManager manager = AccountManager.get(this);	
 		  Account[]  accounts = manager.getAccountsByType(accountType);
 		  String saved_username=null; 
 		  String saved_password =null;
@@ -75,8 +73,8 @@ public class LoginActivity extends Activity implements OnItemSelectedListener {
 			  CheckBox save = (CheckBox)findViewById(R.id.save_pass);
 			  save.setText("Replace saved information");
 			  save.toggle();
-		  } 
-		   AddAccountsSpinner();
+		  } */
+		 
 	}
  
 	 @Override
@@ -92,15 +90,23 @@ public class LoginActivity extends Activity implements OnItemSelectedListener {
 	    { 	
 	    	  FragmentManager fragmentManager = getFragmentManager();  	  
 	      	  Fragment screen=new Fragment();
-		   if(item.getItemId() == R.id.accounts){	    	
-			   screen=new HomeFragment();
-	    		ShowMessage("accounts");
-	    		return true;
-	    	}		    
-	    	/*  fragmentManager.beginTransaction()
+	      	  switch (item.getItemId()) {
+			case R.id.accounts:
+				screen=new AccountsFragment();
+				break;
+
+			case R.id.add_account:
+				screen=new AddAccountFragment();
+				break;
+				
+			default:
+				break;
+			}
+		       
+	      fragmentManager.beginTransaction()
 	          .replace(R.id.container,screen)           
 	          .addToBackStack(null)
-	          .commit();*/
+	          .commit(); 
 	      
 	    	return false;
 	    }
@@ -111,7 +117,7 @@ public class LoginActivity extends Activity implements OnItemSelectedListener {
 	        intent.setData(Uri.parse("http://extensions.sashas.org"));
 	        startActivity(intent);
 	}
-	  public void LoginonClick(View v) {
+	  public void LoginonClick1(View v) {
 		  boolean hasErrors = false; 
 		  TextView ApiUsername = (TextView) this.findViewById(R.id.username);  
 		  TextView ApiPass = (TextView) this.findViewById(R.id.password);
@@ -207,30 +213,6 @@ public class LoginActivity extends Activity implements OnItemSelectedListener {
 	    	}	     
 	}
 	  
-	  public void AddAccountsSpinner(){
-			 Spinner AccountsOptions = (Spinner) findViewById(R.id.AccountList);
-			 String[] accounts = new String[] {"Last 24 Hours"};
  
-			 	
-			 	ArrayAdapter<String> adapter_state = new ArrayAdapter<String>(this,
-			 		    android.R.layout.simple_spinner_item, accounts);
-			 		  adapter_state
-			 		    .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			 	
-					AccountsOptions.setAdapter(adapter_state);
-					AccountsOptions.setOnItemSelectedListener(this);
-
-		 } 
-	  public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
-	        //	if (AmountsData!=null) {
-	        	/*	 switch (position) {
-	                 case 0:
-	                	 ShowMessage("asd");
-	                     break;  	                     
-	        		 }		*/        		
-	        		
-	        //	}		        	
-	        }
-	  public void onNothingSelected(AdapterView<?> arg0) { }
 }
  
