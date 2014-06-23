@@ -20,6 +20,7 @@ import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
  
+
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
@@ -306,23 +307,10 @@ public class SalesActivity extends Fragment implements OnClickListener  {
 		protected void onPostExecute(Object[] result) {
 			if (result[0] instanceof XMLRPCException ) {				 				    
 				ShowMessage( result[0].toString());		
-				
-				String regex_script = "\\[code (.*?)\\]";
-				 Pattern p = Pattern.compile(regex_script); 
-				 String error_msg=result[0].toString();
-				 Matcher m = p.matcher(error_msg);
-				 String error_code="0";
-				 if (m.find())
-				 {
-					//  Log.e("Sashas", m.group(1)); 
-					  error_code=m.group(1).toString();
-					 
-				 }
-				 
-				  
-							
-			} else {
+				HandleError( result[0].toString());					 				  							
+			} else {				 
 				SortRows(result);
+				 
 			}
 		}
 
@@ -330,6 +318,25 @@ public class SalesActivity extends Fragment implements OnClickListener  {
 	}
 	  public void ShowMessage(String text) {
 		  Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
+	  }
+	  
+	  public void HandleError(String error) {
+		  String regex_script = "\\[code (.*?)\\]";
+			 Pattern p = Pattern.compile(regex_script); 
+			 
+			 Matcher m = p.matcher(error);
+			 String error_code="0";
+			 if (m.find())
+			 {				 
+				  error_code=m.group(1).toString();				 
+			 }
+			 Log.e("Sashas", error_code);
+			 if (error_code.equals("5")){
+				 Intent Login = new Intent(getActivity(),LoginActivity.class);				  
+				 this.startActivity(Login);
+				 getActivity().finish();
+			 }
+			  
 	  }
 }
 

@@ -1,10 +1,11 @@
 package com.example.magapp;
 
 import java.net.URI;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
@@ -16,18 +17,14 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.magapp.order.CustomerAccountFragment;
@@ -200,7 +197,8 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		@Override
 		protected void onPostExecute(Object result) {
 			if (result instanceof XMLRPCException ) {				 			 
-				ShowMessage( result.toString());		
+				ShowMessage(result.toString());		
+				HandleError(result.toString());
 			} else {
 				// for(Object o : result) {
 				HashMap map = (HashMap) result;
@@ -250,4 +248,23 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	  public void ShowMessage(String text) {
 		  Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	  } 
+	  
+	  public void HandleError(String error) {
+		  String regex_script = "\\[code (.*?)\\]";
+			 Pattern p = Pattern.compile(regex_script); 
+			 
+			 Matcher m = p.matcher(error);
+			 String error_code="0";
+			 if (m.find())
+			 {				 
+				  error_code=m.group(1).toString();				 
+			 }
+			 
+			 if (error_code.equals("5")){
+				 Intent Login = new Intent(this,LoginActivity.class);				  
+				 this.startActivity(Login);
+				 this.finish();
+			 }
+			  
+	  }
 }

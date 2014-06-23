@@ -9,11 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
@@ -344,7 +347,8 @@ public class HomeFragment extends Fragment {
 				progressBar.setVisibility(View.INVISIBLE);
 				progressBar2.setVisibility(View.INVISIBLE);
 				if (result instanceof XMLRPCException ) {				 			 
-					ShowMessage( result.toString());		
+					ShowMessage( result.toString());	
+					HandleError(result.toString());
 				} else {		 
 					 SetChartData(result);
 				}
@@ -354,5 +358,22 @@ public class HomeFragment extends Fragment {
 		}
 	  public void ShowMessage(String text) {
 		  Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
+	  }
+	  public void HandleError(String error) {
+		  String regex_script = "\\[code (.*?)\\]";
+			 Pattern p = Pattern.compile(regex_script); 
+			 
+			 Matcher m = p.matcher(error);
+			 String error_code="0";
+			 if (m.find())
+			 {				 
+				  error_code=m.group(1).toString();				 
+			 }			  
+			 if (error_code.equals("5")){
+				 Intent Login = new Intent(getActivity(),LoginActivity.class);				  
+				 this.startActivity(Login);
+				 getActivity().finish();
+			 }
+			  
 	  }
 }

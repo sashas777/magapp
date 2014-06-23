@@ -33,7 +33,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 	private String desired_preferense_file="magapp";	 
 	private XMLRPCClient client;
 	private URI uri;
-	private String  session;
+	private String session=null;
 	private String url;
 	private String api_username=null;
 	private String api_password=null;	 
@@ -49,11 +49,14 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 			LoginButton.setOnClickListener(this);
 			AddAccountButton.setOnClickListener(this);
 			
-			/*
+			 
 			 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);		 
 			 String selected_account_name = settings.getString("selected_account_name",null); 
+			 String used_session = settings.getString("session",null); 
 			 AccountManager manager = AccountManager.get(getActivity());	
 			 Account[]  accounts = manager.getAccountsByType(accountType);
+			   			
+			/*Login is account specified*/
 			 
 			 for (int i=0; i < accounts.length; i++) {			 
 				  Account account=accounts[i];			   
@@ -64,9 +67,17 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 					  break;
 				 }
 					 		 
-			  }		 
-			*/
-			/*Login is account specified*/
+			  }	
+			 
+			 if (!api_username.equals(null)) {
+				 url=url.concat("/index.php/api/xmlrpc/");	       
+				 uri = URI.create(url);
+			     client = new XMLRPCClient(uri);	       	      	      
+			     LoginTask task=new LoginTask();
+			     task.execute(api_username,api_password);
+			 }
+			 
+			 
 			return rootView;
 	}
 	 
