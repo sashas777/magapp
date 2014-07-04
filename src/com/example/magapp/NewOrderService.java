@@ -196,7 +196,7 @@ public class NewOrderService extends Service {
 	    @Override
 	      protected void onPostExecute(Object[] result) {		    
 	    	if (result[0] instanceof XMLRPCException ) {				 			 
-				ShowMessage(result.toString());					 
+				//ShowMessage(result.toString());					 
 			} else {			 				 
 				PrepareOrdersData(result);				 
 			}
