@@ -9,10 +9,13 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +58,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 			 String used_session = settings.getString("session",null); 
 			 AccountManager manager = AccountManager.get(getActivity());	
 			 Account[]  accounts = manager.getAccountsByType(accountType);
-			   			
+			   				 
+			 			 
 			/*Login is account specified*/
 			 
 			 for (int i=0; i < accounts.length; i++) {			 

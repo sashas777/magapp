@@ -22,7 +22,9 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -48,11 +50,13 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	String[] actions = new String[] {"Order", "Invoice", "Shipment" };
 	private CharSequence mTitle;
 	public Integer menu_id =-1;
+	private ProgressBar progressBar;
 	
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);            
         
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);		
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), 
@@ -67,7 +71,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		api_session = vars.getString("api_session");
 		api_url = vars.getString("api_url");
 		order_id= vars.getInt("order_id");
- 
+	 
 		uri = URI.create(api_url);
 		client = new XMLRPCClient(uri);
 		OrderinfoTask task = new OrderinfoTask();
@@ -175,6 +179,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	class OrderinfoTask extends AsyncTask<Integer, Void, Object> {
 
 		protected Object doInBackground(Integer... order_id) {
+			progressBar.setVisibility(View.VISIBLE);
 			int order_id_value = order_id[0];		 
 			HashMap map_date = new HashMap();
 			 
@@ -204,7 +209,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 				HashMap map = (HashMap) result;
 				FillData(map);
 				//Log.e("Sashas_Log", map.get("subtotal").toString());
-
+				progressBar.setVisibility(View.INVISIBLE);
 				// }
 
 			}

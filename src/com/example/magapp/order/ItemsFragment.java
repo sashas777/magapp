@@ -7,8 +7,6 @@ import java.util.Locale;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +15,14 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.magapp.R;
-import com.example.magapp.imageLoader.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class ItemsFragment extends Fragment {
 
 	public View rootView;
  
-	public ImageLoader imageLoader; 
+	// public ImageLoader imageLoader; 
 	   
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -37,11 +36,14 @@ public class ItemsFragment extends Fragment {
 		HashMap item_data = (HashMap) item;
 	 
 		View tr = inflater.inflate(R.layout.order_item_view, null,false);
-	
+	 
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).build();
+		 ImageLoader.getInstance().init(config);
 		ImageView item_image=(ImageView)tr.findViewById(R.id.list_image);
-		imageLoader=new ImageLoader(getActivity().getApplicationContext());
-		imageLoader.DisplayImage(item_data.get("image").toString(), item_image);
- 
+		//imageLoader=new ImageLoader(getActivity().getApplicationContext());
+		ImageLoader.getInstance().displayImage(item_data.get("image").toString(), item_image);
+		//ImageLoader.getInstance().displayImage("http://placehold.it/240x240", item_image);
+		 
 		TextView ProductName = (TextView) tr.findViewById(R.id.ItemName);	
 		TextView ItemInfo = (TextView) tr.findViewById(R.id.ItemInfo);	
 		TextView Price = (TextView) tr.findViewById(R.id.Price);

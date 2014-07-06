@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    android:layout_width="fill_parent" 
+    android:id="@+id/wrapper_container"
+    android:layout_height="match_parent"
+    android:gravity="center" >
+         
+<ScrollView  
+     
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="top"
     android:fillViewport="true" >
 
+ 
     <com.example.magapp.NowLayout
        	android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#e3e3e3"
-         >
+        android:background="#e3e3e3" >
  
 	 <FrameLayout 
 	 android:id="@+id/main_info_card"
@@ -19,7 +27,7 @@
 	 android:layout_height="wrap_content">
 	</FrameLayout >
  
-    
+ 
 	 <FrameLayout 
 	 android:id="@+id/account_info"
 	 android:layout_width="match_parent"
@@ -40,6 +48,7 @@
 	android:layout_height="wrap_content"
 	android:layout_alignParentBottom="true"
 	tools:layout="@layout/order_address">
+
 	</FrameLayout >
  
  	 <FrameLayout 
@@ -70,3 +79,14 @@
     </com.example.magapp.NowLayout>
 
 </ScrollView>
+
+<ProgressBar
+    android:id="@+id/progressBar1"
+    style="?android:attr/progressBarStyleLarge"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical|center_horizontal"
+    android:indeterminate="false"
+    android:indeterminateBehavior="cycle" />
+
+</RelativeLayout>

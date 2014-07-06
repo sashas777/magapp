@@ -64,7 +64,9 @@ public class HomeFragment extends Fragment {
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	      Bundle savedInstanceState) {
 		 rootView =  inflater.inflate(R.layout.home, null);
-		 	 
+		 
+		 progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);		
+		 progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		 /*Get credentials*/		
 	  	api_session=getArguments().getString("api_session");
 		api_url=getArguments().getString("api_url");		 	 	 
@@ -307,30 +309,37 @@ public class HomeFragment extends Fragment {
 		  HashMap data_map = (HashMap) data;	
 		 
 		  if (data_map.get("orders")!=null) {
-			  OrdersData=(Object[]) data_map.get("orders");
+			  OrdersData=(Object[]) data_map.get("orders");			   				 							 		 
 			  AddOrdersSpinner(); 	
+			  progressBar.setVisibility(View.INVISIBLE);
 		  }else {
 			  AmountsData=(Object[]) data_map.get("amounts");
 			  AddAmountsSpinner();
+			  progressBar2.setVisibility(View.INVISIBLE);
 		  }			  			  
 	 }
 	 
 	 class ChartsTask extends AsyncTask<String, Void, Object> {
 		  protected void onPreExecute()
 		    {			 
-			  progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-			  progressBar.setVisibility(View.VISIBLE);
-			  progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
-			  progressBar2.setVisibility(View.VISIBLE);			  
+			   
 			  super.onPreExecute();
 		               
 		    };  		 
 		 
 			protected Object doInBackground(String... request_type) {
-				 				 			 								 
+ 
 				Vector params=new Vector();
 				HashMap req_type= new HashMap();			 
 				req_type.put("type",request_type[0]);	
+				if (request_type[0].equals("orders")) {
+					 progressBar.setVisibility(View.VISIBLE);
+				}else {					 
+					 progressBar2.setVisibility(View.VISIBLE);	
+				}
+ 
+				  		
+				
 				params.add(req_type);				 
 				Object charts_info;
 				try {
@@ -344,14 +353,14 @@ public class HomeFragment extends Fragment {
 
 			@Override
 			protected void onPostExecute(Object result) {
-				progressBar.setVisibility(View.INVISIBLE);
-				progressBar2.setVisibility(View.INVISIBLE);
+ 
 				if (result instanceof XMLRPCException ) {				 			 
 					ShowMessage( result.toString());	
 					HandleError(result.toString());
 				} else {		 
 					 SetChartData(result);
 				}
+ 				
 			}
 
 		

@@ -21,6 +21,8 @@ import org.xmlrpc.android.XMLRPCException;
 
  
 
+
+
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
@@ -36,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -52,12 +55,14 @@ public class SalesActivity extends Fragment implements OnClickListener  {
 	private int year;
 	private int month;
 	private int day;
-	
+	private ProgressBar progressBar;
 	
 	  public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
 		  
-		rootView  = inflater.inflate(R.layout.sales, null);		 
+		rootView  = inflater.inflate(R.layout.sales, null);		
+		
+		 progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);		
 		api_session=getArguments().getString("api_session");
 		api_url=getArguments().getString("api_url");
 		uri = URI.create(api_url);
@@ -184,6 +189,7 @@ public class SalesActivity extends Fragment implements OnClickListener  {
 			}
 			//TextView IncrementIdCell = (TextView) t.getChildAt(0);
 			//String order_id = (String) IncrementIdCell.getText();
+			 
 			ShowOrderInfo(t.getId());			 
 		}
 	};
@@ -274,7 +280,7 @@ public class SalesActivity extends Fragment implements OnClickListener  {
 	  
 	class OrderlistTask extends AsyncTask<String, Void, Object[]> {
 		protected Object[] doInBackground(String... selected_date) {
-			 	
+			progressBar.setVisibility(View.VISIBLE);
 			Vector params=new Vector();
 			DateFormat date_local = new SimpleDateFormat("yyyy-MM-dd");					
 			Date from_date = new Date();
@@ -310,7 +316,7 @@ public class SalesActivity extends Fragment implements OnClickListener  {
 				HandleError( result[0].toString());					 				  							
 			} else {				 
 				SortRows(result);
-				 
+				progressBar.setVisibility(View.INVISIBLE);
 			}
 		}
 

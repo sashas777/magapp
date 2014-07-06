@@ -37,7 +37,7 @@ public class NewOrderService extends Service {
 	private String desired_preferense_file = "magapp";
 	Timer timer;
 	TimerTask tTask;
-	long interval = 360000;
+	long interval = 5000;
 	  
 	public void onCreate() {
 		super.onCreate();
@@ -214,15 +214,18 @@ public class NewOrderService extends Service {
 				"New order was placed", System.currentTimeMillis());
 
 		// set activity
-		Intent intent = new Intent(this, LoginActivity.class);
-		// intent.putExtra(LoginActivity.FILE_NAME, "somefile");
-		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+		Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
+		OrderInfo.putExtra("api_session",session);
+		OrderInfo.putExtra("api_url",url);		 
+		OrderInfo.putExtra("order_id",order_id);	
+		 
+		PendingIntent pIntent = PendingIntent.getActivity(this, 0, OrderInfo, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// 2nd part
 		notif.setLatestEventInfo(this, "Order #"+increment_id, "Status: "+order_status+" | Amount: "+order_amount, pIntent);
 
 		// set flag
-		notif.flags |= Notification.FLAG_AUTO_CANCEL;
+		notif.flags |= Notification.FLAG_AUTO_CANCEL;		
 		notif.defaults|=Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE;
 		// send
 		nm.notify(order_id, notif);
