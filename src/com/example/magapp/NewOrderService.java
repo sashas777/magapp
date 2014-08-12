@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
@@ -76,11 +75,34 @@ public class NewOrderService extends Service {
 
 	void CheckOrders() {
 
-		SharedPreferences settings = this.getSharedPreferences(
-				desired_preferense_file, 0);
-		String selected_account_name = settings.getString("selected_account_name", null);
+		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
+		//String selected_account_name = settings.getString("selected_account_name", null);
 		last_order_id=settings.getString("last_order_id", "0");
 		String used_session = settings.getString("session", null);
+		
+		session=used_session;
+		if (!session.equals(null)) {
+			 
+			OrdersInfo task=new OrdersInfo();
+			task.execute(last_order_id);			
+		} else{
+			NewConnection();
+		}
+ 
+		
+		//stopSelf();
+
+	}
+
+	public void OrdersRequest(){
+		OrdersInfo task=new OrdersInfo();
+		task.execute(last_order_id);
+	}
+	
+	
+	public void NewConnection(){
+		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
+		String selected_account_name = settings.getString("selected_account_name", null);		 
 		AccountManager manager = AccountManager.get(this);
 		Account[] accounts = manager.getAccountsByType(accountType);
 
@@ -95,7 +117,7 @@ public class NewOrderService extends Service {
 			}
 
 		}
-
+		
 		if (!api_username.equals(null)) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
@@ -104,27 +126,18 @@ public class NewOrderService extends Service {
 			LoginTask task=new LoginTask();
 			task.execute(api_username,api_password);
 		}
-
-		 
-
-		//stopSelf();
-
-	}
-
-	public void OrdersRequest(){
-		OrdersInfo task=new OrdersInfo();
-		task.execute(last_order_id);
 	}
 	
 	public void PrepareOrdersData(Object[] new_info) {
 		for (Object o : new_info) {
 			
 			HashMap map = (HashMap) o;		 
+			SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
 			 
-			 if (map.get("last_id")!=null) {
-				  SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
+			 if (map.get("last_id")!=null) {				  
 			      SharedPreferences.Editor editor = settings.edit();
 			      editor.putString("last_order_id", map.get("last_id").toString());
+			      editor.putString("session", session);
 			      editor.commit();		
 			      last_order_id=map.get("last_id").toString();
 			     // Log.e("Sashas",map.get("last_id").toString());
@@ -185,6 +198,7 @@ public class NewOrderService extends Service {
 			Object[] orders;
 			try {
 				orders = (Object[]) client.callEx("call", new Object[] { session, "magapp_sales_order.notifications",  new Object[] {map_filter} });				 
+				 
 				return orders;	
 				
 			} catch (XMLRPCException e) {
@@ -196,7 +210,7 @@ public class NewOrderService extends Service {
 	    @Override
 	      protected void onPostExecute(Object[] result) {		    
 	    	if (result[0] instanceof XMLRPCException ) {				 			 
-				//ShowMessage(result.toString());					 
+	    		NewConnection();				 
 			} else {			 				 
 				PrepareOrdersData(result);				 
 			}
