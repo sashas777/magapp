@@ -161,7 +161,7 @@ public class NewOrderService extends Service {
 		    @Override
 		      protected void onPostExecute(String result) {		    
 			    	if (result.contains(" ")) {
-			    		ShowMessage(result);		    		 
+			    		//ShowMessage(result);		    		 
 			    	}else {
 			    		//ShowMessage("You are logged in");
 			    		OrdersRequest();

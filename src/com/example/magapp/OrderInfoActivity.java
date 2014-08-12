@@ -67,7 +67,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
         
         getActionBar().setDisplayHomeAsUpEnabled(true);
          
-      Bundle vars= getIntent().getExtras();
+        Bundle vars= getIntent().getExtras();
 		api_session = vars.getString("api_session");
 		api_url = vars.getString("api_url");
 		order_id= vars.getInt("order_id");
