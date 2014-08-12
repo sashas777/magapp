@@ -75,13 +75,31 @@ public class NewOrderService extends Service {
 
 	void CheckOrders() {
 
-		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
-		//String selected_account_name = settings.getString("selected_account_name", null);
+		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);		
+		String selected_account_name = settings.getString("selected_account_name", null);		
 		last_order_id=settings.getString("last_order_id", "0");
 		String used_session = settings.getString("session", null);
+		AccountManager manager = AccountManager.get(this);
+		Account[] accounts = manager.getAccountsByType(accountType);
 		
+		
+		/* Login with account specified */
+		for (int i = 0; i < accounts.length; i++) {
+			Account account = accounts[i];
+			if (selected_account_name.equals(account.name)) {
+				api_username = manager.getUserData(account, "username");
+				api_password = manager.getPassword(account);
+				url = manager.getUserData(account, "store_url");
+				break;
+			}
+
+		}
+ 		
 		session=used_session;
-		if (!session.equals(null)) {
+		if (!session.equals(null) && !api_username.equals(null)) {
+			url = url.concat("/index.php/api/xmlrpc/");
+			uri = URI.create(url);
+			client = new XMLRPCClient(uri);
 			 
 			OrdersInfo task=new OrdersInfo();
 			task.execute(last_order_id);			
@@ -137,7 +155,7 @@ public class NewOrderService extends Service {
 			 if (map.get("last_id")!=null) {				  
 			      SharedPreferences.Editor editor = settings.edit();
 			      editor.putString("last_order_id", map.get("last_id").toString());
-			      editor.putString("session", session);
+			      editor.putString("session", session);			     	     
 			      editor.commit();		
 			      last_order_id=map.get("last_id").toString();
 			     // Log.e("Sashas",map.get("last_id").toString());
@@ -194,7 +212,7 @@ public class NewOrderService extends Service {
 			 	 	 
 			HashMap map_filter = new HashMap();
 			map_filter.put("order_id",last_order_id);
-
+			 
 			Object[] orders;
 			try {
 				orders = (Object[]) client.callEx("call", new Object[] { session, "magapp_sales_order.notifications",  new Object[] {map_filter} });				 
