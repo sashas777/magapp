@@ -36,7 +36,7 @@ public class BaseFragment extends Activity implements
 
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
+		mTitle = getTitle(); 
 
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -51,7 +51,7 @@ public class BaseFragment extends Activity implements
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 
-		if (api_session.length() == 0) {
+		if (api_session == null) {
 			Bundle vars = getIntent().getExtras();
 			api_session = vars.getString("api_session");
 			api_url = vars.getString("api_url");

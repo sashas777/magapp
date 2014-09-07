@@ -138,7 +138,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 		 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);		 
 		 String selected_account_name = settings.getString("selected_account_name",null); 
 		 
-		 if (selected_account_name.equals(null)) {
+		 if (selected_account_name ==null) {
 			 ShowMessage("Please select account");
 			 fragmentManager.beginTransaction()
 	         .replace(R.id.container,new AccountsFragment())           

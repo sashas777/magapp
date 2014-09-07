@@ -86,7 +86,7 @@ public class NewOrderService extends Service {
 		AccountManager manager = AccountManager.get(this);
 		Account[] accounts = manager.getAccountsByType(accountType);
 
-		if (url.equals(null)) {
+		if (url !=null) {
 			/* Login with account specified */
 			for (int i = 0; i < accounts.length; i++) {
 				Account account = accounts[i];
@@ -98,7 +98,7 @@ public class NewOrderService extends Service {
 		}
 
 		session = used_session;
-		if (!session.equals(null) && !url.equals(null)) {
+		if (session !=null && url!=null) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
 			client = new XMLRPCClient(uri);
@@ -138,7 +138,7 @@ public class NewOrderService extends Service {
 
 		}
 
-		if (!api_username.equals(null)) {
+		if (api_username !=null) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
 			client = new XMLRPCClient(uri);

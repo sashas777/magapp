@@ -19,7 +19,7 @@ public class PaymentInfoFragment  extends Fragment {
 		rootView  = inflater.inflate(R.layout.fragment_payment_info, null);
 		String payment_info = getArguments().getString("payment_info");
 		String currency_info=getArguments().getString("currency_info");
-		 				  
+		 				   
 		TextView PaymentInfo = (TextView) rootView.findViewById(R.id.payment_info);
 		TextView CurrencyInfo = (TextView) rootView.findViewById(R.id.currency_info);
 		 
