@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class ConnectAuth extends Activity {
 
-	private String accountType = "com.magapp";
+	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
 	private XMLRPCClient client;
 	private URI uri;

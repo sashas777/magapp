@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.magapp.connect.MagAuth;
 import com.magapp.main.BaseFragment;
 import com.magapp.main.R;
 
@@ -69,13 +70,13 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 				 }
 					 		 
 			  }	
-			  			 			
+			  			 			 
 			 if (api_username!=null) {
 				 url=url.concat("/index.php/api/xmlrpc/");	       
 				 uri = URI.create(url);
 			     client = new XMLRPCClient(uri);	       	      	      
 			     LoginTask task=new LoginTask();			     
-			   /* MagAuth.makeToast(getActivity(), "as");*/
+			     MagAuth.makeToast(getActivity(), "as!!!!!!!!");
 			     task.execute(api_username,api_password);
 			 }
 			 
