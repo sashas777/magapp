@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.magapp"
+    package="com.magapp.main"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -34,11 +34,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity><activity
-            android:name="com.magapp.BaseFragment"
+            android:name="com.magapp.main.BaseFragment"
             android:label="@string/app_name" >
  
         </activity>
-        <activity android:name="com.magapp.OrderInfoActivity"  android:label="@string/app_name" ></activity>
+        <activity android:name="com.magapp.main.OrderInfoActivity"  android:label="@string/app_name" ></activity>
         <service android:name="NewOrderService"></service>
         <receiver android:name="BootBroadReceiv">
             <intent-filter>

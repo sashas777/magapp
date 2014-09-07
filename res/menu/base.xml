@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.magapp.BAseActivity" >
+    tools:context="com.magapp.main.BaseActivity" >
   
     
     <item android:id="@+id/settings" android:orderInCategory="100"  android:showAsAction="never"  android:title="@string/action_settings"/>  

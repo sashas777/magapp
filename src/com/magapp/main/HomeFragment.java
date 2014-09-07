@@ -1,4 +1,4 @@
-package com.magapp;
+package com.magapp.main;
 
 import java.net.URI;
 import java.text.DecimalFormat;
@@ -45,7 +45,6 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
-import com.magapp.R;
 
 public class HomeFragment extends Fragment {
 

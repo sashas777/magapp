@@ -9,7 +9,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -20,10 +19,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-import com.magapp.R;
+import com.magapp.main.R;
 
 public class AccountsFragment  extends Fragment    implements  OnItemClickListener  {
 	
@@ -31,7 +29,7 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	 View rootView;
 	 String[] AccountNames;
 	
-	 private String accountType = "com.magapp";
+	 private String accountType = "com.magapp.main";
 	 private String desired_preferense_file="magapp";	 
 	 private ArrayList<HashMap<String, String>> AccountList;	 
 	 private AccountsAdapter adapter;

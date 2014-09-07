@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.magapp.R;
+import com.magapp.main.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 

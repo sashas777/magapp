@@ -1,4 +1,4 @@
-package com.magapp;
+package com.magapp.main;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.magapp;
+package com.magapp.main;
 
 import java.net.URI;
 import java.util.HashMap;
@@ -7,8 +7,6 @@ import java.util.TimerTask;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
-
-import com.magapp.R;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -34,7 +32,7 @@ public class NewOrderService extends Service {
 	private String api_username = null;
 	private String api_password = null;
 	private String last_order_id = "0";
-	private String accountType = "com.example.magapp";
+	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
 	Timer timer;
 	TimerTask tTask;

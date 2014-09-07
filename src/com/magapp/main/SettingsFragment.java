@@ -1,6 +1,4 @@
-package com.magapp;
-
-import com.magapp.R;
+package com.magapp.main;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -10,7 +8,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnPreferenceChangeListener {
@@ -48,7 +45,7 @@ public class SettingsFragment extends PreferenceFragment implements
 				.getSystemService(getActivity().ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager
 				.getRunningServices(Integer.MAX_VALUE)) {
-			if ("com.example.magapp.NewOrderService".equals(service.service
+			if ("com.magapp.NewOrderService".equals(service.service
 					.getClassName())) {
 				return true;
 

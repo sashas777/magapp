@@ -7,7 +7,6 @@ import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,14 +16,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.magapp.R;
+import com.magapp.main.R;
 
 public class AddAccountFragment  extends Fragment    implements  OnClickListener  {
 	
 	 
 	View rootView;
 	 
-	 private String accountType = "com.magapp";
+	 private String accountType = "com.magapp.main";
 	 private String desired_preferense_file="magapp";	 
 	 
 	 

@@ -1,11 +1,4 @@
-package com.magapp;
-
-import java.net.URI;
-
-import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
-
-import com.magapp.R;
+package com.magapp.main;
 
 import Login.AccountsFragment;
 import Login.AddAccountFragment;
@@ -15,20 +8,10 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
@@ -39,7 +22,7 @@ public class LoginActivity extends Activity {
 	 * private String session; private String url; private String
 	 * api_username=null; private String api_password=null;
 	 */
-	private String accountType = "com.example.magapp";
+	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
 
 	// private Menu options_menu;
@@ -48,11 +31,11 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-
+ 
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new LoginFragment();
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
-				.addToBackStack(null).commit();
+				.addToBackStack(null).commit(); 
 	}
 
 	@Override

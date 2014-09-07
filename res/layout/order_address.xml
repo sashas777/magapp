@@ -6,7 +6,7 @@
     android:layout_gravity="top"
     android:fillViewport="true" >
 
-    <com.magapp.NowLayout
+    <com.magapp.main.NowLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#e3e3e3"
@@ -44,6 +44,6 @@
          
         
         
-    </com.magapp.NowLayout>
+    </com.magapp.main.NowLayout>
 
 </ScrollView>

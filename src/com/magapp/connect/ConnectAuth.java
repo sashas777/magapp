@@ -1,11 +1,9 @@
-package com.magapp;
+package com.magapp.connect;
 
 import java.net.URI;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
-
-import com.magapp.NewOrderService.LoginTask;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -13,11 +11,10 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
 public class ConnectAuth extends Activity {
 
-	private String accountType = "com.example.magapp";
+	private String accountType = "com.magapp";
 	private String desired_preferense_file = "magapp";
 	private XMLRPCClient client;
 	private URI uri;
@@ -25,7 +22,7 @@ public class ConnectAuth extends Activity {
 	private String url;
 	private String api_username = null;
 	private String api_password = null;
-
+ 
 	public void login() {
 		SharedPreferences settings = this.getSharedPreferences(
 				desired_preferense_file, 0);

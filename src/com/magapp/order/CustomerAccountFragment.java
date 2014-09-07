@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.magapp.R;
+import com.magapp.main.R;
 
 public class CustomerAccountFragment  extends Fragment {  
 	

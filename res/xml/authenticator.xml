@@ -1,4 +1,4 @@
  <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:accountType="com.example.magapp"
+    android:accountType="com.magapp.main"
      >
 </account-authenticator>

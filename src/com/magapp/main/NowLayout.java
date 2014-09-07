@@ -1,9 +1,5 @@
-package com.magapp;
+package com.magapp.main;
 
-import com.magapp.R;
-
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.LinearLayout;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;

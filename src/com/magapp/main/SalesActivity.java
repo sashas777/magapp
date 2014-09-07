@@ -1,4 +1,4 @@
-package com.magapp;
+package com.magapp.main;
 
 import java.net.URI;
 import java.text.DateFormat;
@@ -18,8 +18,6 @@ import java.util.regex.Pattern;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
-
-import com.magapp.R;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;

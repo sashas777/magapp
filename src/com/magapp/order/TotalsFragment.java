@@ -5,7 +5,6 @@ import java.util.HashMap;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.magapp.R;
+import com.magapp.main.R;
 
 public class TotalsFragment  extends Fragment {  
 	

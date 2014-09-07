@@ -1,6 +1,4 @@
-package com.magapp;
-
-import com.magapp.R;
+package com.magapp.main;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -53,7 +51,7 @@ public class BaseFragment extends Activity implements
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 
-		if (api_session == null) {
+		if (api_session.length() == 0) {
 			Bundle vars = getIntent().getExtras();
 			api_session = vars.getString("api_session");
 			api_url = vars.getString("api_url");

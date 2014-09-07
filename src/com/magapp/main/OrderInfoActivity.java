@@ -1,4 +1,4 @@
-package com.magapp;
+package com.magapp.main;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -29,7 +29,6 @@ import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
-import com.magapp.R;
 import com.magapp.order.CustomerAccountFragment;
 import com.magapp.order.ItemsFragment;
 import com.magapp.order.MainInfoFragment;
