@@ -25,11 +25,11 @@ public class MagAuth {
 	private String url;
 	private String api_username = null;
 	private String api_password = null;	
-	
+	private LoginTask task = new LoginTask();
 	
 	public String getSession(Activity activity) {
 		
-		
+		login(activity);
 		
 		return "seession";
 	}
@@ -55,9 +55,13 @@ public class MagAuth {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
 			client = new XMLRPCClient(uri);
-
-			LoginTask task = new LoginTask();
+			
 			task.execute(api_username, api_password);
+			while (task.getStatus().toString()!="FINISHED") {
+				
+			}
+			/*How to get result from AsyncTask*/
+			/*Log.e("Sashas",task.get());*/
 		}
 
 	}	
@@ -91,9 +95,13 @@ public class MagAuth {
 				// ShowMessage("You are logged in");
 				// OrdersRequest();
 			}
+			 
 		}
 	}
 	
+	public  String getApiUrl(){
+		return url;
+	}
 	
 	public static void makeToast(Context context, String text){
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
