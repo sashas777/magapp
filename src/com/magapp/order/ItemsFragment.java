@@ -1,4 +1,4 @@
-package com.example.magapp.order;
+package com.magapp.order;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.example.magapp.R;
+import com.magapp.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 

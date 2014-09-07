@@ -1,4 +1,4 @@
-package com.example.magapp.order;
+package com.magapp.order;
 
 import java.util.HashMap;
 
@@ -15,7 +15,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.magapp.R;
+import com.magapp.R;
 
 public class TotalsFragment  extends Fragment {  
 	

@@ -1,12 +1,14 @@
-package com.example.magapp;
+package com.magapp;
+
+import com.magapp.R;
 
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.LinearLayout;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View; 
+import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.animation.AnimationUtils; 
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
 public class NowLayout extends LinearLayout implements OnGlobalLayoutListener {
@@ -16,6 +18,7 @@ public class NowLayout extends LinearLayout implements OnGlobalLayoutListener {
 		initLayoutObserver();
 
 	}
+
 	public NowLayout(Context context) {
 		super(context);
 		initLayoutObserver();
@@ -57,5 +60,5 @@ public class NowLayout extends LinearLayout implements OnGlobalLayoutListener {
 			inversed = !inversed;
 		}
 
-	}	
+	}
 }

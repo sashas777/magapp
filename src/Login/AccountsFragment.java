@@ -23,7 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
-import com.example.magapp.R;
+import com.magapp.R;
 
 public class AccountsFragment  extends Fragment    implements  OnItemClickListener  {
 	
@@ -31,7 +31,7 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	 View rootView;
 	 String[] AccountNames;
 	
-	 private String accountType = "com.example.magapp";
+	 private String accountType = "com.magapp";
 	 private String desired_preferense_file="magapp";	 
 	 private ArrayList<HashMap<String, String>> AccountList;	 
 	 private AccountsAdapter adapter;

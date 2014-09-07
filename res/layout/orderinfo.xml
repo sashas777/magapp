@@ -15,7 +15,7 @@
     android:fillViewport="true" >
 
  
-    <com.example.magapp.NowLayout
+    <com.magapp.NowLayout
        	android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#e3e3e3" >
@@ -76,7 +76,7 @@
 	</FrameLayout >
      
         
-    </com.example.magapp.NowLayout>
+    </com.magapp.NowLayout>
 
 </ScrollView>
 

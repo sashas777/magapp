@@ -13,7 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.example.magapp.R;
+import com.magapp.R;
 
 public class AccountsAdapter extends BaseAdapter  {
 

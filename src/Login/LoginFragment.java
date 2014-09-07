@@ -9,13 +9,10 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +22,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.magapp.BaseFragment;
-import com.example.magapp.R;
+import com.magapp.R;
+import com.magapp.BaseFragment;
 
 public class LoginFragment  extends Fragment    implements  OnClickListener  {
 	
 	 
 	View rootView;	 
-	private String accountType = "com.example.magapp";
+	private String accountType = "com.magapp";
 	private String desired_preferense_file="magapp";	 
 	private XMLRPCClient client;
 	private URI uri;
@@ -77,7 +74,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 				 url=url.concat("/index.php/api/xmlrpc/");	       
 				 uri = URI.create(url);
 			     client = new XMLRPCClient(uri);	       	      	      
-			     LoginTask task=new LoginTask();
+			     LoginTask task=new LoginTask();			     
+			   //  MagAuth.makeToast(getActivity(), "as");
 			     task.execute(api_username,api_password);
 			 }
 			 

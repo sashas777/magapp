@@ -17,14 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.magapp.R;
+import com.magapp.R;
 
 public class AddAccountFragment  extends Fragment    implements  OnClickListener  {
 	
 	 
 	View rootView;
 	 
-	 private String accountType = "com.example.magapp";
+	 private String accountType = "com.magapp";
 	 private String desired_preferense_file="magapp";	 
 	 
 	 
