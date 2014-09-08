@@ -17,24 +17,28 @@ import android.widget.Toast;
 
 public class MagAuth {
 
-	private String accountType = "com.magapp.main";
-	private String desired_preferense_file = "magapp";
-	private XMLRPCClient client;
-	private URI uri;
-	private String session = null;
-	private String url;
-	private String api_username = null;
-	private String api_password = null;	
+	private  String   accountType = "com.magapp.main";
+	private  String desired_preferense_file = "magapp";
+	private  XMLRPCClient client;
+	private  URI uri;
+	private  String session = null;
+	private  String url;
+	private  String api_username = null;
+	private  String api_password = null;	
+	private Context activity;
 	private LoginTask task = new LoginTask();
 	
-	public String getSession(Activity activity) {
+	public static String getSession(Context act) {
 		
-		login(activity);
-		
-		return "seession";
+		 
+		MagAuth connection= new MagAuth();
+		 
+		String ses=connection.login(act);
+		return ses;
 	}
 	
-	public void login(Activity activity) {
+	public String login(Context act) {
+		activity=act;
 		SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
 		String selected_account_name = settings.getString("selected_account_name", null);
 		String used_session = settings.getString("session", null);
@@ -54,16 +58,17 @@ public class MagAuth {
 		if (api_username!=null) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
-			client = new XMLRPCClient(uri);
-			
-			task.execute(api_username, api_password);
-			while (task.getStatus().toString()!="FINISHED") {
-				
-			}
+			client = new XMLRPCClient(uri);			 
+			task.execute(api_username, api_password);			 
+		 	while (session==null) {
+			} 
 			/*How to get result from AsyncTask*/
-			/*Log.e("Sashas",task.get());*/
+			//Log.e("Sashas",task.getStatus().toString());			 
+		}else{
+			session="failed";
 		}
-
+		
+		return session;
 	}	
 	
 	class LoginTask extends AsyncTask<String, Void, String> {
@@ -73,7 +78,9 @@ public class MagAuth {
 		};
 
 		protected String doInBackground(String... credentials) {
-
+			
+ 
+		    
 			try {
 				session = (String) client.call("login", credentials[0], credentials[1]);
 				return session;
@@ -90,21 +97,24 @@ public class MagAuth {
 		@Override
 		protected void onPostExecute(String result) {
 			if (result.contains(" ")) {
-				// ShowMessage(result);
+				 makeToast(result);
 			} else {
-				// ShowMessage("You are logged in");
+				 makeToast("You are logged in11");				
 				// OrdersRequest();
 			}
+			return;
 			 
 		}
+		
+	    
 	}
 	
 	public  String getApiUrl(){
 		return url;
 	}
 	
-	public static void makeToast(Context context, String text){
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+	public void makeToast(String text){
+        Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
         
     }
 }

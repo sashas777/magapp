@@ -75,9 +75,10 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 				 url=url.concat("/index.php/api/xmlrpc/");	       
 				 uri = URI.create(url);
 			     client = new XMLRPCClient(uri);	       	      	      
-			     LoginTask task=new LoginTask();			     
-			     MagAuth.makeToast(getActivity(), "as!!!!!!!!");
-			     task.execute(api_username,api_password);
+			    // LoginTask task=new LoginTask();			     
+			     session=MagAuth.getSession(getActivity());
+			     ShowSales();
+			   //  task.execute(api_username,api_password);
 			 }
 			 
 			 
