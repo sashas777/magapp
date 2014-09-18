@@ -22,11 +22,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
 import com.magapp.main.BaseFragment;
 import com.magapp.main.R;
 
-public class LoginFragment  extends Fragment    implements  OnClickListener  {
+public class LoginFragment  extends Fragment    implements  OnClickListener, GetSession  {
 	
 	 
 	View rootView;	 
@@ -76,14 +77,22 @@ public class LoginFragment  extends Fragment    implements  OnClickListener  {
 				 uri = URI.create(url);
 			     client = new XMLRPCClient(uri);	       	      	      
 			    // LoginTask task=new LoginTask();			     
-			     session=MagAuth.getSession(getActivity());
-			     ShowSales();
+			     MagAuth auth=new MagAuth(this,getActivity());
+			    
+			     //Log.e("Sashas","returned - "+session);
+			    // ShowSales();
 			   //  task.execute(api_username,api_password);
 			 }
 			 
 			 
 			return rootView;
 	}
+	 
+	 public void SessionReturned(String ses){
+		 session=ses;
+		 /* Log.e("Sashas","returned - "+session); */
+		 ShowSales();
+	 }
 	 
 	 @Override
 		public void onResume() {

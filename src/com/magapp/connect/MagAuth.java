@@ -2,43 +2,42 @@ package com.magapp.connect;
 
 import java.net.URI;
 
-import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.magapp.connect.LoginTask.FinishLogin;
 
-public class MagAuth {
 
+public class MagAuth implements FinishLogin{
+ 
+	
 	private  String   accountType = "com.magapp.main";
 	private  String desired_preferense_file = "magapp";
-	private  XMLRPCClient client;
+	//private  XMLRPCClient client;
 	private  URI uri;
-	private  String session = null;
+	//private  String session = null;
 	private  String url;
 	private  String api_username = null;
 	private  String api_password = null;	
 	private Context activity;
-	private LoginTask task = new LoginTask();
+	private LoginTask task;
+	 
+	GetSession GetSessionCallBack;
 	
-	public static String getSession(Context act) {
-		
-		 
-		MagAuth connection= new MagAuth();
-		 
-		String ses=connection.login(act);
-		return ses;
-	}
 	
-	public String login(Context act) {
+	public MagAuth(GetSession callback, Context act ) {
+		GetSessionCallBack = callback;
 		activity=act;
+		login();
+	}
+ 
+	
+	public void login() {
+		 
 		SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
 		String selected_account_name = settings.getString("selected_account_name", null);
 		String used_session = settings.getString("session", null);
@@ -54,7 +53,17 @@ public class MagAuth {
 				break;
 			}
 		}
-
+		
+		
+		if (api_username!=null) {
+			url = url.concat("/index.php/api/xmlrpc/");
+			task = new LoginTask(this,  api_username, api_password,url);
+			task.execute(); 
+		}else{
+			//session="failed";
+			Log.e("Sashas","failed");
+		}
+/*
 		if (api_username!=null) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
@@ -64,13 +73,29 @@ public class MagAuth {
 			} 
 			/*How to get result from AsyncTask*/
 			//Log.e("Sashas",task.getStatus().toString());			 
-		}else{
+	/*	}else{
 			session="failed";
-		}
+		} */
 		
-		return session;
+		//return session;
 	}	
 	
+ 
+
+	 @Override
+	 public void doPostExecute(String result) {
+	 if (result.contains(" ")) {
+			makeToast(result);
+		} else {
+			Log.e("Sashas","task done - "+result);
+			// makeToast("You are logged in");
+			// OrdersRequest();
+			GetSessionCallBack.SessionReturned(result);
+		}
+ 
+	 }	
+	
+	/*
 	class LoginTask extends AsyncTask<String, Void, String> {
 
 		protected void onPreExecute() {
@@ -108,7 +133,7 @@ public class MagAuth {
 		
 	    
 	}
-	
+	*/
 	public  String getApiUrl(){
 		return url;
 	}

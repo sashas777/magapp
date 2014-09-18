@@ -16,9 +16,9 @@ public class ConnectAuth extends Activity {
 
 	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
-	private XMLRPCClient client;
-	private URI uri;
-	private String session = null;
+	//private XMLRPCClient client;
+	//private URI uri;
+	//private String session = null;
 	private String url;
 	private String api_username = null;
 	private String api_password = null;
@@ -41,7 +41,7 @@ public class ConnectAuth extends Activity {
 				break;
 			}
 		}
-
+/*
 		if (!api_username.equals(null)) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
@@ -50,9 +50,9 @@ public class ConnectAuth extends Activity {
 			LoginTask task = new LoginTask();
 			task.execute(api_username, api_password);
 		}
-
+*/
 	}
-
+/*
 	class LoginTask extends AsyncTask<String, Void, String> {
 
 		protected void onPreExecute() {
@@ -85,5 +85,5 @@ public class ConnectAuth extends Activity {
 			}
 		}
 	}
-
+*/
 }
