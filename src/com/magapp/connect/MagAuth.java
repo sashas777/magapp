@@ -4,6 +4,8 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,7 +28,7 @@ public class MagAuth implements FinishLogin{
 	public MagAuth(GetSession callback, Context act ) {
 		GetSessionCallBack = callback;
 		activity=act;
-		login();
+		login();	 		
 	}
  
 	
@@ -34,7 +36,7 @@ public class MagAuth implements FinishLogin{
 		 
 		SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
 		String selected_account_name = settings.getString("selected_account_name", null);
-		String used_session = settings.getString("session", null);
+		String used_session = settings.getString("session", null); // -- modernize
 		AccountManager manager = AccountManager.get(activity);
 		Account[] accounts = manager.getAccountsByType(accountType);
 		/* Login with account specified */
@@ -49,12 +51,14 @@ public class MagAuth implements FinishLogin{
 		}
 		
 		
-		if (api_username!=null) {
+		if (api_username!=null && isOnline()) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			task = new LoginTask(this,  api_username, api_password,url);
 			task.execute(); 
-		}else{
-			//session="failed";
+		}else if (!isOnline()) {
+			Log.e("Sashas","No Internet Connection.");			
+			GetSessionCallBack.NoInternet(this);
+		}else{		 
 			makeToast("Please select default magento account");
 			Log.e("Sashas","Default Account Not Choosed.");
 		}
@@ -79,8 +83,17 @@ public class MagAuth implements FinishLogin{
 		return url;
 	}
 	
-	public void makeToast(String text){
+	public void makeToast(String text){		
         Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();
         
     }
+	
+	public boolean isOnline() {
+	    ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}	
 }

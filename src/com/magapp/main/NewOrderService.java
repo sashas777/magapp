@@ -76,10 +76,8 @@ public class NewOrderService extends Service {
 
 	void CheckOrders() {
 
-		SharedPreferences settings = this.getSharedPreferences(
-				desired_preferense_file, 0);
-		String selected_account_name = settings.getString(
-				"selected_account_name", null);
+		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
+		String selected_account_name = settings.getString("selected_account_name", null);
 		last_order_id = settings.getString("last_order_id", "0");
 		url = settings.getString("store_url", "0");
 		String used_session = settings.getString("session", null);
@@ -180,8 +178,7 @@ public class NewOrderService extends Service {
 		protected String doInBackground(String... credentials) {
 
 			try {
-				session = (String) client.call("login", credentials[0],
-						credentials[1]);
+				session = (String) client.call("login", credentials[0],credentials[1]);
 				return session;
 			} catch (XMLRPCException e) {
 				Log.e("Sashas", e.getMessage());

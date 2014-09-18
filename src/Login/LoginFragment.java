@@ -54,15 +54,20 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		 auth.makeToast("You are logged in");
 		 ShowSales();
 	 }
+	 
 	 public void ShowProgressBar() {
 		  progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
 		  progressBar.setVisibility(View.VISIBLE);		 
 	 }
 	 
+	 public void NoInternet(MagAuth a){
+		 a.makeToast("Oops. No network connection.");
+	 }
+	 
 	 @Override
 	 public void onResume() {
-			 super.onResume(); 
-			 getActivity().invalidateOptionsMenu();
+			super.onResume(); 
+			getActivity().invalidateOptionsMenu();
 		    return; 
 		}
 
