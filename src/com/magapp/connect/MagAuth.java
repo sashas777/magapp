@@ -55,7 +55,8 @@ public class MagAuth implements FinishLogin{
 			task.execute(); 
 		}else{
 			//session="failed";
-			Log.e("Sashas","failed");
+			makeToast("Please select default magento account");
+			Log.e("Sashas","Default Account Not Choosed.");
 		}
  
 	}	
@@ -65,11 +66,11 @@ public class MagAuth implements FinishLogin{
 	};  
 
 	 @Override
-	 public void doPostExecute(String result) {
-	 if (result.contains(" ")) {
-			makeToast(result);
+	 public void doPostExecute(String session) {
+	 if (session.contains(" ")) {
+			makeToast(session);
 		} else { 
-			GetSessionCallBack.SessionReturned(result);
+			GetSessionCallBack.SessionReturned(session);
 		}
  
 	 }	

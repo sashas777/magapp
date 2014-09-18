@@ -1,9 +1,6 @@
 package Login;
 
-import java.net.URI;
-
 import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -11,16 +8,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
@@ -34,13 +28,10 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	private String accountType = "com.magapp.main";
 	private String desired_preferense_file="magapp";	 
 	private XMLRPCClient client;
-	private URI uri;
 	private String session=null;
 	private String url;
-	private String api_username=null;
-	private String api_password=null;	 
 	private ProgressBar progressBar;
-	 
+	private MagAuth auth;
 	
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
@@ -50,35 +41,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			Button AddAccountButton = (Button) rootView.findViewById(R.id.AddAccount);
 			LoginButton.setOnClickListener(this);
 			AddAccountButton.setOnClickListener(this);
-			
-			 
-			 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);		 
-			 String selected_account_name = settings.getString("selected_account_name",null); 
-			 String used_session = settings.getString("session",null); 
-			 AccountManager manager = AccountManager.get(getActivity());	
-			 Account[]  accounts = manager.getAccountsByType(accountType);
-			   				 
-			 			 
-			/*Login is account specified*/
-			  
-			 for (int i=0; i < accounts.length; i++) {			 
-				  Account account=accounts[i];			   
-				 if (selected_account_name.equals(account.name))  {
-					  api_username=manager.getUserData(account, "username");
-					  api_password=manager.getPassword(account);
-					  url=manager.getUserData(account, "store_url");				  
-					  break;
-				 }
-					 		 
-			  }	
-			  			 			 
-			 if (api_username!=null) {
-				 url=url.concat("/index.php/api/xmlrpc/");	       
-				 uri = URI.create(url);
-			     client = new XMLRPCClient(uri);	       	      	       		     
-			     MagAuth auth=new MagAuth(this,getActivity()); 
-			 }
-			 
+			auth=new MagAuth(this,getActivity()); 
 			 
 			return rootView;
 	}
@@ -86,7 +49,9 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	 public void SessionReturned(String ses){
 		 progressBar.setVisibility(View.INVISIBLE);
 		 session=ses;
+		 url=auth.getApiUrl();
 		 /* Log.e("Sashas","returned - "+session); */
+		 auth.makeToast("You are logged in");
 		 ShowSales();
 	 }
 	 public void ShowProgressBar() {
@@ -95,7 +60,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	 }
 	 
 	 @Override
-		public void onResume() {
+	 public void onResume() {
 			 super.onResume(); 
 			 getActivity().invalidateOptionsMenu();
 		    return; 
@@ -144,81 +109,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			 
 	}
 		 
-	public void LoginAction(){
-		 FragmentManager fragmentManager = getFragmentManager();  	
-		 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);		 
-		 String selected_account_name = settings.getString("selected_account_name",null); 
-		 
-		 if (selected_account_name ==null) {
-			 ShowMessage("Please select account");
-			 fragmentManager.beginTransaction()
-	         .replace(R.id.container,new AccountsFragment())           
-	         .addToBackStack(null)
-	         .commit();  
-			 return;
-		 }
-		 
-		 AccountManager manager = AccountManager.get(getActivity());	
-		 Account[]  accounts = manager.getAccountsByType(accountType);
-		 
-		 for (int i=0; i < accounts.length; i++) {			 
-			  Account account=accounts[i];			   
-			 if (selected_account_name.equals(account.name))  {
-				  api_username=manager.getUserData(account, "username");
-				  api_password=manager.getPassword(account);
-				  url=manager.getUserData(account, "store_url");				  
-				  break;
-			 }
-				 		 
-		  }		 
-		 
-		  url=url.concat("/index.php/api/xmlrpc/");	       
-		  uri = URI.create(url);
-	      client = new XMLRPCClient(uri);	       	      	      
-	      LoginTask task=new LoginTask();
-	      task.execute(api_username,api_password);
-	 
+	public void LoginAction(){ 
+	      auth=new MagAuth(this,getActivity()); 
 	}
-	
-	  public void ShowMessage(String text) {
-		  Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-	  }
-	 /*
-	  class LoginTask extends AsyncTask<String, Void, String> {  
-		  
-		  protected void onPreExecute()
-		    {			 
-			  progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-			  progressBar.setVisibility(View.VISIBLE);
-			  super.onPreExecute();
-		               
-		    };   
-		    
-		    
-		    protected String doInBackground(String... credentials) {	
-		     	    	 
-		      try {           
-		        	 session = (String) client.call("login",credentials[0], credentials[1]);        	
-		        	 return session;	
-		        } catch (XMLRPCException e) {   
-		         	Log.e("Sashas",e.getMessage());	      
-		         	session=e.getMessage().toString();	          	    	     	     
-		       }  	catch (Exception e) { 
-		         	Log.e("Sashas",e.getMessage());	         		     
-		         	session=e.getMessage().toString();
-		        }	     
-		      return session;	
-		    }	     
-		    @Override
-		      protected void onPostExecute(String result) {
-		    	progressBar.setVisibility(View.INVISIBLE);
-			    	if (result.contains(" ")) {
-			    		ShowMessage(result);		    		 
-			    	}else {
-			    		ShowMessage("You are logged in");
-			    		ShowSales();
-			    	}
-		    	}	     
-		}
-*/		  
+
 }
