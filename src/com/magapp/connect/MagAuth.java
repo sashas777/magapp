@@ -1,7 +1,5 @@
 package com.magapp.connect;
 
-import java.net.URI;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
@@ -13,13 +11,9 @@ import com.magapp.connect.LoginTask.FinishLogin;
 
 
 public class MagAuth implements FinishLogin{
- 
-	
+ 	
 	private  String   accountType = "com.magapp.main";
 	private  String desired_preferense_file = "magapp";
-	//private  XMLRPCClient client;
-	private  URI uri;
-	//private  String session = null;
 	private  String url;
 	private  String api_username = null;
 	private  String api_password = null;	
@@ -63,77 +57,23 @@ public class MagAuth implements FinishLogin{
 			//session="failed";
 			Log.e("Sashas","failed");
 		}
-/*
-		if (api_username!=null) {
-			url = url.concat("/index.php/api/xmlrpc/");
-			uri = URI.create(url);
-			client = new XMLRPCClient(uri);			 
-			task.execute(api_username, api_password);			 
-		 	while (session==null) {
-			} 
-			/*How to get result from AsyncTask*/
-			//Log.e("Sashas",task.getStatus().toString());			 
-	/*	}else{
-			session="failed";
-		} */
-		
-		//return session;
+ 
 	}	
 	
- 
+	public void onPreExecute(){			 
+		  GetSessionCallBack.ShowProgressBar();		 	            
+	};  
 
 	 @Override
 	 public void doPostExecute(String result) {
 	 if (result.contains(" ")) {
 			makeToast(result);
-		} else {
-			Log.e("Sashas","task done - "+result);
-			// makeToast("You are logged in");
-			// OrdersRequest();
+		} else { 
 			GetSessionCallBack.SessionReturned(result);
 		}
  
 	 }	
-	
-	/*
-	class LoginTask extends AsyncTask<String, Void, String> {
-
-		protected void onPreExecute() {
-			super.onPreExecute();
-		};
-
-		protected String doInBackground(String... credentials) {
-			
- 
-		    
-			try {
-				session = (String) client.call("login", credentials[0], credentials[1]);
-				return session;
-			} catch (XMLRPCException e) {
-				Log.e("Sashas", e.getMessage());
-				session = e.getMessage().toString();
-			} catch (Exception e) {
-				Log.e("Sashas", e.getMessage());
-				session = e.getMessage().toString();
-			}
-			return session;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if (result.contains(" ")) {
-				 makeToast(result);
-			} else {
-				 makeToast("You are logged in11");				
-				// OrdersRequest();
-			}
-			return;
-			 
-		}
-		
-	    
-	}
-	*/
+		 
 	public  String getApiUrl(){
 		return url;
 	}

@@ -75,13 +75,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			 if (api_username!=null) {
 				 url=url.concat("/index.php/api/xmlrpc/");	       
 				 uri = URI.create(url);
-			     client = new XMLRPCClient(uri);	       	      	      
-			    // LoginTask task=new LoginTask();			     
-			     MagAuth auth=new MagAuth(this,getActivity());
-			    
-			     //Log.e("Sashas","returned - "+session);
-			    // ShowSales();
-			   //  task.execute(api_username,api_password);
+			     client = new XMLRPCClient(uri);	       	      	       		     
+			     MagAuth auth=new MagAuth(this,getActivity()); 
 			 }
 			 
 			 
@@ -89,9 +84,14 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	}
 	 
 	 public void SessionReturned(String ses){
+		 progressBar.setVisibility(View.INVISIBLE);
 		 session=ses;
 		 /* Log.e("Sashas","returned - "+session); */
 		 ShowSales();
+	 }
+	 public void ShowProgressBar() {
+		  progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+		  progressBar.setVisibility(View.VISIBLE);		 
 	 }
 	 
 	 @Override
@@ -183,7 +183,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	  public void ShowMessage(String text) {
 		  Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
 	  }
-	 
+	 /*
 	  class LoginTask extends AsyncTask<String, Void, String> {  
 		  
 		  protected void onPreExecute()
@@ -220,5 +220,5 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			    	}
 		    	}	     
 		}
-		  
+*/		  
 }

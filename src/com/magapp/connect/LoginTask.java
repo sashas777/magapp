@@ -12,6 +12,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
 
 	 interface FinishLogin {		 
 		  void doPostExecute(String result);
+		  void onPreExecute();
 	 }
 	
 	 FinishLogin FinishLoginCallBack;
@@ -28,6 +29,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
 	 
 	protected void onPreExecute() {
 		super.onPreExecute();
+		FinishLoginCallBack.onPreExecute();		
 	};
 
 	protected String doInBackground(Void... params) {
