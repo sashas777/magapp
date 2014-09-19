@@ -16,7 +16,8 @@ public class MagAuth implements FinishLogin{
  	
 	private  String   accountType = "com.magapp.main";
 	private  String desired_preferense_file = "magapp";
-	private  String url;
+	private  static String url;
+	private  static String api_session;
 	private  String api_username = null;
 	private  String api_password = null;	
 	private Context activity;
@@ -28,7 +29,11 @@ public class MagAuth implements FinishLogin{
 	public MagAuth(GetSession callback, Context act ) {
 		GetSessionCallBack = callback;
 		activity=act;
-		login();	 		
+		
+		if (getSession()!=null && isOnline()) 
+			GetSessionCallBack.SessionReturned(getSession(), true);
+		else		
+			login();	 		
 	}
  
 	
@@ -36,7 +41,7 @@ public class MagAuth implements FinishLogin{
 		 
 		SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
 		String selected_account_name = settings.getString("selected_account_name", null);
-		String used_session = settings.getString("session", null); // -- modernize
+		//String used_session = settings.getString("session", null); // -- modernize
 		AccountManager manager = AccountManager.get(activity);
 		Account[] accounts = manager.getAccountsByType(accountType);
 		/* Login with account specified */
@@ -75,13 +80,23 @@ public class MagAuth implements FinishLogin{
 			makeToast("Error: Please check your credentials");
 			GetSessionCallBack.SessionReturned(session, false);
 		} else { 
+			api_session=session;
 			GetSessionCallBack.SessionReturned(session, true);
+			 
 		}
  
 	 }	
 		 
-	public  String getApiUrl(){
+	public static String getApiUrl(){
 		return url;
+	}
+	
+	public static void setSession(String ses){
+		api_session=ses;		 
+	}	
+	
+	public static String getSession(){
+		return api_session;
 	}
 	
 	public void makeToast(String text){		

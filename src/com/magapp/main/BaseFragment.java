@@ -1,5 +1,7 @@
 package com.magapp.main;
 
+import com.magapp.connect.MagAuth;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -42,20 +44,24 @@ public class BaseFragment extends Activity implements
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 
-		Bundle vars = getIntent().getExtras();
+		/*Bundle vars = getIntent().getExtras();
 		api_session = vars.getString("api_session");
 		api_url = vars.getString("api_url");
-		connection_params = vars;
+		*/
+		api_session =MagAuth.getSession();
+		api_url = MagAuth.getApiUrl();		
+		
+		//connection_params = vars;
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 
 		if (api_session == null) {
-			Bundle vars = getIntent().getExtras();
-			api_session = vars.getString("api_session");
-			api_url = vars.getString("api_url");
-			connection_params = vars;
+			//Bundle vars = getIntent().getExtras();
+			api_session = MagAuth.getSession();
+			api_url = MagAuth.getApiUrl();		
+		//	connection_params = vars;
 		}
 		FragmentManager fragmentManager = getFragmentManager();
 
@@ -73,7 +79,7 @@ public class BaseFragment extends Activity implements
 			break;
 
 		}
-		screen.setArguments(connection_params);
+		//screen.setArguments(connection_params);
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
 				.addToBackStack(null).commit();
 

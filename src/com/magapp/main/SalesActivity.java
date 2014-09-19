@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
+import com.magapp.connect.MagAuth;
+
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
@@ -59,8 +61,12 @@ public class SalesActivity extends Fragment implements OnClickListener {
 		rootView = inflater.inflate(R.layout.sales, null);
 
 		progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-		api_session = getArguments().getString("api_session");
-		api_url = getArguments().getString("api_url");
+		//api_session = getArguments().getString("api_session");
+		//api_url = getArguments().getString("api_url");
+		
+		api_session=MagAuth.getSession();
+		api_url= MagAuth.getApiUrl();	
+				
 		uri = URI.create(api_url);
 
 		client = new XMLRPCClient(uri);

@@ -74,14 +74,14 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		}
 
 	 public void ShowSales() {
-		  SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
+		 /* SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
 	      SharedPreferences.Editor editor = settings.edit();
 	      editor.putString("session", session);
-	      editor.commit();		 
+	      editor.commit();*/		 
 		 
 		 Intent Base = new Intent(getActivity(),BaseFragment.class);
-		 Base.putExtra("api_session",session);
-		 Base.putExtra("api_url",url);		 
+		// Base.putExtra("api_session",session);
+		// Base.putExtra("api_url",url);		 
 		 this.startActivity(Base);
 		 getActivity().finish();
 	  }

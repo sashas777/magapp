@@ -45,6 +45,7 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
+import com.magapp.connect.MagAuth;
 
 public class HomeFragment extends Fragment {
 
@@ -67,8 +68,13 @@ public class HomeFragment extends Fragment {
 		progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
 		progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		/* Get credentials */
-		api_session = getArguments().getString("api_session");
-		api_url = getArguments().getString("api_url");
+		//api_session = getArguments().getString("api_session");
+		//api_url = getArguments().getString("api_url");
+		
+		api_session=MagAuth.getSession();
+		api_url=MagAuth.getApiUrl();
+		
+		
 		uri = URI.create(api_url);
 		client = new XMLRPCClient(uri);
 		ChartsTask task_orders = new ChartsTask();
@@ -78,7 +84,7 @@ public class HomeFragment extends Fragment {
 
 		// AddOrdersPlot(new Number[]{},new Number[]{});
 		// AddAmountsPlot(new Number[]{},new Number[]{});
-
+		 
 		return rootView;
 	}
 
@@ -401,6 +407,7 @@ public class HomeFragment extends Fragment {
 		if (m.find()) {
 			error_code = m.group(1).toString();
 		}
+		/*Code 5 ? session expired*/
 		if (error_code.equals("5")) {
 			Intent Login = new Intent(getActivity(), LoginActivity.class);
 			this.startActivity(Login);

@@ -29,6 +29,7 @@ import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import com.magapp.connect.MagAuth;
 import com.magapp.order.CustomerAccountFragment;
 import com.magapp.order.ItemsFragment;
 import com.magapp.order.MainInfoFragment;
@@ -64,8 +65,12 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle vars = getIntent().getExtras();
-		api_session = vars.getString("api_session");
-		api_url = vars.getString("api_url");
+		/*api_session = vars.getString("api_session");
+		api_url = vars.getString("api_url");*/
+		
+		api_session =MagAuth.getSession();
+		api_url = MagAuth.getApiUrl();	
+		
 		order_id = vars.getInt("order_id");
 
 		uri = URI.create(api_url);
