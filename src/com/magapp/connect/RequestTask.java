@@ -14,21 +14,18 @@ import android.util.Log;
 
 public class RequestTask extends  AsyncTask<Vector, Void, Object>  {
 
-	interface RequestInterface {		 
-		  void doPostExecute(Object result);
-		  void onPreExecute();
-		  String GetApiRoute(); //"magapp_dashboard.charts"
-	}
+	String task_type=null;
 	
 	RequestInterface RequestCallBack;	
 	
-	RequestTask(RequestInterface callback){
-		RequestCallBack = callback; 	 
+	public RequestTask(RequestInterface callback, String type){
+		RequestCallBack = callback; 
+		task_type=type;
 	}		
 	
 	protected void onPreExecute() {
 		super.onPreExecute();
-		RequestCallBack.onPreExecute();		
+		RequestCallBack.onPreExecute(task_type);		
 	};		
 	
 	protected Object doInBackground(Vector... params) {
@@ -60,7 +57,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object>  {
 
 	@Override
 	protected void onPostExecute(Object result) {
-		RequestCallBack.doPostExecute(result);	
+		RequestCallBack.doPostExecute(result,task_type);	
 		if (result instanceof XMLRPCException) {
 			//ShowMessage(result.toString());
 			//HandleError(result.toString());

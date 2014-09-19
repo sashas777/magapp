@@ -1,6 +1,5 @@
 package com.magapp.main;
 
-import java.net.URI;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
@@ -8,20 +7,16 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
 
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,32 +40,32 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
-import com.magapp.connect.MagAuth;
+import com.magapp.connect.RequestInterface;
+import com.magapp.connect.RequestTask;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment  implements RequestInterface{
 
 	private View rootView;
 	private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hha");
 	private SimpleDateFormat AmountsDateFormat = new SimpleDateFormat("hha");
 	private Object[] AmountsData, OrdersData;
-	public String api_session;
-	public String api_url;
-	private XMLRPCClient client;
-	private URI uri;
-	private ProgressBar progressBar;
-	private ProgressBar progressBar2;
-
+	//public String api_session;
+	//public String api_url;
+	//private XMLRPCClient client;
+	//private URI uri;
+	//private ProgressBar progressBar;
+	//private ProgressBar progressBar2;
+	  
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.home, null);
 
-		progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-		progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+	/*	progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+		progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);*/
 		/* Get credentials */
-		//api_session = getArguments().getString("api_session");
-		//api_url = getArguments().getString("api_url");
-		
+ 
+		/*
 		api_session=MagAuth.getSession();
 		api_url=MagAuth.getApiUrl();
 		
@@ -81,13 +76,64 @@ public class HomeFragment extends Fragment {
 		task_orders.execute(new String[] { "orders" });
 		ChartsTask task_amounts = new ChartsTask();
 		task_amounts.execute(new String[] { "amounts" });
-
+*/
+		RequestTask task;
+		RequestTask task2;
+		Vector params = new Vector();
+		HashMap req_type = new HashMap();
+		req_type.put("type", "orders");
+		params.add(req_type);
+		
+		task = new RequestTask(this,"orders");
+		task.execute(params);
+		
+		req_type.clear();
+		params.clear();
+		req_type.put("type", "amounts");
+		params.add(req_type);
+		
+		task2 = new RequestTask(this,"amounts");
+		task2.execute(params);		
+		
 		// AddOrdersPlot(new Number[]{},new Number[]{});
 		// AddAmountsPlot(new Number[]{},new Number[]{});
 		 
 		return rootView;
 	}
 
+	public void onPreExecute(String type){		
+
+		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
+		ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+		
+		if (type.equals("orders")) {
+			progressBar.setVisibility(View.VISIBLE);
+		} else {
+			progressBar2.setVisibility(View.VISIBLE);
+	 	}		
+		 
+	};  
+
+	 @Override
+	 public void doPostExecute(Object result, String type) {
+		 
+		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
+		ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+			
+		if (type.equals("orders")) {
+			progressBar.setVisibility(View.INVISIBLE);
+		} else {
+			progressBar2.setVisibility(View.INVISIBLE);
+	 	}		 
+		
+		SetChartData(result);
+
+	 }		
+	
+	 public  String GetApiRoute() {
+		 return "magapp_dashboard.charts";
+	 }
+	 
 	public void AddAmountsSpinner() {
 		Spinner AmountsPlotOptions = (Spinner) rootView
 				.findViewById(R.id.AmountsPlotOptions);
@@ -341,15 +387,13 @@ public class HomeFragment extends Fragment {
 
 		if (data_map.get("orders") != null) {
 			OrdersData = (Object[]) data_map.get("orders");
-			AddOrdersSpinner();
-			progressBar.setVisibility(View.INVISIBLE);
+			AddOrdersSpinner();			 
 		} else {
 			AmountsData = (Object[]) data_map.get("amounts");
-			AddAmountsSpinner();
-			progressBar2.setVisibility(View.INVISIBLE);
+			AddAmountsSpinner();			 
 		}
 	}
-
+/*
 	class ChartsTask extends AsyncTask<String, Void, Object> {
 		protected void onPreExecute() {
 
@@ -393,7 +437,7 @@ public class HomeFragment extends Fragment {
 		}
 
 	}
-
+*/
 	public void ShowMessage(String text) {
 		Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
 	}
