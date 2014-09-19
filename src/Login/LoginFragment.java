@@ -46,13 +46,15 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			return rootView;
 	}
 	 
-	 public void SessionReturned(String ses){
+	 public void SessionReturned(String ses, Boolean status){
 		 progressBar.setVisibility(View.INVISIBLE);
-		 session=ses;
-		 url=auth.getApiUrl();
-		 /* Log.e("Sashas","returned - "+session); */
-		 auth.makeToast("You are logged in");
-		 ShowSales();
+		 if (status) {
+			 session=ses;
+			 url=auth.getApiUrl();
+			 /* Log.e("Sashas","returned - "+session); */
+			 auth.makeToast("You are logged in");
+			 ShowSales();
+		 } 
 	 }
 	 
 	 public void ShowProgressBar() {

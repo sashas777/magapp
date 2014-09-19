@@ -72,9 +72,10 @@ public class MagAuth implements FinishLogin{
 	 @Override
 	 public void doPostExecute(String session) {
 	 if (session.contains(" ")) {
-			makeToast(session);
+			makeToast("Error: Please check your credentials");
+			GetSessionCallBack.SessionReturned(session, false);
 		} else { 
-			GetSessionCallBack.SessionReturned(session);
+			GetSessionCallBack.SessionReturned(session, true);
 		}
  
 	 }	
