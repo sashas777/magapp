@@ -26,8 +26,6 @@ public class BaseFragment extends Activity implements
 	 * {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
-	public String api_session;
-	public String api_url;
 	public Integer menu_id;
 	public Bundle connection_params;
 
@@ -43,26 +41,12 @@ public class BaseFragment extends Activity implements
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-
-		/*Bundle vars = getIntent().getExtras();
-		api_session = vars.getString("api_session");
-		api_url = vars.getString("api_url");
-		*/
-		api_session =MagAuth.getSession();
-		api_url = MagAuth.getApiUrl();		
-		
-		//connection_params = vars;
+  
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-
-		if (api_session == null) {
-			//Bundle vars = getIntent().getExtras();
-			api_session = MagAuth.getSession();
-			api_url = MagAuth.getApiUrl();		
-		//	connection_params = vars;
-		}
+ 
 		FragmentManager fragmentManager = getFragmentManager();
 
 		// update the main content by replacing fragments
@@ -79,7 +63,7 @@ public class BaseFragment extends Activity implements
 			break;
 
 		}
-		//screen.setArguments(connection_params);
+	 
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
 				.addToBackStack(null).commit();
 
