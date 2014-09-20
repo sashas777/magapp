@@ -77,15 +77,15 @@ public class NewOrderService extends Service {
 	void CheckOrders() {
 
 		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
-		String selected_account_name = settings.getString("selected_account_name", null);
+	//	String selected_account_name = settings.getString("selected_account_name", null);
 		last_order_id = settings.getString("last_order_id", "0");
-		url = settings.getString("store_url", "0");
-		String used_session = settings.getString("session", null);
-		AccountManager manager = AccountManager.get(this);
-		Account[] accounts = manager.getAccountsByType(accountType);
+	//	url = settings.getString("store_url", "0");
+	//	String used_session = settings.getString("session", null);
+	//	AccountManager manager = AccountManager.get(this);
+	//	Account[] accounts = manager.getAccountsByType(accountType);
 
-		if (url !=null) {
-			/* Login with account specified */
+	/*	if (url !=null) {
+			/* Login with account specified *//*
 			for (int i = 0; i < accounts.length; i++) {
 				Account account = accounts[i];
 				if (selected_account_name.equals(account.name)) {
@@ -94,8 +94,8 @@ public class NewOrderService extends Service {
 				}
 			}
 		}
-
-		session = used_session;
+*/
+	/*	session = used_session;
 		if (session !=null && url!=null) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			uri = URI.create(url);
@@ -104,8 +104,8 @@ public class NewOrderService extends Service {
 			OrdersInfo task = new OrdersInfo();
 			task.execute(last_order_id);
 		} else {
-			NewConnection();
-		}
+			//NewConnection();
+		}*/
 
 		// stopSelf();
 
@@ -115,7 +115,7 @@ public class NewOrderService extends Service {
 		OrdersInfo task = new OrdersInfo();
 		task.execute(last_order_id);
 	}
-
+/*
 	public void NewConnection() {
 		SharedPreferences settings = this.getSharedPreferences(
 				desired_preferense_file, 0);
@@ -124,7 +124,7 @@ public class NewOrderService extends Service {
 		AccountManager manager = AccountManager.get(this);
 		Account[] accounts = manager.getAccountsByType(accountType);
 
-		/* Login with account specified */
+		/* Login with account specified *//*
 		for (int i = 0; i < accounts.length; i++) {
 			Account account = accounts[i];
 			if (selected_account_name.equals(account.name)) {
@@ -145,7 +145,7 @@ public class NewOrderService extends Service {
 			task.execute(api_username, api_password);
 		}
 	}
-
+*/
 	public void PrepareOrdersData(Object[] new_info) {
 		for (Object o : new_info) {
 
@@ -168,7 +168,7 @@ public class NewOrderService extends Service {
 			// Log.e("Sashas",map.get("order_id").toString());
 		}
 	}
-
+/*
 	class LoginTask extends AsyncTask<String, Void, String> {
 
 		protected void onPreExecute() {
@@ -200,7 +200,7 @@ public class NewOrderService extends Service {
 			}
 		}
 	}
-
+*/
 	class OrdersInfo extends AsyncTask<String, Void, Object[]> {
 
 		protected void onPreExecute() {
