@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.magapp.connect.LoginTask.FinishLogin;
+import com.magapp.main.NewOrderService;
 
 
 public class MagAuth implements FinishLogin{
@@ -64,12 +65,12 @@ public class MagAuth implements FinishLogin{
 			url = url.concat("/index.php/api/xmlrpc/");
 			task = new LoginTask(this,  api_username, api_password,url);
 			task.execute(); 
-		}else if (!isOnline()) {
+		}else if (!isOnline() && !(activity instanceof NewOrderService)) {
 			Log.e("Sashas","No Internet Connection.");			
 			makeToast("Oops. No network connection.");
-		}else if (api_password==null ||url==null ){
+		}else if ((api_password==null ||url==null) &&  !(activity instanceof NewOrderService) ){
 			makeToast("Please magento account settings");
-		}else{		
+		}else if (!(activity instanceof NewOrderService)){		
 			makeToast("Please select default magento account");
 			Log.e("Sashas","Default Account Not Choosed.");
 		}

@@ -32,14 +32,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 
 	NotificationManager nm;
 	final String LOG_TAG = "Sashas";
-	//private String session = null;
-	//private XMLRPCClient client;
-//	private URI uri;
-//	private String url;
-	//private String api_username = null;
-//	private String api_password = null;
-	private String last_order_id = "0";
-	private String accountType = "com.magapp.main";
+	private String last_order_id = "0";	 
 	private String desired_preferense_file = "magapp";
 	Timer timer;
 	TimerTask tTask;
@@ -84,37 +77,8 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 	void CheckOrders() {
 
 		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
-	//	String selected_account_name = settings.getString("selected_account_name", null);
 		last_order_id = settings.getString("last_order_id", "0");
-	//	url = settings.getString("store_url", "0");
-	//	String used_session = settings.getString("session", null);
-	//	AccountManager manager = AccountManager.get(this);
-	//	Account[] accounts = manager.getAccountsByType(accountType);
 
-	/*	if (url !=null) {
-			/* Login with account specified *//*
-			for (int i = 0; i < accounts.length; i++) {
-				Account account = accounts[i];
-				if (selected_account_name.equals(account.name)) {
-					url = manager.getUserData(account, "store_url");
-					break;
-				}
-			}
-		}
-*/
-	/*	session = used_session;
-		if (session !=null && url!=null) {
-			url = url.concat("/index.php/api/xmlrpc/");
-			uri = URI.create(url);
-			client = new XMLRPCClient(uri);
-
-			OrdersInfo task = new OrdersInfo();
-			task.execute(last_order_id);
-		} else {
-			//NewConnection();
-		}*/
-
-		
 		HashMap map_filter = new HashMap();
 		map_filter.put("order_id", last_order_id);
 
@@ -144,43 +108,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 	 
 	 public void RequestFailed(String error) {
 	 }		
-/*
-	public void OrdersRequest() {
-		//OrdersInfo task = new OrdersInfo();
-		//task.execute(last_order_id);
-	}
-	*/
-/*
-	public void NewConnection() {
-		SharedPreferences settings = this.getSharedPreferences(
-				desired_preferense_file, 0);
-		String selected_account_name = settings.getString(
-				"selected_account_name", null);
-		AccountManager manager = AccountManager.get(this);
-		Account[] accounts = manager.getAccountsByType(accountType);
 
-		/* Login with account specified *//*
-		for (int i = 0; i < accounts.length; i++) {
-			Account account = accounts[i];
-			if (selected_account_name.equals(account.name)) {
-				api_username = manager.getUserData(account, "username");
-				api_password = manager.getPassword(account);
-				url = manager.getUserData(account, "store_url");
-				break;
-			}
-
-		}
-
-		if (api_username !=null) {
-			url = url.concat("/index.php/api/xmlrpc/");
-			uri = URI.create(url);
-			client = new XMLRPCClient(uri);
-
-			LoginTask task = new LoginTask();
-			task.execute(api_username, api_password);
-		}
-	}
-*/
 	public void PrepareOrdersData(Object[] new_info) {
 		for (Object o : new_info) {
 
@@ -190,8 +118,6 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 			if (map.get("last_id") != null) {
 				SharedPreferences.Editor editor = settings.edit();
 				editor.putString("last_order_id", map.get("last_id").toString());
-				//editor.putString("session", session);
-				//editor.putString("store_url", url);
 				editor.commit();
 				last_order_id = map.get("last_id").toString();
 				// Log.e("Sashas",map.get("last_id").toString());
@@ -202,74 +128,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 			// Log.e("Sashas",map.get("order_id").toString());
 		}
 	}
-/*
-	class LoginTask extends AsyncTask<String, Void, String> {
 
-		protected void onPreExecute() {
-			super.onPreExecute();
-		};
-
-		protected String doInBackground(String... credentials) {
-
-			try {
-				session = (String) client.call("login", credentials[0],credentials[1]);
-				return session;
-			} catch (XMLRPCException e) {
-				Log.e("Sashas", e.getMessage());
-				session = e.getMessage().toString();
-			} catch (Exception e) {
-				Log.e("Sashas", e.getMessage());
-				session = e.getMessage().toString();
-			}
-			return session;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			if (result.contains(" ")) {
-				// ShowMessage(result);
-			} else {
-				// ShowMessage("You are logged in");
-				OrdersRequest();
-			}
-		}
-	}
-*/
-	/*
-	class OrdersInfo extends AsyncTask<String, Void, Object[]> {
-
-		protected void onPreExecute() {
-			super.onPreExecute();
-		};
-
-		protected Object[] doInBackground(String... order_id) {
-
-			HashMap map_filter = new HashMap();
-			map_filter.put("order_id", last_order_id);
-
-			Object[] orders;
-			try {
-				orders = (Object[]) client.callEx("call", new Object[] {session, "magapp_sales_order.notifications",new Object[] { map_filter } });
-
-				return orders;
-
-			} catch (XMLRPCException e) {
-				Log.e("Sashas", e.getMessage());
-				return new Object[] { e };
-			}
-
-		}
-
-		@Override
-		protected void onPostExecute(Object[] result) {
-			if (result[0] instanceof XMLRPCException) {
-				//NewConnection();
-			} else {
-				PrepareOrdersData(result);
-			}
-		}
-	}
-*/
 	void ShowNotification(HashMap order) {
 
 		String increment_id = order.get("increment_id").toString();
@@ -281,8 +140,6 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 
 		// set activity
 		Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
-		//OrderInfo.putExtra("api_session", session);
-		//OrderInfo.putExtra("api_url", url);
 		OrderInfo.putExtra("order_id", order_id);
 
 		PendingIntent pIntent = PendingIntent.getActivity(this, 0, OrderInfo, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -296,8 +153,5 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 		// send
 		nm.notify(order_id, notif);
 	}
-/*
-	public void ShowMessage(String text) {
-		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-	}*/
+
 }
