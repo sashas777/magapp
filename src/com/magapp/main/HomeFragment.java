@@ -51,14 +51,13 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	private Object[] AmountsData, OrdersData;
 	  
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.home, null);
 
 		RequestTask task;
 		 
 		Vector params = new Vector();		 	 
-		task = new RequestTask(this);
+		task = new RequestTask(this, getActivity());
 		task.execute(params);				 
 		
 		// AddOrdersPlot(new Number[]{},new Number[]{});
@@ -83,13 +82,19 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		 return "magapp_dashboard.charts";
 	 }
 	 
+	 public void RequestFailed(String error) {
+		ShowMessage(error);
+		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
+		progressBar.setVisibility(View.INVISIBLE); 			
+		Intent Login = new Intent(getActivity(), LoginActivity.class);
+		this.startActivity(Login);
+		getActivity().finish();		 
+	 }
+	 
 	public void AddAmountsSpinner() {
-		Spinner AmountsPlotOptions = (Spinner) rootView
-				.findViewById(R.id.AmountsPlotOptions);
-		String[] plot_item_data = new String[] { "Last 24 Hours",
-				"Last 7 Days", "Current Month", "YTD", "2YTD" };
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(
-				getActivity(), R.layout.custom_spinner_row, plot_item_data);
+		Spinner AmountsPlotOptions = (Spinner) rootView.findViewById(R.id.AmountsPlotOptions);
+		String[] plot_item_data = new String[] { "Last 24 Hours","Last 7 Days", "Current Month", "YTD", "2YTD" };
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.custom_spinner_row, plot_item_data);
 		dataAdapter.setDropDownViewResource(R.layout.custom_spinner_row);
 		AmountsPlotOptions.setAdapter(dataAdapter);
 
@@ -104,25 +109,20 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 								AmountsDateFormat = new SimpleDateFormat("hha");
 								break;
 							case 1:
-								AmountsDateFormat = new SimpleDateFormat(
-										"MM-dd");
+								AmountsDateFormat = new SimpleDateFormat("MM-dd");
 								break;
 							case 2:
-								AmountsDateFormat = new SimpleDateFormat(
-										"MM-dd");
+								AmountsDateFormat = new SimpleDateFormat("MM-dd");
 								break;
 							case 3:
-								AmountsDateFormat = new SimpleDateFormat(
-										"MM-yyyy");
+								AmountsDateFormat = new SimpleDateFormat("MM-yyyy");
 								break;
 							case 4:
-								AmountsDateFormat = new SimpleDateFormat(
-										"MM-yyyy");
+								AmountsDateFormat = new SimpleDateFormat("MM-yyyy");
 								break;
 							}
 
-							PrepareChartData((HashMap) AmountsData[position],
-									"amounts");
+							PrepareChartData((HashMap) AmountsData[position],"amounts");
 						}
 
 					}
@@ -179,7 +179,6 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 					public void onNothingSelected(AdapterView<?> arg0) {
 					}
 				});
-
 	}
 
 	public void PrepareChartData(HashMap chart_info_obj, String type) {
@@ -195,22 +194,18 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 			y_row[i] = (Number) y_obj[i];
 		}
 
-		TextView Revenue = (TextView) rootView
-				.findViewById(R.id.OrdersRevenueValue);
+		TextView Revenue = (TextView) rootView.findViewById(R.id.OrdersRevenueValue);
 		TextView Tax = (TextView) rootView.findViewById(R.id.OrdersTaxValue);
-		TextView Shipping = (TextView) rootView
-				.findViewById(R.id.OrdersShippingValue);
+		TextView Shipping = (TextView) rootView.findViewById(R.id.OrdersShippingValue);
 		TextView Qty = (TextView) rootView.findViewById(R.id.OrdersQtyValue);
 
 		if (type == "orders") {
 			AddOrdersPlot(y_row, x_row);
 		} else if (type == "amounts") {
 			AddAmountsPlot(y_row, x_row);
-			Revenue = (TextView) rootView
-					.findViewById(R.id.AmountsRevenueValue);
+			Revenue = (TextView) rootView.findViewById(R.id.AmountsRevenueValue);
 			Tax = (TextView) rootView.findViewById(R.id.AmountsTaxValue);
-			Shipping = (TextView) rootView
-					.findViewById(R.id.AmountsShippingValue);
+			Shipping = (TextView) rootView.findViewById(R.id.AmountsShippingValue);
 			Qty = (TextView) rootView.findViewById(R.id.AmountsQtyValue);
 		}
 
@@ -334,78 +329,15 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	public void SetChartData(Object data) {
 		HashMap data_map = (HashMap) data;
  
-		//if (data_map.get("orders") != null) {
-			OrdersData = (Object[]) data_map.get("orders");
-			AddOrdersSpinner();			 
-	//	} else {
-			AmountsData = (Object[]) data_map.get("amounts");
-			AddAmountsSpinner();			 
-		//}
+		OrdersData = (Object[]) data_map.get("orders");
+		AddOrdersSpinner();			 
+ 
+		AmountsData = (Object[]) data_map.get("amounts");
+		AddAmountsSpinner();			 
 	}
-/*
-	class ChartsTask extends AsyncTask<String, Void, Object> {
-		protected void onPreExecute() {
-
-			super.onPreExecute();
-
-		};
-
-		protected Object doInBackground(String... request_type) {
-
-			Vector params = new Vector();
-			HashMap req_type = new HashMap();
-			req_type.put("type", request_type[0]);
-			if (request_type[0].equals("orders")) {
-				progressBar.setVisibility(View.VISIBLE);
-			} else {
-				progressBar2.setVisibility(View.VISIBLE);
-			}
-
-			params.add(req_type);
-			Object charts_info;
-			try {
-				charts_info = (Object) client.callEx("call", new Object[] {
-						api_session, "magapp_dashboard.charts", params });
-				return charts_info;
-			} catch (XMLRPCException e) {
-				Log.e("Sashas", e.getMessage());
-				return e;
-			}
-		}
-
-		@Override
-		protected void onPostExecute(Object result) {
-
-			if (result instanceof XMLRPCException) {
-				ShowMessage(result.toString());
-				HandleError(result.toString());
-			} else {
-				SetChartData(result);
-			}
-
-		}
-
-	}
-*/
+ 
 	public void ShowMessage(String text) {
 		Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
 	}
-
-	public void HandleError(String error) {
-		String regex_script = "\\[code (.*?)\\]";
-		Pattern p = Pattern.compile(regex_script);
-
-		Matcher m = p.matcher(error);
-		String error_code = "0";
-		if (m.find()) {
-			error_code = m.group(1).toString();
-		}
-		/*Code 5 ? session expired*/
-		if (error_code.equals("5")) {
-			Intent Login = new Intent(getActivity(), LoginActivity.class);
-			this.startActivity(Login);
-			getActivity().finish();
-		}
-
-	}
+ 
 }

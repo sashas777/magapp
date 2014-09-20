@@ -54,7 +54,9 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			 /* Log.e("Sashas","returned - "+session); */
 			 auth.makeToast("You are logged in");
 			 ShowSales();
-		 } 
+		 }else {
+			 auth.makeToast(ses);
+		 }
 	 }
 	 
 	 public void ShowProgressBar() {
@@ -62,9 +64,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		  progressBar.setVisibility(View.VISIBLE);		 
 	 }
 	 
-	 public void NoInternet(MagAuth a){
-		 a.makeToast("Oops. No network connection.");
-	 }
+ 
 	 
 	 @Override
 	 public void onResume() {

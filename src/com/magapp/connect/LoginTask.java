@@ -8,11 +8,11 @@ import org.xmlrpc.android.XMLRPCException;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class LoginTask extends AsyncTask<Void, Void, String> {
+public class LoginTask extends AsyncTask<Void, Void, Object> {
 
 	 interface FinishLogin {		 
-		  void doPostExecute(String result);
-		  void onPreExecute();
+		  void doFinishLoginPostExecute(Object result);
+		  void onFinishLoginPreExecute();
 	 }
 	
 	 FinishLogin FinishLoginCallBack;
@@ -29,29 +29,28 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
 	 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		FinishLoginCallBack.onPreExecute();		
+		FinishLoginCallBack.onFinishLoginPreExecute();		
 	};
 
-	protected String doInBackground(Void... params) {
+	protected Object doInBackground(Void... params) {
 		String session="";		 
 		URI uri = URI.create(api_url);
 		XMLRPCClient client = new XMLRPCClient(uri);
 		try {
 			session = (String) client.call("login", api_username,api_password);
 			return session;
-		} catch (XMLRPCException e) {
-			Log.e("Sashas", e.getMessage());
-			session = e.getMessage().toString();
-		} catch (Exception e) {
-			Log.e("Sashas", e.getMessage());
-			session = e.getMessage().toString();
-		}
-		return session;
+		} catch (XMLRPCException e) {			
+			return e;
+				
+		} catch (Exception e) {			
+			return e;
+		} 
+		 
 	}
 
 	@Override
-	protected void onPostExecute(String result) {
-		FinishLoginCallBack.doPostExecute(result);		 
+	protected void onPostExecute(Object result) {
+		FinishLoginCallBack.doFinishLoginPostExecute(result);		 
 	}
 }
 

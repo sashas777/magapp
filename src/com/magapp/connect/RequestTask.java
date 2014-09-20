@@ -3,24 +3,29 @@ package com.magapp.connect;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
 import com.magapp.connect.LoginTask.FinishLogin;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class RequestTask extends  AsyncTask<Vector, Void, Object>  {
+public class RequestTask extends  AsyncTask<Vector, Void, Object> implements GetSession {
 
 	
 	
 	RequestInterface RequestCallBack;	
+	private Vector[] stored_params;
+	private Context activity;
 	
-	public RequestTask(RequestInterface callback){
+	public RequestTask(RequestInterface callback, Context act){
 		RequestCallBack = callback; 
-		
+		activity=act;
 	}		
 	
 	protected void onPreExecute() {
@@ -29,26 +34,15 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object>  {
 	};		
 	
 	protected Object doInBackground(Vector... params) {
-
-		//Vector params = new Vector();
-		//HashMap req_type = new HashMap();
-		//req_type.put("type", request_type[0]);
-		//if (request_type[0].equals("orders")) {
-			//progressBar.setVisibility(View.VISIBLE);
-		//} else {
-			//progressBar2.setVisibility(View.VISIBLE);
-	//	}
-
-	//	params.add(req_type);
-		
-		Object charts_info;
-		
+	
+		Object result_info;
+		stored_params=params;
 		URI uri = URI.create(MagAuth.getApiUrl());
 		XMLRPCClient client = new XMLRPCClient(uri);		
 		
 		try {
-			charts_info = (Object) client.callEx("call", new Object[] { MagAuth.getSession(), RequestCallBack.GetApiRoute(), params[0] });
-			return charts_info;
+			result_info = (Object) client.callEx("call", new Object[] { MagAuth.getSession(), RequestCallBack.GetApiRoute(), params[0] });
+			return result_info;
 		} catch (XMLRPCException e) {
 			Log.e("Sashas", e.getMessage());
 			return e;
@@ -57,13 +51,29 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object>  {
 
 	@Override
 	protected void onPostExecute(Object result) {
-		RequestCallBack.doPostExecute(result);	
-		if (result instanceof XMLRPCException) {
-			//ShowMessage(result.toString());
-			//HandleError(result.toString());
+		 
+		if (result instanceof XMLRPCException) {			 
+			HandleError((XMLRPCException) result);
 		} else {
-			//SetChartData(result);
+			RequestCallBack.doPostExecute(result);	
 		}
 	}	
+	
+	public void HandleError(XMLRPCException error_obj) {
+		MagAuth.setSession(null);
+		MagAuth auth=new MagAuth(this,  activity);			 
+	}	
+	
+	public void SessionReturned(String result, Boolean status){
+		 if (status) {
+			 doInBackground(stored_params);
+		 }else {
+			 RequestCallBack.RequestFailed(result);
+		 }
+	}
+	
+	public void ShowProgressBar(){
+		
+	}
 	
 }

@@ -1,5 +1,10 @@
 package com.magapp.connect;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.xmlrpc.android.XMLRPCException;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
@@ -40,8 +45,7 @@ public class MagAuth implements FinishLogin{
 	public void login() {
 		 
 		SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
-		String selected_account_name = settings.getString("selected_account_name", null);
-		//String used_session = settings.getString("session", null); // -- modernize
+		String selected_account_name = settings.getString("selected_account_name", null);		
 		AccountManager manager = AccountManager.get(activity);
 		Account[] accounts = manager.getAccountsByType(accountType);
 		/* Login with account specified */
@@ -56,33 +60,38 @@ public class MagAuth implements FinishLogin{
 		}
 		
 		
-		if (api_username!=null && isOnline()) {
+		if (api_username!=null && api_password!=null && url!=null && isOnline()) {
 			url = url.concat("/index.php/api/xmlrpc/");
 			task = new LoginTask(this,  api_username, api_password,url);
 			task.execute(); 
 		}else if (!isOnline()) {
 			Log.e("Sashas","No Internet Connection.");			
-			GetSessionCallBack.NoInternet(this);
-		}else{		 
+			makeToast("Oops. No network connection.");
+		}else if (api_password==null ||url==null ){
+			makeToast("Please magento account settings");
+		}else{		
 			makeToast("Please select default magento account");
 			Log.e("Sashas","Default Account Not Choosed.");
 		}
  
 	}	
 	
-	public void onPreExecute(){			 
+	public void onFinishLoginPreExecute(){			 
 		  GetSessionCallBack.ShowProgressBar();		 	            
 	};  
 
 	 @Override
-	 public void doPostExecute(String session) {
-	 if (session.contains(" ")) {
-			makeToast("Error: Please check your credentials");
-			GetSessionCallBack.SessionReturned(session, false);
-		} else { 
-			api_session=session;
-			GetSessionCallBack.SessionReturned(session, true);
-			 
+	 public void doFinishLoginPostExecute(Object session) {
+	 if (session instanceof XMLRPCException) {		 	 
+		 	XMLRPCException exp=(XMLRPCException) session;
+		 	String res =HandleError(exp);
+		 	Log.e("Sashas",res);
+			GetSessionCallBack.SessionReturned(res, false);
+	 	} else if (session instanceof Exception){
+	 		GetSessionCallBack.SessionReturned(((Exception) session).getMessage().toString(), false);
+		} else if (session instanceof  String) { 
+			api_session=session.toString();
+			GetSessionCallBack.SessionReturned(session.toString(), true);			 
 		}
  
 	 }	
@@ -112,4 +121,26 @@ public class MagAuth implements FinishLogin{
 	    }
 	    return false;
 	}	
+	
+	public String HandleError(XMLRPCException error_obj) {
+		
+		String error = error_obj.toString(); 		 
+		
+		String regex_script = "\\[code (.*?)\\]";
+		Pattern p = Pattern.compile(regex_script);
+		 
+		Matcher m = p.matcher(error);
+		String error_code = "0";
+		if (m.find()) {
+			error_code = m.group(1).toString();
+		}
+		 
+		if (error_code.equals("5")) {
+			error="Session expired. Try to relogin.";
+		} else if (error_code.equals("2")) {
+			error="Access denied. Please check credentials.";
+		}		
+		 
+		return error;
+	}
 }
