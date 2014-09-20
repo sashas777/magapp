@@ -4,9 +4,13 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
+
+import com.magapp.connect.RequestArrayInterface;
+import com.magapp.connect.RequestArrayTask;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -19,18 +23,21 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class NewOrderService extends Service  {
+public class NewOrderService extends Service  implements RequestArrayInterface{
 
 	NotificationManager nm;
 	final String LOG_TAG = "Sashas";
-	private String session = null;
-	private XMLRPCClient client;
-	private URI uri;
-	private String url;
-	private String api_username = null;
-	private String api_password = null;
+	//private String session = null;
+	//private XMLRPCClient client;
+//	private URI uri;
+//	private String url;
+	//private String api_username = null;
+//	private String api_password = null;
 	private String last_order_id = "0";
 	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
@@ -107,14 +114,42 @@ public class NewOrderService extends Service  {
 			//NewConnection();
 		}*/
 
+		
+		HashMap map_filter = new HashMap();
+		map_filter.put("order_id", last_order_id);
+
+		RequestArrayTask task;	 
+		Vector params = new Vector();		
+		params.add(map_filter);
+		task = new RequestArrayTask(this, this);
+		task.execute(params);				
+		 
+		
 		// stopSelf();
 
 	}
+	
+	
+	public void onPreExecute(){				
+	};  
 
+	 @Override
+	 public void doPostExecute(Object[] result) {			
+		 PrepareOrdersData(result);
+	 }		
+	
+	 public  String GetApiRoute() {
+		 return "magapp_sales_order.notifications";
+	 }
+	 
+	 public void RequestFailed(String error) {
+	 }		
+/*
 	public void OrdersRequest() {
-		OrdersInfo task = new OrdersInfo();
-		task.execute(last_order_id);
+		//OrdersInfo task = new OrdersInfo();
+		//task.execute(last_order_id);
 	}
+	*/
 /*
 	public void NewConnection() {
 		SharedPreferences settings = this.getSharedPreferences(
@@ -150,14 +185,13 @@ public class NewOrderService extends Service  {
 		for (Object o : new_info) {
 
 			HashMap map = (HashMap) o;
-			SharedPreferences settings = this.getSharedPreferences(
-					desired_preferense_file, 0);
+			SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
 
 			if (map.get("last_id") != null) {
 				SharedPreferences.Editor editor = settings.edit();
 				editor.putString("last_order_id", map.get("last_id").toString());
-				editor.putString("session", session);
-				editor.putString("store_url", url);
+				//editor.putString("session", session);
+				//editor.putString("store_url", url);
 				editor.commit();
 				last_order_id = map.get("last_id").toString();
 				// Log.e("Sashas",map.get("last_id").toString());
@@ -201,6 +235,7 @@ public class NewOrderService extends Service  {
 		}
 	}
 */
+	/*
 	class OrdersInfo extends AsyncTask<String, Void, Object[]> {
 
 		protected void onPreExecute() {
@@ -214,9 +249,7 @@ public class NewOrderService extends Service  {
 
 			Object[] orders;
 			try {
-				orders = (Object[]) client.callEx("call", new Object[] {
-						session, "magapp_sales_order.notifications",
-						new Object[] { map_filter } });
+				orders = (Object[]) client.callEx("call", new Object[] {session, "magapp_sales_order.notifications",new Object[] { map_filter } });
 
 				return orders;
 
@@ -236,7 +269,7 @@ public class NewOrderService extends Service  {
 			}
 		}
 	}
-
+*/
 	void ShowNotification(HashMap order) {
 
 		String increment_id = order.get("increment_id").toString();
@@ -248,8 +281,8 @@ public class NewOrderService extends Service  {
 
 		// set activity
 		Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
-		OrderInfo.putExtra("api_session", session);
-		OrderInfo.putExtra("api_url", url);
+		//OrderInfo.putExtra("api_session", session);
+		//OrderInfo.putExtra("api_url", url);
 		OrderInfo.putExtra("order_id", order_id);
 
 		PendingIntent pIntent = PendingIntent.getActivity(this, 0, OrderInfo, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -259,13 +292,12 @@ public class NewOrderService extends Service  {
 
 		// set flag
 		notif.flags |= Notification.FLAG_AUTO_CANCEL;
-		notif.defaults |= Notification.DEFAULT_LIGHTS
-				| Notification.DEFAULT_VIBRATE;
+		notif.defaults |= Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE;
 		// send
 		nm.notify(order_id, notif);
 	}
-
+/*
 	public void ShowMessage(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-	}
+	}*/
 }
