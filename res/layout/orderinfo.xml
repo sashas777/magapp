@@ -6,79 +6,12 @@
     android:id="@+id/wrapper_container"
     android:layout_height="match_parent"
     android:gravity="center" >
-         
-<ScrollView  
-     
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="top"
-    android:fillViewport="true" >
-
- 
-    <com.magapp.main.NowLayout
-       	android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#e3e3e3" >
- 
-	 <FrameLayout 
-	 android:id="@+id/main_info_card"
-	 android:layout_width="match_parent"
-	 tools:layout="@layout/fragment_order_info"
-	 android:layout_height="wrap_content">
-	</FrameLayout >
- 
- 
-	 <FrameLayout 
-	 android:id="@+id/account_info"
-	 android:layout_width="match_parent"
-	 tools:layout="@layout/fragment_account_info"
-	 android:layout_height="wrap_content">
-	</FrameLayout >
+	   <FrameLayout    
+	        android:id="@+id/container"   
+	        android:layout_width="match_parent"
+	    	android:layout_height="match_parent"> 
 	     
-	 <FrameLayout 
-	 android:id="@+id/bill_address"
-	 android:layout_width="match_parent"
-	 tools:layout="@layout/order_bill_address"
-	 android:layout_height="wrap_content">
-	</FrameLayout >
-	     
-	 <FrameLayout 
-	android:id="@+id/ship_address"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_alignParentBottom="true"
-	tools:layout="@layout/order_address">
-
-	</FrameLayout >
- 
- 	 <FrameLayout 
-	android:id="@+id/payment_card"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_alignParentBottom="true"
-	tools:layout="@layout/fragment_payment_info">
-	</FrameLayout >
-    
-   	 <FrameLayout 
-	android:id="@+id/items_card"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_alignParentBottom="true"
-	tools:layout="@layout/fragment_items_info">
-	</FrameLayout >
-	              
-    <FrameLayout 
-	android:id="@+id/totals_card"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_alignParentBottom="true"
-	tools:layout="@layout/fragment_totals_info">
-	</FrameLayout >
-     
-        
-    </com.magapp.main.NowLayout>
-
-</ScrollView>
+	</FrameLayout>
 
 <ProgressBar
     android:id="@+id/progressBar1"
@@ -87,6 +20,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical|center_horizontal"
     android:indeterminate="false"
-    android:indeterminateBehavior="cycle" />
+    android:indeterminateBehavior="cycle"
+    android:visibility="invisible" />
 
 </RelativeLayout>
