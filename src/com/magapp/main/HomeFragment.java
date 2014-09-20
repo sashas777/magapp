@@ -49,43 +49,17 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hha");
 	private SimpleDateFormat AmountsDateFormat = new SimpleDateFormat("hha");
 	private Object[] AmountsData, OrdersData;
-	//public String api_session;
-	//public String api_url;
-	//private XMLRPCClient client;
-	//private URI uri;
-	//private ProgressBar progressBar;
-	//private ProgressBar progressBar2;
 	  
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.home, null);
 
-	/*	progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-		progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);*/
-		/* Get credentials */
- 
-		/*
-		api_session=MagAuth.getSession();
-		api_url=MagAuth.getApiUrl();
-		
-		
-		uri = URI.create(api_url);
-		client = new XMLRPCClient(uri);
-		ChartsTask task_orders = new ChartsTask();
-		task_orders.execute(new String[] { "orders" });
-		ChartsTask task_amounts = new ChartsTask();
-		task_amounts.execute(new String[] { "amounts" });
-*/
 		RequestTask task;
 		 
-		Vector params = new Vector();		 
-		//params.add();
-		
+		Vector params = new Vector();		 	 
 		task = new RequestTask(this);
-		task.execute(params);
-		
-		 
+		task.execute(params);				 
 		
 		// AddOrdersPlot(new Number[]{},new Number[]{});
 		// AddAmountsPlot(new Number[]{},new Number[]{});
@@ -94,32 +68,15 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	}
 
 	public void onPreExecute(){		
-
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
-		//ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
-		
-	//	if (type.equals("orders")) {
-			progressBar.setVisibility(View.VISIBLE);
-		//} else {
-			//progressBar2.setVisibility(View.VISIBLE);
-	 //	}		
-		 
+		progressBar.setVisibility(View.VISIBLE);
 	};  
 
 	 @Override
-	 public void doPostExecute(Object result) {
-		 
-		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
-		//ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
-			
-		//if (type.equals("orders")) {
-			progressBar.setVisibility(View.INVISIBLE);
-	//	} else {
-		//	progressBar2.setVisibility(View.INVISIBLE);
-	// 	}		 
-		
+	 public void doPostExecute(Object result) {		
+		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
+		progressBar.setVisibility(View.INVISIBLE); 	 		
 		SetChartData(result);
-
 	 }		
 	
 	 public  String GetApiRoute() {
