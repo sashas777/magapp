@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +31,8 @@ import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.magapp.connect.MagAuth;
+import com.magapp.connect.RequestInterface;
+import com.magapp.connect.RequestTask;
 import com.magapp.order.CustomerAccountFragment;
 import com.magapp.order.ItemsFragment;
 import com.magapp.order.MainInfoFragment;
@@ -37,7 +40,7 @@ import com.magapp.order.OrderAddressFragment;
 import com.magapp.order.PaymentInfoFragment;
 import com.magapp.order.TotalsFragment;
 
-public class OrderInfoActivity extends Activity implements OnNavigationListener {
+public class OrderInfoActivity extends Activity implements OnNavigationListener,RequestInterface {
 
 	public String api_session;
 	public String api_url;
@@ -48,17 +51,16 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	String[] actions = new String[] { "Order", "Invoice", "Shipment" };
 	private CharSequence mTitle;
 	public Integer menu_id = -1;
-	private ProgressBar progressBar;
+	//private ProgressBar progressBar;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orderinfo);
 
-		progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+	//	progressBar = (ProgressBar) findViewById(R.id.progressBar1);
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(
-				getBaseContext(), R.layout.custom_spinner_row_white, actions);
+		SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
 
 		getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
 
@@ -68,7 +70,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		/*api_session = vars.getString("api_session");
 		api_url = vars.getString("api_url");*/
 		
-		api_session =MagAuth.getSession();
+	/*	api_session =MagAuth.getSession();
 		api_url = MagAuth.getApiUrl();	
 		
 		order_id = vars.getInt("order_id");
@@ -77,8 +79,49 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		client = new XMLRPCClient(uri);
 		OrderinfoTask task = new OrderinfoTask();
 		task.execute(order_id);
+		*/
+		
+		order_id = vars.getInt("order_id");
+		Vector params = new Vector();
+		/*HashMap map_date = new HashMap();
+
+		map_date.put("eq", order_id_value);*/
+		RequestTask task;
+		HashMap map_filter = new HashMap(); 
+		map_filter.put("order_id", order_id);		
+		params.add(map_filter);
+		task = new RequestTask(this, this);
+		task.execute(params);			
+		
 	}
 
+	
+	public void onPreExecute(){		
+		ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar1);
+		progressBar.setVisibility(View.VISIBLE);
+	};  
+
+	 @Override
+	 public void doPostExecute(Object result) {		
+		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+		progressBar.setVisibility(View.INVISIBLE); 	 		
+		HashMap map = (HashMap) result;
+		FillData(map);
+	 }		
+	
+	 public  String GetApiRoute() {
+		 return "magapp_sales_order.info";
+	 }
+	 
+	 public void RequestFailed(String error) {
+		ShowMessage(error);
+		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+		progressBar.setVisibility(View.INVISIBLE); 			
+		Intent Login = new Intent(this, LoginActivity.class);
+		this.startActivity(Login);
+		finish();		 
+	 }	
+	
 	public void FillData(HashMap order) {
 
 		Bundle params = new Bundle();
@@ -186,7 +229,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		/* Totals */
 		mFragmentTransaction.commit();
 	}
-
+/*
 	class OrderinfoTask extends AsyncTask<Integer, Void, Object> {
 
 		protected Object doInBackground(Integer... order_id) {
@@ -200,9 +243,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 
 			Object orders;
 			try {
-				orders = (Object) client.callEx("call", new Object[] {
-						api_session, "magapp_sales_order.info",
-						new Object[] { map_filter } });
+				orders = (Object) client.callEx("call", new Object[] { api_session, "magapp_sales_order.info", new Object[] { map_filter } });
 				return orders;
 			} catch (XMLRPCException e) {
 				Log.e("Sashas", e.getMessage());
@@ -226,6 +267,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 			}
 		}
 	}
+	*/
 
 	/* Additional for actionbar */
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -261,7 +303,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	public void ShowMessage(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
-
+/*
 	public void HandleError(String error) {
 		String regex_script = "\\[code (.*?)\\]";
 		Pattern p = Pattern.compile(regex_script);
@@ -278,5 +320,5 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 			this.finish();
 		}
 
-	}
+	} */
 }
