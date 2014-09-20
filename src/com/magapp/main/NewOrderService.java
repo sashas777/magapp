@@ -21,7 +21,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-public class NewOrderService extends Service {
+public class NewOrderService extends Service  {
 
 	NotificationManager nm;
 	final String LOG_TAG = "Sashas";
