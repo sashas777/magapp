@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	 }
 	 
 	 public void RequestFailed(String error) {
-		ShowMessage(error);
+		((BaseFragment)getActivity()).ShowMessage(error);
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
 		progressBar.setVisibility(View.INVISIBLE); 			
 		Intent Login = new Intent(getActivity(), LoginActivity.class);
@@ -336,8 +336,5 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		AddAmountsSpinner();			 
 	}
  
-	public void ShowMessage(String text) {
-		Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
-	}
  
 }

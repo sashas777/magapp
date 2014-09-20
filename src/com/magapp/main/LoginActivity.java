@@ -16,17 +16,11 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
-	/*
-	 * private XMLRPCClient client; private URI uri;
-	 * 
-	 * private String session; private String url; private String
-	 * api_username=null; private String api_password=null;
-	 */
+ 
 	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
 
-	// private Menu options_menu;
-	// private TextView textView;
+ 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -155,4 +155,6 @@ public class BaseFragment extends Activity implements
 	 *           activity).onSectionAttached(
 	 *           getArguments().getInt(ARG_SECTION_NUMBER)); } }
 	 */
+	
+	
 }
