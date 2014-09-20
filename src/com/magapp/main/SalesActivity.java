@@ -48,35 +48,18 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 	private int year;
 	private int month;
 	private int day;
-	private SalesActivity current_class;
-	 
+	private SalesActivity current_class;	 
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 		rootView = inflater.inflate(R.layout.sales, null);
 
-		//progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-	 /*
-		api_session=MagAuth.getSession();
-		api_url= MagAuth.getApiUrl();	
-				
-		uri = URI.create(api_url);
-
-		client = new XMLRPCClient(uri);
-
-		OrderlistTask task = new OrderlistTask();
-
-		task.execute(new String[] { "" });*/
 		EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
 		DateInput.setText("Select Date");
 		AddTitles();
-
-		
-		
+			
 		ImageButton imageButton1 = (ImageButton) rootView.findViewById(R.id.imageButton1);
 		imageButton1.setOnClickListener(this);
-
 		 
 		RequestArrayTask task;	 
 		Vector params = new Vector();		 	 			  		
@@ -310,13 +293,7 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 						RequestArrayTask task;	 						 	 	 			  	
 						task = new RequestArrayTask(current_class, getActivity());
 						task.execute(params); 					
-						//OrderlistTask task = new OrderlistTask();
-						/*task.execute(new String[] { String.valueOf(year) + "-"
-								+ String.format("%02d", monthOfYear + 1) + "-"
-								+ String.format("%02d", dayOfMonth) });*/
-						
-						
-						
+																
 						month = monthOfYear;
 						day = dayOfMonth;
 					}
@@ -324,70 +301,5 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 		mTimePicker.setTitle("Select Date");
 		mTimePicker.show();
 	}
-/*
-	class OrderlistTask extends AsyncTask<String, Void, Object[]> {
-		protected Object[] doInBackground(String... selected_date) {
-			progressBar.setVisibility(View.VISIBLE);
-			Vector params = new Vector();
-			DateFormat date_local = new SimpleDateFormat("yyyy-MM-dd");
-			Date from_date = new Date();
-			if (!selected_date[0].isEmpty()) {
-				try {
-					from_date = date_local.parse(selected_date[0]);
 
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				date_local.setTimeZone(TimeZone.getTimeZone("UTC"));
-				String date_utc_from = date_local.format(from_date);
-				HashMap day_filter = new HashMap();
-				day_filter.put("day", date_utc_from);
-				params.add(day_filter);
-			}
-
-			Object[] orders;
-			try {
-				orders = (Object[]) client.callEx("call", new Object[] {api_session, "magapp_order.last", params });
-				return orders;
-			} catch (XMLRPCException e) {
-				Log.e("Sashas", e.getMessage());
-				return new Object[] { e };
-			}
-		}
-
-		@Override
-		protected void onPostExecute(Object[] result) {
-			if (result[0] instanceof XMLRPCException) {
-				ShowMessage(result[0].toString());
-				HandleError(result[0].toString());
-			} else {
-				SortRows(result);
-				progressBar.setVisibility(View.INVISIBLE);
-			}
-		}
-
-	}
-*/
-	/*public void ShowMessage(String text) {
-		Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
-	}*/
-
-	/*public void HandleError(String error) {
-		String regex_script = "\\[code (.*?)\\]";
-		Pattern p = Pattern.compile(regex_script);
-
-		Matcher m = p.matcher(error);
-		String error_code = "0";
-		if (m.find()) {
-			error_code = m.group(1).toString();
-		}
-		Log.e("Sashas", error_code);
-		if (error_code.equals("5")) {
-			Intent Login = new Intent(getActivity(), LoginActivity.class);
-			this.startActivity(Login);
-			getActivity().finish();
-		}
-
-	}*/
 }
