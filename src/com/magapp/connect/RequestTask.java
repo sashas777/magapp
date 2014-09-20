@@ -45,7 +45,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 			return result_info;
 		} catch (XMLRPCException e) {
 			Log.e("Sashas", e.getMessage());
-			return e;
+			return new Object[] {e};
 		}
 	}
 

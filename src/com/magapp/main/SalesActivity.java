@@ -61,9 +61,7 @@ public class SalesActivity extends Fragment implements OnClickListener {
 		rootView = inflater.inflate(R.layout.sales, null);
 
 		progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-		//api_session = getArguments().getString("api_session");
-		//api_url = getArguments().getString("api_url");
-		
+	 
 		api_session=MagAuth.getSession();
 		api_url= MagAuth.getApiUrl();	
 				
@@ -201,8 +199,8 @@ public class SalesActivity extends Fragment implements OnClickListener {
 	public void ShowOrderInfo(int OrderId) {
 
 		Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
-		OrderInfo.putExtra("api_session", api_session);
-		OrderInfo.putExtra("api_url", api_url);
+		//OrderInfo.putExtra("api_session", api_session);
+		//OrderInfo.putExtra("api_url", api_url);
 		OrderInfo.putExtra("order_id", OrderId);
 		getActivity().startActivity(OrderInfo);
 		// getActivity().finish();
@@ -218,10 +216,8 @@ public class SalesActivity extends Fragment implements OnClickListener {
 		}
 		Collections.sort(data, new Comparator<HashMap>() {
 			public int compare(HashMap obj1, HashMap obj2) {
-				Integer obj1_val = Integer.parseInt(obj1.get("order_id")
-						.toString());
-				Integer obj2_val = Integer.parseInt(obj2.get("order_id")
-						.toString());
+				Integer obj1_val = Integer.parseInt(obj1.get("order_id").toString());
+				Integer obj2_val = Integer.parseInt(obj2.get("order_id").toString());
 				return obj2_val.compareTo(obj1_val);
 			}
 		});
@@ -309,8 +305,7 @@ public class SalesActivity extends Fragment implements OnClickListener {
 
 			Object[] orders;
 			try {
-				orders = (Object[]) client.callEx("call", new Object[] {
-						api_session, "magapp_order.last", params });
+				orders = (Object[]) client.callEx("call", new Object[] {api_session, "magapp_order.last", params });
 				return orders;
 			} catch (XMLRPCException e) {
 				Log.e("Sashas", e.getMessage());
