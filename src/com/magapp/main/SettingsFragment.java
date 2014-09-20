@@ -41,12 +41,9 @@ public class SettingsFragment extends PreferenceFragment implements
 	}
 
 	public boolean IsServiceActive() {
-		ActivityManager manager = (ActivityManager) getActivity()
-				.getSystemService(getActivity().ACTIVITY_SERVICE);
-		for (RunningServiceInfo service : manager
-				.getRunningServices(Integer.MAX_VALUE)) {
-			if ("com.magapp.NewOrderService".equals(service.service
-					.getClassName())) {
+		ActivityManager manager = (ActivityManager) getActivity().getSystemService(getActivity().ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+			if ("com.magapp.main.NewOrderService".equals(service.service.getClassName())) {
 				return true;
 
 			}
