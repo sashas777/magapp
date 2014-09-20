@@ -42,10 +42,10 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 
 		Bundle vars = getIntent().getExtras();	 
 		order_id = vars.getInt("order_id");		 
-		//FragmentManager fragmentManager = getFragmentManager();
-	//	Fragment screen = new OrderInfoFragment();	
-	//	fragmentManager.beginTransaction().replace(R.id.container, screen)
-	//	.addToBackStack(null).commit();		
+		FragmentManager fragmentManager = getFragmentManager();
+		Fragment screen = new OrderInfoFragment();	
+		fragmentManager.beginTransaction().replace(R.id.container, screen)
+		.addToBackStack(null).commit();		
 	}
  
 	public int GetOrderId(){
@@ -62,13 +62,6 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		Fragment screen = new Fragment();
 		switch (itemPosition) {
 		case 0:
-			/*RequestTask task;
-			Vector params = new Vector();
-			HashMap map_filter = new HashMap(); 
-			map_filter.put("order_id", order_id);		
-			params.add(map_filter);
-			task = new RequestTask(this, this);
-			task.execute(params);			*/
 			screen = new OrderInfoFragment();		
 			break;
 		case 1:

@@ -64,7 +64,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 		 }
 		 
 		 public void RequestFailed(String error) {
-			ShowMessage(error);
+			((OrderInfoActivity)getActivity()).ShowMessage(error);
 			ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
 			progressBar.setVisibility(View.INVISIBLE); 			
 			Intent Login = new Intent(getActivity(), LoginActivity.class);
@@ -180,8 +180,6 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			mFragmentTransaction.commit();
 		}	
 		
-		public void ShowMessage(String text) {
-			Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-		}
+ 
 	 
 }
