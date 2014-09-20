@@ -41,10 +41,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			task.execute(params);					
 			
 			return rootView;
-	}
-	 
-	 
-
+	}	 
 		
 		public void onPreExecute(){		
 			ProgressBar progressBar =(ProgressBar)  getActivity().findViewById(R.id.progressBar1);

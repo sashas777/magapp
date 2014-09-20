@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.magapp.main.R;
 
@@ -30,7 +31,7 @@ public class InvoiceListFragment extends ListFragment    {
 	 
 	  @Override
 	  public void onListItemClick(ListView l, View v, int position, long id) {
-	    // do something with the data
+		  Toast.makeText(getActivity(),String.valueOf(getListView().getCheckedItemCount()),Toast.LENGTH_LONG).show();
 	  }	 
 }
 
