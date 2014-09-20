@@ -47,7 +47,7 @@
             android:id="@+id/CustomerEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentLeft="true"            
             android:layout_below="@+id/CustomerName"
             
             android:layout_marginTop="10dp"
@@ -66,6 +66,7 @@
             android:id="@+id/customer_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+             android:autoLink="email"
             android:layout_alignBaseline="@+id/CustomerEmail"
             android:layout_alignBottom="@+id/CustomerEmail"
             android:layout_alignLeft="@+id/customer_name"
