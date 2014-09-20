@@ -1,6 +1,5 @@
 package com.magapp.main;
 
-import java.net.URI;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,15 +16,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
-
-import com.magapp.connect.MagAuth;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -42,26 +37,27 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SalesActivity extends Fragment implements OnClickListener {
+import com.magapp.connect.RequestArrayInterface;
+import com.magapp.connect.RequestArrayTask;
 
-	public String api_session;
-	public String api_url;
-	public XMLRPCClient client;
-	public URI uri;
+public class SalesActivity extends Fragment implements OnClickListener,RequestArrayInterface {
+
+
 	public TableLayout prodlist;
 	public View rootView;
 	private int year;
 	private int month;
 	private int day;
-	private ProgressBar progressBar;
+	private SalesActivity current_class;
+	 
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		rootView = inflater.inflate(R.layout.sales, null);
 
-		progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-	 
+		//progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+	 /*
 		api_session=MagAuth.getSession();
 		api_url= MagAuth.getApiUrl();	
 				
@@ -71,18 +67,52 @@ public class SalesActivity extends Fragment implements OnClickListener {
 
 		OrderlistTask task = new OrderlistTask();
 
-		task.execute(new String[] { "" });
+		task.execute(new String[] { "" });*/
 		EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
 		DateInput.setText("Select Date");
 		AddTitles();
 
-		ImageButton imageButton1 = (ImageButton) rootView
-				.findViewById(R.id.imageButton1);
+		
+		
+		ImageButton imageButton1 = (ImageButton) rootView.findViewById(R.id.imageButton1);
 		imageButton1.setOnClickListener(this);
 
+		 
+		RequestArrayTask task;	 
+		Vector params = new Vector();		 	 			  		
+		task = new RequestArrayTask(this, getActivity());
+		task.execute(params);				
+		current_class=this;
+		
 		return rootView;
 	}
 
+	
+	public void onPreExecute(){		
+		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
+		progressBar.setVisibility(View.VISIBLE);
+	};  
+
+	 @Override
+	 public void doPostExecute(Object[] result) {		
+		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
+		progressBar.setVisibility(View.INVISIBLE); 	
+		SortRows(result);
+	 }		
+	
+	 public  String GetApiRoute() {
+		 return "magapp_order.last";
+	 }
+	 
+	 public void RequestFailed(String error) {
+		((BaseFragment)getActivity()).ShowMessage(error);
+		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
+		progressBar.setVisibility(View.INVISIBLE); 			
+		Intent Login = new Intent(getActivity(), LoginActivity.class);
+		this.startActivity(Login);
+		getActivity().finish();		 
+	 }		
+	
 	public void AddTitles() {
 		/* Add Field titles */
 		prodlist = (TableLayout) rootView.findViewById(R.id.tbl_orders);
@@ -199,8 +229,6 @@ public class SalesActivity extends Fragment implements OnClickListener {
 	public void ShowOrderInfo(int OrderId) {
 
 		Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
-		//OrderInfo.putExtra("api_session", api_session);
-		//OrderInfo.putExtra("api_url", api_url);
 		OrderInfo.putExtra("order_id", OrderId);
 		getActivity().startActivity(OrderInfo);
 		// getActivity().finish();
@@ -258,22 +286,37 @@ public class SalesActivity extends Fragment implements OnClickListener {
 		mTimePicker = new DatePickerDialog(getActivity(),
 				new DatePickerDialog.OnDateSetListener() {
 					@Override
-					public void onDateSet(DatePicker view, int year,
-							int monthOfYear, int dayOfMonth) {
+					public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
 						// TODO Auto-generated method stub
-						EditText DateInput = (EditText) rootView
-								.findViewById(R.id.editText1);
-						DateInput.setText(String
-								.format("%02d", monthOfYear + 1)
-								+ "/"
-								+ String.format("%02d", dayOfMonth)
-								+ "/"
-								+ String.valueOf(year));
+						EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
+						DateInput.setText(String.format("%02d", monthOfYear + 1)+ "/"+ String.format("%02d", dayOfMonth)+ "/"+ String.valueOf(year));
 
-						OrderlistTask task = new OrderlistTask();
-						task.execute(new String[] { String.valueOf(year) + "-"
+						Vector params = new Vector();	
+						String selected_date=String.valueOf(year) + "-"+ String.format("%02d", monthOfYear + 1)+"-"+String.format("%02d", dayOfMonth);
+						DateFormat date_local = new SimpleDateFormat("yyyy-MM-dd");
+						Date from_date = new Date();				 					
+						try {
+							from_date = date_local.parse(selected_date);
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}						
+						date_local.setTimeZone(TimeZone.getTimeZone("UTC"));
+						String date_utc_from = date_local.format(from_date);
+						HashMap day_filter = new HashMap();
+						day_filter.put("day", date_utc_from);
+						params.add(day_filter);
+						
+						RequestArrayTask task;	 						 	 	 			  	
+						task = new RequestArrayTask(current_class, getActivity());
+						task.execute(params); 					
+						//OrderlistTask task = new OrderlistTask();
+						/*task.execute(new String[] { String.valueOf(year) + "-"
 								+ String.format("%02d", monthOfYear + 1) + "-"
-								+ String.format("%02d", dayOfMonth) });
+								+ String.format("%02d", dayOfMonth) });*/
+						
+						
+						
 						month = monthOfYear;
 						day = dayOfMonth;
 					}
@@ -281,7 +324,7 @@ public class SalesActivity extends Fragment implements OnClickListener {
 		mTimePicker.setTitle("Select Date");
 		mTimePicker.show();
 	}
-
+/*
 	class OrderlistTask extends AsyncTask<String, Void, Object[]> {
 		protected Object[] doInBackground(String... selected_date) {
 			progressBar.setVisibility(View.VISIBLE);
@@ -325,12 +368,12 @@ public class SalesActivity extends Fragment implements OnClickListener {
 		}
 
 	}
-
-	public void ShowMessage(String text) {
+*/
+	/*public void ShowMessage(String text) {
 		Toast.makeText(this.getActivity(), text, Toast.LENGTH_SHORT).show();
-	}
+	}*/
 
-	public void HandleError(String error) {
+	/*public void HandleError(String error) {
 		String regex_script = "\\[code (.*?)\\]";
 		Pattern p = Pattern.compile(regex_script);
 
@@ -346,5 +389,5 @@ public class SalesActivity extends Fragment implements OnClickListener {
 			getActivity().finish();
 		}
 
-	}
+	}*/
 }

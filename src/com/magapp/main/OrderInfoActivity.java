@@ -42,12 +42,9 @@ import com.magapp.order.TotalsFragment;
 
 public class OrderInfoActivity extends Activity implements OnNavigationListener,RequestInterface {
 
-	public String api_session;
-	public String api_url;
-	private XMLRPCClient client;
-	private URI uri;
+	 
 	private TableLayout prodlist;
-	private int order_id;
+	 
 	String[] actions = new String[] { "Order", "Invoice", "Shipment" };
 	private CharSequence mTitle;
 	public Integer menu_id = -1; 
@@ -67,7 +64,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
 
 		Bundle vars = getIntent().getExtras();
 	 
-		order_id = vars.getInt("order_id");
+		int order_id = vars.getInt("order_id");
 		Vector params = new Vector();
 	 
 		RequestTask task;
