@@ -176,19 +176,19 @@
             </TableRow>
         </TableLayout>
 
-        <ProgressBar
+         
+    </RelativeLayout>
+<ProgressBar
             android:id="@+id/progressBar1"
             style="?android:attr/progressBarStyleLarge"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/OrdersPlot"
+            
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dp" 
+             android:layout_centerVertical="true"
             android:gravity="center_vertical|center_horizontal"
             android:indeterminate="false"
             android:indeterminateBehavior="cycle" />
-    </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/AmountsLayout"
         android:layout_below="@+id/OrdersLayout"
@@ -357,17 +357,6 @@
                     android:typeface="sans" />
             </TableRow>
         </TableLayout>
-         <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/AmountsPlot"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="60dp" 
-            android:gravity="center_vertical|center_horizontal"
-            android:indeterminate="false"
-            android:indeterminateBehavior="cycle" />
     </RelativeLayout>        
     
         </RelativeLayout>

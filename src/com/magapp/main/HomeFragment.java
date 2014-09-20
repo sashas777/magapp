@@ -7,7 +7,6 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,22 +78,14 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		task_amounts.execute(new String[] { "amounts" });
 */
 		RequestTask task;
-		RequestTask task2;
-		Vector params = new Vector();
-		HashMap req_type = new HashMap();
-		req_type.put("type", "orders");
-		params.add(req_type);
+		 
+		Vector params = new Vector();		 
+		//params.add();
 		
-		task = new RequestTask(this,"orders");
+		task = new RequestTask(this);
 		task.execute(params);
 		
-		req_type.clear();
-		params.clear();
-		req_type.put("type", "amounts");
-		params.add(req_type);
-		
-		task2 = new RequestTask(this,"amounts");
-		task2.execute(params);		
+		 
 		
 		// AddOrdersPlot(new Number[]{},new Number[]{});
 		// AddAmountsPlot(new Number[]{},new Number[]{});
@@ -101,30 +93,30 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		return rootView;
 	}
 
-	public void onPreExecute(String type){		
+	public void onPreExecute(){		
 
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
-		ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+		//ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 		
-		if (type.equals("orders")) {
+	//	if (type.equals("orders")) {
 			progressBar.setVisibility(View.VISIBLE);
-		} else {
-			progressBar2.setVisibility(View.VISIBLE);
-	 	}		
+		//} else {
+			//progressBar2.setVisibility(View.VISIBLE);
+	 //	}		
 		 
 	};  
 
 	 @Override
-	 public void doPostExecute(Object result, String type) {
+	 public void doPostExecute(Object result) {
 		 
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
-		ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
+		//ProgressBar progressBar2 = (ProgressBar) rootView.findViewById(R.id.progressBar2);
 			
-		if (type.equals("orders")) {
+		//if (type.equals("orders")) {
 			progressBar.setVisibility(View.INVISIBLE);
-		} else {
-			progressBar2.setVisibility(View.INVISIBLE);
-	 	}		 
+	//	} else {
+		//	progressBar2.setVisibility(View.INVISIBLE);
+	// 	}		 
 		
 		SetChartData(result);
 
@@ -384,14 +376,14 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 
 	public void SetChartData(Object data) {
 		HashMap data_map = (HashMap) data;
-
-		if (data_map.get("orders") != null) {
+ 
+		//if (data_map.get("orders") != null) {
 			OrdersData = (Object[]) data_map.get("orders");
 			AddOrdersSpinner();			 
-		} else {
+	//	} else {
 			AmountsData = (Object[]) data_map.get("amounts");
 			AddAmountsSpinner();			 
-		}
+		//}
 	}
 /*
 	class ChartsTask extends AsyncTask<String, Void, Object> {

@@ -14,18 +14,18 @@ import android.util.Log;
 
 public class RequestTask extends  AsyncTask<Vector, Void, Object>  {
 
-	String task_type=null;
+	
 	
 	RequestInterface RequestCallBack;	
 	
-	public RequestTask(RequestInterface callback, String type){
+	public RequestTask(RequestInterface callback){
 		RequestCallBack = callback; 
-		task_type=type;
+		
 	}		
 	
 	protected void onPreExecute() {
 		super.onPreExecute();
-		RequestCallBack.onPreExecute(task_type);		
+		RequestCallBack.onPreExecute();		
 	};		
 	
 	protected Object doInBackground(Vector... params) {
@@ -57,7 +57,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object>  {
 
 	@Override
 	protected void onPostExecute(Object result) {
-		RequestCallBack.doPostExecute(result,task_type);	
+		RequestCallBack.doPostExecute(result);	
 		if (result instanceof XMLRPCException) {
 			//ShowMessage(result.toString());
 			//HandleError(result.toString());

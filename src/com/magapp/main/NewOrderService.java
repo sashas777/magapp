@@ -244,8 +244,7 @@ public class NewOrderService extends Service {
 		String order_amount = order.get("amount").toString();
 		Integer order_id = Integer.parseInt(order.get("order_id").toString());
 		// 1nd part
-		Notification notif = new Notification(R.drawable.ic_launcher,
-				"New order was placed", System.currentTimeMillis());
+		Notification notif = new Notification(R.drawable.ic_launcher, "New order was placed", System.currentTimeMillis());
 
 		// set activity
 		Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
@@ -253,12 +252,10 @@ public class NewOrderService extends Service {
 		OrderInfo.putExtra("api_url", url);
 		OrderInfo.putExtra("order_id", order_id);
 
-		PendingIntent pIntent = PendingIntent.getActivity(this, 0, OrderInfo,
-				PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pIntent = PendingIntent.getActivity(this, 0, OrderInfo, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// 2nd part
-		notif.setLatestEventInfo(this, "Order #" + increment_id, "Status: "
-				+ order_status + " | Amount: " + order_amount, pIntent);
+		notif.setLatestEventInfo(this, "Order #" + increment_id, "Status: " + order_status + " | Amount: " + order_amount, pIntent);
 
 		// set flag
 		notif.flags |= Notification.FLAG_AUTO_CANCEL;
