@@ -53,24 +53,18 @@ public class InvoiceListAdapter extends BaseAdapter  {
             vi =  inflater.inflate(R.layout.invoice_list_item, null);                
         }     
         
-        TextView account_name = (TextView)vi.findViewById(R.id.account_name); // title
-        TextView account_url = (TextView)vi.findViewById(R.id.url); // artist name
-      
+        TextView invoice_num = (TextView)vi.findViewById(R.id.invoice_number); 
+        TextView bill_to = (TextView)vi.findViewById(R.id.bill_to);  
+        TextView description = (TextView)vi.findViewById(R.id.InvoiceDescription);  
  
-        HashMap<String, String> account = new HashMap<String, String>();
-        account = data.get(position);
+        HashMap<String, String> invoice = new HashMap<String, String>();
+        invoice = data.get(position);
  
         // Setting all values in listview
-        account_name.setText(account.get("name"));
-        account_url.setText(account.get("url"));
-        
-        RadioButton r = (RadioButton)vi.findViewById(R.id.radio_list);
-        if(selectedIndex == position){
-            	r.setChecked(true);
-            }
-            else{
-            	r.setChecked(false);
-            }
+        invoice_num.setText(invoice.get("invoice_number"));
+        bill_to.setText(invoice.get("bill_to"));
+        description.setText(invoice.get("description"));
+ 
       
         return vi;
     }
