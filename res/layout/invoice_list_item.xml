@@ -10,10 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/invoice_number"
         android:layout_alignBottom="@+id/invoice_number"
-        android:layout_alignLeft="@+id/InvoiceBillTo"       
         android:gravity="center_vertical|left"
-        android:text="Invoice #"    
-          
+        android:text="Invoice #" 		android:layout_above="@id/InvoiceDescription"
         android:textSize="16sp" />
         
     <TextView
@@ -23,38 +21,14 @@
         android:layout_toRightOf="@+id/InvoiceNumTitle"            
         android:gravity="center_vertical"
         android:text="1235456"        
-        android:textSize="16sp" /> 
-
-    <TextView
-        android:id="@+id/InvoiceBillTo"
-        
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/InvoiceDescription"
-        android:layout_alignParentLeft="true"
-        android:layout_alignBaseline="@+id/bill_to"
-        android:layout_below="@id/InvoiceNumTitle"
-        android:ellipsize="marquee"        
-        android:text="Bill to:"
-        android:textSize="12sp" />    
-    
-    <TextView
-        android:id="@+id/bill_to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/invoice_number"
-        android:layout_below="@+id/InvoiceNumTitle"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Alex Lukyanov"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
     
     
     <TextView
        
         android:id="@+id/InvoiceDescription"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"          
+        android:layout_height="26dip"    
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:ellipsize="marquee"

@@ -52,9 +52,9 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	@Override
 	protected void onPostExecute(Object[] result) {
 		 
-		if (result[0] instanceof XMLRPCException) {			 
+		if ( result.length > 0 && result[0] instanceof XMLRPCException) {						
 			HandleError((XMLRPCException) result[0]);
-		} else {
+		} else {		
 			RequestCallBack.doPostExecute(result);	
 		}
 	}	

@@ -151,15 +151,13 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 		DateFormat created_at = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date created_at_date = new Date();
 		try {
-			created_at_date = created_at.parse(order.get("created_at")
-					.toString());
+			created_at_date = created_at.parse(order.get("created_at").toString());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		TextView hLabel3 = new TextView(getActivity());
-		hLabel3.setText(new SimpleDateFormat("MM-dd-yyy")
-				.format(created_at_date));
+		hLabel3.setText(new SimpleDateFormat("MM-dd-yyy") .format(created_at_date));
 		hLabel3.setPadding(10, 10, 10, 10);
 		hLabel3.setGravity(Gravity.CENTER_HORIZONTAL);
 		hLabel3.setBackgroundResource(R.layout.line);

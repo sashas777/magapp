@@ -53,16 +53,14 @@ public class InvoiceListAdapter extends BaseAdapter  {
             vi =  inflater.inflate(R.layout.invoice_list_item, null);                
         }     
         
-        TextView invoice_num = (TextView)vi.findViewById(R.id.invoice_number); 
-        TextView bill_to = (TextView)vi.findViewById(R.id.bill_to);  
+        TextView invoice_num = (TextView)vi.findViewById(R.id.invoice_number);         
         TextView description = (TextView)vi.findViewById(R.id.InvoiceDescription);  
  
         HashMap<String, String> invoice = new HashMap<String, String>();
         invoice = data.get(position);
  
         // Setting all values in listview
-        invoice_num.setText(invoice.get("invoice_number"));
-        bill_to.setText(invoice.get("bill_to"));
+        invoice_num.setText(invoice.get("invoice_number"));        
         description.setText(invoice.get("description"));
  
       
