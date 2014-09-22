@@ -45,7 +45,6 @@ public class LoginActivity extends Activity {
 			item_down.setVisible(false);
 		else
 			item_down.setVisible(true);
-
 		return true;
 	}
 

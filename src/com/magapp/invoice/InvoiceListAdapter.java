@@ -55,11 +55,13 @@ public class InvoiceListAdapter extends BaseAdapter  {
         
         TextView invoice_num = (TextView)vi.findViewById(R.id.invoice_number);         
         TextView description = (TextView)vi.findViewById(R.id.InvoiceDescription);  
- 
+        TextView increment_id =(TextView)vi.findViewById(R.id.increment_id);  
+        
         HashMap<String, String> invoice = new HashMap<String, String>();
         invoice = data.get(position);
  
         // Setting all values in listview
+        increment_id.setText(invoice.get("increment_id"));  
         invoice_num.setText(invoice.get("invoice_number"));        
         description.setText(invoice.get("description"));
  

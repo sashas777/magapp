@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -13,13 +14,12 @@ import java.util.Vector;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.magapp.connect.RequestArrayInterface;
@@ -32,13 +32,20 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 	
 	public View rootView;
 	 
-
+	 private ArrayList<HashMap<String, String>> InvoiceList;	 
+	 private InvoiceListAdapter adapter;
+	 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.invoice_list, null);
 			
-			String[] values = new String[] { "Android", "iPhone", "WindowsMobile","Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X","Linux", "OS/2", "aa","sdd","ccc" };
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
+			//String[] values = new String[] { "Android", "iPhone", "WindowsMobile","Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X","Linux", "OS/2", "aa","sdd","ccc" };
+			//ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
+			
+			InvoiceList = new ArrayList<HashMap<String, String>>(); 
+ 
+			 
+			adapter=new InvoiceListAdapter(getActivity(), InvoiceList);			
 			setListAdapter(adapter);
 			//getActiviy().getActionBar().setDisplayHomeAsUpEnabled(true);
 		
@@ -101,7 +108,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 					status="Paid";	
 					break;
 				case 3:
-					status="Canceled";	
+					status="Canceled";	 
 					break;					
 				}							
 				/*State*/
@@ -110,17 +117,18 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				NumberFormat currency_format = NumberFormat.getCurrencyInstance(Locale.US);
 				String TotalAmount=currency_format.format(Double.valueOf(total).doubleValue());
 				/*Total*/
-				String Invoice_LIne_1=increment_id+" | "+created_at_date_string;
+				String Invoice_LIne_1="Invoice #"+increment_id+" | "+created_at_date_string;
 				String Invoice_LIne_2=TotalAmount+" "+status;
 				
-				 
-				/*Log.e("Sashas",map.get("increment_id").toString());
-				Log.e("Sashas",map.get("created_at").toString());
-				Log.e("Sashas",map.get("state").toString());
-				Log.e("Sashas",map.get("grand_total").toString());*/
-				 
+				HashMap<String, String> list_map = new HashMap<String, String>();
+				 	   
+				list_map.put("invoice_number",Invoice_LIne_1);
+				list_map.put("description",Invoice_LIne_2); 
+				list_map.put("increment_id",increment_id); 	
+				InvoiceList.add(list_map);
+ 				 
 			}			 
-			 
+			adapter.notifyDataSetChanged();
 		 }
 
 		
@@ -140,7 +148,8 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 	 
 	  @Override
 	  public void onListItemClick(ListView l, View v, int position, long id) {
-		  Toast.makeText(getActivity(),String.valueOf(getListView().getCheckedItemCount()),Toast.LENGTH_LONG).show();
+		  String selected = ((TextView) v.findViewById(R.id.increment_id)).getText().toString();
+		  Toast.makeText(getActivity(),selected,Toast.LENGTH_LONG).show();
 	  }	 
 }
 
