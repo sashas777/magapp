@@ -48,4 +48,5 @@
  	<string name="add_select_account">Create new account</string>  
  	<string name="back_button_field">Back</string>
  	<string name="no_invoices">There are no invoices for this order yet.</string>
+ 	<string name="invoice">Invoice</string>
 </resources>

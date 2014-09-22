@@ -173,6 +173,8 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 		prodlist.addView(row, new TableLayout.LayoutParams());
 
 	}
+	
+	
 
 	@Override
 	public void onResume() {

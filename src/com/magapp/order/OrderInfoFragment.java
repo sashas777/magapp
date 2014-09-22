@@ -11,10 +11,12 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
@@ -26,6 +28,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 
 	
 	public View rootView;
+	private Menu menu_settings;
 	 
 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -39,10 +42,19 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			params.add(map_filter);
 			task = new RequestTask(this, getActivity());
 			task.execute(params);					
-			
+			setHasOptionsMenu(true);
 			return rootView;
 	}	 
-		
+	 @Override
+	 public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		  menu.clear();
+		  getActivity().getMenuInflater().inflate(R.menu.base, menu);		
+		  menu_settings=menu;
+		  super.onCreateOptionsMenu(menu, inflater); 
+		}
+	 
+ 
+	 
 		public void onPreExecute(){		
 			ProgressBar progressBar =(ProgressBar)  getActivity().findViewById(R.id.progressBar1);
 			progressBar.setVisibility(View.VISIBLE);
@@ -175,6 +187,18 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			mFragmentTransaction.add(R.id.totals_card, totals_card);
 			/* Totals */
 			mFragmentTransaction.commit();
+			
+			/*Menu Item*/
+			MenuItem invoice_item = menu_settings.findItem(R.id.invoice);
+			 
+		//	if (order.get("can_invoice").toString()=="1"){
+				invoice_item.setVisible(true);
+				
+		//	}else {
+		//		invoice_item.setVisible(false);
+	//		}
+			getActivity().invalidateOptionsMenu();
+			/*Menu Item*/
 		}	
 		
  

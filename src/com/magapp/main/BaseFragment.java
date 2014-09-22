@@ -27,20 +27,17 @@ public class BaseFragment extends Activity implements
 	 */
 	private CharSequence mTitle;
 	public Integer menu_id;
-	public Bundle connection_params;
-
+	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base);
 
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
-				.findFragmentById(R.id.navigation_drawer);
+		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle(); 
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout) findViewById(R.id.drawer_layout));
   
 	}
 
@@ -64,8 +61,7 @@ public class BaseFragment extends Activity implements
 
 		}
 	 
-		fragmentManager.beginTransaction().replace(R.id.container, screen)
-				.addToBackStack(null).commit();
+		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
 
 		/*
 		 * FragmentManager fragmentManager = getFragmentManager();
