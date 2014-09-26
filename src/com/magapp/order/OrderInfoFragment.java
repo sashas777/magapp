@@ -10,6 +10,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +30,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 	
 	public View rootView;
 	private Menu menu_settings;
-	 
+	private Boolean can_invoice=false;
 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
@@ -49,7 +50,14 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 	 public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		  menu.clear();
 		  getActivity().getMenuInflater().inflate(R.menu.base, menu);		
-		  menu_settings=menu;
+		  MenuItem invoice_item = menu.findItem(R.id.invoice);
+			 
+		  if (can_invoice==true) {
+			  invoice_item.setVisible(true);
+		  }else {
+			  invoice_item.setVisible(false); 
+		  }
+ 
 		  super.onCreateOptionsMenu(menu, inflater); 
 		}
 	 
@@ -188,15 +196,12 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			/* Totals */
 			mFragmentTransaction.commit();
 			
-			/*Menu Item*/
-			MenuItem invoice_item = menu_settings.findItem(R.id.invoice);
-			 
-		//	if (order.get("can_invoice").toString()=="1"){
-				invoice_item.setVisible(true);
-				
-		//	}else {
-		//		invoice_item.setVisible(false);
-	//		}
+			/*Menu Item*/		 
+			if (order.get("can_invoice").toString().equals("1")){ 
+				can_invoice=true;						 
+			}else {
+				can_invoice=false;
+			}			 
 			getActivity().invalidateOptionsMenu();
 			/*Menu Item*/
 		}	

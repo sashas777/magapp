@@ -93,6 +93,8 @@ public class BaseFragment extends Activity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
+ 
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
@@ -101,6 +103,8 @@ public class BaseFragment extends Activity implements
 			restoreActionBar();
 			return true;
 		}
+ 
+ 
 		return super.onCreateOptionsMenu(menu);
 	}
 
