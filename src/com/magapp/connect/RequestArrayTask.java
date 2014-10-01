@@ -6,6 +6,8 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
@@ -41,6 +43,9 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 		XMLRPCClient client = new XMLRPCClient(uri);		
 		
 		try {
+            if (!isOnline())
+                throw new XMLRPCException("No internet connection");
+
 			result_info = (Object[]) client.callEx("call", new Object[] { MagAuth.getSession(), RequestCallBack.GetApiRoute(), params[0] });
 			return result_info;
 		} catch (XMLRPCException e) {
@@ -54,14 +59,19 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 		 
 		if ( result.length > 0 && result[0] instanceof XMLRPCException) {						
 			HandleError((XMLRPCException) result[0]);
-		} else {		
+		} else {
+            Log.e("Sashas",Integer.toString(result.length));
 			RequestCallBack.doPostExecute(result);	
 		}
 	}	
 	
 	public void HandleError(XMLRPCException error_obj) {
 		MagAuth.setSession(null);
-		MagAuth auth=new MagAuth(this,  activity);			 
+        if (!error_obj.getMessage().toString().equals("No internet connection")) {
+            MagAuth auth = new MagAuth(this, activity);
+        }else{
+            RequestCallBack.RequestFailed(error_obj.getMessage().toString());
+        }
 	}	
 	
 	public void SessionReturned(String result, Boolean status){
@@ -75,5 +85,14 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	public void ShowProgressBar(){
 		
 	}
-	
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
+
 }
