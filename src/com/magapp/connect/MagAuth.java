@@ -21,12 +21,16 @@ import com.magapp.main.NewOrderService;
 public class MagAuth implements FinishLogin{
  	
 	private  String   accountType = "com.magapp.main";
+    private  static String   static_accountType = "com.magapp.main";
 	private  String desired_preferense_file = "magapp";
+    private  static String static_desired_preferense_file = "magapp";
 	private  static String url;
 	private  static String api_session;
 	private  String api_username = null;
-	private  String api_password = null;	
-	private Context activity;
+	private  String api_password = null;
+    private  static String static_api_username = null;
+    private  static String static_api_password = null;
+    private Context activity;
 	private LoginTask task;
 	 
 	GetSession GetSessionCallBack;
@@ -41,28 +45,38 @@ public class MagAuth implements FinishLogin{
 		else		
 			login();	 		
 	}
- 
+
+    public MagAuth(Context act ) {
+        activity=act;
+        getCredentials();
+    }
+
+
+    public void getCredentials(){
+        SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
+        String selected_account_name = settings.getString("selected_account_name", null);
+        AccountManager manager = AccountManager.get(activity);
+        Account[] accounts = manager.getAccountsByType(accountType);
+		/* Login with account specified */
+        for (int i = 0; i < accounts.length; i++) {
+            Account account = accounts[i];
+            if (selected_account_name.equals(account.name)) {
+                api_username = manager.getUserData(account, "username");
+                api_password = manager.getPassword(account);
+                url = manager.getUserData(account, "store_url");
+                break;
+            }
+        }
+        if (url!=null) {
+            url = url.concat("/index.php/api/xmlrpc/");
+        }
+    }
 	
 	public void login() {
-		 
-		SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
-		String selected_account_name = settings.getString("selected_account_name", null);		
-		AccountManager manager = AccountManager.get(activity);
-		Account[] accounts = manager.getAccountsByType(accountType);
-		/* Login with account specified */
-		for (int i = 0; i < accounts.length; i++) {
-			Account account = accounts[i];
-			if (selected_account_name.equals(account.name)) {
-				api_username = manager.getUserData(account, "username");
-				api_password = manager.getPassword(account);
-				url = manager.getUserData(account, "store_url");
-				break;
-			}
-		}
-		
+
+        getCredentials();
 		
 		if (api_username!=null && api_password!=null && url!=null && isOnline()) {
-			url = url.concat("/index.php/api/xmlrpc/");
 			task = new LoginTask(this,  api_username, api_password,url);
 			task.execute(); 
 		}else if (!isOnline() && !(activity instanceof NewOrderService)) {
@@ -97,7 +111,11 @@ public class MagAuth implements FinishLogin{
  
 	 }	
 		 
-	public static String getApiUrl(){
+	public static String getApiUrl(Context act){
+        if (url.length()<1) {
+            new MagAuth(act).getCredentials();
+        }
+
 		return url;
 	}
 	

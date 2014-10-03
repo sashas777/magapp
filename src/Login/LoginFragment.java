@@ -50,7 +50,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		 progressBar.setVisibility(View.INVISIBLE);
 		 if (status) {
 			 session=ses;
-			 url=auth.getApiUrl();
+			 url=auth.getApiUrl(getActivity());
 			 /* Log.e("Sashas","returned - "+session); */
 			 auth.makeToast("You are logged in");
 			 ShowSales();

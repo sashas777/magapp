@@ -39,7 +39,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 	
 		Object result_info;
 		stored_params=params;
-		URI uri = URI.create(MagAuth.getApiUrl());
+		URI uri = URI.create(MagAuth.getApiUrl(activity));
 		XMLRPCClient client = new XMLRPCClient(uri);		
 		
 		try {
@@ -49,7 +49,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 			return result_info;
 		} catch (XMLRPCException e) {
 			Log.e("Sashas", e.getMessage());
-			return new Object[] {e};
+			return e;
 		}
 	}
 
@@ -59,7 +59,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 		if (result instanceof XMLRPCException) {			 
 			HandleError((XMLRPCException) result);
 		} else {
-			RequestCallBack.doPostExecute(result);	
+			RequestCallBack.doPostExecute(result);
 		}
 	}	
 	
@@ -67,6 +67,8 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 		MagAuth.setSession(null);
         if (!error_obj.getMessage().toString().equals("No internet connection")) {
             MagAuth auth = new MagAuth(this, activity);
+        }else {
+            RequestCallBack.RequestFailed("No internet connection");
         }
 
 	}	

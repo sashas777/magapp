@@ -39,7 +39,7 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	
 		Object[] result_info;
 		stored_params=params;
-		URI uri = URI.create(MagAuth.getApiUrl());
+		URI uri = URI.create(MagAuth.getApiUrl(activity));
 		XMLRPCClient client = new XMLRPCClient(uri);		
 		
 		try {

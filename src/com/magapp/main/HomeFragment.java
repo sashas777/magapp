@@ -327,6 +327,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	}
 
 	public void SetChartData(Object data) {
+
 		HashMap data_map = (HashMap) data;
  
 		OrdersData = (Object[]) data_map.get("orders");
@@ -335,6 +336,6 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		AmountsData = (Object[]) data_map.get("amounts");
 		AddAmountsSpinner();			 
 	}
- 
+
  
 }
