@@ -61,8 +61,6 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 		  super.onCreateOptionsMenu(menu, inflater); 
 		}
 	 
- 
-	 
 		public void onPreExecute(){		
 			ProgressBar progressBar =(ProgressBar)  getActivity().findViewById(R.id.progressBar1);
 			progressBar.setVisibility(View.VISIBLE);
