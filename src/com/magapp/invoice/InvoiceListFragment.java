@@ -31,25 +31,20 @@ import com.magapp.main.R;
 public class InvoiceListFragment extends ListFragment implements RequestArrayInterface     {  
 	
 	public View rootView;
-	 
+	 private  int order_id;
 	 private ArrayList<HashMap<String, String>> InvoiceList;	 
 	 private InvoiceListAdapter adapter;
 	 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.invoice_list, null);
-			
-			//String[] values = new String[] { "Android", "iPhone", "WindowsMobile","Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X","Linux", "OS/2", "aa","sdd","ccc" };
-			//ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
-			
+
 			InvoiceList = new ArrayList<HashMap<String, String>>(); 
- 
-			 
+
 			adapter=new InvoiceListAdapter(getActivity(), InvoiceList);			
 			setListAdapter(adapter);
-			//getActiviy().getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		    int order_id=((OrderInfoActivity)getActivity()).GetOrderId();
+		    order_id=((OrderInfoActivity)getActivity()).GetOrderId();
 			RequestArrayTask task;	 
 			Vector params = new Vector();		 
 			HashMap map_filter = new HashMap(); 
@@ -74,7 +69,9 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 		 }			
  	
 		 public void AddIvoices(Object[]  invoices){
-			 
+
+
+
 			for (Object o : invoices) {
 				HashMap map = (HashMap) o;
 				
@@ -127,7 +124,16 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				list_map.put("increment_id",increment_id); 	
 				InvoiceList.add(list_map);
  				 
-			}			 
+			}
+
+             if (invoices.length<1) {
+                 HashMap<String, String> list_map = new HashMap<String, String>();
+                 list_map.put("invoice_number","There are no invoices for this order yet.");
+                 list_map.put("description","");
+                 list_map.put("increment_id","");
+                 InvoiceList.add(list_map);
+             }
+
 			adapter.notifyDataSetChanged();
 		 }
 
@@ -149,7 +155,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 	  @Override
 	  public void onListItemClick(ListView l, View v, int position, long id) {
 		  String selected = ((TextView) v.findViewById(R.id.increment_id)).getText().toString();
-		  Toast.makeText(getActivity(),selected,Toast.LENGTH_LONG).show();
+		  Toast.makeText(getActivity(),selected+Integer.toString(order_id),Toast.LENGTH_LONG).show();
 	  }	 
 }
 

@@ -79,12 +79,9 @@
 	        style="?android:attr/progressBarStyleLarge"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentTop="true"
 	        android:layout_centerHorizontal="true"
 	        android:layout_centerVertical="true"
-	       android:gravity="center_vertical|center_horizontal"
-	        android:indeterminate="true"
+	        android:gravity="center_vertical|center_horizontal"
 	        android:visibility="invisible"
 	        android:indeterminateBehavior="cycle" />
  	</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.magapp.main;
+package com.magapp.invoice;
 
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
@@ -13,17 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.Toast;
-
-import com.magapp.invoice.InvoiceListFragment;
+import com.magapp.main.R;
+import com.magapp.main.SalesActivity;
 import com.magapp.order.OrderInfoFragment;
 
-public class OrderInfoActivity extends Activity implements OnNavigationListener {
+public class InvoiceInfoActivity extends Activity implements OnNavigationListener {
 
-	private int order_id;
+	private int order_id,invoice_incerement;
 	 
 	private TableLayout prodlist;
 	 
-	String[] actions = new String[] { "Order", "Invoice", "Comments" };
+	String[] actions = new String[] { "Invoice", "Comments" };
 	private CharSequence mTitle;
 	public Integer menu_id = -1; 
 
@@ -31,7 +31,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orderinfo);
 
-	 
+
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
@@ -41,7 +41,8 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle vars = getIntent().getExtras();	 
-		order_id = vars.getInt("order_id");		 
+		order_id = vars.getInt("order_id");
+        invoice_incerement= vars.getInt("increment_id");
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new OrderInfoFragment();	
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
@@ -62,13 +63,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		Fragment screen = new Fragment();
 		switch (itemPosition) {
 		case 0:
-			screen = new OrderInfoFragment();		
-			break;
-		case 1:
-			screen = new InvoiceListFragment();			 
-			break;
-		case 2:
-			ShowMessage("Coming Soon");
+            ShowMessage("Coming Soon");
 			break;
 		}
 		

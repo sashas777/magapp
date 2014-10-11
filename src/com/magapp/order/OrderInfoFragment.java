@@ -49,7 +49,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 	 @Override
 	 public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		  menu.clear();
-		  getActivity().getMenuInflater().inflate(R.menu.base, menu);		
+		  getActivity().getMenuInflater().inflate(R.menu.orderinfo_menu, menu);
 		  MenuItem invoice_item = menu.findItem(R.id.invoice);
 			 
 		  if (can_invoice==true) {
