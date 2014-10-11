@@ -47,7 +47,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	}
 	 
 	 public void SessionReturned(String ses, Boolean status){
-		 progressBar.setVisibility(View.INVISIBLE);
+
+		    progressBar.setVisibility(View.INVISIBLE);
 		 if (status) {
 			 session=ses;
 			 url=auth.getApiUrl(getActivity());

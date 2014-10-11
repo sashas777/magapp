@@ -42,8 +42,10 @@ public class MagAuth implements FinishLogin{
 		
 		if (getSession()!=null && isOnline()) 
 			GetSessionCallBack.SessionReturned(getSession(), true);
-		else		
-			login();	 		
+		else {
+            setSession(null);
+            login();
+        }
 	}
 
     public MagAuth(Context act ) {
@@ -112,7 +114,7 @@ public class MagAuth implements FinishLogin{
 	 }	
 		 
 	public static String getApiUrl(Context act){
-        if (url.length()<1) {
+        if (url!=null && url.length()<1) {
             new MagAuth(act).getCredentials();
         }
 

@@ -60,7 +60,7 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 		if ( result.length > 0 && result[0] instanceof XMLRPCException) {						
 			HandleError((XMLRPCException) result[0]);
 		} else {
-            Log.e("Sashas",Integer.toString(result.length));
+
 			RequestCallBack.doPostExecute(result);	
 		}
 	}	

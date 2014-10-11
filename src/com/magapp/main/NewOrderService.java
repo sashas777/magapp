@@ -86,11 +86,8 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 		Vector params = new Vector();		
 		params.add(map_filter);
 		task = new RequestArrayTask(this, this);
-		task.execute(params);				
-		 
-		
+		task.execute(params);
 		// stopSelf();
-
 	}
 	
 	
