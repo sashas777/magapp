@@ -21,7 +21,9 @@ import android.widget.ProgressBar;
 
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
+import com.magapp.invoice.InvoiceOrderActivity;
 import com.magapp.main.LoginActivity;
+import com.magapp.main.NavigationDrawerFragment;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 
@@ -31,11 +33,14 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 	public View rootView;
 	private Menu menu_settings;
 	private Boolean can_invoice=false;
+    private int order_increment_id,order_id;
+    private Bundle order_items=new Bundle();
+
 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.order_info_fragment, null);
-			int order_id=((OrderInfoActivity)getActivity()).GetOrderId();
+			order_id=((OrderInfoActivity)getActivity()).GetOrderId();
 			Vector params = new Vector();	 
 			RequestTask task;
 			HashMap map_filter = new HashMap(); 
@@ -93,6 +98,9 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			FragmentManager fragmentManager = getFragmentManager();
 			FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
+            /*Invoice Menu*/
+            order_increment_id=Integer.parseInt(order.get("increment_id").toString());
+            /*Invoice Menu*/
 			/* Main Info */
 			params = new Bundle();
 			String cardt_title = order.get("order_title").toString();
@@ -177,6 +185,9 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 				items_array.add(item_data);
 			}
 			params.putSerializable("items", items_array);
+            /* Invoice Menu */
+            order_items.putSerializable("items", items_array);
+            /*Invoice Menu*/
 			Fragment items_card = new Fragment();
 			items_card = new ItemsFragment();
 			items_card.setArguments(params);
@@ -201,7 +212,21 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			}			 
 			getActivity().invalidateOptionsMenu();
 			/*Menu Item*/
-		}	
+		}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.invoice) {
+            Intent InvoiceOrder = new Intent(getActivity(), InvoiceOrderActivity.class);
+            InvoiceOrder.putExtra("order_id", order_id);
+            InvoiceOrder.putExtra("order_items", order_items);
+            InvoiceOrder.putExtra("order_increment_id", order_increment_id);
+            getActivity().startActivity(InvoiceOrder);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 		
  
 	 

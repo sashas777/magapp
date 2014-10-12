@@ -38,6 +38,7 @@
 
         <activity android:name="OrderInfoActivity"  android:label="@string/app_name" />
         <activity android:name="com.magapp.invoice.InvoiceInfoActivity"  android:label="@string/app_name" />
+        <activity android:name="com.magapp.invoice.InvoiceOrderActivity"/>
 
         <service android:name="NewOrderService"></service>
         <receiver android:name="BootBroadReceiv">
