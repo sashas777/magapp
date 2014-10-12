@@ -67,7 +67,6 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         case 1:
             ShowMessage("Coming Soon");
             break;
-
 		}
 		
 		fragmentManager.beginTransaction().replace(R.id.container, screen)

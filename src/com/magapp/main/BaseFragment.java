@@ -56,7 +56,7 @@ public class BaseFragment extends Activity implements
 			screen = new SalesActivity();
 			break;
 		case 2:
-			ShowMessage("Coming Soon");
+            screen= new SettingsFragment();
 			break;
 
 		}
