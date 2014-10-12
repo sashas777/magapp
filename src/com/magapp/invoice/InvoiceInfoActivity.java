@@ -20,8 +20,8 @@ import com.magapp.order.OrderInfoFragment;
 
 public class InvoiceInfoActivity extends Activity implements OnNavigationListener {
 
-	private int order_id,invoice_incerement;
-	 
+	private int order_id,invoice_increment;
+
 	private TableLayout prodlist;
 	 
 	String[] actions = new String[] { "Invoice", "Comments" };
@@ -40,7 +40,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
 
 		Bundle vars = getIntent().getExtras();	 
 		order_id = vars.getInt("order_id");
-        invoice_incerement= vars.getInt("increment_id");
+        invoice_increment= Integer.parseInt(vars.getString("increment_id"));
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new InvoiceInfoFragment();
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
@@ -48,7 +48,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
 	}
  
 	public int GetInvoiceIncrementId(){
-		return invoice_incerement;
+		return invoice_increment;
 	}
 
 	/* Additional for actionbar */
@@ -61,8 +61,8 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
 		Fragment screen = new Fragment();
 		switch (itemPosition) {
 		case 0:
-            ShowMessage("Coming Soon");
-			break;
+            screen = new InvoiceInfoFragment();
+            break;
 
         case 1:
             ShowMessage("Coming Soon");

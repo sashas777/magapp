@@ -91,8 +91,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 
 			Bundle params = new Bundle();
 			FragmentManager fragmentManager = getFragmentManager();
-			FragmentTransaction mFragmentTransaction = fragmentManager
-					.beginTransaction();
+			FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
 			/* Main Info */
 			params = new Bundle();
