@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import android.widget.TableLayout;
 import android.widget.Toast;
+import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.main.SalesActivity;
 import com.magapp.order.OrderInfoFragment;
@@ -31,26 +32,23 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orderinfo);
 
-
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
-
 		getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle vars = getIntent().getExtras();	 
 		order_id = vars.getInt("order_id");
         invoice_incerement= vars.getInt("increment_id");
 		FragmentManager fragmentManager = getFragmentManager();
-		Fragment screen = new OrderInfoFragment();	
+		Fragment screen = new InvoiceInfoFragment();
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
-		.addToBackStack(null).commit();		
+		.addToBackStack(null).commit();
 	}
  
-	public int GetOrderId(){
-		return order_id;
+	public int GetInvoiceIncrementId(){
+		return invoice_incerement;
 	}
 
 	/* Additional for actionbar */
@@ -65,6 +63,11 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
 		case 0:
             ShowMessage("Coming Soon");
 			break;
+
+        case 1:
+            ShowMessage("Coming Soon");
+            break;
+
 		}
 		
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
@@ -77,7 +80,9 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpTo(this, new Intent(this, SalesActivity.class));
+            Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
+            OrderInfo.putExtra("order_id", order_id);
+			NavUtils.navigateUpTo(this, OrderInfo);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

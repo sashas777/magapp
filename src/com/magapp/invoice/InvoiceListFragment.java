@@ -155,7 +155,13 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 	  @Override
 	  public void onListItemClick(ListView l, View v, int position, long id) {
 		  String selected = ((TextView) v.findViewById(R.id.increment_id)).getText().toString();
-		  Toast.makeText(getActivity(),selected+Integer.toString(order_id),Toast.LENGTH_LONG).show();
+
+          Intent Invoice = new Intent(getActivity(), InvoiceInfoActivity.class);
+          Invoice.putExtra("order_id", order_id);
+          Invoice.putExtra("increment_id", selected);
+          getActivity().startActivity(Invoice);
+         // getActivity().finish();
+
 	  }	 
 }
 

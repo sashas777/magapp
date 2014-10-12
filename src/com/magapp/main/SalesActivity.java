@@ -212,7 +212,7 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 	public void ShowOrderInfo(int OrderId) {
 
 		Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
-		OrderInfo.putExtra("order_id", OrderId);
+	 	OrderInfo.putExtra("order_id", OrderId);
 		getActivity().startActivity(OrderInfo);
 		// getActivity().finish();
 	}
