@@ -90,50 +90,6 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		this.startActivity(Login);
 		getActivity().finish();		 
 	 }
-	 
-	public void AddAmountsSpinner() {
-		Spinner AmountsPlotOptions = (Spinner) rootView.findViewById(R.id.AmountsPlotOptions);
-		String[] plot_item_data = new String[] { "Last 24 Hours","Last 7 Days", "Current Month", "YTD", "2YTD" };
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.custom_spinner_row, plot_item_data);
-		dataAdapter.setDropDownViewResource(R.layout.custom_spinner_row);
-		AmountsPlotOptions.setAdapter(dataAdapter);
-
-		AmountsPlotOptions
-				.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-					public void onItemSelected(AdapterView<?> arg0, View view,
-							int position, long id) {
-						if (AmountsData != null) {
-							switch (position) {
-							case 0:
-								AmountsDateFormat = new SimpleDateFormat("hha");
-								break;
-							case 1:
-								AmountsDateFormat = new SimpleDateFormat("MM-dd");
-								break;
-							case 2:
-								AmountsDateFormat = new SimpleDateFormat("MM-dd");
-								break;
-							case 3:
-								AmountsDateFormat = new SimpleDateFormat("MM-yyyy");
-								break;
-							case 4:
-								AmountsDateFormat = new SimpleDateFormat("MM-yyyy");
-								break;
-							}
-
-							PrepareChartData((HashMap) AmountsData[position],"amounts");
-						}
-
-					}
-
-					public void onNothingSelected(AdapterView<?> arg0) {
-					}
-				});
-
-	}
-
-
 
 	public void AddOrdersSpinner() {
 		Spinner OrdersPlotOptions = (Spinner) rootView
@@ -172,8 +128,8 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 								break;
 							}
 
-							PrepareChartData((HashMap) OrdersData[position],
-									"orders");
+							PrepareChartData((HashMap) OrdersData[position],"orders");
+                            PrepareChartData((HashMap) AmountsData[position],"amounts");
 						}
 
 					}
@@ -205,10 +161,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 			AddOrdersPlot(y_row, x_row);
 		} else if (type == "amounts") {
 			AddAmountsPlot(y_row, x_row);
-			Revenue = (TextView) rootView.findViewById(R.id.AmountsRevenueValue);
-			Tax = (TextView) rootView.findViewById(R.id.AmountsTaxValue);
-			Shipping = (TextView) rootView.findViewById(R.id.AmountsShippingValue);
-			Qty = (TextView) rootView.findViewById(R.id.AmountsQtyValue);
+
 		}
 
 		Revenue.setText(totals_obj[0].toString());
@@ -336,7 +289,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		AddOrdersSpinner();			 
  
 		AmountsData = (Object[]) data_map.get("amounts");
-		AddAmountsSpinner();			 
+
 	}
 
  
