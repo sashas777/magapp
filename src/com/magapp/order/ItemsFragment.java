@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,8 @@ public class ItemsFragment extends Fragment {
 		String PriceText=new String();		 		 
 		percentFormat.setMaximumFractionDigits(3);
 		//PriceText="Price: "+format.format(Double.valueOf(item_data.get("price").toString()).doubleValue())+"\n";
+
+        if (item_data.get("tax_amount").toString()!=null && !item_data.get("tax_amount").toString().isEmpty())
 		PriceText="Tax Amount: "+format.format(Double.valueOf(item_data.get("tax_amount").toString()).doubleValue())+"\n";
 		//PriceText+="Tax Percent: "+percentFormat.format(Double.valueOf(item_data.get("tax_percent").toString()).doubleValue()/100)+"\n";
 		if (Double.valueOf(item_data.get("discount_amount").toString()).doubleValue()!=0)
