@@ -21,9 +21,11 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.magapp.connect.GetSession;
+import com.magapp.connect.MagAuth;
 import com.magapp.main.R;
 
-public class AccountsFragment  extends Fragment    implements  OnItemClickListener  {
+public class AccountsFragment  extends Fragment    implements  OnItemClickListener,GetSession {
 	
 	 ListView dataList;
 	 View rootView;
@@ -113,7 +115,10 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	     SharedPreferences.Editor editor = settings.edit();
 	     editor.putString("selected_account_name", AccountNames[dataList.getCheckedItemPosition()]);
 	     editor.commit();
-	     
+
+
+        MagAuth auth=new MagAuth(this,getActivity());
+        auth.setSession(null);
 		 FragmentManager fragmentManager = getFragmentManager();  	  
 		 fragmentManager.beginTransaction()
          .replace(R.id.container,new LoginFragment())           
@@ -121,6 +126,10 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
          .commit();
 		 
 	}
+
+    public void SessionReturned(String ses, Boolean status){
+    }
+    public void ShowProgressBar() { }
 	
 	@Override
 	 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
