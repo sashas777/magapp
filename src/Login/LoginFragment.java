@@ -1,5 +1,6 @@
 package Login;
 
+import android.util.Log;
 import org.xmlrpc.android.XMLRPCClient;
 
 import android.accounts.Account;
@@ -41,19 +42,23 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			Button AddAccountButton = (Button) rootView.findViewById(R.id.AddAccount);
 			LoginButton.setOnClickListener(this);
 			AddAccountButton.setOnClickListener(this);
-			auth=new MagAuth(this,getActivity()); 
-			 
+
+			auth=new MagAuth(this,getActivity());
+
 			return rootView;
 	}
 	 
 	 public void SessionReturned(String ses, Boolean status){
 
+         if (progressBar!=null)
 		    progressBar.setVisibility(View.INVISIBLE);
 		 if (status) {
 			 session=ses;
 			 url=auth.getApiUrl(getActivity());
-			 /* Log.e("Sashas","returned - "+session); */
-			 auth.makeToast("You are logged in");
+
+			 /*Log.e("Sashas", "returned - " + session);*/
+            /* @todo something happening when click back  and then on the icon.*/
+			/*  auth.makeToast("You are logged in"); */
 			 ShowSales();
 		 }else {
 			 auth.makeToast(ses);
@@ -75,7 +80,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		}
 
 	 public void ShowSales() {	 	
-		 Intent Base = new Intent(getActivity(),BaseFragment.class);	 
+		 Intent Base = new Intent(getActivity(),BaseFragment.class);
+
 		 this.startActivity(Base);
 		 getActivity().finish();
 	  }

@@ -84,6 +84,20 @@ public class BaseFragment extends Activity implements
 		}
 	}
 
+    @Override
+    public void onBackPressed(){
+        /*Issue on the home fragment when click back*/
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 1) {
+
+            fm.popBackStack();
+        } else {
+            finish();
+           // super.onBackPressed();
+        }
+
+    }
+
 	public void restoreActionBar() {
 		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);

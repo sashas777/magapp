@@ -133,6 +133,8 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 
 	}
 
+
+
 	public void AddOrdersSpinner() {
 		Spinner OrdersPlotOptions = (Spinner) rootView
 				.findViewById(R.id.OrdersPlotOptions);
