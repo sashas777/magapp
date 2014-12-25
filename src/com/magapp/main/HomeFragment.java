@@ -5,9 +5,7 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +46,6 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 
 	private View rootView;
 	private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hha");
-	private SimpleDateFormat AmountsDateFormat = new SimpleDateFormat("hha");
 	private Object[] AmountsData, OrdersData;
 	  
 	@Override
@@ -175,20 +173,19 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 
 		XYPlot OrdersPlot = (XYPlot) rootView.findViewById(R.id.OrdersPlot);
 		OrdersPlot.clear();
-		XYSeries series2 = new SimpleXYSeries(Arrays.asList(order_dates),
-				Arrays.asList(orders_num), "");
+
+		XYSeries series2 = new SimpleXYSeries(Arrays.asList(order_dates), Arrays.asList(orders_num), "");
 
 		OrdersPlot.setBorderStyle(Plot.BorderStyle.SQUARE, null, null);
 		OrdersPlot.setPlotMargins(0, 0, 0, 0);
 
-		SizeMetrics sm = new SizeMetrics(0, SizeLayoutType.FILL, 0,
-				SizeLayoutType.FILL);
+		SizeMetrics sm = new SizeMetrics(0, SizeLayoutType.FILL, 0, SizeLayoutType.FILL);
 		OrdersPlot.getGraphWidget().setSize(sm);
-		OrdersPlot.getGraphWidget().position(0, XLayoutStyle.RELATIVE_TO_LEFT,
-				0, YLayoutStyle.RELATIVE_TO_TOP, AnchorPosition.LEFT_TOP);
+		OrdersPlot.getGraphWidget().position(0, XLayoutStyle.RELATIVE_TO_LEFT, 0, YLayoutStyle.RELATIVE_TO_TOP, AnchorPosition.LEFT_TOP);
 
 		// OrdersPlot.setTicksPerRangeLabel(1);
-		// OrdersPlot.setDomainStep(XYStepMode.SUBDIVIDE, orders_num.length);
+        /*test*/
+		/* OrdersPlot.setDomainStep(XYStepMode.SUBDIVIDE, 12); */
 		OrdersPlot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, 1);
 		// mySimpleXYPlot.setRangeBoundaries(0, BoundaryMode.FIXED, 6,
 		// BoundaryMode.GROW);
@@ -211,8 +208,11 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 			@Override
 			public StringBuffer format(Object obj, StringBuffer toAppendTo,
 					FieldPosition pos) {
-				java.util.Date date = new java.util.Date(((Number) obj)
-						.longValue() * 1000);
+				java.util.Date date = new java.util.Date(((Number) obj).longValue()*1000);
+
+
+                OrdersDateFormat.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+
 				return OrdersDateFormat.format(date, toAppendTo, pos);
 			}
 
@@ -268,7 +268,8 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 					FieldPosition pos) {
 				java.util.Date date = new java.util.Date(((Number) obj)
 						.longValue() * 1000);
-				return AmountsDateFormat.format(date, toAppendTo, pos);
+                OrdersDateFormat.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+				return OrdersDateFormat.format(date, toAppendTo, pos);
 			}
 
 			@Override
