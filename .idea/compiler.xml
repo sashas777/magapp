@@ -2,6 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
+    <excludeFromCompile>
+      <file url="file://$PROJECT_DIR$/res/layout/order_address.xml" />
+      <file url="file://$PROJECT_DIR$/res/layout/home.xml" />
+    </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
@@ -20,4 +24,3 @@
     </annotationProcessing>
   </component>
 </project>
-
