@@ -1,192 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollViewHome"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
- 
-<RelativeLayout 
-    android:layout_width="wrap_content"       
-    android:layout_height="wrap_content" >
 
-    <RelativeLayout
-        android:id="@+id/OrdersLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingTop="0dp"  >
-    
-        <TextView
-            android:id="@+id/OrdersChartTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-             
-            android:gravity="center_horizontal|bottom"
-            android:paddingBottom="5dp"
-            android:text="@string/Orders"
-            android:textSize="15sp" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
         <Spinner
-            android:id="@+id/OrdersPlotOptions"
-            android:layout_width="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
+                android:id="@+id/OrdersPlotOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1"
+                android:layout_gravity="right"
+                android:spinnerMode="dropdown"
+                android:gravity="center|left|end"
+                android:dropDownWidth="wrap_content"
+                android:focusable="true"
+                android:layout_above="@+id/chart2"/>
+        <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart2"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_weight="1"
+                android:layout_above="@+id/chart" android:layout_alignParentStart="true"/>
 
-            android:layout_marginTop="-0.8dp"
-            android:layout_weight="0.53"
-            android:layout_height="33dp"
-            android:layout_gravity="right"
-            android:spinnerMode="dropdown"
-            android:layout_alignParentTop="true"
-
-            android:gravity="center|right|end" android:dropDownWidth="wrap_content"
-            android:focusable="true" android:layout_above="@+id/OrdersPlot"
-
-            android:layout_marginLeft="150px"
-
-                />
-        <com.androidplot.xy.XYPlot
-            android:id="@+id/OrdersPlot"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/OrdersChartTitle"
-            androidPlot.BackgroundPaint.Color="#FFFFFF"
-            androidPlot.graphWidget.BackgroundPaint.color="#FFFFFF"
-            androidPlot.graphWidget.DomainLabelPaint.color="#000000"
-            androidPlot.graphWidget.DomainOriginLinePaint.color="#FFFFFF"
-            androidPlot.graphWidget.GridBackgroundPaint.color="#FFFFFF"
-            androidPlot.graphWidget.RangeLabelPaint.color="#000000"
-            androidPlot.graphWidget.RangeOriginLinePaint.color="#FFFFFF"
-            androidPlot.graphWidget.gridMarginBottom="10"
-            androidPlot.graphWidget.gridPaddingBottom="5"
-            androidPlot.graphWidget.gridPaddingRight="10"
-            androidPlot.graphWidget.gridPaddingTop="10"
-            androidPlot.graphWidget.marginBottom="10dp"
-            androidPlot.graphWidget.rangeLabelPaint.textSize="8dp"
-            androidPlot.graphWidget.domainLabelPaint.textSize="8dp"
-            androidPlot.graphWidget.marginRight="10dp"
-            androidPlot.graphWidget.plotPaddingTop="10"
-            androidPlot.legendWidget.positionMetrics.anchor="left_top" />
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_weight="1"
+            android:layout_above="@+id/OrdersStats"/>
 
         <TableLayout
-            android:id="@+id/OrdersStats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/OrdersPlot"           
-            android:layout_marginTop="5dip"            
-            android:background="@drawable/table_border"
-            android:shrinkColumns="1" >
+                android:id="@+id/OrdersStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="8dp"
+                android:background="@drawable/table_border"
+                android:shrinkColumns="1" >
 
-            <TableRow android:layout_gravity="center|center_horizontal" >
+                <TableRow android:layout_gravity="center|center_horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/OrdersRevenueTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_weight="1"
-                    android:paddingLeft="5dp"
-                    android:text="@string/Revenue"
-                    android:textColor="#040404"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
+                        <TextView
+                                android:id="@+id/OrdersRevenueTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_horizontal"
+                                android:layout_weight="1"
+                                android:paddingLeft="5dp"
+                                android:text="@string/Revenue"
+                                android:textColor="#040404"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
 
-                <TextView
-                    android:id="@+id/OrdersTaxTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/Tax"
-                    android:textColor="#040404"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
+                        <TextView
+                                android:id="@+id/OrdersTaxTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:text="@string/Tax"
+                                android:textColor="#040404"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
 
-                <TextView
-                    android:id="@+id/OrdersShippingTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:singleLine="false"
-                    android:text="@string/Shipping"
-                    android:textColor="#040404"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
+                        <TextView
+                                android:id="@+id/OrdersShippingTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:singleLine="false"
+                                android:text="@string/Shipping"
+                                android:textColor="#040404"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
 
-                <TextView
-                    android:id="@+id/OrdersQtyTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:singleLine="false"
-                    android:text="@string/Qty"
-                    android:textColor="#040404"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
-            </TableRow>
+                        <TextView
+                                android:id="@+id/OrdersQtyTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:singleLine="false"
+                                android:text="@string/Qty"
+                                android:textColor="#040404"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
+                </TableRow>
 
-            <TableRow>
+                <TableRow android:layout_width="wrap_content" android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/OrdersRevenueValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_weight="1"
-                    android:text="@string/PricePlaceholder"
-                    android:textColor="#EA7601"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
+                        <TextView
+                                android:id="@+id/OrdersRevenueValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_horizontal"
+                                android:layout_weight="1"
+                                android:text="@string/PricePlaceholder"
+                                android:textColor="#EA7601"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
 
-                <TextView
-                    android:id="@+id/OrdersTaxValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_weight="1"
-                    android:text="@string/PricePlaceholder"
-                    android:textColor="#EA7601"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
+                        <TextView
+                                android:id="@+id/OrdersTaxValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_horizontal"
+                                android:layout_weight="1"
+                                android:text="@string/PricePlaceholder"
+                                android:textColor="#EA7601"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
 
-                <TextView
-                    android:id="@+id/OrdersShippingValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_weight="1"
-                    android:text="@string/PricePlaceholder"
-                    android:textColor="#EA7601"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
+                        <TextView
+                                android:id="@+id/OrdersShippingValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_horizontal"
+                                android:layout_weight="1"
+                                android:text="@string/PricePlaceholder"
+                                android:textColor="#EA7601"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
 
-                <TextView
-                    android:id="@+id/OrdersQtyValue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_weight="1"
-                    android:singleLine="false"
-                    android:text="@string/NumberPlaceholder"
-                    android:textColor="#EA7601"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:typeface="sans" />
-            </TableRow>
+                        <TextView
+                                android:id="@+id/OrdersQtyValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|center_horizontal"
+                                android:layout_weight="1"
+                                android:singleLine="false"
+                                android:text="@string/NumberPlaceholder"
+                                android:textColor="#EA7601"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                android:typeface="sans" />
+                </TableRow>
         </TableLayout>
 
 
-    </RelativeLayout>
-    <ProgressBar
+
+
+
+        <ProgressBar
             android:id="@+id/progressBar1"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
@@ -196,54 +166,6 @@
             android:gravity="center_vertical|center_horizontal"
             android:indeterminate="false"
             android:indeterminateBehavior="cycle" />
-    <RelativeLayout
-        android:id="@+id/AmountsLayout"
-        android:layout_below="@+id/OrdersLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="0dp"
-        >
 
-        <TextView
-            android:id="@+id/AmountsChartTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"         
-            android:gravity="center_horizontal|bottom"
-            android:paddingBottom="5dp"
-            android:text="@string/Amounts"
-            android:textSize="15sp" />
-
-        <com.androidplot.xy.XYPlot
-            android:id="@+id/AmountsPlot"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/AmountsChartTitle"
-            androidPlot.BackgroundPaint.Color="#FFFFFF"
-            androidPlot.graphWidget.BackgroundPaint.color="#FFFFFF"
-            androidPlot.graphWidget.DomainLabelPaint.color="#000000"
-            androidPlot.graphWidget.DomainOriginLinePaint.color="#FFFFFF"
-            androidPlot.graphWidget.GridBackgroundPaint.color="#FFFFFF"
-            androidPlot.graphWidget.RangeLabelPaint.color="#000000"
-            androidPlot.graphWidget.RangeOriginLinePaint.color="#FFFFFF"
-            androidPlot.graphWidget.gridMarginBottom="10"
-            androidPlot.graphWidget.gridPaddingBottom="5"
-            androidPlot.graphWidget.gridPaddingRight="10"
-            androidPlot.graphWidget.gridPaddingTop="10"
-             
-            androidPlot.graphWidget.marginBottom="10dp"
-            androidPlot.graphWidget.marginRight="10dp"
-            androidPlot.graphWidget.rangeLabelPaint.textSize="7dp"
-            androidPlot.graphWidget.domainLabelPaint.textSize="8dp"            
-            androidPlot.graphWidget.plotPaddingTop="10"
-            androidPlot.legendWidget.positionMetrics.anchor="left_top" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
-  
- 
-  </ScrollView>
+  </RelativeLayout>
  
