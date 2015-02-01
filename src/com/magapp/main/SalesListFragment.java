@@ -40,7 +40,7 @@ import android.widget.Toast;
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
 
-public class SalesActivity extends Fragment implements OnClickListener,RequestArrayInterface {
+public class SalesListFragment extends Fragment implements OnClickListener,RequestArrayInterface {
 
 
 	public TableLayout prodlist;
@@ -48,7 +48,7 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 	private int year;
 	private int month;
 	private int day;
-	private SalesActivity current_class;	 
+	private SalesListFragment current_class;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 

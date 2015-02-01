@@ -15,7 +15,7 @@ import android.widget.TableLayout;
 import android.widget.Toast;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
-import com.magapp.main.SalesActivity;
+import com.magapp.main.SalesListFragment;
 import com.magapp.order.OrderInfoFragment;
 
 public class InvoiceInfoActivity extends Activity implements OnNavigationListener {

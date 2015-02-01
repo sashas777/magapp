@@ -39,6 +39,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 	
 		Object result_info;
 		stored_params=params;
+		Log.e("Sashas",activity.toString());
 		URI uri = URI.create(MagAuth.getApiUrl(activity));
 		XMLRPCClient client = new XMLRPCClient(uri);		
 		

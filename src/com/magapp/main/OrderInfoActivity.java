@@ -83,7 +83,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpTo(this, new Intent(this, SalesActivity.class));
+			NavUtils.navigateUpTo(this, new Intent(this, SalesListFragment.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

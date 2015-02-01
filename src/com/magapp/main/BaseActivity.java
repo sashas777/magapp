@@ -53,7 +53,7 @@ public class BaseActivity extends Activity implements
 			screen = new HomeFragment();
 			break;
 		case 1:
-			screen = new SalesActivity();
+			screen = new SalesListFragment();
 			break;
 		case 2:
             screen= new SettingsFragment();
