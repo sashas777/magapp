@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 
 import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
-import com.magapp.main.BaseFragment;
+import com.magapp.main.BaseActivity;
 import com.magapp.main.R;
 
 public class LoginFragment  extends Fragment    implements  OnClickListener, GetSession  {
@@ -80,7 +80,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		}
 
 	 public void ShowSales() {	 	
-		 Intent Base = new Intent(getActivity(),BaseFragment.class);
+		 Intent Base = new Intent(getActivity(),BaseActivity.class);
 
 		 this.startActivity(Base);
 		 getActivity().finish();

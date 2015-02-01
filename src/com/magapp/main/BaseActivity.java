@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class BaseFragment extends Activity implements
+public class BaseActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	/**
@@ -97,6 +97,9 @@ public class BaseFragment extends Activity implements
         }
 
     }
+
+
+
 
 	public void restoreActionBar() {
 		ActionBar actionBar = getActionBar();

@@ -72,9 +72,10 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 		};  
 
 		 @Override
-		 public void doPostExecute(Object result) {		
-			ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-			progressBar.setVisibility(View.INVISIBLE); 	 		
+		 public void doPostExecute(Object result) {
+			 ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
+			 progressBar.setVisibility(View.INVISIBLE);
+
 			HashMap map = (HashMap) result;
 			FillData(map);
 		 }		

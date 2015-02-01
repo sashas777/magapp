@@ -88,7 +88,7 @@ public class SalesActivity extends Fragment implements OnClickListener,RequestAr
 	 }
 	 
 	 public void RequestFailed(String error) {
-		((BaseFragment)getActivity()).ShowMessage(error);
+		((BaseActivity)getActivity()).ShowMessage(error);
 		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
 		progressBar.setVisibility(View.INVISIBLE); 			
 		Intent Login = new Intent(getActivity(), LoginActivity.class);

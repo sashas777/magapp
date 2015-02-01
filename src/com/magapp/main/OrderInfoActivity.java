@@ -44,9 +44,10 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		order_id = vars.getInt("order_id");		 
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new OrderInfoFragment();	
-		fragmentManager.beginTransaction().replace(R.id.container, screen)
-		.addToBackStack(null).commit();		
+		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
 	}
+
+
  
 	public int GetOrderId(){
 		return order_id;
