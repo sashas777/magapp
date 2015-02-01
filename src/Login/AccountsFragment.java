@@ -118,7 +118,7 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 
 
         MagAuth auth=new MagAuth(this,getActivity());
-        auth.setSession(null);
+        auth.setSession(getActivity(),null);
 		 FragmentManager fragmentManager = getFragmentManager();  	  
 		 fragmentManager.beginTransaction()
          .replace(R.id.container,new LoginFragment())           

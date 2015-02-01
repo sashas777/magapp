@@ -40,10 +40,10 @@ public class MagAuth implements FinishLogin{
 		GetSessionCallBack = callback;
 		activity=act;
 		
-		if (getSession()!=null && isOnline()) 
-			GetSessionCallBack.SessionReturned(getSession(), true);
+		if (getSession(activity)!=null && isOnline())
+			GetSessionCallBack.SessionReturned(getSession(activity), true);
 		else {
-            setSession(null);
+            setSession(activity,null);
             login();
         }
 	}
@@ -105,9 +105,14 @@ public class MagAuth implements FinishLogin{
 		 	Log.e("Sashas",res);
 			GetSessionCallBack.SessionReturned(res, false);
 	 	} else if (session instanceof Exception){
+		 	Log.e("Sashas", ((Exception) session).getMessage().toString());
 	 		GetSessionCallBack.SessionReturned(((Exception) session).getMessage().toString(), false);
-		} else if (session instanceof  String) { 
-			api_session=session.toString();
+		} else if (session instanceof  String) {
+			SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("session_id", session.toString());
+			editor.commit();
+			/* api_session=session.toString(); */
 			GetSessionCallBack.SessionReturned(session.toString(), true);			 
 		}
  
@@ -121,13 +126,20 @@ public class MagAuth implements FinishLogin{
 		return url;
 	}
 	
-	public static void setSession(String ses){
-		api_session=ses;		 
+	public static void setSession(Context act,String ses){
+		SharedPreferences settings = act.getSharedPreferences(static_desired_preferense_file, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("session_id", ses);
+		editor.commit();
 	}	
-	
-	public static String getSession(){
-		return api_session;
+
+
+	public static String getSession(Context act){
+		SharedPreferences settings = act.getSharedPreferences(static_desired_preferense_file, 0);
+		String session_id = settings.getString("session_id", null);
+		return session_id;
 	}
+
 	
 	public void makeToast(String text){		
         Toast.makeText(activity, text, Toast.LENGTH_SHORT).show();

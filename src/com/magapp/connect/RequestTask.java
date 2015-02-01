@@ -45,7 +45,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 		try {
             if (!isOnline())
                 throw new XMLRPCException("No internet connection");
-			result_info = (Object) client.callEx("call", new Object[] { MagAuth.getSession(), RequestCallBack.GetApiRoute(), params[0] });
+			result_info = (Object) client.callEx("call", new Object[] { MagAuth.getSession(activity), RequestCallBack.GetApiRoute(), params[0] });
 			return result_info;
 		} catch (XMLRPCException e) {
 			Log.e("Sashas", e.getMessage());
@@ -64,7 +64,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 	}	
 	
 	public void HandleError(XMLRPCException error_obj) {
-		MagAuth.setSession(null);
+		MagAuth.setSession(activity, null);
         if (!error_obj.getMessage().toString().equals("No internet connection")) {
             MagAuth auth = new MagAuth(this, activity);
         }else {
