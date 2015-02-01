@@ -32,6 +32,7 @@ public class MagAuth implements FinishLogin{
     private  static String static_api_password = null;
     private Context activity;
 	private LoginTask task;
+	SharedPreferences settings;
 	 
 	GetSession GetSessionCallBack;
 	
@@ -39,23 +40,22 @@ public class MagAuth implements FinishLogin{
 	public MagAuth(GetSession callback, Context act ) {
 		GetSessionCallBack = callback;
 		activity=act;
-		
-		if (getSession(activity)!=null && isOnline())
-			GetSessionCallBack.SessionReturned(getSession(activity), true);
+		settings = activity.getSharedPreferences(desired_preferense_file, 0);
+		if (getSession()!=null && isOnline())
+			GetSessionCallBack.SessionReturned(getSession(), true);
 		else {
             setSession(activity,null);
             login();
         }
 	}
-
+ /*
     public MagAuth(Context act ) {
         activity=act;
         getCredentials();
     }
+*/
 
-
-    public void getCredentials(){
-        SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
+    public String getCredentials(){
         String selected_account_name = settings.getString("selected_account_name", null);
         AccountManager manager = AccountManager.get(activity);
         Account[] accounts = manager.getAccountsByType(accountType);
@@ -72,11 +72,16 @@ public class MagAuth implements FinishLogin{
         if (url!=null) {
             url = url.concat("/index.php/api/xmlrpc/");
         }
+
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("store_url", url);
+		editor.commit();
+		return url;
     }
 	
 	public void login() {
 
-        getCredentials();
+		url=getCredentials();
 		
 		if (api_username!=null && api_password!=null && url!=null && isOnline()) {
 			task = new LoginTask(this,  api_username, api_password,url);
@@ -108,7 +113,6 @@ public class MagAuth implements FinishLogin{
 		 	Log.e("Sashas", ((Exception) session).getMessage().toString());
 	 		GetSessionCallBack.SessionReturned(((Exception) session).getMessage().toString(), false);
 		} else if (session instanceof  String) {
-			SharedPreferences settings = activity.getSharedPreferences(desired_preferense_file, 0);
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("session_id", session.toString());
 			editor.commit();
@@ -118,24 +122,22 @@ public class MagAuth implements FinishLogin{
  
 	 }	
 		 
-	public static String getApiUrl(Context act){
-        if (url!=null && url.length()<1) {
-            new MagAuth(act).getCredentials();
-        }
+	public String getApiUrl(){
+        if (url!=null && url.length()<1)
+			url=getCredentials();
 
+		Log.e("Sashas","url - "+url);
 		return url;
 	}
 	
-	public static void setSession(Context act,String ses){
-		SharedPreferences settings = act.getSharedPreferences(static_desired_preferense_file, 0);
+	public void setSession(Context act,String ses){
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putString("session_id", ses);
 		editor.commit();
 	}	
 
 
-	public static String getSession(Context act){
-		SharedPreferences settings = act.getSharedPreferences(static_desired_preferense_file, 0);
+	public String getSession(){
 		String session_id = settings.getString("session_id", null);
 		return session_id;
 	}
@@ -169,7 +171,7 @@ public class MagAuth implements FinishLogin{
 		}
 		 
 		if (error_code.equals("5")) {
-			error="Session expired. Try to relogin.";
+			error="Session expired. Try to re-login.";
 		} else if (error_code.equals("2")) {
 			error="Access denied. Please check credentials.";
 		}		

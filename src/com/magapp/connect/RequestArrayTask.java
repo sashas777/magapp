@@ -6,6 +6,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import org.xmlrpc.android.XMLRPCClient;
@@ -24,10 +25,13 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	RequestArrayInterface RequestCallBack;	
 	private Vector[] stored_params;
 	private Context activity;
-	
+	private  String desired_preferense_file = "magapp";
+	private SharedPreferences settings;
+
 	public RequestArrayTask(RequestArrayInterface callback, Context act){
 		RequestCallBack = callback; 
 		activity=act;
+		settings = activity.getSharedPreferences(desired_preferense_file, 0);
 	}		
 	
 	protected void onPreExecute() {
@@ -39,14 +43,18 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	
 		Object[] result_info;
 		stored_params=params;
-		URI uri = URI.create(MagAuth.getApiUrl(activity));
+		String store_url = settings.getString("store_url", null);
+		URI uri = URI.create(store_url);
 		XMLRPCClient client = new XMLRPCClient(uri);		
 		
 		try {
             if (!isOnline())
                 throw new XMLRPCException("No internet connection");
 
-			result_info = (Object[]) client.callEx("call", new Object[] { MagAuth.getSession(activity), RequestCallBack.GetApiRoute(), params[0] });
+
+			String session_id = settings.getString("session_id", null);
+
+			result_info = (Object[]) client.callEx("call", new Object[] { session_id, RequestCallBack.GetApiRoute(), params[0] });
 			return result_info;
 		} catch (XMLRPCException e) {
 			Log.e("Sashas", e.getMessage());
@@ -66,7 +74,11 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	}	
 	
 	public void HandleError(XMLRPCException error_obj) {
-		MagAuth.setSession(activity,null);
+	 	/* Set session null */
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("session_id", null);
+		editor.commit();
+		/* Set session null */
         if (!error_obj.getMessage().toString().equals("No internet connection")) {
             MagAuth auth = new MagAuth(this, activity);
         }else{

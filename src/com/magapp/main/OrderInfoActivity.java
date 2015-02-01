@@ -73,8 +73,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 			break;
 		}
 		
-		fragmentManager.beginTransaction().replace(R.id.container, screen)
-		.addToBackStack(null).commit();		
+		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
 
 		return false;
 	}

@@ -33,6 +33,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	private String url;
 	private ProgressBar progressBar;
 	private MagAuth auth;
+
 	
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
@@ -54,7 +55,9 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		    progressBar.setVisibility(View.INVISIBLE);
 		 if (status) {
 			 session=ses;
-			 url=auth.getApiUrl(getActivity());
+			 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
+			 String store_url = settings.getString("store_url", null);
+			 url=store_url;
 
 			 /*Log.e("Sashas", "returned - " + session);*/
             /* @todo something happening when click back  and then on the icon.*/
