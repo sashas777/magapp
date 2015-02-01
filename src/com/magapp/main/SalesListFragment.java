@@ -15,6 +15,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.view.*;
 import org.xmlrpc.android.XMLRPCClient;
 
 import android.app.DatePickerDialog;
@@ -23,11 +24,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -70,6 +67,13 @@ public class SalesListFragment extends Fragment implements OnClickListener,Reque
 		return rootView;
 	}
 
+
+
+	@Override
+	public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+
+	}
 	
 	public void onPreExecute(){		
 		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
