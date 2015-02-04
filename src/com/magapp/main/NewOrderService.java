@@ -32,8 +32,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 
 	NotificationManager nm;
 	final String LOG_TAG = "Sashas";
-	private String last_order_id = "0";	 
-	private String desired_preferense_file = "magapp";
+
 	Timer timer;
 	TimerTask tTask;
 	long interval = 5000;
@@ -76,11 +75,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 
 	void CheckOrders() {
 
-		SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
-		last_order_id = settings.getString("last_order_id", "0");
-
 		HashMap map_filter = new HashMap();
-		map_filter.put("order_id", last_order_id);
 
 		RequestArrayTask task;	 
 		Vector params = new Vector();		
@@ -110,18 +105,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 		for (Object o : new_info) {
 
 			HashMap map = (HashMap) o;
-			SharedPreferences settings = this.getSharedPreferences(desired_preferense_file, 0);
-
-			if (map.get("last_id") != null) {
-				SharedPreferences.Editor editor = settings.edit();
-				editor.putString("last_order_id", map.get("last_id").toString());
-				editor.commit();
-				last_order_id = map.get("last_id").toString();
-				// Log.e("Sashas",map.get("last_id").toString());
-			} else {
-				ShowNotification(map);
-			}
-
+			ShowNotification(map);
 			// Log.e("Sashas",map.get("order_id").toString());
 		}
 	}
@@ -133,7 +117,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 		String order_amount = order.get("amount").toString();
 		Integer order_id = Integer.parseInt(order.get("order_id").toString());
 		// 1nd part
-		Notification notif = new Notification(R.drawable.ic_launcher, "New order was placed", System.currentTimeMillis());
+		Notification notif = new Notification(R.drawable.ic_launcher, "New Order #"+increment_id, System.currentTimeMillis());
 
 		// set activity
 		Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
