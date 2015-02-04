@@ -49,4 +49,5 @@
  	<string name="back_button_field">Back</string>
  	<string name="no_invoices">There are no invoices for this order yet.</string>
  	<string name="invoice">Invoice</string>
+	<string name="date_range">Date Filter</string>
 </resources>

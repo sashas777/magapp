@@ -16,6 +16,9 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+def computeVersionName() {
+    return "2.2"
+}
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')

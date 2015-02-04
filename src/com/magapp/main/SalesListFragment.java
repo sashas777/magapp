@@ -15,6 +15,8 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.view.*;
 import org.xmlrpc.android.XMLRPCClient;
 
@@ -37,7 +39,7 @@ import android.widget.Toast;
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
 
-public class SalesListFragment extends Fragment implements OnClickListener,RequestArrayInterface {
+public class SalesListFragment extends Fragment implements RequestArrayInterface {
 
 
 	public TableLayout prodlist;
@@ -45,36 +47,70 @@ public class SalesListFragment extends Fragment implements OnClickListener,Reque
 	private int year;
 	private int month;
 	private int day;
-	private SalesListFragment current_class;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 		rootView = inflater.inflate(R.layout.sales, null);
+		setHasOptionsMenu(true);
 
 		EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
 		DateInput.setText("Select Date");
 		AddTitles();
-			
-		ImageButton imageButton1 = (ImageButton) rootView.findViewById(R.id.imageButton1);
-		imageButton1.setOnClickListener(this);
+
 		 
 		RequestArrayTask task;	 
-		Vector params = new Vector();		 	 			  		
+		Vector params = new Vector();
+
+		Bundle arguments = getArguments();
+		if (arguments != null)
+		{
+			String date_utc_from = arguments.getString("date_utc_from");
+			HashMap day_filter = new HashMap();
+			day_filter.put("day", date_utc_from);
+			params.add(day_filter);
+
+			DateFormat date_local = new SimpleDateFormat("yyyy-MM-dd");
+			Date formatDate = null;
+			try {
+				formatDate = date_local.parse(date_utc_from);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			DateFormat correctFormat = new SimpleDateFormat("MM/dd/yyyy");
+			String formattedDate = correctFormat.format(formatDate);
+			DateInput.setText(formattedDate);
+		}
+
+
+
 		task = new RequestArrayTask(this, getActivity());
 		task.execute(params);				
-		current_class=this;
-		
+
 		return rootView;
 	}
 
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		menu.clear();
+		getActivity().getMenuInflater().inflate(R.menu.base, menu);
+		MenuItem dateRange_item = menu.findItem(R.id.date_range);
+		dateRange_item.setVisible(true);
+		getActivity().invalidateOptionsMenu();
+		super.onCreateOptionsMenu(menu,inflater);
+	}
 
 	@Override
-	public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.date_range) {
+			selectDate();
+		}
 
+		return super.onOptionsItemSelected(item);
 	}
-	
+
+
 	public void onPreExecute(){		
 		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
 		progressBar.setVisibility(View.VISIBLE);
@@ -243,41 +279,25 @@ public class SalesListFragment extends Fragment implements OnClickListener,Reque
 		}
 	}
 
-	public void onClick(View v) {
 
-		switch (v.getId()) {
-		case R.id.imageButton1:
-			selectDate(v);
-			break;
-		/*
-		 * case R.id.btnRemove: fTrans.remove(frag1); break;
-		 */
-		default:
-			Toast.makeText(this.getActivity(), "Something clicked?",
-					Toast.LENGTH_LONG).show();
-			break;
-		}
-
-	}
-
-	public void selectDate(View view) {
+	public void selectDate() {
 		Calendar mcurrentTime = Calendar.getInstance();
-		EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
+		//EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
 		if (year == 0) {
 			year = mcurrentTime.get(Calendar.YEAR);
 			month = mcurrentTime.get(Calendar.MONTH);
 			day = mcurrentTime.get(Calendar.DAY_OF_MONTH);
 		}
+
 		DatePickerDialog mTimePicker;
 
-		mTimePicker = new DatePickerDialog(getActivity(),
-				new DatePickerDialog.OnDateSetListener() {
+		mTimePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 					@Override
 					public void onDateSet(DatePicker view, int year,int monthOfYear, int dayOfMonth) {
 						// TODO Auto-generated method stub
-						EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
+						/*EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
 						DateInput.setText(String.format("%02d", monthOfYear + 1)+ "/"+ String.format("%02d", dayOfMonth)+ "/"+ String.valueOf(year));
-
+*/
 						Vector params = new Vector();	
 						String selected_date=String.valueOf(year) + "-"+ String.format("%02d", monthOfYear + 1)+"-"+String.format("%02d", dayOfMonth);
 						DateFormat date_local = new SimpleDateFormat("yyyy-MM-dd");
@@ -293,15 +313,28 @@ public class SalesListFragment extends Fragment implements OnClickListener,Reque
 						HashMap day_filter = new HashMap();
 						day_filter.put("day", date_utc_from);
 						params.add(day_filter);
-						
-						RequestArrayTask task;	 						 	 	 			  	
+
+						/*
+						RequestArrayTask task;
 						task = new RequestArrayTask(current_class, getActivity());
-						task.execute(params); 					
-																
+						task.execute(params);
+							*/
+						FragmentManager fragmentManager = getFragmentManager();
+						Fragment screen = new Fragment();
+						screen = new SalesListFragment();
+
+						Bundle bundl = new Bundle();
+						bundl.putString("date_utc_from", date_utc_from);
+						screen.setArguments(bundl);
+
+						fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
+
+
 						month = monthOfYear;
 						day = dayOfMonth;
 					}
 				}, year, month, day);
+		mTimePicker.getDatePicker().setMaxDate(new Date().getTime());
 		mTimePicker.setTitle("Select Date");
 		mTimePicker.show();
 	}

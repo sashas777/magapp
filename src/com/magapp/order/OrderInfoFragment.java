@@ -62,7 +62,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 		  }else {
 			  invoice_item.setVisible(false); 
 		  }
- 
+
 		  super.onCreateOptionsMenu(menu, inflater); 
 		}
 	 

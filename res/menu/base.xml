@@ -4,6 +4,6 @@
       
     <item android:id="@+id/settings" android:orderInCategory="100"  android:showAsAction="never"  android:title="@string/action_settings"/>  
     <item android:id="@+id/accounts" android:title="@string/accounts" android:showAsAction="never"></item>
-    <item android:id="@+id/add_account" android:title="@string/add_account" android:showAsAction="never"></item>        
-    <item android:id="@+id/invoice" android:title="@string/invoice" android:showAsAction="never" android:visible="false"></item>
+    <item android:id="@+id/add_account" android:title="@string/add_account" android:showAsAction="never"></item>
+    <item android:id="@+id/date_range" android:title="@string/date_range" android:showAsAction="never" android:visible="false"></item>
 </menu>
