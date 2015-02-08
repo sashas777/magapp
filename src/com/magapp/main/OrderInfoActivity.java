@@ -19,7 +19,7 @@ import com.magapp.order.OrderInfoFragment;
 
 public class OrderInfoActivity extends Activity implements OnNavigationListener {
 
-	private int order_id;
+	private String order_id;
 	 
 	private TableLayout prodlist;
 	 
@@ -41,7 +41,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle vars = getIntent().getExtras();	 
-		order_id = vars.getInt("order_id");		 
+		order_id = vars.getString("order_id");
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new OrderInfoFragment();	
 		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
@@ -49,7 +49,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 
 
  
-	public int GetOrderId(){
+	public String GetOrderId(){
 		return order_id;
 	}
 

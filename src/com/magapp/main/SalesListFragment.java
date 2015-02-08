@@ -1,63 +1,53 @@
 package com.magapp.main;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TimeZone;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
 
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.ListFragment;
+import android.text.TextUtils;
 import android.view.*;
-import org.xmlrpc.android.XMLRPCClient;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.magapp.invoice.InvoiceListAdapter;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
 
-public class SalesListFragment extends Fragment implements RequestArrayInterface {
+public class SalesListFragment extends ListFragment implements RequestArrayInterface {
 
 
-	public TableLayout prodlist;
 	public View rootView;
+	private ArrayList<HashMap<String, String>> OrderList;
+	private InvoiceListAdapter adapter;
 	private int year;
 	private int month;
 	private int day;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.sales, null);
+		rootView = inflater.inflate(R.layout.fragment_sales_list, null);
 		setHasOptionsMenu(true);
 
-		EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
-		DateInput.setText("Select Date");
-		AddTitles();
+	//	EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
+		//DateInput.setText("Select Date");
+		OrderList = new ArrayList<HashMap<String, String>>();
 
-		 
+		adapter=new InvoiceListAdapter(getActivity(), OrderList);
+		setListAdapter(adapter);
+
+		/*  Prepare parameters  for query */
 		RequestArrayTask task;	 
 		Vector params = new Vector();
 
@@ -78,11 +68,11 @@ public class SalesListFragment extends Fragment implements RequestArrayInterface
 			}
 			DateFormat correctFormat = new SimpleDateFormat("MM/dd/yyyy");
 			String formattedDate = correctFormat.format(formatDate);
-			DateInput.setText(formattedDate);
+			//DateInput.setText(formattedDate);
+			//String title = "Order for "+formattedDate;
 		}
-
-
-
+		/* @comment
+			parameters can be day=value or day=array('from'=>date_from,'to'=>date_to) */
 		task = new RequestArrayTask(this, getActivity());
 		task.execute(params);				
 
@@ -106,7 +96,6 @@ public class SalesListFragment extends Fragment implements RequestArrayInterface
 		if (id == R.id.date_range) {
 			selectDate();
 		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -135,131 +124,76 @@ public class SalesListFragment extends Fragment implements RequestArrayInterface
 		this.startActivity(Login);
 		getActivity().finish();		 
 	 }		
-	
-	public void AddTitles() {
-		/* Add Field titles */
-		prodlist = (TableLayout) rootView.findViewById(R.id.tbl_orders);
-		prodlist.setStretchAllColumns(true);
-		prodlist.setColumnShrinkable(1, true);
 
-		TableRow row = new TableRow(getActivity());
-		row.setBackgroundColor(Color.parseColor("#EEEEEE"));
-
-		TextView order_id = new TextView(getActivity());
-		order_id.setText("Order #");
-		order_id.setPadding(10, 10, 10, 10);
-		order_id.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		TextView order_name = new TextView(getActivity());
-		order_name.setText("Name");
-		order_name.setPadding(10, 10, 10, 10);
-		order_name.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		TextView order_date = new TextView(getActivity());
-		order_date.setText("Date");
-		order_date.setPadding(10, 10, 10, 10);
-		order_date.setGravity(Gravity.CENTER_HORIZONTAL);
-
-		row.addView(order_id, new TableRow.LayoutParams());
-		row.addView(order_name, new TableRow.LayoutParams());
-		row.addView(order_date, new TableRow.LayoutParams());
-
-		prodlist.addView(row, new TableLayout.LayoutParams());
-		/* Add Field titles */
-	}
 
 	public void Addrow(HashMap order) {
-		prodlist = (TableLayout) rootView.findViewById(R.id.tbl_orders);
 
-		TableRow row = new TableRow(getActivity());
-		row.setBackgroundColor(Color.parseColor("#FFFFFF"));
+		String increment_id=order.get("increment_id").toString();
+		String created_at=order.get("created_at").toString();
+		String status=order.get("status").toString();
+		String grandTotal=order.get("grand_total").toString();
+		String billingName=order.get("billing_name").toString();
 
-		TextView hLabel = new TextView(getActivity());
-		hLabel.setText(order.get("increment_id").toString());
-		hLabel.setPadding(10, 10, 10, 10);
-		hLabel.setGravity(Gravity.CENTER_HORIZONTAL);
-		hLabel.setBackgroundResource(R.layout.line);
-		// hNextLabel.setGravity(Gravity.CENTER_HORIZONTAL) ;
-		// row.setBackgroundResource(R.layout.line);
+		/* Status */
+		status = status.substring(0,1).toUpperCase() + status.substring(1).toLowerCase();
+		/* Status */
 
-		TextView hLabel2 = new TextView(getActivity());
-		hLabel2.setText(order.get("billing_name").toString());
-		hLabel2.setPadding(10, 10, 10, 10);
-		hLabel2.setGravity(Gravity.CENTER_HORIZONTAL);
-		hLabel2.setBackgroundResource(R.layout.line);
-
-		DateFormat created_at = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		/*Date*/
+		DateFormat created_at_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		created_at_format.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Date created_at_date = new Date();
 		try {
-			created_at_date = created_at.parse(order.get("created_at").toString());
+			created_at_date =created_at_format.parse(created_at);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		TextView hLabel3 = new TextView(getActivity());
-		hLabel3.setText(new SimpleDateFormat("MM-dd-yyy") .format(created_at_date));
-		hLabel3.setPadding(10, 10, 10, 10);
-		hLabel3.setGravity(Gravity.CENTER_HORIZONTAL);
-		hLabel3.setBackgroundResource(R.layout.line);
+		String created_at_date_string= new SimpleDateFormat("LLL dd, yyy HH:mm:ss") .format(created_at_date);
+		/*Date*/
+		/*Total*/
+		NumberFormat currency_format = NumberFormat.getCurrencyInstance(Locale.US);
+		String TotalAmount=currency_format.format(Double.valueOf(grandTotal).doubleValue());
+		/*Total*/
 
-		row.setId(Integer.parseInt(order.get("order_id").toString()));
+		/*Add values to the List*/
+		String Order_Line_1="Order #"+increment_id+" | "+created_at_date_string;
+		String Order_Line_2="By: "+billingName;
+		String Order_Line_3="Status: "+status+" | Grand Total: "+TotalAmount;
 
-		row.addView(hLabel, new TableRow.LayoutParams());
-		row.addView(hLabel2, new TableRow.LayoutParams());
-		row.addView(hLabel3, new TableRow.LayoutParams());
-		row.setClickable(true);
-		row.setOnClickListener(tablerowOnClickListener);
+		HashMap<String, String> list_map = new HashMap<String, String>();
 
-		prodlist.addView(row, new TableLayout.LayoutParams());
+		list_map.put("invoice_number",Order_Line_1);
+		list_map.put("description",Order_Line_2);
+		list_map.put("increment_id",increment_id);
+		list_map.put("line3",Order_Line_3);
+		OrderList.add(list_map);
 
 	}
-	
-	
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		prodlist = (TableLayout) rootView.findViewById(R.id.tbl_orders);
-		Integer rows = prodlist.getChildCount();
-		for (int j = 1; j < rows; j++) {
-			TableRow t = (TableRow) prodlist.getChildAt(j);
-			Integer a = t.getChildCount();
-			for (Integer i = 0; i < a; i++) {
-				TextView firstTextView = (TextView) t.getChildAt(i);
-				firstTextView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-				firstTextView.setBackgroundResource(R.layout.line);
-			}
-		}
 		return;
 	}
 
-	private OnClickListener tablerowOnClickListener = new OnClickListener() {
-		public void onClick(View v) {
-			TableRow t = (TableRow) v;
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		String selected = ((TextView) v.findViewById(R.id.increment_id)).getText().toString();
+		ShowOrderInfo(selected);
+	}
 
-			Integer a = t.getChildCount();
-			for (Integer i = 0; i < a; i++) {
-				TextView firstTextView = (TextView) t.getChildAt(i);
-				firstTextView.setBackgroundColor(Color.parseColor("#DDDDDD"));
-			}
-			// TextView IncrementIdCell = (TextView) t.getChildAt(0);
-			// String order_id = (String) IncrementIdCell.getText();
-
-			ShowOrderInfo(t.getId());
-		}
-	};
-
-	public void ShowOrderInfo(int OrderId) {
-
+	public boolean ShowOrderInfo(String OrderId) {
+		if (OrderId.isEmpty())
+			return false;
 		Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
 	 	OrderInfo.putExtra("order_id", OrderId);
 		getActivity().startActivity(OrderInfo);
 		// getActivity().finish();
+		return true;
 	}
 
 	public void SortRows(Object[] orders) {
-		prodlist.removeAllViews();
-		AddTitles();
+
 		List data = new ArrayList();
 		for (Object o : orders) {
 			HashMap map = (HashMap) o;
@@ -274,9 +208,17 @@ public class SalesListFragment extends Fragment implements RequestArrayInterface
 		});
 		for (Object a : data) {
 			HashMap order = (HashMap) a;
-			// Log.e("Sashas",order.get("order_id").toString());
+
 			Addrow(order);
 		}
+		if (orders.length<1) {
+			HashMap<String, String> list_map = new HashMap<String, String>();
+			list_map.put("invoice_number","There are no orders.");
+			list_map.put("description","");
+			list_map.put("increment_id","");
+			OrderList.add(list_map);
+		}
+		adapter.notifyDataSetChanged();
 	}
 
 

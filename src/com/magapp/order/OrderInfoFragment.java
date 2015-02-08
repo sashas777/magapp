@@ -33,7 +33,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 	public View rootView;
 	private Menu menu_settings;
 	private Boolean can_invoice=false;
-    private int order_increment_id,order_id;
+    private String order_increment_id,order_id;
     private Bundle order_items=new Bundle();
 
 
@@ -100,7 +100,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
             /*Invoice Menu*/
-            order_increment_id=Integer.parseInt(order.get("increment_id").toString());
+            order_increment_id=order.get("increment_id").toString();
             /*Invoice Menu*/
 			/* Main Info */
 			params = new Bundle();

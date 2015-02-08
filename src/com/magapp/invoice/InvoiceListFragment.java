@@ -31,7 +31,7 @@ import com.magapp.main.R;
 public class InvoiceListFragment extends ListFragment implements RequestArrayInterface     {  
 	
 	public View rootView;
-	 private  int order_id;
+	 private  String order_id;
 	 private ArrayList<HashMap<String, String>> InvoiceList;	 
 	 private InvoiceListAdapter adapter;
 	 
@@ -114,13 +114,13 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				NumberFormat currency_format = NumberFormat.getCurrencyInstance(Locale.US);
 				String TotalAmount=currency_format.format(Double.valueOf(total).doubleValue());
 				/*Total*/
-				String Invoice_LIne_1="Invoice #"+increment_id+" | "+created_at_date_string;
-				String Invoice_LIne_2=TotalAmount+" "+status;
+				String Invoice_Line_1="Invoice #"+increment_id+" | "+created_at_date_string;
+				String Invoice_Line_2=TotalAmount+" "+status;
 				
 				HashMap<String, String> list_map = new HashMap<String, String>();
 				 	   
-				list_map.put("invoice_number",Invoice_LIne_1);
-				list_map.put("description",Invoice_LIne_2); 
+				list_map.put("invoice_number",Invoice_Line_1);
+				list_map.put("description",Invoice_Line_2);
 				list_map.put("increment_id",increment_id); 	
 				InvoiceList.add(list_map);
  				 
