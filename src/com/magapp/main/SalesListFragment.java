@@ -24,6 +24,8 @@ import android.widget.ProgressBar;
 
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
+import org.apache.commons.lang3.text.WordUtils;
+
 
 public class SalesListFragment extends ListFragment implements RequestArrayInterface {
 
@@ -69,7 +71,8 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 			DateFormat correctFormat = new SimpleDateFormat("MM/dd/yyyy");
 			String formattedDate = correctFormat.format(formatDate);
 			//DateInput.setText(formattedDate);
-			//String title = "Order for "+formattedDate;
+			String title = "Orders for "+formattedDate;
+			getActivity().getActionBar().setTitle(title);
 		}
 		/* @comment
 			parameters can be day=value or day=array('from'=>date_from,'to'=>date_to) */
@@ -135,7 +138,8 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 		String billingName=order.get("billing_name").toString();
 
 		/* Status */
-		status = status.substring(0,1).toUpperCase() + status.substring(1).toLowerCase();
+		status = WordUtils.capitalize(status);
+		billingName = WordUtils.capitalize(billingName);
 		/* Status */
 
 		/*Date*/

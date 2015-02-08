@@ -29,7 +29,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
         transitive = true;
     }
-    compile 'org.apache.commons:commons-lang3:2.6.+'
+    compile 'org.apache.commons:commons-lang3:3.0.+'
 }
 
 android {
