@@ -41,10 +41,15 @@ public class BaseActivity extends Activity implements
   
 	}
 
+	public void setActionBarTitle(String title){
+		mTitle=title;
+	}
+
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
  
 		FragmentManager fragmentManager = getFragmentManager();
+		mTitle = getTitle();
 
 		// update the main content by replacing fragments
 		Fragment screen = new Fragment();
@@ -86,17 +91,20 @@ public class BaseActivity extends Activity implements
 
     @Override
     public void onBackPressed(){
+		mTitle = getTitle();
         /*Issue on the home fragment when click back*/
         FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 1) {
+        if (fm.getBackStackEntryCount() > 0) {
 
             fm.popBackStack();
+			//super.onBackPressed();
         } else {
             finish();
            // super.onBackPressed();
         }
 
     }
+
 
 
 

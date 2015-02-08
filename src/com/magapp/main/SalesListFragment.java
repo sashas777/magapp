@@ -42,8 +42,6 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 		rootView = inflater.inflate(R.layout.fragment_sales_list, null);
 		setHasOptionsMenu(true);
 
-	//	EditText DateInput = (EditText) rootView.findViewById(R.id.editText1);
-		//DateInput.setText("Select Date");
 		OrderList = new ArrayList<HashMap<String, String>>();
 
 		adapter=new InvoiceListAdapter(getActivity(), OrderList);
@@ -70,9 +68,11 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 			}
 			DateFormat correctFormat = new SimpleDateFormat("MM/dd/yyyy");
 			String formattedDate = correctFormat.format(formatDate);
-			//DateInput.setText(formattedDate);
+
 			String title = "Orders for "+formattedDate;
-			getActivity().getActionBar().setTitle(title);
+
+			((BaseActivity) getActivity()).setActionBarTitle(title);
+
 		}
 		/* @comment
 			parameters can be day=value or day=array('from'=>date_from,'to'=>date_to) */
@@ -90,6 +90,7 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 		MenuItem dateRange_item = menu.findItem(R.id.date_range);
 		dateRange_item.setVisible(true);
 		getActivity().invalidateOptionsMenu();
+
 		super.onCreateOptionsMenu(menu,inflater);
 	}
 
