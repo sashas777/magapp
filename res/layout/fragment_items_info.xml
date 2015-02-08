@@ -49,27 +49,6 @@
                     android:gravity="fill_horizontal"
                     android:minWidth="2dp"
                     tools:context=".OrderInfoActivity">
-
-              <!--  <ListView
-                        android:id="@android:id/list"
-                        android:layout_weight="1"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_height="fill_parent"
-                        android:layout_below="@+id/items_list"
-                        android:layout_width="fill_parent">
-                </ListView> -->
-
-               <!-- <TableLayout
-                        android:stretchColumns="2"
-                        android:id="@+id/items_list"
-                        android:layout_width="fill_parent"
-                        android:layout_marginTop="23dp"
-                        android:layout_height="wrap_content"
-                        android:divider="#b5b5b5"
-                        android:shrinkColumns="*"
-                        /> -->
             </LinearLayout>
         </LinearLayout>
 
