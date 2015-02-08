@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.Fragment;
+import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,16 +20,26 @@ import com.magapp.main.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class ItemsFragment extends Fragment {
+public class ItemsFragment extends ListFragment {
 
 	public View rootView;
- 
+	private ArrayList<HashMap<String, String>> OrderItemsList;
+	private OrderItemsListAdapter adapter;
 	// public ImageLoader imageLoader; 
 	   
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		rootView = inflater.inflate(R.layout.fragment_items_info, null);
+
+		OrderItemsList = new ArrayList<HashMap<String, String>>();
+
+		/* Items list */
+		adapter=new OrderItemsListAdapter(getActivity(), OrderItemsList);
+		setListAdapter(adapter);
+
+		/* Items list */
+
 		ArrayList items = getArguments().getParcelableArrayList("items");
 		//ListView items_listview=(ListView) rootView.findViewById(R.id.items_list);
 		 
@@ -37,8 +48,22 @@ public class ItemsFragment extends Fragment {
 		HashMap item_data = (HashMap) item;
 	 
 		View tr = inflater.inflate(R.layout.order_item_view, null,false);
-	 
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).build();
+
+		/* New View view  Item list*/
+			String Order_Line_1="Order #"+" | ";
+			String Order_Line_2="By: ";
+			String Order_Line_3="Status: "+" | Grand Total: ";
+
+			HashMap<String, String> list_map = new HashMap<String, String>();
+
+			list_map.put("invoice_number",Order_Line_1);
+			list_map.put("description",Order_Line_2);
+			//list_map.put("increment_id",increment_id);
+			list_map.put("line3",Order_Line_3);
+			OrderItemsList.add(list_map);
+
+		/* New View view  Item list*/
+	/*	ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).build();
 		 ImageLoader.getInstance().init(config);
 		ImageView item_image=(ImageView)tr.findViewById(R.id.list_image);
 		//imageLoader=new ImageLoader(getActivity().getApplicationContext());
@@ -85,7 +110,7 @@ public class ItemsFragment extends Fragment {
 			Options.setText(item_option_text);
 		}
 			 
-		ItemsTable.addView(tr);				 		 
+		ItemsTable.addView(tr);		*/
 		//Log.e("Sashas", item_data.get("sku").toString());
 	 
 		}

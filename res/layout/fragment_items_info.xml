@@ -48,6 +48,14 @@
                     android:minWidth="2dp"
                     tools:context=".OrderInfoActivity">
 
+                <ListView
+                        android:id="@android:id/list"
+                        android:layout_weight="1"
+                        android:layout_height="fill_parent"
+                        android:layout_below="@+id/items_list"
+                        android:layout_width="fill_parent">
+                </ListView>
+
                 <TableLayout
                         android:stretchColumns="2"
                         android:id="@+id/items_list"
