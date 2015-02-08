@@ -16,7 +16,8 @@ import com.magapp.main.R;
  */
 public class InvoiceOrderActivity extends Activity {
 
-    private int order_id,increment_id;
+    private int order_id;
+    private String increment_id;
     private Bundle order_items=new Bundle();
 
     @Override
@@ -26,7 +27,7 @@ public class InvoiceOrderActivity extends Activity {
 
         Bundle vars = getIntent().getExtras();
         order_id = vars.getInt("order_id");
-        increment_id = vars.getInt("increment_id");
+        increment_id = vars.getString("increment_id");
         order_items= vars.getBundle("order_items");
 
         getActionBar().setDisplayShowTitleEnabled(false);

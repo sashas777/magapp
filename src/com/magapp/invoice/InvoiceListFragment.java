@@ -11,10 +11,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -27,6 +30,7 @@ import com.magapp.connect.RequestArrayTask;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
+import com.magapp.order.OrderInfoFragment;
 
 public class InvoiceListFragment extends ListFragment implements RequestArrayInterface     {  
 	
@@ -53,7 +57,8 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 			params.add(map_filter);			
 			task = new RequestArrayTask(this, getActivity());
 			task.execute(params);					    
-				    
+		 /* @todo disable icon and back symbol */
+
 			return rootView;
 	}
 	 
@@ -165,6 +170,24 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 		  }
          // getActivity().finish();
 
-	  }	 
+	  }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		/* @todo show invoice info frament on click home */
+	/*	switch (item.getItemId()) {
+			case android.R.id.home:
+				//Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
+				//OrderInfo.putExtra("order_increment_id", order_increment_id );
+				final FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.replace(R.id.container, new OrderInfoFragment(), "OrderInfo");
+				ft.commit();
+				NavUtils.navigateUpTo(getActivity(), OrderInfo);
+
+				return true;
+
+		} */
+		return super.onOptionsItemSelected(item);
+	}
 }
 

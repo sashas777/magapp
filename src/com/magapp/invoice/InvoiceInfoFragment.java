@@ -25,16 +25,16 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 	
 	public View rootView;
 	private Menu menu_settings;
-	private Boolean can_invoice=false;
     private int order_id;
+
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.order_info_fragment, null);
-			int increment_id=((InvoiceInfoActivity)getActivity()).GetInvoiceIncrementId();
+			String invoice_increment_id=((InvoiceInfoActivity)getActivity()).GetInvoiceIncrementId();
 			Vector params = new Vector();
 			RequestTask task;
 			HashMap map_filter = new HashMap();
-			map_filter.put("invoiceIncrementId", increment_id);
+			map_filter.put("invoiceIncrementId", invoice_increment_id);
 			params.add(map_filter);
 			task = new RequestTask(this, getActivity());
 			task.execute(params);
@@ -72,16 +72,17 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 			getActivity().finish();
 		 }
 
-		public void FillData(HashMap order) {
+		public void FillData(HashMap invoice) {
 
 			Bundle params = new Bundle();
 			FragmentManager fragmentManager = getFragmentManager();
 			FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
+			((InvoiceInfoActivity)getActivity()).setOrderIncrementId(invoice.get("order_increment_id").toString());
 			/* Items */
 			params = new Bundle();
 			ArrayList<HashMap> items_array = new ArrayList<HashMap>();
-			Object[] items = (Object[]) order.get("items");
+			Object[] items = (Object[]) invoice.get("items");
 			for (Object item : items) {
 				HashMap item_data = (HashMap) item;
 				items_array.add(item_data);
@@ -94,7 +95,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 			/* Items */
 			/* Totals */
 			params = new Bundle();
-			Object[] totals = (Object[]) order.get("totals");
+			Object[] totals = (Object[]) invoice.get("totals");
 			params.putSerializable("totals", totals);
 			Fragment totals_card = new Fragment();
 			totals_card = new TotalsFragment();
