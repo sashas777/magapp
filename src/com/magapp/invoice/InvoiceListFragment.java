@@ -11,11 +11,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.Vector;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,9 +58,9 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 			map_filter.put("order_id ", order_id);
 			params.add(map_filter);			
 			task = new RequestArrayTask(this, getActivity());
-			task.execute(params);					    
-		 /* @todo disable icon and back symbol */
+			task.execute(params);
 
+		 	setHasOptionsMenu(true);
 			return rootView;
 	}
 	 
@@ -76,8 +78,6 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
  	
 		 public void AddIvoices(Object[]  invoices){
 
-
-
 			for (Object o : invoices) {
 				HashMap map = (HashMap) o;
 				
@@ -93,7 +93,6 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				try {
 					created_at_date =created_at_format.parse(created_at);
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}				
 				String created_at_date_string= new SimpleDateFormat("MM-dd-yyy HH:mm:ss") .format(created_at_date);
@@ -129,7 +128,6 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				list_map.put("description",Invoice_Line_2);
 				list_map.put("increment_id",increment_id); 	
 				InvoiceList.add(list_map);
- 				 
 			}
 
              if (invoices.length<1) {
@@ -174,20 +172,15 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		/* @todo show invoice info frament on click home */
-	/*	switch (item.getItemId()) {
-			case android.R.id.home:
-				//Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
-				//OrderInfo.putExtra("order_increment_id", order_increment_id );
-				final FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.replace(R.id.container, new OrderInfoFragment(), "OrderInfo");
-				ft.commit();
-				NavUtils.navigateUpTo(getActivity(), OrderInfo);
 
+	 	switch (item.getItemId()) {
+			case android.R.id.home:
+				getActivity().getActionBar().setSelectedNavigationItem(0);
 				return true;
 
-		} */
-		return super.onOptionsItemSelected(item);
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }
 

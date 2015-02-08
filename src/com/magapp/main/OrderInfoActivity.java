@@ -89,11 +89,11 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			NavUtils.navigateUpTo(this, new Intent(this, SalesListFragment.class));
-			return true;
+			/* Need to specify back in each fragment */
+			default:
+				return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+
 	}
 
 	public void ShowMessage(String text) {

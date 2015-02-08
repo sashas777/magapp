@@ -150,7 +150,6 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 		try {
 			created_at_date =created_at_format.parse(created_at);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String created_at_date_string= new SimpleDateFormat("LLL dd, yyy HH:mm:ss") .format(created_at_date);

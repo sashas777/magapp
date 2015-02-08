@@ -10,6 +10,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,10 +23,7 @@ import android.widget.ProgressBar;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.invoice.InvoiceOrderActivity;
-import com.magapp.main.LoginActivity;
-import com.magapp.main.NavigationDrawerFragment;
-import com.magapp.main.OrderInfoActivity;
-import com.magapp.main.R;
+import com.magapp.main.*;
 
 public class OrderInfoFragment extends Fragment implements RequestInterface  {
 
@@ -218,20 +216,26 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			/*Menu Item*/
 		}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.invoice) {
-            Intent InvoiceOrder = new Intent(getActivity(), InvoiceOrderActivity.class);
-            InvoiceOrder.putExtra("order_id", order_id);
-            InvoiceOrder.putExtra("order_items", order_items);
-            InvoiceOrder.putExtra("order_increment_id", order_increment_id);
-            getActivity().startActivity(InvoiceOrder);
-        }
 
-        return super.onOptionsItemSelected(item);
-    }
-		
- 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(), SalesListFragment.class));
+			return true;
+
+		case R.id.invoice:
+			Intent InvoiceOrder = new Intent(getActivity(), InvoiceOrderActivity.class);
+			InvoiceOrder.putExtra("order_id", order_id);
+			InvoiceOrder.putExtra("order_items", order_items);
+			InvoiceOrder.putExtra("order_increment_id", order_increment_id);
+			getActivity().startActivity(InvoiceOrder);
+			return true;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+
+	}
 	 
 }
