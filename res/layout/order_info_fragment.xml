@@ -5,7 +5,8 @@
     android:layout_width="fill_parent" 
     android:id="@+id/wrapper_container"
     android:layout_height="match_parent"
-    android:gravity="center" 
+    android:gravity="center"
+	android:background="#ffffff"
       android:fillViewport="true" 
     >
  
@@ -15,11 +16,12 @@
     <com.magapp.main.NowLayout
        	android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#e3e3e3" >
+        android:background="#ffffff" >
  
 	 <FrameLayout 
 	 android:id="@+id/main_info_card"
 	 android:layout_width="match_parent"
+	 android:background="#ffffff"
 	 tools:layout="@layout/fragment_order_info"
 	 android:layout_height="wrap_content">
 	</FrameLayout >
@@ -27,6 +29,7 @@
  
 	 <FrameLayout 
 	 android:id="@+id/account_info"
+	 android:background="#ffffff"
 	 android:layout_width="match_parent"
 	 tools:layout="@layout/fragment_account_info"
 	 android:layout_height="wrap_content">
@@ -35,6 +38,7 @@
 	 <FrameLayout 
 	 android:id="@+id/bill_address"
 	 android:layout_width="match_parent"
+	 android:background="#ffffff"
 	 tools:layout="@layout/order_bill_address"
 	 android:layout_height="wrap_content">
 	</FrameLayout >
@@ -43,6 +47,7 @@
 	android:id="@+id/ship_address"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:background="#ffffff"
 	android:layout_alignParentBottom="true"
 	tools:layout="@layout/order_address">
 
@@ -53,6 +58,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_alignParentBottom="true"
+	android:background="#ffffff"
 	tools:layout="@layout/fragment_payment_info">
 	</FrameLayout >
     
@@ -61,6 +67,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_alignParentBottom="true"
+	android:background="#ffffff"
 	tools:layout="@layout/fragment_items_info">
 	</FrameLayout >
 	              
@@ -69,6 +76,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:layout_alignParentBottom="true"
+	android:background="#ffffff"
 	tools:layout="@layout/fragment_totals_info">
 	</FrameLayout >
      

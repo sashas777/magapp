@@ -46,11 +46,9 @@ public class NowLayout extends LinearLayout implements OnGlobalLayoutListener {
 			}
 
 			if (!inversed) {
-				child.startAnimation(AnimationUtils.loadAnimation(getContext(),
-						R.anim.slide_up_left));
+				child.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up_left));
 			} else {
-				child.startAnimation(AnimationUtils.loadAnimation(getContext(),
-						R.anim.slide_up_right));
+				child.startAnimation(AnimationUtils.loadAnimation(getContext(),R.anim.slide_up_right));
 			}
 
 			inversed = !inversed;
