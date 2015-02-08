@@ -31,9 +31,10 @@ import com.magapp.main.R;
 public class InvoiceListFragment extends ListFragment implements RequestArrayInterface     {  
 	
 	public View rootView;
-	 private  String order_id;
-	 private ArrayList<HashMap<String, String>> InvoiceList;	 
-	 private InvoiceListAdapter adapter;
+	private Integer order_id;
+	private String order_increment_id;
+	private ArrayList<HashMap<String, String>> InvoiceList;
+	private InvoiceListAdapter adapter;
 	 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
@@ -43,12 +44,12 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 
 			adapter=new InvoiceListAdapter(getActivity(), InvoiceList);			
 			setListAdapter(adapter);
-		
+
 		    order_id=((OrderInfoActivity)getActivity()).GetOrderId();
 			RequestArrayTask task;	 
 			Vector params = new Vector();		 
 			HashMap map_filter = new HashMap(); 
-			map_filter.put("order_id", order_id);		
+			map_filter.put("order_id ", order_id);
 			params.add(map_filter);			
 			task = new RequestArrayTask(this, getActivity());
 			task.execute(params);					    

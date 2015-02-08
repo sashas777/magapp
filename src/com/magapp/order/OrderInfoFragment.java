@@ -33,18 +33,19 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 	public View rootView;
 	private Menu menu_settings;
 	private Boolean can_invoice=false;
-    private String order_increment_id,order_id;
+    private String order_increment_id;
+	private Integer  order_id;
     private Bundle order_items=new Bundle();
 
 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.order_info_fragment, null);
-			order_id=((OrderInfoActivity)getActivity()).GetOrderId();
+		 	order_increment_id=((OrderInfoActivity)getActivity()).GetOrderIncrementId();
 			Vector params = new Vector();	 
 			RequestTask task;
 			HashMap map_filter = new HashMap(); 
-			map_filter.put("order_id", order_id);		
+			map_filter.put("order_increment_id", order_increment_id);
 			params.add(map_filter);
 			task = new RequestTask(this, getActivity());
 			task.execute(params);					
@@ -101,6 +102,8 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 
             /*Invoice Menu*/
             order_increment_id=order.get("increment_id").toString();
+			order_id=Integer.parseInt(order.get("order_id").toString());
+			((OrderInfoActivity) getActivity()).setOrderId(order_id);
             /*Invoice Menu*/
 			/* Main Info */
 			params = new Bundle();

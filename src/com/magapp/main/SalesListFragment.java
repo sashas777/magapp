@@ -191,7 +191,7 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 		if (OrderId.isEmpty())
 			return false;
 		Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
-	 	OrderInfo.putExtra("order_id", OrderId);
+	 	OrderInfo.putExtra("order_increment_id", OrderId);
 		getActivity().startActivity(OrderInfo);
 		// getActivity().finish();
 		return true;
