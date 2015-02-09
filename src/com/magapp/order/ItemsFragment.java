@@ -35,8 +35,6 @@ public class ItemsFragment extends  Fragment {
 		int item_iterator=1;
 		for (Object item : items) {
 		HashMap item_data = (HashMap) item;
-	 
-		View tr = inflater.inflate(R.layout.order_item_view, null,false);
 
 		/* New View view  Item list*/
 			/*Qty*/

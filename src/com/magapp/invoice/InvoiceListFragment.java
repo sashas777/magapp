@@ -95,7 +95,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}				
-				String created_at_date_string= new SimpleDateFormat("MM-dd-yyy HH:mm:ss") .format(created_at_date);
+				String created_at_date_string= new SimpleDateFormat("LLL dd, yyy HH:mm:ss") .format(created_at_date);
 				/*Date*/
 				/*State*/
 				String status="";
