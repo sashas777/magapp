@@ -39,7 +39,7 @@
 	 android:id="@+id/bill_address"
 	 android:layout_width="match_parent"
 	 android:background="#ffffff"
-	 tools:layout="@layout/order_bill_address"
+	 tools:layout="@layout/order_address"
 	 android:layout_height="wrap_content">
 	</FrameLayout >
 	     

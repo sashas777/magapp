@@ -229,21 +229,6 @@ public class OrderInfoFragment extends Fragment implements RequestInterface  {
 			InvoiceOrder.putExtra("order_items", order_items);
 			InvoiceOrder.putExtra("order_increment_id", order_increment_id);
 
-			ArrayList<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
-
-			LinearLayout list = (LinearLayout)rootView.findViewById(R.id.items_list);
-
-			for(int i=0; i<((ViewGroup)list).getChildCount(); ++i) {
-				View nextChild = ((ViewGroup)list).getChildAt(i);
-				String order_item_qty=((TextView) nextChild.findViewById(R.id.order_item_qty)).getText().toString();
-				String order_item_id=((TextView)nextChild.findViewById(R.id.order_item_id)).getText().toString();
-				HashMap<String, String> hashMap= new HashMap<String, String>();
-				hashMap.put("order_item_qty",order_item_qty);
-				hashMap.put("order_item_id",order_item_id);
-				listOfMaps.add(hashMap);
-			}
-			InvoiceOrder.putExtra("order_items", listOfMaps);
-
 			getActivity().startActivity(InvoiceOrder);
 			return true;
 
