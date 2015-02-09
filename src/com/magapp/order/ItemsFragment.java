@@ -83,7 +83,13 @@ public class ItemsFragment extends  Fragment {
 			((TextView) vi.findViewById(R.id.ProductOptions)).setText(item_option_text);
 			/*Hidden Values*/
 			((TextView) vi.findViewById(R.id.order_item_id)).setText(item_data.get("item_id").toString());
-			((TextView) vi.findViewById(R.id.order_item_qty)).setText(item_data.get("qty_ordered").toString());
+
+			Double qty_for_invoice=Double.valueOf(item_data.get("qty_ordered").toString()).doubleValue();
+			if (!item_data.get("qty_invoiced").toString().isEmpty())
+				qty_for_invoice=qty_for_invoice-Double.valueOf(item_data.get("qty_invoiced").toString()).doubleValue();
+
+			String qty_for_invoice_string=qty_for_invoice.toString();
+			((TextView) vi.findViewById(R.id.order_item_qty)).setText(qty_for_invoice_string);
 			/*Hidden Values*/
 
 			if (item_option_text.isEmpty())

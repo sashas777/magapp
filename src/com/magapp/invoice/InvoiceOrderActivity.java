@@ -1,13 +1,11 @@
 package com.magapp.invoice;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 
@@ -23,12 +21,15 @@ public class InvoiceOrderActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.invoice_order);
+        setContentView(R.layout.invoice_order_view);
 
         Bundle vars = getIntent().getExtras();
         order_id = vars.getInt("order_id");
         increment_id = vars.getString("increment_id");
         order_items= vars.getBundle("order_items");
+
+        Log.e("Sashas", order_items.toString() );
+
 
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setDisplayHomeAsUpEnabled(true);
