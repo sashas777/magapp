@@ -4,6 +4,12 @@
               android:layout_height="?android:attr/listPreferredItemHeight"
               android:padding="3dip"
               android:orientation="vertical">
+    <View
+            android:id="@+id/SeparatorTop"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:background="@color/separator"/>
+
 
     <TextView
             android:id="@+id/ProductName"
@@ -12,6 +18,8 @@
             android:gravity="center_vertical|left"
             android:text="@string/no_invoices"
             android:textSize="14sp"/>
+
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="fill_parent"

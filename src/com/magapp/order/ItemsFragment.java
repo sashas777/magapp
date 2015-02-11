@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ItemsFragment extends  Fragment {
 		ArrayList items = getArguments().getParcelableArrayList("items");
 		int items_coint=items.size();
 		int item_iterator=1;
+        String parent_id="";
 		for (Object item : items) {
 		HashMap item_data = (HashMap) item;
 
@@ -63,9 +65,10 @@ public class ItemsFragment extends  Fragment {
 			if (item_data.get("tax_amount").toString()!=null && !item_data.get("tax_amount").toString().isEmpty() && Double.valueOf(item_data.get("tax_amount").toString()).doubleValue()!=0)
 				Totals="Tax Amount: "+format.format(Double.valueOf(item_data.get("tax_amount").toString()).doubleValue())+"\n";
 
-			if (Double.valueOf(item_data.get("discount_amount").toString()).doubleValue()!=0)
+			if (item_data.get("discount_amount")!=null && Double.valueOf(item_data.get("discount_amount").toString()).doubleValue()!=0)
 				Totals+="Discount: "+format.format(Double.valueOf(item_data.get("discount_amount").toString()).doubleValue())+"\n";
-			Totals+="Row Total: "+format.format(Double.valueOf(item_data.get("row_total_incl_tax").toString()).doubleValue());
+            if (item_data.get("row_total_incl_tax")!=null && !item_data.get("row_total_incl_tax").toString().isEmpty() )
+			    Totals+="Row Total: "+format.format(Double.valueOf(item_data.get("row_total_incl_tax").toString()).doubleValue());
 			/* Totals */
 
 			View vi = inflater.inflate(R.layout.order_info_item_view, null);
@@ -92,6 +95,24 @@ public class ItemsFragment extends  Fragment {
 			((TextView) vi.findViewById(R.id.order_item_qty)).setText(qty_for_invoice_string);
 			/*Hidden Values*/
 
+            /*Configurable & Bundle Items & Grouped*/
+            if (item_data.get("has_children")!=null && !item_data.get("has_children").toString().isEmpty()) {
+                ((View) vi.findViewById(R.id.Separator)).getLayoutParams().height = 0;
+                parent_id=item_data.get("item_id").toString();
+            }
+
+            if (item_data.get("parent_item_id")!=null && !item_data.get("parent_item_id").toString().isEmpty()) {
+                ((TextView) vi.findViewById(R.id.ProductName)).setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+                ((View) vi.findViewById(R.id.Separator)).getLayoutParams().height = 0;
+                parent_id=item_data.get("parent_item_id").toString();
+            }
+
+            if (!parent_id.isEmpty() && item_data.get("parent_item_id").toString().isEmpty() && item_iterator!=1 ) {
+                parent_id="";
+                ((View) vi.findViewById(R.id.SeparatorTop)).getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getActivity().getResources().getDisplayMetrics());
+            }
+
+            /*Configurable & Bundle Items & Grouped*/
 			if (item_option_text.isEmpty())
 				((TextView) vi.findViewById(R.id.ProductOptions)).setHeight(0);
 
