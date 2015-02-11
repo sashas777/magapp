@@ -85,7 +85,7 @@ public class ItemsFragment extends  Fragment {
 			((TextView) vi.findViewById(R.id.order_item_id)).setText(item_data.get("item_id").toString());
 
 			Double qty_for_invoice=Double.valueOf(item_data.get("qty_ordered").toString()).doubleValue();
-			if (!item_data.get("qty_invoiced").toString().isEmpty())
+			if (item_data.get("qty_invoiced")!=null && !item_data.get("qty_invoiced").toString().isEmpty())
 				qty_for_invoice=qty_for_invoice-Double.valueOf(item_data.get("qty_invoiced").toString()).doubleValue();
 
 			String qty_for_invoice_string=qty_for_invoice.toString();

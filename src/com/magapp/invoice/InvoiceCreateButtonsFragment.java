@@ -5,13 +5,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.*;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.main.LoginActivity;
@@ -19,26 +19,28 @@ import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.order.ItemsFragment;
 import com.magapp.order.TotalsFragment;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 
-public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnClickListener {
+public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnClickListener, RequestInterface {
     public View rootView;
     private String order_increment_id;
-    private LayoutInflater inf;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        inf=inflater;
+
         rootView  = inflater.inflate(R.layout.invoice_create_buttons, null);
+
         order_increment_id=((InvoiceOrderActivity)getActivity()).GetOrderIncrementId();
         Button submitBtn = (Button) rootView.findViewById(R.id.submit);
         submitBtn.setOnClickListener(this);
+
+
         return rootView;
     }
 
@@ -47,31 +49,30 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         boolean add_comment=((CheckBox) rootView.findViewById(R.id.comments)).isChecked();
         /*Email*/
         boolean email=((CheckBox) rootView.findViewById(R.id.email)).isChecked();
-
         /*Get comment Value*/
-        View  comment_fragment =  inf.inflate(R.layout.invoice_create_comment_form, null);
-        String comment = ((EditText)comment_fragment.findViewById(R.id.comment_value)).getText().toString();
-        /*@todo comment not adding*/
-        Log.e("Sashas", "add comment "+add_comment+" email "+email+" comment "+comment);
+        String comment = ((InvoiceOrderActivity)getActivity()).getComment();
         /*Items*/
-/*        ArrayList<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
-        listOfMaps=(ArrayList<Map<String, String>>)vars.getSerializable("order_items");
-/*
-        ArrayList<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
-        LinearLayout list = (LinearLayout)rootView.findViewById(R.id.items_list);
-        for(int i=0; i<((ViewGroup)list).getChildCount(); ++i) {
-            View nextChild = ((ViewGroup)list).getChildAt(i);
-            String order_item_qty=((TextView) nextChild.findViewById(R.id.order_item_qty)).getText().toString();
-            String order_item_id=((TextView)nextChild.findViewById(R.id.order_item_id)).getText().toString();
-            HashMap<String, String> hashMap= new HashMap<String, String>();
-            hashMap.put("order_item_qty",order_item_qty);
-            hashMap.put("order_item_id",order_item_id);
-            listOfMaps.add(hashMap);
-        }
-        InvoiceOrder.putExtra("order_items", listOfMaps);
-*/
- /*Items*/
+        HashMap itemsQty=((InvoiceOrderActivity)getActivity()).GetInvoiceIdQty();
+        /*Items*/
+
+        Vector params = new Vector();
+        RequestTask task;
+        HashMap map_order = new HashMap();
+
+        order_increment_id=((InvoiceOrderActivity)getActivity()).GetOrderIncrementId();
+
+        map_order.put("orderIncrementId", order_increment_id);
+
+        params.add(map_order);
+        params.add(itemsQty);
+        params.add(comment);
+        params.add((email) ? 1 : 0);
+        params.add((add_comment) ? 1 : 0);
+
+        task = new RequestTask(this, getActivity());
+        task.execute(params);
     }
+
 
     @Override
     public void onClick(View view) {
@@ -79,7 +80,35 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
             case R.id.submit:
                 SubmitInvoice();
                 break;
-
         }
     }
+
+
+    public void onPreExecute(){
+        ((InvoiceOrderActivity)getActivity()).showProgressBar();
+    };
+
+    @Override
+    public void doPostExecute(Object result) {
+        ((InvoiceOrderActivity)getActivity()).hideProgressBar();
+        ShowMessage("Invoice #"+result.toString()+" has been created");
+        Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
+        OrderInfo.putExtra("order_increment_id", order_increment_id);
+        NavUtils.navigateUpTo(getActivity(), OrderInfo);
+    }
+
+    public  String GetApiRoute() {
+        return "sales_order_invoice.create";
+    }
+
+    public void RequestFailed(String error) {
+        ((InvoiceOrderActivity)getActivity()).hideProgressBar();
+        ShowMessage(error);
+    }
+
+    public void ShowMessage(String text) {
+        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+    }
+
+
 }
