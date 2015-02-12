@@ -1,5 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.magapp.main.BaseActivity" >
-    <item android:id="@+id/invoice" android:title="@string/invoice" android:showAsAction="never" android:visible="false"></item>
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.magapp.main.OrderInfoActivity">
+    <item android:id="@+id/invoice" android:title="@string/invoice" android:showAsAction="never"
+          android:visible="false"></item>
+    <item android:id="@+id/cancel" android:title="@string/cancel" android:showAsAction="never"
+          android:visible="false"></item>
+    <item android:id="@+id/hold" android:title="@string/hold" android:showAsAction="never"
+          android:visible="false"></item>
+    <item android:id="@+id/unhold" android:title="@string/unhold" android:showAsAction="never"
+          android:visible="false"></item>
+    <item android:id="@+id/ship" android:title="@string/ship" android:showAsAction="never"
+          android:visible="false"></item>
+    <item android:id="@+id/creditmemo" android:title="@string/creditmemo" android:showAsAction="never"
+          android:visible="false"></item>
 </menu>

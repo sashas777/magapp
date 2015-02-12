@@ -49,6 +49,11 @@
  	<string name="back_button_field">Back</string>
  	<string name="no_invoices">There are no invoices for this order yet.</string>
  	<string name="invoice">Invoice</string>
+    <string name="unhold">Unhold</string>
+    <string name="hold">Hold</string>
+    <string name="ship">Ship</string>
+    <string name="cancel">Cancel</string>
+    <string name="creditmemo">Credit Memo</string>
 	<string name="date_range">Date Filter</string>
     <string name="actions">Actions</string>
     <string name="submit">Submit</string>
