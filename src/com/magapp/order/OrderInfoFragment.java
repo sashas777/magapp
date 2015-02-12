@@ -45,7 +45,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
         HashMap map_filter = new HashMap();
         map_filter.put("order_increment_id", order_increment_id);
         params.add(map_filter);
-        task = new RequestTask(this, getActivity());
+        task = new RequestTask(this, getActivity(),"magapp_sales_order.info");
         task.execute(params);
         setHasOptionsMenu(true);
         return rootView;
@@ -88,9 +88,6 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
         FillData(map);
     }
 
-    public String GetApiRoute() {
-        return "magapp_sales_order.info";
-    }
 
     public void RequestFailed(String error) {
         ((OrderInfoActivity) getActivity()).ShowMessage(error);

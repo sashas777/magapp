@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		RequestTask task;
 		 
 		Vector params = new Vector();		 	 
-		task = new RequestTask(this, getActivity());
+		task = new RequestTask(this, getActivity(),"magapp_dashboard.charts");
 
 		/*new chart*/
 		LineChart chart = (LineChart) rootView.findViewById(R.id.chart);
@@ -101,10 +101,6 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
 		progressBar.setVisibility(View.INVISIBLE); 	 		
 		SetChartData(result);
-	 }		
-	
-	 public  String GetApiRoute() {
-		 return "magapp_dashboard.charts";
 	 }
 	 
 	 public void RequestFailed(String error) {

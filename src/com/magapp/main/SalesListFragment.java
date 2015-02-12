@@ -76,7 +76,7 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 		}
 		/* @comment
 			parameters can be day=value or day=array('from'=>date_from,'to'=>date_to) */
-		task = new RequestArrayTask(this, getActivity());
+		task = new RequestArrayTask(this, getActivity(),"magapp_order.last");
 		task.execute(params);				
 
 		return rootView;
@@ -115,10 +115,7 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 		progressBar.setVisibility(View.INVISIBLE); 	
 		SortRows(result);
 	 }		
-	
-	 public  String GetApiRoute() {
-		 return "magapp_order.last";
-	 }
+
 	 
 	 public void RequestFailed(String error) {
 		((BaseActivity)getActivity()).ShowMessage(error);

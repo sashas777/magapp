@@ -69,7 +69,7 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         params.add((email) ? 1 : 0);
         params.add((add_comment) ? 1 : 0);
 
-        task = new RequestTask(this, getActivity());
+        task = new RequestTask(this, getActivity(),"sales_order_invoice.create");
         task.execute(params);
     }
 
@@ -97,9 +97,6 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         NavUtils.navigateUpTo(getActivity(), OrderInfo);
     }
 
-    public  String GetApiRoute() {
-        return "sales_order_invoice.create";
-    }
 
     public void RequestFailed(String error) {
         ((InvoiceOrderActivity)getActivity()).hideProgressBar();

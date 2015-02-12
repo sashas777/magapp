@@ -57,7 +57,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 			HashMap map_filter = new HashMap(); 
 			map_filter.put("order_id ", order_id);
 			params.add(map_filter);			
-			task = new RequestArrayTask(this, getActivity());
+			task = new RequestArrayTask(this, getActivity(),"sales_order_invoice.list");
 			task.execute(params);
 
 		 	setHasOptionsMenu(true);
@@ -139,11 +139,6 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
              }
 
 			adapter.notifyDataSetChanged();
-		 }
-
-		
-		 public  String GetApiRoute() {
-			 return "sales_order_invoice.list";
 		 }
 		 
 		 public void RequestFailed(String error) {

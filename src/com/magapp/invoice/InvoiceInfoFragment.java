@@ -36,7 +36,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 			HashMap map_filter = new HashMap();
 			map_filter.put("invoiceIncrementId", invoice_increment_id);
 			params.add(map_filter);
-			task = new RequestTask(this, getActivity());
+			task = new RequestTask(this, getActivity(),"magapp_sales_order_invoice.info");
 			task.execute(params);
 		//	setHasOptionsMenu(true);
 			return rootView;
@@ -57,10 +57,6 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 			progressBar.setVisibility(View.INVISIBLE); 	 		
 			HashMap map = (HashMap) result;
 			FillData(map);
-		 }
-
-		 public  String GetApiRoute() {
-			 return "magapp_sales_order_invoice.info";
 		 }
 
 		 public void RequestFailed(String error) {

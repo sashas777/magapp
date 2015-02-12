@@ -27,10 +27,12 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	private Context activity;
 	private  String desired_preferense_file = "magapp";
 	private SharedPreferences settings;
+    private String api_route;
 
-	public RequestArrayTask(RequestArrayInterface callback, Context act){
+	public RequestArrayTask(RequestArrayInterface callback, Context act,String api_point){
 		RequestCallBack = callback; 
 		activity=act;
+        api_route=api_point;
 		settings = activity.getSharedPreferences(desired_preferense_file, 0);
 	}		
 	
@@ -54,7 +56,7 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 
 			String session_id = settings.getString("session_id", null);
 
-			result_info = (Object[]) client.callEx("call", new Object[] { session_id, RequestCallBack.GetApiRoute(), params[0] });
+			result_info = (Object[]) client.callEx("call", new Object[] { session_id, api_route, params[0] });
 			return result_info;
 		} catch (XMLRPCException e) {
 			Log.e("Sashas", e.getMessage());

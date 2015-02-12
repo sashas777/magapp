@@ -39,7 +39,7 @@ public class InvoiceOrderFragment extends Fragment  implements RequestInterface 
         order_increment_id=((InvoiceOrderActivity)getActivity()).GetOrderIncrementId();
         map_filter.put("order_increment_id", order_increment_id);
         params.add(map_filter);
-        task = new RequestTask(this, getActivity());
+        task = new RequestTask(this, getActivity(),"magapp_sales_order.info");
         task.execute(params);
 
         return rootView;
@@ -59,9 +59,6 @@ public class InvoiceOrderFragment extends Fragment  implements RequestInterface 
         FillData(map);
     }
 
-    public  String GetApiRoute() {
-        return "magapp_sales_order.info";
-    }
 
     public void RequestFailed(String error) {
         ((OrderInfoActivity)getActivity()).ShowMessage(error);

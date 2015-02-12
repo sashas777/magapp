@@ -80,7 +80,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 		RequestArrayTask task;	 
 		Vector params = new Vector();		
 		params.add(map_filter);
-		task = new RequestArrayTask(this, this);
+		task = new RequestArrayTask(this, this,"magapp_sales_order.notifications");
 		task.execute(params);
 		// stopSelf();
 	}
@@ -93,10 +93,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 	 public void doPostExecute(Object[] result) {			
 		 PrepareOrdersData(result);
 	 }		
-	
-	 public  String GetApiRoute() {
-		 return "magapp_sales_order.notifications";
-	 }
+
 	 
 	 public void RequestFailed(String error) {
 	 }		
