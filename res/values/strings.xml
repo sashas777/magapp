@@ -65,4 +65,5 @@
     <string name="commentPlaceholder">Feb 11, 2015 11:36:36 PM | Processing</string>
     <string name="customer_notified">Customer</string>
     <string name="customer_notified_placeholder">Notified</string>
+	<string name="capture">Capture</string>
 </resources>

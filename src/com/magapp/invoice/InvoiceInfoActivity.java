@@ -96,4 +96,14 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
+    public void showProgressBar(){
+        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar(){
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.INVISIBLE);
+    }	
+	
 }

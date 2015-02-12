@@ -266,7 +266,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
                 params.add(map_filter);
                 task = new RequestTask(this, getActivity(),"sales_order.cancel");
                 task.execute(params);
-                ShowMessage("The Order #"+ order_increment_id +" has not been cancelled.");
+                ShowMessage("The Order #"+ order_increment_id +" has been cancelled.");
                 return true;
 
             default:
