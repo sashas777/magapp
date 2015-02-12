@@ -57,7 +57,12 @@
 	<string name="date_range">Date Filter</string>
     <string name="actions">Actions</string>
     <string name="submit">Submit</string>
+    <string name="add_comment">Submit Comment</string>
     <string name="send_email">Send Email</string>
     <string name="append_comments">Include comments in email</string>
+    <string name="notify_customer">Notify Customer</string>
     <string name="comments">Comments</string>
+    <string name="commentPlaceholder">Feb 11, 2015 11:36:36 PM | Processing</string>
+    <string name="customer_notified">Customer</string>
+    <string name="customer_notified_placeholder">Notified</string>
 </resources>

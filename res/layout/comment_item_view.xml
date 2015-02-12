@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="top"
+              android:orientation="vertical"
+              android:fillViewport="true">
+
+    <com.magapp.main.NowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            >
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="#ffffff"
+                      android:orientation="vertical">
+
+            <LinearLayout
+                    style="@style/nowCardStyleTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_horizontal"
+                    android:minWidth="2dp"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+
+                <TextView
+                        android:id="@+id/card_title"
+                        style="@style/CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+
+                        android:paddingLeft="3dp"
+                        android:text="@string/commentPlaceholder"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/comment_info"
+                    style="@style/nowCardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+                <LinearLayout
+                        android:id="@+id/comment_customer_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:context=".OrderInfoActivity">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/customer_notified"
+                        android:id="@+id/customer_notified"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="@string/customer_notified_placeholder"
+                            android:id="@+id/customer_notified_value"/>
+
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|left"
+                        android:text="@string/customer_notified_placeholder"
+                        android:id="@+id/comment_value"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.magapp.main.NowLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="top"
+              android:orientation="vertical"
+              android:fillViewport="true">
+
+    <com.magapp.main.NowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            >
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="#ffffff"
+                      android:orientation="vertical">
+
+            <LinearLayout
+                    style="@style/nowCardStyleTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_horizontal"
+                    android:minWidth="2dp"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+
+                <TextView
+                        android:id="@+id/card_title"
+                        style="@style/CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+
+                        android:paddingLeft="3dp"
+                        android:text="@string/comments"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/comment_form"
+                    style="@style/nowCardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+
+               <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:lines="5"
+                        android:gravity="top"
+                        android:hint="Comments"
+                        android:id="@+id/comment_value"/>
+
+
+                    <CheckBox
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/notify_customer"
+                            android:id="@+id/notify_customer"/>
+                    <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/add_comment"
+                            android:id="@+id/submit" android:layout_gravity="center_horizontal"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.magapp.main.NowLayout>
+
+
+</LinearLayout>

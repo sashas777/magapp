@@ -204,7 +204,14 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
         mFragmentTransaction.add(R.id.totals_card, totals_card);
 			/* Totals */
         mFragmentTransaction.commit();
-			
+
+        /*Comments*/
+        Object[] order_comments = (Object[]) order.get("status_history");
+        ((OrderInfoActivity)getActivity()).setComments(order_comments);
+        String order_status=(String) order.get("status");
+        ((OrderInfoActivity)getActivity()).setStatus(order_status);
+        /*Comments*/
+
 			/*Menu Items*/
         can_invoice = (order.get("can_invoice").toString().equals("1"));
         can_hold = (order.get("can_hold").toString().equals("1"));

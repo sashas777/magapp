@@ -13,12 +13,14 @@ import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import com.magapp.invoice.InvoiceListFragment;
+import com.magapp.order.CommentsFragment;
 import com.magapp.order.OrderInfoFragment;
 
 public class OrderInfoActivity extends Activity implements OnNavigationListener {
 
-	private String order_increment_id;
+	private String order_increment_id,status;
 	private Integer order_id;
+    private Object[] comments;
 	 
 	String[] actions = new String[] { "Order", "Invoice", "Comments" };
 	public Integer menu_id = -1; 
@@ -27,14 +29,12 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orderinfo);
 
-	 
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		SpinnerAdapter mSpinnerAdapter;
         mSpinnerAdapter = new ArrayAdapter<>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
 
         getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		Bundle vars = getIntent().getExtras();
@@ -48,7 +48,16 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 		order_id=order_id_val;
 	}
 
- 
+    public void setComments(Object[] comments_obj){
+        comments=comments_obj;
+    }
+    public Object[]  getComments( ){ return comments;}
+
+    public void setStatus(String status_val){
+        status=status_val;
+    }
+    public String  getStatus( ){ return status;}
+
 	public Integer GetOrderId(){
 		return order_id;
 	}
@@ -73,8 +82,8 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 			screen = new InvoiceListFragment();			 
 			break;
 		case 2:
-			ShowMessage("Coming Soon");
-			break;
+            screen = new CommentsFragment();
+            break;
 		}
 		
 		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
