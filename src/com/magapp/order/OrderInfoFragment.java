@@ -1,34 +1,30 @@
 package com.magapp.order;
 
-import java.util.*;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-
-import android.widget.TextView;
+import android.view.*;
+import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.invoice.InvoiceOrderActivity;
-import com.magapp.main.*;
+import com.magapp.main.LoginActivity;
+import com.magapp.main.OrderInfoActivity;
+import com.magapp.main.R;
+import com.magapp.main.SalesListFragment;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Vector;
 
 public class OrderInfoFragment extends Fragment implements RequestInterface {
 
 
     public View rootView;
-    private Menu menu_settings;
     private Boolean can_invoice=false, can_hold=false,can_unhold=false,can_creditmemo=false, can_ship=false, can_cancel=false;
     private Boolean can_comment=false;
     private String order_increment_id;
@@ -40,15 +36,19 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
 
         rootView = inflater.inflate(R.layout.order_info_fragment, null);
         order_increment_id = ((OrderInfoActivity) getActivity()).GetOrderIncrementId();
-        Vector params = new Vector();
+        Refresh();
+        setHasOptionsMenu(true);
+        return rootView;
+    }
+
+    public void Refresh() {
+        Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
         RequestTask task;
-        HashMap map_filter = new HashMap();
+        HashMap<String, String> map_filter = new HashMap<String, String>();
         map_filter.put("order_increment_id", order_increment_id);
         params.add(map_filter);
         task = new RequestTask(this, getActivity(),"magapp_sales_order.info");
         task.execute(params);
-        setHasOptionsMenu(true);
-        return rootView;
     }
 
     @Override
@@ -73,26 +73,24 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
     }
 
     public void onPreExecute() {
-        ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.VISIBLE);
+        ((OrderInfoActivity)getActivity()).showProgressBar();
     }
-
-    ;
 
     @Override
     public void doPostExecute(Object result) {
-        ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.INVISIBLE);
-
-        HashMap map = (HashMap) result;
-        FillData(map);
+        ((OrderInfoActivity)getActivity()).hideProgressBar();
+        if(result instanceof HashMap) {
+            HashMap map = (HashMap) result;
+            FillData(map);
+        }else {
+            Refresh();
+        }
     }
 
 
     public void RequestFailed(String error) {
         ((OrderInfoActivity) getActivity()).ShowMessage(error);
-        ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.INVISIBLE);
+        ((OrderInfoActivity)getActivity()).hideProgressBar();
         Intent Login = new Intent(getActivity(), LoginActivity.class);
         getActivity().startActivity(Login);
         getActivity().finish();
@@ -100,7 +98,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
 
     public void FillData(HashMap order) {
 
-        Bundle params = new Bundle();
+        Bundle params;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
@@ -124,14 +122,14 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
         String created_at = cardt_title.substring(
                 cardt_title.lastIndexOf("|") + 1, cardt_title.length());
         params.putString("created_at", created_at);
-        Fragment main_info_card = new Fragment();
+        Fragment main_info_card;
         main_info_card = new MainInfoFragment();
         main_info_card.setArguments(params);
         mFragmentTransaction.add(R.id.main_info_card, main_info_card);
 			/* Main Info */
 			/* Account Info */
         params = new Bundle();
-        if (order.get("customer_is_guest").toString() == "1")
+        if (order.get("customer_is_guest").toString().equals("1"))
             params.putString("customer_name", "Guest");
         else
             params.putString("customer_name", order.get("customer_firstname")
@@ -142,15 +140,13 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
                 .toString());
         params.putString("customer_email", order.get("customer_email")
                 .toString());
-        Fragment account_card = new Fragment();
-        account_card = new CustomerAccountFragment();
+        Fragment account_card = new CustomerAccountFragment();
         account_card.setArguments(params);
         mFragmentTransaction.add(R.id.account_info, account_card);
 			/* Account Info */
 			/* Billing Address */
         params = new Bundle();
-        Fragment billing_card = new Fragment();
-        billing_card = new OrderAddressFragment();
+        Fragment billing_card = new OrderAddressFragment();
         params.putString("order_address", order.get("billing_address_html")
                 .toString());
         params.putString("address_title", "Billing Address");
@@ -161,8 +157,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
 			/* Shipping Address */
         if (Integer.parseInt(order.get("is_virtual").toString()) == 0) {
 
-            Fragment shipping_card = new Fragment();
-            shipping_card = new OrderAddressFragment();
+            Fragment shipping_card = new OrderAddressFragment();
             params = new Bundle();
             params.putString("order_address", order
                     .get("shipping_address_html").toString());
@@ -196,8 +191,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
             /* Invoice Menu */
         order_items.putSerializable("items", items_array);
             /*Invoice Menu*/
-        Fragment items_card = new Fragment();
-        items_card = new ItemsFragment();
+        Fragment items_card = new ItemsFragment();
         items_card.setArguments(params);
         mFragmentTransaction.add(R.id.items_card, items_card);
 			/* Items */
@@ -205,8 +199,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
         params = new Bundle();
         Object[] totals = (Object[]) order.get("totals");
         params.putSerializable("totals", totals);
-        Fragment totals_card = new Fragment();
-        totals_card = new TotalsFragment();
+        Fragment totals_card =  new TotalsFragment();
         totals_card.setArguments(params);
         mFragmentTransaction.add(R.id.totals_card, totals_card);
 			/* Totals */
@@ -227,6 +220,10 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
+        RequestTask task;
+        HashMap<String, String> map_filter = new HashMap<String, String>();
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(), SalesListFragment.class));
@@ -241,10 +238,37 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
                 getActivity().startActivity(InvoiceOrder);
                 return true;
 
+            case R.id.hold:
+                map_filter.put("order_increment_id", order_increment_id);
+                params.add(map_filter);
+                task = new RequestTask(this, getActivity(),"sales_order.hold");
+                task.execute(params);
+                ShowMessage("The Order #"+ order_increment_id +" has been put on hold.");
+                return true;
+
+            case R.id.unhold:
+                map_filter.put("order_increment_id", order_increment_id);
+                params.add(map_filter);
+                task = new RequestTask(this, getActivity(),"sales_order.unhold");
+                task.execute(params);
+                ShowMessage("The Order #"+ order_increment_id +" has been released from holding status.");
+                return true;
+
+            case R.id.cancel:
+                map_filter.put("order_increment_id", order_increment_id);
+                params.add(map_filter);
+                task = new RequestTask(this, getActivity(),"sales_order.cancel");
+                task.execute(params);
+                ShowMessage("The Order #"+ order_increment_id +" has not been cancelled.");
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
 
+    public void ShowMessage(String text) {
+        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+    }
 }

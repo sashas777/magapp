@@ -25,20 +25,9 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.magapp.main" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Sashas\workspace\magapp\src\com\magapp\connect\RequestResultInterface.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/main/HomeFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/main/HomeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceCreateButtonsFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceCreateButtonsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceInfoFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceInfoFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceListFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceListFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceOrderFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceOrderFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/main/NewOrderService.java" afterPath="$PROJECT_DIR$/src/com/magapp/main/NewOrderService.java" />
+    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="Order Hold, Unhold, Cancel">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java" afterPath="$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/connect/RequestArrayInterface.java" afterPath="$PROJECT_DIR$/src/com/magapp/connect/RequestArrayInterface.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/connect/RequestArrayTask.java" afterPath="$PROJECT_DIR$/src/com/magapp/connect/RequestArrayTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/connect/RequestInterface.java" afterPath="$PROJECT_DIR$/src/com/magapp/connect/RequestInterface.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/connect/RequestTask.java" afterPath="$PROJECT_DIR$/src/com/magapp/connect/RequestTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/main/SalesListFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/main/SalesListFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="magapp.iws" />
@@ -66,49 +55,61 @@
       <file leaf-file-name="ItemsFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magapp/order/ItemsFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2006">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1141" max-vertical-offset="2006">
               <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OrderInfoFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="OrderInfoFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8542024" vertical-offset="301" max-vertical-offset="4352">
-              <caret line="47" column="76" selection-start-line="47" selection-start-column="76" selection-end-line="47" selection-end-column="76" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4146" max-vertical-offset="4726">
+              <caret line="261" column="42" selection-start-line="261" selection-start-column="42" selection-end-line="261" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7442#7451#0" expanded="true" />
+                <element signature="e#1493#1518#0" expanded="true" />
+                <element signature="e#1604#1620#0" expanded="true" />
+                <element signature="e#2737#2738#0" expanded="true" />
+                <element signature="e#2805#2806#0" expanded="true" />
+                <element signature="e#7182#7191#0" expanded="true" />
+                <element signature="e#8826#8851#0" expanded="true" />
+                <element signature="e#8937#8953#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="orderinfo_menu.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/menu/orderinfo_menu.xml">
+      <file leaf-file-name="OrderInfoActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-              <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.33275864" vertical-offset="368" max-vertical-offset="1819">
+              <caret line="33" column="43" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
               <folding>
-                <element signature="e#225#242#0" expanded="true" />
-                <element signature="e#363#379#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order_info_item_view.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/order_info_item_view.xml">
+      <file leaf-file-name="InvoiceOrderFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceOrderFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1802">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="80" max-vertical-offset="1683">
+              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="InvoiceCreateButtonsFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceCreateButtonsFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="890" max-vertical-offset="1513">
+              <caret line="92" column="64" selection-start-line="92" selection-start-column="6" selection-end-line="92" selection-end-column="64" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -822,7 +823,6 @@
         <option value="$PROJECT_DIR$/res/layout/fragment_items_info.xml" />
         <option value="$PROJECT_DIR$/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/res/values/colors.xml" />
-        <option value="$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/invoice_order.xml" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/res/layout/order_info_fragment.xml" />
@@ -838,7 +838,6 @@
         <option value="$PROJECT_DIR$/src/com/magapp/connect/RequestInterface.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/connect/RequestArrayTask.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/connect/RequestArrayInterface.java" />
-        <option value="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceCreateButtonsFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceInfoFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceListFragment.java" />
@@ -846,6 +845,8 @@
         <option value="$PROJECT_DIR$/src/com/magapp/main/HomeFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/main/NewOrderService.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/main/SalesListFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java" />
       </list>
     </option>
   </component>
@@ -1457,7 +1458,13 @@
       <option name="project" value="LOCAL" />
       <updated>1423714287583</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Request Task API  Point Adjustment">
+      <created>1423715056035</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1423715056035</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1467,7 +1474,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289183" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3289183" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1478,7 +1485,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33443707" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32560706" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32560706" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
@@ -1510,8 +1517,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Some strange changes" />
-    <MESSAGE value="Refactoring" />
     <MESSAGE value="Android Support Lib" />
     <MESSAGE value="Image Loader Lib" />
     <MESSAGE value="Fixes" />
@@ -1535,7 +1540,10 @@
     <MESSAGE value="@todo Invoice Bundle &amp; handle simple Items&#10;Invoice Action Complete &#10;" />
     <MESSAGE value="Invoice Bundle Items" />
     <MESSAGE value="Order Info Menu items" />
-    <option name="LAST_COMMIT_MESSAGE" value="Order Info Menu items" />
+    <MESSAGE value="Request Task API  Point Adjustment" />
+    <MESSAGE value="Order Hold, Unhold, Cancel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Order Hold, Unhold, Cancel" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1801,14 +1809,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="879" max-vertical-offset="1462">
-          <caret line="100" column="5" selection-start-line="98" selection-start-column="4" selection-end-line="100" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/orderinfo.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="25" max-vertical-offset="578">
@@ -1818,19 +1818,6 @@
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceOrderActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="556" max-vertical-offset="1394">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="e#2182#2183#0" expanded="false" />
-            <element signature="e#2212#2213#0" expanded="false" />
-            <element signature="e#2245#2246#0" expanded="false" />
-            <element signature="e#2275#2276#0" expanded="false" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceCreateCommentFragment.java">
@@ -1857,25 +1844,6 @@
           <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/order/ItemsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2006">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/order_info_item_view.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1802">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/menu/orderinfo_menu.xml">
@@ -1937,34 +1905,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceCreateButtonsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32586208" vertical-offset="627" max-vertical-offset="1513">
-          <caret line="71" column="79" selection-start-line="71" selection-start-column="79" selection-end-line="71" selection-end-column="79" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceOrderFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6448276" vertical-offset="0" max-vertical-offset="1683">
-          <caret line="41" column="76" selection-start-line="41" selection-start-column="76" selection-end-line="41" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17931035" vertical-offset="355" max-vertical-offset="2635">
           <caret line="59" column="86" selection-start-line="59" selection-start-column="86" selection-end-line="59" selection-end-column="86" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceInfoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45" vertical-offset="79" max-vertical-offset="1598">
-          <caret line="38" column="88" selection-start-line="38" selection-start-column="88" selection-end-line="38" selection-end-column="88" />
           <folding />
         </state>
       </provider>
@@ -1993,13 +1937,80 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/order/ItemsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2006">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceInfoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.4328018" vertical-offset="720" max-vertical-offset="1598">
+          <caret line="38" column="88" selection-start-line="38" selection-start-column="88" selection-end-line="38" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/order_info_item_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="1802">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceOrderActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5626072" vertical-offset="743" max-vertical-offset="1326">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="95" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceOrderFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="80" max-vertical-offset="1683">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/invoice/InvoiceCreateButtonsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="890" max-vertical-offset="1513">
+          <caret line="92" column="64" selection-start-line="92" selection-start-column="6" selection-end-line="92" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8542024" vertical-offset="301" max-vertical-offset="4352">
-          <caret line="47" column="76" selection-start-line="47" selection-start-column="76" selection-end-line="47" selection-end-column="76" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="4146" max-vertical-offset="4726">
+          <caret line="261" column="42" selection-start-line="261" selection-start-column="42" selection-end-line="261" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7442#7451#0" expanded="true" />
+            <element signature="e#1493#1518#0" expanded="true" />
+            <element signature="e#1604#1620#0" expanded="true" />
+            <element signature="e#2737#2738#0" expanded="true" />
+            <element signature="e#2805#2806#0" expanded="true" />
+            <element signature="e#7182#7191#0" expanded="true" />
+            <element signature="e#8826#8851#0" expanded="true" />
+            <element signature="e#8937#8953#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33275864" vertical-offset="368" max-vertical-offset="1819">
+          <caret line="33" column="43" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

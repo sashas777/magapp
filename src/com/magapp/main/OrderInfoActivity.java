@@ -5,15 +5,13 @@ import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
-import android.widget.TableLayout;
 import android.widget.Toast;
-
 import com.magapp.invoice.InvoiceListFragment;
 import com.magapp.order.OrderInfoFragment;
 
@@ -22,10 +20,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	private String order_increment_id;
 	private Integer order_id;
 	 
-	private TableLayout prodlist;
-	 
 	String[] actions = new String[] { "Order", "Invoice", "Comments" };
-	private CharSequence mTitle;
 	public Integer menu_id = -1; 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +30,10 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	 
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
+		SpinnerAdapter mSpinnerAdapter;
+        mSpinnerAdapter = new ArrayAdapter<>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
 
-		getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
+        getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -99,5 +95,15 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	public void ShowMessage(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
+
+    public void showProgressBar(){
+        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar(){
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.INVISIBLE);
+    }
  
 }
