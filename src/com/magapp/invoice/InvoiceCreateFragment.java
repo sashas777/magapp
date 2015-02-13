@@ -24,7 +24,7 @@ import java.util.Vector;
 /**
  * Created by Sashas on 10/12/2014.
  */
-public class InvoiceOrderFragment extends Fragment  implements RequestInterface {
+public class InvoiceCreateFragment extends Fragment  implements RequestInterface {
 
     public View rootView;
     private String order_increment_id;
@@ -36,7 +36,7 @@ public class InvoiceOrderFragment extends Fragment  implements RequestInterface 
         Vector params = new Vector();
         RequestTask task;
         HashMap map_filter = new HashMap();
-        order_increment_id=((InvoiceOrderActivity)getActivity()).GetOrderIncrementId();
+        order_increment_id=((InvoiceCreateActivity)getActivity()).GetOrderIncrementId();
         map_filter.put("order_increment_id", order_increment_id);
         params.add(map_filter);
         task = new RequestTask(this, getActivity(),"magapp_sales_order.info");

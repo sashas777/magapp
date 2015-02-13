@@ -10,11 +10,12 @@ import android.view.*;
 import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
-import com.magapp.invoice.InvoiceOrderActivity;
+import com.magapp.invoice.InvoiceCreateActivity;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.main.SalesListFragment;
+import com.magapp.shipment.ShipmentCreateActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -237,7 +238,7 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
                 return true;
 
             case R.id.invoice:
-                Intent InvoiceOrder = new Intent(getActivity(), InvoiceOrderActivity.class);
+                Intent InvoiceOrder = new Intent(getActivity(), InvoiceCreateActivity.class);
                 InvoiceOrder.putExtra("order_id", order_id);
                 InvoiceOrder.putExtra("order_items", order_items);
                 InvoiceOrder.putExtra("order_increment_id", order_increment_id);
@@ -267,6 +268,15 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
                 task = new RequestTask(this, getActivity(),"sales_order.cancel");
                 task.execute(params);
                 ShowMessage("The Order #"+ order_increment_id +" has been cancelled.");
+                return true;
+
+            case R.id.ship:
+                Intent ShipOrder = new Intent(getActivity(), ShipmentCreateActivity.class);
+                ShipOrder.putExtra("order_id", order_id);
+                ShipOrder.putExtra("order_items", order_items);
+                ShipOrder.putExtra("order_increment_id", order_increment_id);
+                getActivity().startActivity(ShipOrder);
+
                 return true;
 
             default:

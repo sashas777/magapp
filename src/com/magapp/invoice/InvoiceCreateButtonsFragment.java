@@ -1,28 +1,21 @@
 package com.magapp.invoice;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.*;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
-import com.magapp.main.LoginActivity;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
-import com.magapp.order.ItemsFragment;
-import com.magapp.order.TotalsFragment;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 
@@ -36,7 +29,7 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
 
         rootView  = inflater.inflate(R.layout.invoice_create_buttons, null);
 
-        order_increment_id=((InvoiceOrderActivity)getActivity()).GetOrderIncrementId();
+        order_increment_id=((InvoiceCreateActivity)getActivity()).GetOrderIncrementId();
         Button submitBtn = (Button) rootView.findViewById(R.id.submit);
         submitBtn.setOnClickListener(this);
 
@@ -50,16 +43,16 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         /*Email*/
         boolean email=((CheckBox) rootView.findViewById(R.id.email)).isChecked();
         /*Get comment Value*/
-        String comment = ((InvoiceOrderActivity)getActivity()).getComment();
+        String comment = ((InvoiceCreateActivity)getActivity()).getComment();
         /*Items*/
-        HashMap itemsQty=((InvoiceOrderActivity)getActivity()).GetInvoiceIdQty();
+        HashMap itemsQty=((InvoiceCreateActivity)getActivity()).GetInvoiceIdQty();
         /*Items*/
 
         Vector params = new Vector();
         RequestTask task;
         HashMap map_order = new HashMap();
 
-        order_increment_id=((InvoiceOrderActivity)getActivity()).GetOrderIncrementId();
+        order_increment_id=((InvoiceCreateActivity)getActivity()).GetOrderIncrementId();
 
         map_order.put("orderIncrementId", order_increment_id);
 
@@ -85,12 +78,12 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
 
 
     public void onPreExecute(){
-        ((InvoiceOrderActivity)getActivity()).showProgressBar();
+        ((InvoiceCreateActivity)getActivity()).showProgressBar();
     };
 
     @Override
     public void doPostExecute(Object result) {
-        ((InvoiceOrderActivity)getActivity()).hideProgressBar();
+        ((InvoiceCreateActivity)getActivity()).hideProgressBar();
         ShowMessage("Invoice #"+result.toString()+" has been created");
         Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
         OrderInfo.putExtra("order_increment_id", order_increment_id);
@@ -99,7 +92,7 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
 
 
     public void RequestFailed(String error) {
-        ((InvoiceOrderActivity)getActivity()).hideProgressBar();
+        ((InvoiceCreateActivity)getActivity()).hideProgressBar();
         ShowMessage(error);
     }
 

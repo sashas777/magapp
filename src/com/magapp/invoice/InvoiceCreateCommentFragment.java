@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import com.magapp.main.R;
 
-import java.util.HashMap;
-
 
 public class InvoiceCreateCommentFragment extends Fragment    {
     public View rootView;
@@ -24,7 +22,7 @@ public class InvoiceCreateCommentFragment extends Fragment    {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         rootView  = inflater.inflate(R.layout.invoice_create_comment_form, null);
-        order_increment_id=((InvoiceOrderActivity)getActivity()).GetOrderIncrementId();
+        order_increment_id=((InvoiceCreateActivity)getActivity()).GetOrderIncrementId();
         comment = (EditText)rootView.findViewById(R.id.comment_value);
         comment.addTextChangedListener(new TextWatcher() {
             @Override

@@ -1,44 +1,31 @@
 package com.magapp.invoice;
 
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.Vector;
-
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
+import com.magapp.main.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
-import com.magapp.order.OrderInfoFragment;
+
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class InvoiceListFragment extends ListFragment implements RequestArrayInterface     {  
 	
 	public View rootView;
 	private Integer order_id;
-	private String order_increment_id;
+	private String order_increment_id,api_point, entityName;
 	private ArrayList<HashMap<String, String>> InvoiceList;
 	private InvoiceListAdapter adapter;
 	 
@@ -51,28 +38,32 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 			adapter=new InvoiceListAdapter(getActivity(), InvoiceList);			
 			setListAdapter(adapter);
 
-		    order_id=((OrderInfoActivity)getActivity()).GetOrderId();
-			RequestArrayTask task;	 
-			Vector params = new Vector();		 
+            Bundle params = new Bundle();
+            params=getArguments();
+
+		    order_id=params.getInt("order_id");
+            api_point=params.getString("api_point");
+            entityName=params.getString("entity_name");
+			RequestArrayTask task;
+
+			Vector task_params = new Vector();
 			HashMap map_filter = new HashMap(); 
 			map_filter.put("order_id ", order_id);
-			params.add(map_filter);			
-			task = new RequestArrayTask(this, getActivity(),"sales_order_invoice.list");
-			task.execute(params);
+            task_params.add(map_filter);
+			task = new RequestArrayTask(this, getActivity(),api_point);
+			task.execute(task_params);
 
 		 	setHasOptionsMenu(true);
 			return rootView;
 	}
 	 
-		public void onPreExecute(){		
-			ProgressBar progressBar =(ProgressBar)  getActivity().findViewById(R.id.progressBar1);
-			progressBar.setVisibility(View.VISIBLE);
+		public void onPreExecute(){
+            ((ActivityLoadInterface)getActivity()).showProgressBar();
 		};  
 
 		 @Override
-		 public void doPostExecute(Object[] result) {		
-			ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-			progressBar.setVisibility(View.INVISIBLE); 	 			
+		 public void doPostExecute(Object[] result) {
+            ((ActivityLoadInterface)getActivity()).hideProgressBar();
 			AddIvoices(result);
 		 }			
  	
@@ -82,10 +73,8 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				HashMap map = (HashMap) o;
 				
 				String increment_id=map.get("increment_id").toString();
-				String created_at=map.get("created_at").toString();
-				int state=Integer.parseInt(map.get("state").toString());  				 
-				String total=map.get("grand_total").toString();
-				
+                String created_at=map.get("created_at").toString();
+
 				/*Date*/
 				DateFormat created_at_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				created_at_format.setTimeZone(TimeZone.getTimeZone("UTC"));			
@@ -97,30 +86,40 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				}				
 				String created_at_date_string= new SimpleDateFormat("LLL dd, yyy HH:mm:ss") .format(created_at_date);
 				/*Date*/
-				/*State*/
-				String status="";
-				switch (state) {
-				case 0:
-					status="Not Defined";	
-					break;
-				case 1:
-					status="Pending";			 
-					break;
-				case 2:
-					status="Paid";	
-					break;
-				case 3:
-					status="Canceled";	 
-					break;					
-				}							
-				/*State*/
-				
 				/*Total*/
-				NumberFormat currency_format = NumberFormat.getCurrencyInstance(Locale.US);
-				String TotalAmount=currency_format.format(Double.valueOf(total).doubleValue());
+                String TotalAmount ="";
+                if (api_point.equals("sales_order_invoice.list")) {
+                    String total = map.get("grand_total").toString();
+                    NumberFormat currency_format = NumberFormat.getCurrencyInstance(Locale.US);
+                    TotalAmount = currency_format.format(Double.valueOf(total).doubleValue());
+                }else if (api_point.equals("sales_order_shipment.list")) {
+                    TotalAmount="Total Qty: "+Double.valueOf(map.get("total_qty").toString()).doubleValue();
+                }
 				/*Total*/
-				String Invoice_Line_1="Invoice #"+increment_id+" | "+created_at_date_string;
-				String Invoice_Line_2=TotalAmount+" "+status;
+				/*State*/
+                String status="";
+                if (api_point.equals("sales_order_invoice.list")) {
+                    int state = Integer.parseInt(map.get("state").toString());
+                    status=status+" ";
+                    switch (state) {
+                    case 0:
+                        status=status+"Not Defined";
+                        break;
+                    case 1:
+                        status=status+"Pending";
+                        break;
+                    case 2:
+                        status=status+"Paid";
+                        break;
+                    case 3:
+                        status=status+"Canceled";
+                        break;
+                    }
+                }
+				/*State*/
+
+				String Invoice_Line_1=entityName+" #"+increment_id+" | "+created_at_date_string;
+				String Invoice_Line_2=TotalAmount+status;
 				
 				HashMap<String, String> list_map = new HashMap<String, String>();
 				 	   
@@ -132,7 +131,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 
              if (invoices.length<1) {
                  HashMap<String, String> list_map = new HashMap<String, String>();
-                 list_map.put("invoice_number","There are no invoices for this order yet.");
+                 list_map.put("invoice_number","There are no items for this order yet.");
                  list_map.put("description","");
                  list_map.put("increment_id","");
                  InvoiceList.add(list_map);
@@ -142,11 +141,10 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 		 }
 		 
 		 public void RequestFailed(String error) {
-			((OrderInfoActivity)getActivity()).ShowMessage(error);
-			ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-			progressBar.setVisibility(View.INVISIBLE); 			
-			Intent Login = new Intent(getActivity(), LoginActivity.class);
-			getActivity().startActivity(Login);
+			((ActivityLoadInterface)getActivity()).ShowMessage(error);
+            ((ActivityLoadInterface)getActivity()).hideProgressBar();
+            Intent screen = new Intent(getActivity(), LoginActivity.class);
+			getActivity().startActivity(screen);
 			getActivity().finish();		 
 		 }		 
 	 
@@ -156,10 +154,16 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 
 		  String selected = ((TextView) v.findViewById(R.id.increment_id)).getText().toString();
 		  if (!selected.isEmpty()) {
-			  Intent Invoice = new Intent(getActivity(), InvoiceInfoActivity.class);
-			  Invoice.putExtra("order_id", order_id);
-			  Invoice.putExtra("increment_id", selected);
-			  getActivity().startActivity(Invoice);
+              Intent screen = null;
+              if (api_point.equals("sales_order_invoice.list")) {
+                  screen = new Intent(getActivity(), InvoiceInfoActivity.class);
+              }else if (api_point.equals("sales_order_shipment.list")) {
+                /*change it */
+                  screen = new Intent(getActivity(), InvoiceInfoActivity.class);
+              }
+              screen.putExtra("order_id", order_id);
+              screen.putExtra("increment_id", selected);
+			  getActivity().startActivity(screen);
 		  }
          // getActivity().finish();
 

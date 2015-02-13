@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import com.magapp.invoice.InvoiceListFragment;
 import com.magapp.order.CommentsFragment;
@@ -24,8 +23,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
 	private String order_increment_id,status;
 	private Integer order_id;
     private ArrayList<HashMap> comments;
-	 
-	String[] actions = new String[] { "Order", "Invoice", "Comments" };
+
 	public Integer menu_id = -1; 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +32,17 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
 
 		getActionBar().setDisplayShowTitleEnabled(false);
 		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		SpinnerAdapter mSpinnerAdapter;
-        mSpinnerAdapter = new ArrayAdapter<>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
+        ArrayAdapter<String> mSpinnerAdapter;
+        mSpinnerAdapter = new ArrayAdapter<>(getBaseContext(), R.layout.custom_spinner_row_white, new ArrayList<String>());
 
         getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mSpinnerAdapter.add("Order");
+        mSpinnerAdapter.add("Invoice");
+        mSpinnerAdapter.add("Shipment");
+        mSpinnerAdapter.add("Comments");
+        mSpinnerAdapter.notifyDataSetChanged();
 
 		Bundle vars = getIntent().getExtras();
 		order_increment_id = vars.getString("order_increment_id");
@@ -82,16 +86,27 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
 		}
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new Fragment();
+        Bundle params = new Bundle();
 		switch (itemPosition) {
 		case 0:
 			screen = new OrderInfoFragment();		
 			break;
 		case 1:
-			screen = new InvoiceListFragment();			 
+			screen = new InvoiceListFragment();
+            params.putInt("order_id", order_id);
+            params.putString("entity_name", "Invoice");
+            params.putString("api_point","sales_order_invoice.list");
+            screen.setArguments(params);
 			break;
-		case 2:
+        case 2:
+            screen = new InvoiceListFragment();
+            params.putInt("order_id", order_id);
+            params.putString("entity_name", "Shipment");
+            params.putString("api_point","sales_order_shipment.list");
+            screen.setArguments(params);
+            break;
+		case 3:
             screen = new CommentsFragment();
-            Bundle params = new Bundle();
             params.putString("status", status);
             params.putString("increment_id", order_increment_id);
             params.putString("api_point","sales_order.addComment");
