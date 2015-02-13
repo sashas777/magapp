@@ -10,16 +10,24 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
+import android.widget.SpinnerAdapter;
+import android.widget.Toast;
+import com.magapp.main.ActivityLoadInterface;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
+import com.magapp.order.CommentsFragment;
 
-public class InvoiceInfoActivity extends Activity implements OnNavigationListener {
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class InvoiceInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface {
 
     private int order_id;
     private String invoice_increment_id;
     private String order_increment_id;
-    private TableLayout prodlist;
+    private ArrayList<HashMap> comments;
 
     String[] actions = new String[]{"Invoice", "Comments"};
     private CharSequence mTitle;
@@ -52,6 +60,16 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         order_increment_id = order_increment_id_val;
     }
 
+    public void setComments(Object[] comments_obj){
+        comments = new ArrayList<HashMap>();
+        for (Object comment_item : comments_obj) {
+            HashMap item_data = (HashMap) comment_item;
+            comments.add(item_data);
+        }
+    }
+
+    public ArrayList  getComments( ){ return comments;}
+
     /* Additional for actionbar */
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         if (menu_id == -1) {
@@ -66,12 +84,17 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
                 break;
 
             case 1:
-                ShowMessage("Coming Soon");
+                screen = new CommentsFragment();
+                Bundle params = new Bundle();
+                params.putString("status",  "");
+                params.putString("increment_id", invoice_increment_id);
+                params.putString("api_point","sales_order_invoice.addComment");
+                params.putSerializable("comments", comments);
+                screen.setArguments(params);
                 break;
         }
 
-        fragmentManager.beginTransaction().replace(R.id.container, screen)
-                .addToBackStack(null).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
 
         return false;
     }

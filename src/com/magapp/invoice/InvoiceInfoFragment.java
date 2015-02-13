@@ -112,7 +112,12 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 			mFragmentTransaction.add(R.id.totals_card, totals_card);
 			/* Totals */
 			mFragmentTransaction.commit();
-			
+
+            /* Set Comments*/
+            Object[] invoice_comments = (Object[]) invoice.get("comments");
+            ((InvoiceInfoActivity)getActivity()).setComments(invoice_comments);
+            /* Set Comments*/
+
 			/*Options Menu*/
 			can_cancel = (invoice.get("can_cancel").toString().equals("1"));
 			can_capture = (invoice.get("can_capture").toString().equals("1"));
@@ -128,9 +133,6 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
         HashMap<String, String> map_filter = new HashMap<String, String>();
 
         switch (item.getItemId()) {
-            /*case android.R.id.home:
-                NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(), SalesListFragment.class));
-                return true;*/
 
             case R.id.cancel:
                 map_filter.put("invoiceIncrementId", invoice_increment_id);

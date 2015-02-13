@@ -9,18 +9,21 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import com.magapp.invoice.InvoiceListFragment;
 import com.magapp.order.CommentsFragment;
 import com.magapp.order.OrderInfoFragment;
 
-public class OrderInfoActivity extends Activity implements OnNavigationListener {
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class OrderInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface {
 
 	private String order_increment_id,status;
 	private Integer order_id;
-    private Object[] comments;
+    private ArrayList<HashMap> comments;
 	 
 	String[] actions = new String[] { "Order", "Invoice", "Comments" };
 	public Integer menu_id = -1; 
@@ -49,9 +52,14 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	}
 
     public void setComments(Object[] comments_obj){
-        comments=comments_obj;
+        comments = new ArrayList<HashMap>();
+        for (Object comment_item : comments_obj) {
+            HashMap item_data = (HashMap) comment_item;
+            comments.add(item_data);
+        }
     }
-    public Object[]  getComments( ){ return comments;}
+
+    public ArrayList  getComments( ){ return comments;}
 
     public void setStatus(String status_val){
         status=status_val;
@@ -83,6 +91,12 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 			break;
 		case 2:
             screen = new CommentsFragment();
+            Bundle params = new Bundle();
+            params.putString("status", status);
+            params.putString("increment_id", order_increment_id);
+            params.putString("api_point","sales_order.addComment");
+            params.putSerializable("comments", comments);
+            screen.setArguments(params);
             break;
 		}
 		
@@ -106,13 +120,13 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener 
 	}
 
     public void showProgressBar(){
-        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.VISIBLE);
+        LinearLayout Progress =(LinearLayout) findViewById(R.id.linlaHeaderProgress);
+        Progress.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar(){
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.INVISIBLE);
+        LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
+        Progress.setVisibility(View.GONE);
     }
  
 }

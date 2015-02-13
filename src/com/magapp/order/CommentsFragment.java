@@ -8,28 +8,33 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
-import com.magapp.main.OrderInfoActivity;
+import com.magapp.main.ActivityLoadInterface;
 import com.magapp.main.R;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.TimeZone;
-import java.util.Vector;
+import java.util.*;
 
 public class CommentsFragment extends Fragment implements View.OnClickListener, RequestInterface {
 	
 	public View rootView;
 	private LayoutInflater inf;
+    private String increment_id,status,api_point;
+    private ArrayList comments;
 
-	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
 
             inf=inflater;
 			rootView  = inflater.inflate(R.layout.linear_comments, null);
+
+            Bundle params=getArguments();
+            status=params.getString("status");
+            increment_id=params.getString("increment_id");
+            api_point=params.getString("api_point");
+            comments=params.getParcelableArrayList("comments");
 
             addCommentForm();
 
@@ -52,24 +57,33 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
     public void addCommentForm() {
         LinearLayout current_view = (LinearLayout)rootView.findViewById(R.id.container);
         View vi = inf.inflate(R.layout.add_comment_form, null);
+        if (!status.isEmpty())
+            ((CheckBox)vi.findViewById(R.id.include_comments)).setHeight(0);
+
         current_view.addView(vi);
     }
 
     public void addCommentTask() {
-        String status=((OrderInfoActivity)getActivity()).getStatus();
+
         boolean notify=((CheckBox)rootView.findViewById(R.id.notify_customer)).isChecked();
+        boolean include_comments=((CheckBox)rootView.findViewById(R.id.include_comments)).isChecked();
         String comment_val=((EditText)rootView.findViewById(R.id.comment_value)).getText().toString();
         /*Task*/
         Vector params = new Vector();
         RequestTask task;
 
-        String order_increment_id=((OrderInfoActivity)getActivity()).GetOrderIncrementId();
+        params.add(increment_id);
 
-        params.add(order_increment_id);
-        params.add(status);
+        if (!status.isEmpty())
+            params.add(status);
+
         params.add(comment_val);
+
         params.add((notify ? 1: 0));
-        task = new RequestTask(this, getActivity(),"sales_order.addComment");
+        if (status.isEmpty())
+          params.add((include_comments ? 1: 0));
+
+        task = new RequestTask(this, getActivity(),api_point);
         task.execute(params);
         /*Task*/
     }
@@ -78,7 +92,6 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
         LinearLayout current_view = (LinearLayout)rootView.findViewById(R.id.container);
         View vi = inf.inflate(R.layout.comment_item_view, null);
 
-        String status=((OrderInfoActivity)getActivity()).getStatus();
         boolean notify=((CheckBox)rootView.findViewById(R.id.notify_customer)).isChecked();
         String comment_val=((EditText)rootView.findViewById(R.id.comment_value)).getText().toString();
         /*Date*/
@@ -93,7 +106,17 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
         else
             ((TextView) vi.findViewById(R.id.customer_notified_value)).setText("Notified");
 
-        ((TextView) vi.findViewById(R.id.card_title)).setText(created_at_date_string+" | "+status);
+            /*Status*/
+        String comment_status=" | ";
+        if (status!=null && !status.isEmpty() ) {
+            String comment_status_value = status.toString();
+            comment_status = comment_status + WordUtils.capitalize(comment_status_value);
+        } else {
+            comment_status="";
+        }
+            /*Status*/
+
+        ((TextView) vi.findViewById(R.id.card_title)).setText(created_at_date_string+comment_status);
         ((TextView) vi.findViewById(R.id.comment_value)).setText(comment_val);
 
 
@@ -101,7 +124,7 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void Addcomments() {
-        Object[] comments=((OrderInfoActivity)getActivity()).getComments();
+
 
         LinearLayout current_view = (LinearLayout)rootView.findViewById(R.id.container);
 
@@ -126,10 +149,15 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
             String created_at_date_string= new SimpleDateFormat("LLL dd, yyy HH:mm:ss") .format(created_at_date);
 			/*Date*/
             /*Status*/
-            String status=comment_data.get("status").toString();
-            status = WordUtils.capitalize(status);
+            String comment_status=" | ";
+            if (comment_data.get("status")!=null && !comment_data.get("status").toString().isEmpty() ) {
+                String comment_status_value = comment_data.get("status").toString();
+                comment_status = comment_status + WordUtils.capitalize(comment_status_value);
+            } else {
+                comment_status="";
+            }
             /*Status*/
-            ((TextView) vi.findViewById(R.id.card_title)).setText(created_at_date_string+" | "+status);
+            ((TextView) vi.findViewById(R.id.card_title)).setText(created_at_date_string+comment_status);
 
             ((TextView) vi.findViewById(R.id.comment_value)).setText(comment_data.get("comment").toString());
 
@@ -139,19 +167,19 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void onPreExecute(){
-        ((OrderInfoActivity)getActivity()).showProgressBar();
+        ((ActivityLoadInterface)getActivity()).showProgressBar();
     };
 
     @Override
     public void doPostExecute(Object result) {
-        ((OrderInfoActivity)getActivity()).hideProgressBar();
+        ((ActivityLoadInterface)getActivity()).hideProgressBar();
         ShowMessage("Comment has been added");
         Addcomment();
     }
 
 
     public void RequestFailed(String error) {
-        ((OrderInfoActivity)getActivity()).hideProgressBar();
+        ((ActivityLoadInterface)getActivity()).hideProgressBar();
         ShowMessage(error);
     }
 

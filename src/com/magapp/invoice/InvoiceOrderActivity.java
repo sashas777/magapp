@@ -6,24 +6,22 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.magapp.main.ActivityLoadInterface;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
-import com.magapp.order.OrderInfoFragment;
 
 import java.util.HashMap;
-import java.util.Vector;
 
 /**
  * Created by Sashas on 10/11/2014.
  */
-public class InvoiceOrderActivity extends Activity implements InvoiceCreateCommentFragment.CommentListener  {
+public class InvoiceOrderActivity extends Activity implements InvoiceCreateCommentFragment.CommentListener, ActivityLoadInterface {
 
     private int order_id;
     private String order_increment_id;
