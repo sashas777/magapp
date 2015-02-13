@@ -9,14 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
-import android.widget.TableLayout;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.*;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
-import com.magapp.main.SalesListFragment;
-import com.magapp.order.OrderInfoFragment;
 
 public class InvoiceInfoActivity extends Activity implements OnNavigationListener {
 

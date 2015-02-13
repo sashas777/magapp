@@ -5,19 +5,18 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
-import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
-import com.magapp.order.*;
+import com.magapp.order.ItemsFragment;
+import com.magapp.order.TotalsFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Vector;
 
 public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
@@ -26,7 +25,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 	public View rootView;
 	private Menu menu_settings;
     private int order_id;
-	private Boolean can_cancel=false,can_capturel=false;
+	private Boolean can_cancel=false,can_capture=false;
 	String invoice_increment_id;
 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 		MenuItem cancel_item = menu.findItem(R.id.cancel);
 		MenuItem capture_item = menu.findItem(R.id.capture);
 		cancel_item.setVisible(can_cancel);
-		capture_item.setVisible(capture_item);
+		capture_item.setVisible(can_capture);
         super.onCreateOptionsMenu(menu, inflater);		
 	}
 	 

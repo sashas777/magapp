@@ -62,14 +62,13 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
         /*Task*/
         Vector params = new Vector();
         RequestTask task;
-        HashMap map_comment = new HashMap();
 
         String order_increment_id=((OrderInfoActivity)getActivity()).GetOrderIncrementId();
 
-        map_comment.put("orderIncrementId", order_increment_id);
-        map_comment.put("status", order_increment_id);
-        map_comment.put("comment", comment_val);
-        map_comment.put("notify", (notify ? 1: 0));
+        params.add(order_increment_id);
+        params.add(status);
+        params.add(comment_val);
+        params.add((notify ? 1: 0));
         task = new RequestTask(this, getActivity(),"sales_order.addComment");
         task.execute(params);
         /*Task*/
