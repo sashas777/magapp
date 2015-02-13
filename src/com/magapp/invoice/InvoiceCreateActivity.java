@@ -42,6 +42,14 @@ public class InvoiceCreateActivity extends Activity implements InvoiceCreateComm
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new InvoiceCreateFragment();
+
+        Bundle params=new Bundle();
+       /* params.putString("status", status);
+        params.putString("order_increment_id", order_increment_id);
+        params.putString("api_point","sales_order.addComment");
+        params.putSerializable("comments", comments);*/
+        screen.setArguments(params);
+
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_create_activity").commit();
     }
 

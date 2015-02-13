@@ -48,7 +48,7 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new InvoiceCreateFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_create_activity").commit();
+        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_create_activity").commit();
     }
 
     public String GetOrderIncrementId(){

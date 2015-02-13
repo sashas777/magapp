@@ -41,7 +41,6 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
         params.add(map_filter);
         task = new RequestTask(this, getActivity(),"magapp_sales_order.info");
         task.execute(params);
-
         return rootView;
     }
 

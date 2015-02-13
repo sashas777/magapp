@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 
 import java.util.HashMap;
@@ -21,7 +20,7 @@ import java.util.Vector;
 
 public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnClickListener, RequestInterface {
     public View rootView;
-    private String order_increment_id;
+    private String order_increment_id,api_point;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -29,7 +28,9 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
 
         rootView  = inflater.inflate(R.layout.invoice_create_buttons, null);
 
-        order_increment_id=((InvoiceCreateActivity)getActivity()).GetOrderIncrementId();
+        /* @todo put params from activity->frament->here*/
+        order_increment_id="";
+        api_point="sales_order_invoice.create";
         Button submitBtn = (Button) rootView.findViewById(R.id.submit);
         submitBtn.setOnClickListener(this);
 
@@ -62,7 +63,7 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         params.add((email) ? 1 : 0);
         params.add((add_comment) ? 1 : 0);
 
-        task = new RequestTask(this, getActivity(),"sales_order_invoice.create");
+        task = new RequestTask(this, getActivity(),api_point);
         task.execute(params);
     }
 
@@ -85,8 +86,8 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
     public void doPostExecute(Object result) {
         ((InvoiceCreateActivity)getActivity()).hideProgressBar();
         ShowMessage("Invoice #"+result.toString()+" has been created");
-        Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
-        OrderInfo.putExtra("order_increment_id", order_increment_id);
+        Intent OrderInfo = new Intent(getActivity(), InvoiceInfoActivity.class);
+        OrderInfo.putExtra("increment_id", result.toString());
         NavUtils.navigateUpTo(getActivity(), OrderInfo);
     }
 
