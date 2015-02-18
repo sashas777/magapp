@@ -90,14 +90,18 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         }
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new Fragment();
+        Bundle params=new Bundle();
+
         switch (itemPosition) {
             case 0:
                 screen = new ShipmentInfoFragment();
+                params.putString("increment_id", shipment_increment_id);
+                params.putString("api_point","magapp_sales_order_shipment.info");
+                screen.setArguments(params);
                 break;
 
             case 1:
                 screen = new CommentsFragment();
-                Bundle params = new Bundle();
                 params.putString("status",  "");
                 params.putString("increment_id", shipment_increment_id);
                 params.putString("api_point","sales_order_shipment.addComment");

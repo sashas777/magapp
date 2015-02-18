@@ -49,13 +49,13 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         invoice_increment_id = vars.getString("increment_id");
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new InvoiceInfoFragment();
+        Bundle params = new Bundle();
+        params.putString("increment_id", invoice_increment_id);
+        params.putString("api_point","magapp_sales_order_invoice.info");
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_info_activity").commit();
 
     }
 
-    public String GetInvoiceIncrementId() {
-        return invoice_increment_id;
-    }
 
     public void setOrderIncrementId(String order_increment_id_val) {
         order_increment_id = order_increment_id_val;
@@ -79,14 +79,17 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         }
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new Fragment();
+        Bundle params = new Bundle();
         switch (itemPosition) {
             case 0:
                 screen = new InvoiceInfoFragment();
+                params.putString("increment_id", invoice_increment_id);
+                params.putString("api_point","magapp_sales_order_invoice.info");
+                screen.setArguments(params);
                 break;
 
             case 1:
                 screen = new CommentsFragment();
-                Bundle params = new Bundle();
                 params.putString("status",  "");
                 params.putString("increment_id", invoice_increment_id);
                 params.putString("api_point","sales_order_invoice.addComment");

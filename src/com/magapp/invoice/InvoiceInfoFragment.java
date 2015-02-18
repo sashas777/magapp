@@ -26,12 +26,13 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 	public View rootView;
 
 	private Boolean can_cancel=false,can_capture=false;
-	String invoice_increment_id;
+	String invoice_increment_id,api_point;
 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.order_info_fragment, null);
-			invoice_increment_id=((InvoiceInfoActivity)getActivity()).GetInvoiceIncrementId();
+            invoice_increment_id=getArguments().getString("increment_id");
+            api_point=getArguments().getString("api_point");
 	
 			Refresh();
 			setHasOptionsMenu(true);
@@ -44,7 +45,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 		HashMap map_filter = new HashMap();
 		map_filter.put("invoiceIncrementId", invoice_increment_id);
 		params.add(map_filter);
-		task = new RequestTask(this, getActivity(),"magapp_sales_order_invoice.info");
+		task = new RequestTask(this, getActivity(),api_point);
 		task.execute(params);	
 	}
 	 @Override

@@ -69,6 +69,8 @@ public class ItemsFragment extends  Fragment {
 				Totals+="Discount: "+format.format(Double.valueOf(item_data.get("discount_amount").toString()).doubleValue())+"\n";
             if (item_data.get("row_total_incl_tax")!=null && !item_data.get("row_total_incl_tax").toString().isEmpty() )
 			    Totals+="Row Total: "+format.format(Double.valueOf(item_data.get("row_total_incl_tax").toString()).doubleValue());
+            if (api_point.equals("sales_order_shipment.create"))
+                Totals="Weight: "+format.format(Double.valueOf(item_data.get("weight").toString()).doubleValue())+" Lbs";
 			/* Totals */
 
 			View vi = inflater.inflate(R.layout.order_info_item_view, null);
