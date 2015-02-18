@@ -32,8 +32,7 @@ public class TrackingsFragment extends  Fragment  implements View.OnClickListene
 
 		rootView = inflater.inflate(R.layout.linear_comments, null);
 
-        Button removeBtn = (Button) rootView.findViewById(R.id.remove);
-        removeBtn.setOnClickListener(this);
+
 
 		/* Items list */
 		LinearLayout list = (LinearLayout)rootView.findViewById(R.id.container);
@@ -59,7 +58,8 @@ public class TrackingsFragment extends  Fragment  implements View.OnClickListene
             ((TextView) vi.findViewById(R.id.tracking_title)).setText(title);
             ((TextView) vi.findViewById(R.id.tracking_number)).setText(tracking_number);
             ((TextView) vi.findViewById(R.id.tracking_id)).setText(tracking_id);
-
+            Button removeBtn = (Button) vi.findViewById(R.id.remove);
+            removeBtn.setOnClickListener(this);
 			/*Date*/
             DateFormat created_at_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             created_at_format.setTimeZone(TimeZone.getTimeZone("UTC"));
