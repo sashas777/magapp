@@ -9,8 +9,8 @@ import android.view.*;
 import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
+import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.order.ItemsFragment;
 import com.magapp.order.TotalsFragment;
@@ -23,8 +23,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 
 	
 	public View rootView;
-	private Menu menu_settings;
-    private int order_id;
+
 	private Boolean can_cancel=false,can_capture=false;
 	String invoice_increment_id;
 
@@ -59,12 +58,12 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 	}
 	 
 		public void onPreExecute(){		
-			((InvoiceInfoActivity)getActivity()).showProgressBar();
+			((ActivityLoadInterface)getActivity()).showProgressBar();
 		};  
 
 		 @Override
 		 public void doPostExecute(Object result) {		
-			((InvoiceInfoActivity)getActivity()).hideProgressBar();	
+			((ActivityLoadInterface)getActivity()).hideProgressBar();
 			if(result instanceof HashMap) {			
 				HashMap map = (HashMap) result;
 				FillData(map);
@@ -74,8 +73,8 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 		 }
 
 		 public void RequestFailed(String error) {
-			((OrderInfoActivity)getActivity()).ShowMessage(error);		
-			((InvoiceInfoActivity)getActivity()).hideProgressBar();
+			((ActivityLoadInterface)getActivity()).ShowMessage(error);
+			((ActivityLoadInterface)getActivity()).hideProgressBar();
 			Intent Login = new Intent(getActivity(), LoginActivity.class);
 			getActivity().startActivity(Login);
 			getActivity().finish();
@@ -147,7 +146,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
                 params.add(map_filter);
                 task = new RequestTask(this, getActivity(),"sales_order_invoice.capture");
                 task.execute(params);
-                ShowMessage("The Invoice #"+ invoice_increment_id +" has been captured.");
+                ((ActivityLoadInterface) getActivity()).ShowMessage("The Invoice #" + invoice_increment_id + " has been captured.");
                 return true;
 
 				

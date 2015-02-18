@@ -41,9 +41,10 @@
         <activity android:name="BaseActivity"  android:label="@string/app_name" />
 
         <activity android:name="OrderInfoActivity"  android:label="@string/app_name" />
-        <activity android:name="com.magapp.invoice.InvoiceInfoActivity"  android:label="@string/app_name" />
+        <activity android:name="com.magapp.invoice.InvoiceInfoActivity"  android:label="@string/label_invoice_info" />
         <activity android:name="com.magapp.invoice.InvoiceCreateActivity"/>
         <activity android:name="com.magapp.shipment.ShipmentCreateActivity"/>
+        <activity android:name="com.magapp.shipment.ShipmentInfoActivity"/>
 
         <service android:name="NewOrderService"></service>
         <receiver android:name="BootBroadReceiv">

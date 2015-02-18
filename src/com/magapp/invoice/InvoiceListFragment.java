@@ -14,6 +14,7 @@ import com.magapp.connect.RequestArrayTask;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
+import com.magapp.shipment.ShipmentInfoActivity;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -159,8 +160,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
               if (api_point.equals("sales_order_invoice.list")) {
                   screen = new Intent(getActivity(), InvoiceInfoActivity.class);
               }else if (api_point.equals("sales_order_shipment.list")) {
-                /*change it */
-                  screen = new Intent(getActivity(), InvoiceInfoActivity.class);
+                  screen = new Intent(getActivity(), ShipmentInfoActivity.class);
               }
               screen.putExtra("order_id", order_id);
               screen.putExtra("increment_id", selected);

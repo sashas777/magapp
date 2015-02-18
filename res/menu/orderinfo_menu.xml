@@ -14,5 +14,7 @@
     <item android:id="@+id/creditmemo" android:title="@string/creditmemo" android:showAsAction="never"
           android:visible="false"></item>
     <item android:id="@+id/capture" android:title="@string/capture" android:showAsAction="never"
-          android:visible="false"></item>		  
+          android:visible="false"></item>
+    <item android:id="@+id/add_track" android:title="@string/add_tracking" android:showAsAction="never"
+          android:visible="false"></item>
 </menu>

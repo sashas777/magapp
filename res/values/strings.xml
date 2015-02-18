@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Magento Manager</string>
+    <string name="label_invoice_info">Invoice Info</string>
     <string name="home">Home</string>
     <string name="sales">Sales</string>
     <string name="title_section3">Settings</string>
@@ -66,4 +67,6 @@
     <string name="customer_notified">Customer</string>
     <string name="customer_notified_placeholder">Notified</string>
 	<string name="capture">Capture</string>
+    <string name="add_tracking">Add Tracking Number</string>
+
 </resources>

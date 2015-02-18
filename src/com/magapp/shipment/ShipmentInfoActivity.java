@@ -52,6 +52,12 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         shipment_increment_id = vars.getString("increment_id");
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new InvoiceInfoFragment();
+
+        Bundle params=new Bundle();
+        params.putString("shipment_increment_id", shipment_increment_id);
+        params.putString("api_point","magapp_sales_order_shipment.info");
+        screen.setArguments(params);
+
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_info_activity").commit();
 
     }
@@ -84,7 +90,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         Fragment screen = new Fragment();
         switch (itemPosition) {
             case 0:
-                screen = new InvoiceInfoFragment();
+                screen = new ShipmentInfoFragment();
                 break;
 
             case 1:
@@ -98,7 +104,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
                 break;
         }
 
-        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
+        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_info_activity").commit();
 
         return false;
     }
