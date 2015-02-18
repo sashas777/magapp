@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
+import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.order.ItemsFragment;
 import com.magapp.order.TotalsFragment;
@@ -27,7 +26,7 @@ import java.util.Vector;
 public class InvoiceCreateFragment extends Fragment  implements RequestInterface {
 
     public View rootView;
-    private String order_increment_id;
+    private String order_increment_id, api_point;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -36,7 +35,10 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
         Vector params = new Vector();
         RequestTask task;
         HashMap map_filter = new HashMap();
-        order_increment_id=((InvoiceCreateActivity)getActivity()).GetOrderIncrementId();
+
+        order_increment_id=getArguments().getString("order_increment_id");
+        api_point=getArguments().getString("api_point");
+
         map_filter.put("order_increment_id", order_increment_id);
         params.add(map_filter);
         task = new RequestTask(this, getActivity(),"magapp_sales_order.info");
@@ -45,24 +47,20 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
     }
 
     public void onPreExecute(){
-        ProgressBar progressBar =(ProgressBar)  getActivity().findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.VISIBLE);
+        ((ActivityLoadInterface)getActivity()).showProgressBar();
     };
 
     @Override
     public void doPostExecute(Object result) {
-        ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.INVISIBLE);
-
+        ((ActivityLoadInterface)getActivity()).hideProgressBar();
         HashMap map = (HashMap) result;
         FillData(map);
     }
 
 
     public void RequestFailed(String error) {
-        ((OrderInfoActivity)getActivity()).ShowMessage(error);
-        ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.INVISIBLE);
+        ((ActivityLoadInterface)getActivity()).ShowMessage(error);
+        ((ActivityLoadInterface)getActivity()).hideProgressBar();
         Intent Login = new Intent(getActivity(), LoginActivity.class);
         getActivity().startActivity(Login);
         getActivity().finish();
@@ -81,8 +79,10 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
             items_array.add(item_data);
         }
         params.putSerializable("items", items_array);
-        Fragment items_card = new Fragment();
-        items_card = new ItemsFragment();
+        params.putString("api_point",api_point);
+
+
+        Fragment items_card =new ItemsFragment();
         items_card.setArguments(params);
         mFragmentTransaction.add(R.id.main_info_card, items_card);
 		/* Items */
@@ -96,11 +96,18 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
         mFragmentTransaction.add(R.id.account_info, totals_card);
 		/* Totals */
         /*Comment*/
-        Fragment invoice_comment = new InvoiceCreateCommentFragment();
-        mFragmentTransaction.add(R.id.bill_address, invoice_comment);
+        Fragment comment_form = new InvoiceCreateCommentFragment();
+        params=new Bundle();
+        params.putString("order_increment_id", order_increment_id);
+        comment_form.setArguments(params);
+        mFragmentTransaction.add(R.id.bill_address, comment_form);
         /*Comment*/
         /*Buttons*/
         Fragment invoice_buttons = new InvoiceCreateButtonsFragment();
+        params=new Bundle();
+        params.putString("order_increment_id", order_increment_id);
+        params.putString("api_point",api_point);
+        invoice_buttons.setArguments(params);
         mFragmentTransaction.add(R.id.ship_address, invoice_buttons);
         /*Buttons*/
 

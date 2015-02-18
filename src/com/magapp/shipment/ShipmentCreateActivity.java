@@ -18,16 +18,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.magapp.interfaces.ActivityCreateInterface;
+import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.invoice.InvoiceCreateCommentFragment;
 import com.magapp.invoice.InvoiceCreateFragment;
-import com.magapp.main.ActivityLoadInterface;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 
 import java.util.HashMap;
 
 
-public class ShipmentCreateActivity extends Activity implements InvoiceCreateCommentFragment.CommentListener, ActivityLoadInterface {
+public class ShipmentCreateActivity extends Activity implements InvoiceCreateCommentFragment.CommentListener, ActivityLoadInterface,ActivityCreateInterface {
 
     private int order_id;
     private String order_increment_id;
@@ -48,13 +49,14 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new InvoiceCreateFragment();
+
+        Bundle params=new Bundle();
+        params.putString("order_increment_id", order_increment_id);
+        params.putString("api_point","sales_order_shipment.create");
+        screen.setArguments(params);
+
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_create_activity").commit();
     }
-
-    public String GetOrderIncrementId(){
-        return order_increment_id;
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,7 +79,7 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
         return comment;
     }
 
-    public HashMap GetInvoiceIdQty(){
+    public HashMap GetOrderItemsIdQty(){
         HashMap<String, String> hashMap= new HashMap<String, String>();
         LinearLayout list = (LinearLayout)findViewById(R.id.items_list);
         for(int i=0; i<((ViewGroup)list).getChildCount(); ++i) {
@@ -101,5 +103,13 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
     public void hideProgressBar(){
         LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void ShowSuccess(String increment_id) {
+        ShowMessage("Shipment #"+increment_id+" has been created");
+        Intent ShipmentInfo = new Intent(this, ShipmentInfoActivity.class);
+        ShipmentInfo.putExtra("increment_id", increment_id);
+        NavUtils.navigateUpTo(this, ShipmentInfo);
     }
 }

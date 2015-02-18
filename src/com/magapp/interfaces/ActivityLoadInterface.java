@@ -1,4 +1,4 @@
-package com.magapp.main;
+package com.magapp.interfaces;
 
 public interface ActivityLoadInterface {
 	

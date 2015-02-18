@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
-import com.magapp.main.ActivityLoadInterface;
+import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.R;
 import org.apache.commons.lang3.text.WordUtils;
 

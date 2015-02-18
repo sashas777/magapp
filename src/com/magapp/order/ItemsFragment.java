@@ -1,23 +1,22 @@
 package com.magapp.order;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.magapp.main.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class ItemsFragment extends  Fragment {
 
@@ -32,6 +31,7 @@ public class ItemsFragment extends  Fragment {
 		/* Items list */
 
 		ArrayList items = getArguments().getParcelableArrayList("items");
+        String api_point= getArguments().getString("api_point");
 		int items_coint=items.size();
 		int item_iterator=1;
         String parent_id="";
@@ -87,12 +87,18 @@ public class ItemsFragment extends  Fragment {
 			/*Hidden Values*/
 			((TextView) vi.findViewById(R.id.order_item_id)).setText(item_data.get("item_id").toString());
 
-			Double qty_for_invoice=Double.valueOf(item_data.get("qty_ordered").toString()).doubleValue();
-			if (item_data.get("qty_invoiced")!=null && !item_data.get("qty_invoiced").toString().isEmpty())
-				qty_for_invoice=qty_for_invoice-Double.valueOf(item_data.get("qty_invoiced").toString()).doubleValue();
+			Double qty_for_action=Double.valueOf(item_data.get("qty_ordered").toString()).doubleValue();
+			if (item_data.get("qty_invoiced")!=null && !item_data.get("qty_invoiced").toString().isEmpty() && api_point=="sales_order_invoice.create")
+				qty_for_action=qty_for_action-Double.valueOf(item_data.get("qty_invoiced").toString()).doubleValue();
 
-			String qty_for_invoice_string=qty_for_invoice.toString();
-			((TextView) vi.findViewById(R.id.order_item_qty)).setText(qty_for_invoice_string);
+            if (item_data.get("qty_shipped")!=null && !item_data.get("qty_shipped").toString().isEmpty() && api_point=="sales_order_shipment.create")
+                qty_for_action=qty_for_action-Double.valueOf(item_data.get("qty_shipped").toString()).doubleValue();
+
+            if (item_data.get("qty_refunded")!=null && !item_data.get("qty_refunded").toString().isEmpty() && api_point=="order_creditmemo.create")
+                qty_for_action=qty_for_action-Double.valueOf(item_data.get("qty_refunded").toString()).doubleValue();
+
+			String qty_for_action_string=qty_for_action.toString();
+			((TextView) vi.findViewById(R.id.order_item_qty)).setText(qty_for_action_string);
 			/*Hidden Values*/
 
             /*Configurable & Bundle Items & Grouped*/

@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.magapp.main.ActivityLoadInterface;
+import com.magapp.interfaces.ActivityCreateInterface;
+import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 
@@ -21,7 +22,7 @@ import java.util.HashMap;
 /**
  * Created by Sashas on 10/11/2014.
  */
-public class InvoiceCreateActivity extends Activity implements InvoiceCreateCommentFragment.CommentListener, ActivityLoadInterface {
+public class InvoiceCreateActivity extends Activity implements InvoiceCreateCommentFragment.CommentListener, ActivityLoadInterface, ActivityCreateInterface {
 
     private int order_id;
     private String order_increment_id;
@@ -44,17 +45,11 @@ public class InvoiceCreateActivity extends Activity implements InvoiceCreateComm
         Fragment screen = new InvoiceCreateFragment();
 
         Bundle params=new Bundle();
-       /* params.putString("status", status);
         params.putString("order_increment_id", order_increment_id);
-        params.putString("api_point","sales_order.addComment");
-        params.putSerializable("comments", comments);*/
+        params.putString("api_point","sales_order_invoice.create");
         screen.setArguments(params);
 
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_create_activity").commit();
-    }
-
-    public String GetOrderIncrementId(){
-        return order_increment_id;
     }
 
 
@@ -70,6 +65,9 @@ public class InvoiceCreateActivity extends Activity implements InvoiceCreateComm
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * @param string
+     */
     @Override
     public void onCommentEditTextChanged(String string) {
         comment=string;
@@ -79,7 +77,7 @@ public class InvoiceCreateActivity extends Activity implements InvoiceCreateComm
         return comment;
     }
 
-    public HashMap GetInvoiceIdQty(){
+    public HashMap GetOrderItemsIdQty(){
         HashMap<String, String> hashMap= new HashMap<String, String>();
         LinearLayout list = (LinearLayout)findViewById(R.id.items_list);
         for(int i=0; i<((ViewGroup)list).getChildCount(); ++i) {
@@ -89,6 +87,14 @@ public class InvoiceCreateActivity extends Activity implements InvoiceCreateComm
             hashMap.put(order_item_id,order_item_qty);
         }
         return hashMap;
+    }
+
+    @Override
+    public void ShowSuccess(String increment_id) {
+        ShowMessage("Invoice #"+increment_id+" has been created");
+        Intent InvoiceInfo = new Intent(this, InvoiceInfoActivity.class);
+        InvoiceInfo.putExtra("increment_id", increment_id);
+        NavUtils.navigateUpTo(this, InvoiceInfo);
     }
 
     public void showProgressBar(){

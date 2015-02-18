@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
-import com.magapp.main.ActivityLoadInterface;
+import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
 

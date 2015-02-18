@@ -1,4 +1,9 @@
-package com.magapp.invoice;
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
+package com.magapp.shipment;
 
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
@@ -15,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import com.magapp.interfaces.ActivityLoadInterface;
+import com.magapp.invoice.InvoiceInfoFragment;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.order.CommentsFragment;
@@ -22,14 +28,13 @@ import com.magapp.order.CommentsFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class InvoiceInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface {
+public class ShipmentInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface {
 
-   // private int order_id;
-    private String invoice_increment_id;
+    private String shipment_increment_id;
     private String order_increment_id;
     private ArrayList<HashMap> comments;
 
-    String[] actions = new String[]{"Invoice", "Comments"};
+    String[] actions = new String[]{"Shipment", "Comments"};
     private CharSequence mTitle;
     public Integer menu_id = -1;
 
@@ -44,20 +49,19 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle vars = getIntent().getExtras();
-      //  order_id = vars.getInt("order_id");
-        invoice_increment_id = vars.getString("increment_id");
+        shipment_increment_id = vars.getString("increment_id");
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new InvoiceInfoFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_info_activity").commit();
+        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_info_activity").commit();
 
     }
 
     public String GetInvoiceIncrementId() {
-        return invoice_increment_id;
+        return shipment_increment_id;
     }
 
     public void setOrderIncrementId(String order_increment_id_val) {
-        order_increment_id = order_increment_id_val;
+        shipment_increment_id = order_increment_id_val;
     }
 
     public void setComments(Object[] comments_obj){
@@ -87,8 +91,8 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
                 screen = new CommentsFragment();
                 Bundle params = new Bundle();
                 params.putString("status",  "");
-                params.putString("increment_id", invoice_increment_id);
-                params.putString("api_point","sales_order_invoice.addComment");
+                params.putString("increment_id", shipment_increment_id);
+                params.putString("api_point","sales_order_shipment.addComment");
                 params.putSerializable("comments", comments);
                 screen.setArguments(params);
                 break;
