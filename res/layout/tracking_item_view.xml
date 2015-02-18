@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="top"
+              android:orientation="vertical"
+              android:fillViewport="true">
+
+    <com.magapp.main.NowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            >
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="#ffffff"
+                      android:orientation="vertical">
+
+            <LinearLayout
+                    style="@style/nowCardStyleTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_horizontal"
+                    android:minWidth="2dp"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+
+                <TextView
+                        android:id="@+id/card_title"
+                        style="@style/CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+
+                        android:paddingLeft="3dp"
+                        android:text="@string/commentPlaceholder"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/comment_info"
+                    style="@style/nowCardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+                <LinearLayout
+                        android:id="@+id/comment_customer_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:context=".ShipmentInfoActivity">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/customer_notified"
+                        android:id="@+id/tracking_title"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:text="@string/customer_notified"
+                            android:layout_height="0dp"
+                            android:visibility="invisible"
+                            android:id="@+id/tracking_id"/>
+
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|left"
+                        android:text="@string/customer_notified_placeholder"
+                        android:id="@+id/tracking_number"/>
+                <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_width="83dp"
+                        android:layout_height="30dp"
+                        android:text="@string/remove"
+                        android:id="@+id/remove"
+                        android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.magapp.main.NowLayout>
+
+
+</LinearLayout>

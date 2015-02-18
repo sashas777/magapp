@@ -61,10 +61,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_info_activity").commit();
 
     }
- /*
-    public String GetEntityIncrementId() {
-        return shipment_increment_id;
-    }*/
+
 
     /*For back action to order view*/
     public void setOrderIncrementId(String order_increment_id_val) {

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityCreateInterface;
@@ -86,12 +85,10 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
 
     public void RequestFailed(String error) {
         ((ActivityLoadInterface)getActivity()).hideProgressBar();
-        ShowMessage(error);
+        ((ActivityLoadInterface)getActivity()).ShowMessage(error);
     }
 
-    public void ShowMessage(String text) {
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-    }
+
 
 
 }

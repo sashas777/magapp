@@ -107,15 +107,19 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
         items_card.setArguments(params);
         mFragmentTransaction.add(R.id.items_card, items_card);
 			/* Items */
-			/* Totals */
-        /*params = new Bundle();
-        Object[] totals = (Object[]) shipment.get("totals");
-        params.putSerializable("totals", totals);
-        Fragment totals_card = new Fragment();
-        totals_card = new TotalsFragment();
-        totals_card.setArguments(params);
-        mFragmentTransaction.add(R.id.totals_card, totals_card);*/
-			/* Totals */
+			/* Trackings */
+            params = new Bundle();
+            ArrayList<HashMap> trackings_array = new ArrayList<HashMap>();
+            Object[] tracking_items = (Object[]) shipment.get("tracks");
+            for (Object item : tracking_items) {
+                HashMap item_data = (HashMap) item;
+                trackings_array.add(item_data);
+            }
+            params.putSerializable("items", items_array);
+            Fragment trackings_card =  new TrackingsFragment();
+            trackings_card.setArguments(params);
+            mFragmentTransaction.add(R.id.items_card, trackings_card);
+			/* Trackings */
         mFragmentTransaction.commit();
 
         /* Set Comments*/

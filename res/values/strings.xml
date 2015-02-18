@@ -68,5 +68,6 @@
     <string name="customer_notified_placeholder">Notified</string>
 	<string name="capture">Capture</string>
     <string name="add_tracking">Add Tracking Number</string>
+    <string name="remove">Remove</string>
 
 </resources>
