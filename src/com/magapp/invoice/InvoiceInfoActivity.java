@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
@@ -22,7 +23,7 @@ import com.magapp.order.CommentsFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class InvoiceInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface {
+public class InvoiceInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface,ActivityInfoInterface {
 
    // private int order_id;
     private String invoice_increment_id;

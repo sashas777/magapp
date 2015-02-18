@@ -19,8 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
-import com.magapp.invoice.InvoiceInfoFragment;
 import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.order.CommentsFragment;
@@ -28,7 +28,7 @@ import com.magapp.order.CommentsFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ShipmentInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface {
+public class ShipmentInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface, ActivityInfoInterface {
 
     private String shipment_increment_id;
     private String order_increment_id;
@@ -51,7 +51,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         Bundle vars = getIntent().getExtras();
         shipment_increment_id = vars.getString("increment_id");
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment screen = new InvoiceInfoFragment();
+        Fragment screen = new ShipmentInfoFragment();
 
         Bundle params=new Bundle();
         params.putString("shipment_increment_id", shipment_increment_id);
@@ -62,14 +62,16 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
 
     }
 
-    public String GetInvoiceIncrementId() {
+    public String GetEntityIncrementId() {
         return shipment_increment_id;
     }
 
+    /*For back action to order view*/
     public void setOrderIncrementId(String order_increment_id_val) {
-        shipment_increment_id = order_increment_id_val;
+        order_increment_id = order_increment_id_val;
     }
 
+    /*For comments?*/
     public void setComments(Object[] comments_obj){
         comments = new ArrayList<HashMap>();
         for (Object comment_item : comments_obj) {
@@ -78,7 +80,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         }
     }
 
-    public ArrayList  getComments( ){ return comments;}
+    public ArrayList  getComments(){ return comments;}
 
     /* Additional for actionbar */
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {

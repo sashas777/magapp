@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.*;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
+import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
@@ -90,7 +91,8 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
-        ((ShipmentInfoActivity) getActivity()).setOrderIncrementId(shipment.get("order_increment_id").toString());
+
+        ((ActivityInfoInterface) getActivity()).setOrderIncrementId(shipment.get("order_increment_id").toString());
             /* Items */
         params = new Bundle();
         ArrayList<HashMap> items_array = new ArrayList<HashMap>();
@@ -117,9 +119,9 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
         mFragmentTransaction.commit();
 
             /* Set Comments*/
-      /*  Object[] shipment_comments = (Object[]) shipment.get("comments");
+        Object[] shipment_comments = (Object[]) shipment.get("comments");
         /*@todo redo params*/
-      /*  ((InvoiceInfoActivity) getActivity()).setComments(shipment_comments);*/
+        ((ActivityInfoInterface) getActivity()).setComments(shipment_comments);
             /* Set Comments*/
 
 		/*Options Menu*/

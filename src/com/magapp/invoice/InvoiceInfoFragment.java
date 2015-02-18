@@ -9,6 +9,7 @@ import android.view.*;
 import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
+import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
@@ -86,7 +87,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 			FragmentManager fragmentManager = getFragmentManager();
 			FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
-			((InvoiceInfoActivity)getActivity()).setOrderIncrementId(invoice.get("order_increment_id").toString());
+			((ActivityInfoInterface)getActivity()).setOrderIncrementId(invoice.get("order_increment_id").toString());
 			/* Items */
 			params = new Bundle();
 			ArrayList<HashMap> items_array = new ArrayList<HashMap>();
@@ -96,8 +97,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 				items_array.add(item_data);
 			}
 			params.putSerializable("items", items_array);
-			Fragment items_card = new Fragment();
-			items_card = new ItemsFragment();
+			Fragment items_card =  new ItemsFragment();
 			items_card.setArguments(params);
 			mFragmentTransaction.add(R.id.items_card, items_card);
 			/* Items */
@@ -114,7 +114,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 
             /* Set Comments*/
             Object[] invoice_comments = (Object[]) invoice.get("comments");
-            ((InvoiceInfoActivity)getActivity()).setComments(invoice_comments);
+            ((ActivityInfoInterface)getActivity()).setComments(invoice_comments);
             /* Set Comments*/
 
 			/*Options Menu*/
