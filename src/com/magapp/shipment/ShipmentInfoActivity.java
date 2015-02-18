@@ -54,17 +54,17 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         Fragment screen = new ShipmentInfoFragment();
 
         Bundle params=new Bundle();
-        params.putString("shipment_increment_id", shipment_increment_id);
+        params.putString("increment_id", shipment_increment_id);
         params.putString("api_point","magapp_sales_order_shipment.info");
         screen.setArguments(params);
 
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_info_activity").commit();
 
     }
-
+ /*
     public String GetEntityIncrementId() {
         return shipment_increment_id;
-    }
+    }*/
 
     /*For back action to order view*/
     public void setOrderIncrementId(String order_increment_id_val) {

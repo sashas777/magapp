@@ -62,7 +62,7 @@ public class ItemsFragment extends  Fragment {
 			/*Price & PercentageFormats */
 			/* Totals */
 			String Totals="";
-			if (item_data.get("tax_amount").toString()!=null && !item_data.get("tax_amount").toString().isEmpty() && Double.valueOf(item_data.get("tax_amount").toString()).doubleValue()!=0)
+			if (item_data.get("tax_amount")!=null && item_data.get("tax_amount").toString()!=null && !item_data.get("tax_amount").toString().isEmpty() && Double.valueOf(item_data.get("tax_amount").toString()).doubleValue()!=0)
 				Totals="Tax Amount: "+format.format(Double.valueOf(item_data.get("tax_amount").toString()).doubleValue())+"\n";
 
 			if (item_data.get("discount_amount")!=null && Double.valueOf(item_data.get("discount_amount").toString()).doubleValue()!=0)

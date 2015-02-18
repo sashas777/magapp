@@ -47,6 +47,7 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
         HashMap map_filter = new HashMap();
         map_filter.put("shipmentIncrementId", shipment_increment_id);
         params.add(map_filter);
+
         task = new RequestTask(this, getActivity(), api_point);
         task.execute(params);
     }
@@ -87,7 +88,7 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
 
     public void FillData(HashMap shipment) {
 
-        Bundle params = new Bundle();
+        Bundle params;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
@@ -102,8 +103,7 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
             items_array.add(item_data);
         }
         params.putSerializable("items", items_array);
-        Fragment items_card = new Fragment();
-        items_card = new ItemsFragment();
+        Fragment items_card =  new ItemsFragment();
         items_card.setArguments(params);
         mFragmentTransaction.add(R.id.items_card, items_card);
 			/* Items */
@@ -118,11 +118,11 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
 			/* Totals */
         mFragmentTransaction.commit();
 
-            /* Set Comments*/
-        Object[] shipment_comments = (Object[]) shipment.get("comments");
-        /*@todo redo params*/
-        ((ActivityInfoInterface) getActivity()).setComments(shipment_comments);
-            /* Set Comments*/
+        /* Set Comments*/
+            Object[] shipment_comments = (Object[]) shipment.get("comments");
+            /*@todo redo params*/
+            ((ActivityInfoInterface) getActivity()).setComments(shipment_comments);
+        /* Set Comments*/
 
 		/*Options Menu*/
         getActivity().invalidateOptionsMenu();
