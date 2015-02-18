@@ -93,7 +93,8 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
                     NumberFormat currency_format = NumberFormat.getCurrencyInstance(Locale.US);
                     TotalAmount = currency_format.format(Double.valueOf(total).doubleValue());
                 }else if (api_point.equals("sales_order_shipment.list")) {
-                    TotalAmount="Total Qty: "+Double.valueOf(map.get("total_qty").toString()).doubleValue();
+                    Integer qty_val=(int) Double.valueOf(map.get("total_qty").toString()).doubleValue();
+                    TotalAmount="Total Qty: "+qty_val.toString();
                 }
 				/*Total*/
 				/*State*/
