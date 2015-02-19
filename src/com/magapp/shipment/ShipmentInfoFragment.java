@@ -116,6 +116,7 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
                 trackings_array.add(track_item_data);
             }
             params.putSerializable("items", trackings_array);
+            params.putString("shipment_increment_id", shipment_increment_id);
             Fragment trackings_card =  new TrackingsFragment();
             trackings_card.setArguments(params);
             mFragmentTransaction.add(R.id.totals_card, trackings_card);

@@ -81,7 +81,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top|left"
-                        android:text="@string/customer_notified_placeholder"
+                        android:text="@string/link_placeholder"
+                        android:linksClickable="true"
                         android:id="@+id/tracking_number"/>
                 <Button
                         style="?android:attr/buttonStyle"
