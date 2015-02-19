@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.main.R;
 import com.magapp.order.ItemsFragment;
+import com.magapp.order.TotalsFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,18 +39,18 @@ public class CreditMemoInfoFragment extends Fragment {
         return rootView;
     }
 
-    public void FillData(HashMap shipment) {
+    public void FillData(HashMap creditmemo) {
 
         Bundle params;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction mFragmentTransaction = fragmentManager.beginTransaction();
 
 
-        ((ActivityInfoInterface) getActivity()).setOrderIncrementId(shipment.get("order_increment_id").toString());
+        ((ActivityInfoInterface) getActivity()).setOrderIncrementId(creditmemo.get("order_increment_id").toString());
             /* Items */
         params = new Bundle();
         ArrayList<HashMap> items_array = new ArrayList<HashMap>();
-        Object[] items = (Object[]) shipment.get("items");
+        Object[] items = (Object[]) creditmemo.get("items");
         for (Object item : items) {
             HashMap item_data = (HashMap) item;
             items_array.add(item_data);
@@ -58,25 +59,15 @@ public class CreditMemoInfoFragment extends Fragment {
         Fragment items_card =  new ItemsFragment();
         items_card.setArguments(params);
         mFragmentTransaction.add(R.id.items_card, items_card);
-			/* Items */
-			/* Trackings */
-           /* params = new Bundle();
-            ArrayList<HashMap> trackings_array = new ArrayList<HashMap>();
-            Object[] tracking_items = (Object[]) shipment.get("tracks");
-            for (Object track_item : tracking_items) {
-                HashMap track_item_data = (HashMap) track_item;
-                trackings_array.add(track_item_data);
-            }
-            params.putSerializable("items", trackings_array);
-            params.putString("shipment_increment_id", shipment_increment_id);
-            Fragment trackings_card =  new TrackingsFragment();
-            trackings_card.setArguments(params);
-            mFragmentTransaction.add(R.id.totals_card, trackings_card);*/
-			/* Trackings */
+		/* Totals */
+        params = new Bundle();
+        Object[] totals = (Object[]) creditmemo.get("totals");
+        params.putSerializable("totals", totals);
+        Fragment totals_card = new TotalsFragment();
+        totals_card.setArguments(params);
+        mFragmentTransaction.add(R.id.totals_card, totals_card);
+		/* Totals */
         mFragmentTransaction.commit();
-
-
-
     }
 
 

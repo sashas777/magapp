@@ -129,11 +129,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
 
         switch (itemPosition) {
             case 0:
-                screen = new CreditMemoInfoFragment();
-                params.putString("increment_id", creditmemo_increment_id);
-                params.putString("api_point","magapp_sales_order_shipment.info");
-                params.putSerializable("item", creditmemo_info);
-                screen.setArguments(params);
+                Refresh();
                 break;
 
             case 1:
