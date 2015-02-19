@@ -89,7 +89,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				/*Date*/
 				/*Total*/
                 String TotalAmount ="";
-                if (api_point.equals("sales_order_invoice.list")) {
+                if (api_point.equals("sales_order_invoice.list")|| api_point.equals("order_creditmemo.list")) {
                     String total = map.get("grand_total").toString();
                     NumberFormat currency_format = NumberFormat.getCurrencyInstance(Locale.US);
                     TotalAmount = currency_format.format(Double.valueOf(total).doubleValue());
@@ -100,7 +100,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 				/*Total*/
 				/*State*/
                 String status="";
-                if (api_point.equals("sales_order_invoice.list")) {
+                if (api_point.equals("sales_order_invoice.list") || api_point.equals("order_creditmemo.list")) {
                     int state = Integer.parseInt(map.get("state").toString());
                     status=status+" ";
                     switch (state) {
@@ -111,7 +111,10 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
                         status=status+"Pending";
                         break;
                     case 2:
-                        status=status+"Paid";
+                        if (api_point.equals("sales_order_invoice.list"))
+                            status=status+"Paid";
+                        else
+                            status=status+"Refunded";
                         break;
                     case 3:
                         status=status+"Canceled";

@@ -45,6 +45,9 @@
         <activity android:name="com.magapp.invoice.InvoiceCreateActivity"/>
         <activity android:name="com.magapp.shipment.ShipmentCreateActivity"/>
         <activity android:name="com.magapp.shipment.ShipmentInfoActivity"/>
+        <activity android:name="com.magapp.creditmemo.CreditMemoCreateActivity"/>
+        <activity android:name="com.magapp.creditmemo.CreditMemoInfoActivity"/>
+
 
         <service android:name="NewOrderService"></service>
         <receiver android:name="BootBroadReceiv">

@@ -10,6 +10,7 @@ import android.view.*;
 import android.widget.Toast;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
+import com.magapp.creditmemo.CreditMemoCreateActivity;
 import com.magapp.invoice.InvoiceCreateActivity;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.OrderInfoActivity;
@@ -276,7 +277,14 @@ public class OrderInfoFragment extends Fragment implements RequestInterface {
                 ShipOrder.putExtra("order_items", order_items);
                 ShipOrder.putExtra("order_increment_id", order_increment_id);
                 getActivity().startActivity(ShipOrder);
+                return true;
 
+            case R.id.creditmemo:
+                Intent RefundOrder = new Intent(getActivity(), CreditMemoCreateActivity.class);
+                RefundOrder.putExtra("order_id", order_id);
+                RefundOrder.putExtra("order_items", order_items);
+                RefundOrder.putExtra("order_increment_id", order_increment_id);
+                getActivity().startActivity(RefundOrder);
                 return true;
 
             default:

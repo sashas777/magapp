@@ -42,6 +42,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
         mSpinnerAdapter.add("Order");
         mSpinnerAdapter.add("Invoice");
         mSpinnerAdapter.add("Shipment");
+        mSpinnerAdapter.add("Credit Memo");
         mSpinnerAdapter.add("Comments");
         mSpinnerAdapter.notifyDataSetChanged();
 
@@ -106,7 +107,14 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
             params.putString("api_point","sales_order_shipment.list");
             screen.setArguments(params);
             break;
-		case 3:
+        case 3:
+            screen = new InvoiceListFragment();
+            params.putInt("order_id", order_id);
+            params.putString("entity_name", "Credit Memo");
+            params.putString("api_point","order_creditmemo.list");
+            screen.setArguments(params);
+            break;
+		case 4:
             screen = new CommentsFragment();
             params.putString("status", status);
             params.putString("increment_id", order_increment_id);
