@@ -39,7 +39,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
     private String order_increment_id, api_point;
     private ArrayList<HashMap> comments;
     private HashMap creditmemo_info;
-    private Boolean can_invoice=false;
+    private Boolean can_cancel=false;
 
     String[] actions = new String[]{"Credit Memo", "Comments"};
     private CharSequence mTitle;
@@ -85,7 +85,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         Object[] creditmemo_comments = (Object[]) creditmemo.get("comments");
         setComments(creditmemo_comments);
 
-        can_invoice=(creditmemo.get("can_invoice").toString().equals("1"));
+        can_cancel=(creditmemo.get("can_cancel").toString().equals("1"));
         invalidateOptionsMenu();
 
         screen.setArguments(params);
@@ -97,7 +97,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         menu.clear();
         getMenuInflater().inflate(R.menu.orderinfo_menu, menu);
         MenuItem cancel = menu.findItem(R.id.cancel);
-        cancel.setVisible(can_invoice);
+        cancel.setVisible(can_cancel);
         return super.onCreateOptionsMenu(menu);
     }
 
