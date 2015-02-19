@@ -70,6 +70,7 @@
     <string name="remove">Remove</string>
     <string name="link_placeholder"><a href="http://www.google.com">http://www.google.com</a></string>
     <string name="add_tracking_number">Add Tracking Number</string>
+    <string name="scan_tracking_number">Scan Tracking Number</string>
     <string name="carrier_title">Carrier Title</string>
     <string name="tracking_number">Tracking Number</string>
 

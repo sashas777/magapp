@@ -30,6 +30,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
         transitive = true;
     }
+    compile 'me.dm7.barcodescanner:zxing:1.6'
     compile 'org.apache.commons:commons-lang3:3.0.+'
 }
 

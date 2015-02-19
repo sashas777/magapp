@@ -54,15 +54,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     tools:context=".OrderInfoActivity">
-                <LinearLayout
-                        android:id="@+id/comment_customer_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        tools:context=".ShipmentInfoActivity">
 
-
-                </LinearLayout>
 
                 <Spinner
                         android:layout_width="match_parent"
@@ -94,13 +86,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/tracking_number"/>
-                <Button
-                        style="?android:attr/buttonStyle"
-                        android:layout_width="wrap_content"
+
+                <LinearLayout
+                        android:id="@+id/comment_customer_info"
+                        android:layout_width="match_parent"
+                        android:paddingTop="10dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/add_tracking_number"
-                        android:id="@+id/add_tracking"
-                        android:layout_gravity="center_horizontal|center_vertical"/>
+                        android:orientation="horizontal"
+                        tools:context=".ShipmentInfoActivity">
+
+                    <Button
+                            style="?android:attr/buttonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/add_tracking_number"
+                            android:id="@+id/add_tracking"
+                            android:textSize="15sp"
+                            android:layout_gravity="center_horizontal|center_vertical"/>
+
+                    <Button
+                            style="?android:attr/buttonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/scan_tracking_number"
+                            android:textSize="15sp"
+                            android:id="@+id/scan_tracking"
+                            android:layout_gravity="center_horizontal|center_vertical"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
 

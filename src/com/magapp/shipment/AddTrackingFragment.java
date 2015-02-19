@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-public class AddTrackingFragment extends  Fragment  implements View.OnClickListener, RequestInterface, AdapterView.OnItemSelectedListener {
+public class AddTrackingFragment extends  Fragment  implements View.OnClickListener, RequestInterface, AdapterView.OnItemSelectedListener, ZBarScannerView.ResultHandler  {
 
 	public View rootView;
     private String shipment_increment_id;
@@ -97,6 +97,10 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         task.execute(params);
     }
 
+    public void scanTracking() {
+        mScannerView = new ZBarScannerView(rootView);
+        //setContentView(rootView);
+    }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
         TextView carrier_title=((TextView) rootView.findViewById(R.id.carrier_title));
@@ -118,6 +122,9 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         switch (view.getId()) {
             case R.id.add_tracking:
                 addTracking();
+                break;
+            case R.id.scan_tracking:
+                scanTracking();
                 break;
         }
     }
