@@ -25,9 +25,8 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.magapp.main" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="CreditMemo rev. 3">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoInfoActivity.java" afterPath="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoInfoActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoInfoFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoInfoFragment.java" />
+    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="CreditMemo Done">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoCreateActivity.java" afterPath="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoCreateActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="magapp.iws" />
@@ -65,8 +64,8 @@
       <file leaf-file-name="CreditMemoCreateActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoCreateActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40823328" vertical-offset="255" max-vertical-offset="1564">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6792453" vertical-offset="981" max-vertical-offset="1564">
+              <caret line="109" column="21" selection-start-line="109" selection-start-column="21" selection-end-line="109" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -872,12 +871,12 @@
         <option value="$PROJECT_DIR$/src/com/magapp/shipment/AddTrackingFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/order/ItemsFragment.java" />
-        <option value="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoCreateActivity.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/main/OrderInfoActivity.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/magapp/invoice/InvoiceListFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoInfoActivity.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoInfoFragment.java" />
+        <option value="$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoCreateActivity.java" />
       </list>
     </option>
   </component>
@@ -1372,12 +1371,6 @@
       <option name="number" value="Default" />
       <updated>1422131500408</updated>
     </task>
-    <task id="LOCAL-00002" summary="Home Charts">
-      <created>1422152509429</created>
-      <option name="number" value="00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1422152509429</updated>
-    </task>
     <task id="LOCAL-00003" summary="BaseClass Refactor">
       <created>1422763210564</created>
       <option name="number" value="00003" />
@@ -1666,7 +1659,13 @@
       <option name="project" value="LOCAL" />
       <updated>1424321049536</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="CreditMemo Done">
+      <created>1424321394993</created>
+      <option name="number" value="00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1424321394993</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1719,7 +1718,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="@todo Invoice Bundle &amp; handle simple Items&#10;Invoice Action Complete &#10;" />
     <MESSAGE value="Invoice Bundle Items" />
     <MESSAGE value="Order Info Menu items" />
     <MESSAGE value="Request Task API  Point Adjustment" />
@@ -1744,7 +1742,8 @@
     <MESSAGE value="CreditMemo rev. 1" />
     <MESSAGE value="CreditMemo rev. 2" />
     <MESSAGE value="CreditMemo rev. 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="CreditMemo rev. 3" />
+    <MESSAGE value="CreditMemo Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="CreditMemo Done" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -2226,8 +2225,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magapp/creditmemo/CreditMemoCreateActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40823328" vertical-offset="255" max-vertical-offset="1564">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6792453" vertical-offset="981" max-vertical-offset="1564">
+          <caret line="109" column="21" selection-start-line="109" selection-start-column="21" selection-end-line="109" selection-end-column="21" />
           <folding />
         </state>
       </provider>

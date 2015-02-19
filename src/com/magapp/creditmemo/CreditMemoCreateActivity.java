@@ -107,7 +107,7 @@ public class CreditMemoCreateActivity extends Activity implements InvoiceCreateC
 
     @Override
     public void ShowSuccess(String increment_id) {
-        ShowMessage("Credit Memo #"+increment_id+" has been created");
+        ShowMessage("Memo #"+increment_id+" has been created");
         Intent CreditMemoInfo = new Intent(this, CreditMemoInfoActivity.class);
         CreditMemoInfo.putExtra("increment_id", increment_id);
         NavUtils.navigateUpTo(this, CreditMemoInfo);
