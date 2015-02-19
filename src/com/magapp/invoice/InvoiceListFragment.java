@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
+import com.magapp.creditmemo.CreditMemoInfoActivity;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
@@ -164,6 +165,8 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
                   screen = new Intent(getActivity(), InvoiceInfoActivity.class);
               }else if (api_point.equals("sales_order_shipment.list")) {
                   screen = new Intent(getActivity(), ShipmentInfoActivity.class);
+              }else if (api_point.equals("order_creditmemo.list")) {
+                  screen = new Intent(getActivity(), CreditMemoInfoActivity.class);
               }
               screen.putExtra("order_id", order_id);
               screen.putExtra("increment_id", selected);

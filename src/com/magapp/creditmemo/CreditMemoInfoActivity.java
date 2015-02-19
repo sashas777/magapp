@@ -58,10 +58,8 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         Bundle vars = getIntent().getExtras();
         creditmemo_increment_id = vars.getString("increment_id");
 
-
         api_point="magapp_sales_order_creditmemo.info";
-
-
+        Refresh();
     }
 
     public void Refresh() {
