@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="top"
+              android:orientation="vertical"
+              android:fillViewport="true">
+
+    <com.magapp.main.NowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            >
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="#ffffff"
+                      android:orientation="vertical">
+
+            <LinearLayout
+                    style="@style/nowCardStyleTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_horizontal"
+                    android:minWidth="2dp"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+
+                <TextView
+                        android:id="@+id/card_title"
+                        style="@style/CardTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+
+                        android:paddingLeft="3dp"
+                        android:text="@string/add_tracking_number"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/comment_info"
+                    style="@style/nowCardStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:context=".OrderInfoActivity">
+                <LinearLayout
+                        android:id="@+id/comment_customer_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:context=".ShipmentInfoActivity">
+
+
+                </LinearLayout>
+
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/carrier" style="@android:style/Widget.DeviceDefault.DropDownItem.Spinner"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/carrier_title"
+                        android:textSize="17sp"
+                        android:layout_gravity="left"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/carrierTitleTitle"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/carrier_title"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tracking_number"
+                        android:layout_gravity="left"
+                        android:textSize="17sp"
+                        android:paddingTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/trackingNumberTitle"/>
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tracking_number"/>
+                <Button
+                        style="?android:attr/buttonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_tracking_number"
+                        android:id="@+id/add_tracking"
+                        android:layout_gravity="center_horizontal|center_vertical"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </com.magapp.main.NowLayout>
+
+
+</LinearLayout>

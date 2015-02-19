@@ -10,7 +10,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityInfoInterface;
@@ -37,7 +39,7 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
         api_point=getArguments().getString("api_point");
 
         Refresh();
-        setHasOptionsMenu(true);
+       // setHasOptionsMenu(true);
         return rootView;
     }
 
@@ -52,14 +54,6 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
         task.execute(params);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.orderinfo_menu, menu);
-        MenuItem add_track_item = menu.findItem(R.id.add_track);
-        add_track_item.setVisible(true);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
 
     public void onPreExecute() {
         ((ActivityLoadInterface) getActivity()).showProgressBar();
@@ -125,38 +119,16 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
 
         /* Set Comments*/
             Object[] shipment_comments = (Object[]) shipment.get("comments");
-            /*@todo redo params*/
             ((ActivityInfoInterface) getActivity()).setComments(shipment_comments);
         /* Set Comments*/
 
 		/*Options Menu*/
-        getActivity().invalidateOptionsMenu();
+       // getActivity().invalidateOptionsMenu();
 		/*Options Menu*/
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
-        RequestTask task;
-        HashMap<String, String> map_filter = new HashMap<String, String>();
 
-        switch (item.getItemId()) {
-
-            case R.id.add_track:
-              /*  map_filter.put("invoiceIncrementId", invoice_increment_id);
-                params.add(map_filter);
-                task = new RequestTask(this, getActivity(), "sales_order_invoice.cancel");
-                task.execute(params);*/
-                ((ActivityLoadInterface) getActivity()).ShowMessage("Tracking number for Shipment #" + shipment_increment_id + " has been added.");
-                return true;
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 
 
 

@@ -15,6 +15,6 @@
           android:visible="false"></item>
     <item android:id="@+id/capture" android:title="@string/capture" android:showAsAction="never"
           android:visible="false"></item>
-    <item android:id="@+id/add_track" android:title="@string/add_tracking" android:showAsAction="never"
+    <item android:id="@+id/add_track" android:title="@string/add_tracking_number" android:showAsAction="never"
           android:visible="false"></item>
 </menu>

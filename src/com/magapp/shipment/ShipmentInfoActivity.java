@@ -5,14 +5,12 @@
 
 package com.magapp.shipment;
 
-import android.app.ActionBar;
+import android.app.*;
 import android.app.ActionBar.OnNavigationListener;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -62,6 +60,14 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.orderinfo_menu, menu);
+        MenuItem add_track_item = menu.findItem(R.id.add_track);
+        add_track_item.setVisible(true);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     /*For back action to order view*/
     public void setOrderIncrementId(String order_increment_id_val) {
@@ -114,12 +120,24 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Bundle params;
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
                 return true;
+
+            case R.id.add_track:
+                params = new Bundle();
+                params.putString("shipment_increment_id", shipment_increment_id);
+                Fragment add_tracking_fragment =  new AddTrackingFragment();
+                add_tracking_fragment.setArguments(params);
+                FragmentTransaction mFragmentTransaction =  getFragmentManager().beginTransaction();
+
+                mFragmentTransaction.replace(R.id.container, add_tracking_fragment).addToBackStack("shipment_info_activity").commit();
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

@@ -35,8 +35,6 @@ public class TrackingsFragment extends  Fragment  implements View.OnClickListene
 
 		rootView = inflater.inflate(R.layout.linear_comments, null);
 
-
-
 		/* Items list */
 		LinearLayout list = (LinearLayout)rootView.findViewById(R.id.container);
 		/* Items list */
@@ -114,8 +112,6 @@ public class TrackingsFragment extends  Fragment  implements View.OnClickListene
                 params.add(track_id);
                 task = new RequestTask(this, getActivity(),"sales_order_shipment.removeTrack");
                 task.execute(params);
-
-                ((ActivityLoadInterface)getActivity()).ShowMessage("Tracking number has been removed");
                 break;
         }
     }
