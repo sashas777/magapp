@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
+<resources>
+    <item type="id" name="menu_flash" />
+    <item type="id" name="menu_auto_focus" />
+</resources>

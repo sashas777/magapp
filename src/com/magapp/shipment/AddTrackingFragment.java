@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-public class AddTrackingFragment extends  Fragment  implements View.OnClickListener, RequestInterface, AdapterView.OnItemSelectedListener, ZBarScannerView.ResultHandler  {
+public class AddTrackingFragment extends  Fragment  implements View.OnClickListener, RequestInterface, AdapterView.OnItemSelectedListener  {
 
 	public View rootView;
     private String shipment_increment_id;
@@ -50,10 +50,19 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
         Button addTrackingBtn = (Button) rootView.findViewById(R.id.add_tracking);
         addTrackingBtn.setOnClickListener(this);
+        Button scanTrackingBtn = (Button) rootView.findViewById(R.id.scan_tracking);
+        scanTrackingBtn.setOnClickListener(this);
 
         carriersListView.setOnItemSelectedListener(this);
 
         CapitalEditText();
+
+        if (getArguments().getString("tracking_number")!=null) {
+            String tracking_number = getArguments().getString("tracking_number");
+            TextView tracking_number_value = ((TextView) rootView.findViewById(R.id.tracking_number));
+            tracking_number_value.setText(tracking_number);
+        }
+
         return rootView;
 	}
 
@@ -98,8 +107,24 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
     }
 
     public void scanTracking() {
-        mScannerView = new ZBarScannerView(rootView);
-        //setContentView(rootView);
+
+        Fragment scanTracking = new ScanTrackingFragment();
+        Bundle params = new Bundle();
+        params.putString("increment_id", shipment_increment_id);
+        scanTracking.setArguments(params);
+
+        getActivity().getFragmentManager().beginTransaction()
+                .replace(R.id.container, scanTracking)
+                .addToBackStack("add_tracking_fragment")
+                .commit();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String tracking_number=getArguments().getString("tracking_number");
+        TextView tracking_number_value=((TextView) rootView.findViewById(R.id.tracking_number));
+        tracking_number_value.setText(tracking_number);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {

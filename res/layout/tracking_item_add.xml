@@ -100,8 +100,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/add_tracking_number"
+                            android:layout_weight="1"
                             android:id="@+id/add_tracking"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
                             android:layout_gravity="center_horizontal|center_vertical"/>
 
                     <Button
@@ -109,7 +110,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/scan_tracking_number"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
+                            android:layout_weight="1"
                             android:id="@+id/scan_tracking"
                             android:layout_gravity="center_horizontal|center_vertical"/>
 
