@@ -12,9 +12,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.magapp.common.ItemsFragment;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.main.R;
-import com.magapp.order.ItemsFragment;
 import com.magapp.order.TotalsFragment;
 
 import java.util.ArrayList;

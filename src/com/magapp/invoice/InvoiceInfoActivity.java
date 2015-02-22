@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.invoice;
 
 import android.app.ActionBar;
@@ -16,9 +21,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.order.CommentsFragment;
+import com.magapp.order.OrderInfoActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +57,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         Bundle params = new Bundle();
         params.putString("increment_id", invoice_increment_id);
         params.putString("api_point","magapp_sales_order_invoice.info");
+        screen.setArguments(params);
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_info_activity").commit();
 
     }

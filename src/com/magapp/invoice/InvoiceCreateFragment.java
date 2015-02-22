@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.invoice;
 
 import android.app.Fragment;
@@ -8,12 +13,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
-import com.magapp.order.ItemsFragment;
 import com.magapp.order.TotalsFragment;
 
 import java.util.ArrayList;
@@ -48,7 +53,7 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
 
     public void onPreExecute(){
         ((ActivityLoadInterface)getActivity()).showProgressBar();
-    };
+    }
 
     @Override
     public void doPostExecute(Object result) {

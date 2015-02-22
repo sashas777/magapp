@@ -1,6 +1,11 @@
+<!--
+  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.magapp.main.OrderInfoActivity">
+      tools:context="com.magapp.order.OrderInfoActivity">
     <item android:id="@+id/invoice" android:title="@string/invoice" android:showAsAction="never"
           android:visible="false"></item>
     <item android:id="@+id/cancel" android:title="@string/cancel" android:showAsAction="never"

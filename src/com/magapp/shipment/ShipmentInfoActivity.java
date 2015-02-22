@@ -19,9 +19,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.order.CommentsFragment;
+import com.magapp.order.OrderInfoActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

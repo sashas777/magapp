@@ -1,7 +1,9 @@
-package com.magapp.invoice;
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
 
-import java.util.ArrayList;
-import java.util.HashMap;
+package com.magapp.common;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,10 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.RadioButton;
 import android.widget.TextView;
-
 import com.magapp.main.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InvoiceListAdapter extends BaseAdapter  {
 

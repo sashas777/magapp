@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.invoice;
 
 import android.app.Activity;
@@ -8,14 +13,13 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.magapp.interfaces.ActivityCreateInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
+import com.magapp.order.OrderInfoActivity;
 
 import java.util.HashMap;
 
@@ -80,8 +84,8 @@ public class InvoiceCreateActivity extends Activity implements InvoiceCreateComm
     public HashMap GetOrderItemsIdQty(){
         HashMap<String, String> hashMap= new HashMap<String, String>();
         LinearLayout list = (LinearLayout)findViewById(R.id.items_list);
-        for(int i=0; i<((ViewGroup)list).getChildCount(); ++i) {
-            View nextChild = ((ViewGroup)list).getChildAt(i);
+        for(int i=0; i< list.getChildCount(); ++i) {
+            View nextChild = list.getChildAt(i);
             String order_item_qty=((TextView) nextChild.findViewById(R.id.order_item_qty)).getText().toString();
             String order_item_id=((TextView)nextChild.findViewById(R.id.order_item_id)).getText().toString();
             hashMap.put(order_item_id,order_item_qty);

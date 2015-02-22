@@ -1,4 +1,9 @@
-package com.magapp.main;
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
+package com.magapp.order;
 
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
@@ -11,10 +16,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.magapp.common.InvoiceListFragment;
 import com.magapp.interfaces.ActivityLoadInterface;
-import com.magapp.invoice.InvoiceListFragment;
-import com.magapp.order.CommentsFragment;
-import com.magapp.order.OrderInfoFragment;
+import com.magapp.main.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,11 +52,16 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
 
 		Bundle vars = getIntent().getExtras();
 		order_increment_id = vars.getString("order_increment_id");
-		FragmentManager fragmentManager = getFragmentManager();
-		Fragment screen = new OrderInfoFragment();	
-		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
+        Refresh();
 	}
 
+    public void Refresh(){
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment screen = new OrderInfoFragment();
+        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("order_info_activity").commit();
+    }
+
+    /*@todo Get rid of it */
 	public void  setOrderId(Integer order_id_val){
 		order_id=order_id_val;
 	}

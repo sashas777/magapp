@@ -1,32 +1,24 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.main;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Vector;
-
-import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
-
-import com.magapp.connect.RequestArrayInterface;
-import com.magapp.connect.RequestArrayTask;
-
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.IBinder;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import com.magapp.connect.RequestArrayInterface;
+import com.magapp.connect.RequestArrayTask;
+import com.magapp.order.OrderInfoActivity;
+
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
 
 public class NewOrderService extends Service  implements RequestArrayInterface{
 
@@ -87,9 +79,9 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 	
 	
 	public void onPreExecute(){				
-	};  
+	}
 
-	 @Override
+    @Override
 	 public void doPostExecute(Object[] result) {			
 		 PrepareOrdersData(result);
 	 }		

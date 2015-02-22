@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.invoice;
 
 import android.app.Fragment;
@@ -7,13 +12,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.Toast;
+import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
-import com.magapp.order.ItemsFragment;
 import com.magapp.order.TotalsFragment;
 
 import java.util.ArrayList;
@@ -31,9 +36,15 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.order_info_fragment, null);
-            invoice_increment_id=getArguments().getString("increment_id");
-            api_point=getArguments().getString("api_point");
-	
+
+            if (savedInstanceState!=null) {
+                invoice_increment_id=savedInstanceState.getString("increment_id");
+                api_point=savedInstanceState.getString("api_point");
+            }else {
+                invoice_increment_id=getArguments().getString("increment_id");
+                api_point=getArguments().getString("api_point");
+            }
+
 			Refresh();
 			setHasOptionsMenu(true);
 			return rootView;
@@ -61,9 +72,9 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface  {
 	 
 		public void onPreExecute(){		
 			((ActivityLoadInterface)getActivity()).showProgressBar();
-		};  
+		}
 
-		 @Override
+    @Override
 		 public void doPostExecute(Object result) {		
 			((ActivityLoadInterface)getActivity()).hideProgressBar();
 			if(result instanceof HashMap) {			

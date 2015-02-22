@@ -13,13 +13,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
-import com.magapp.order.ItemsFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,8 +58,6 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
     public void onPreExecute() {
         ((ActivityLoadInterface) getActivity()).showProgressBar();
     }
-
-    ;
 
     @Override
     public void doPostExecute(Object result) {

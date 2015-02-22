@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.magapp.main"
     android:versionCode="1"
@@ -41,7 +46,7 @@
         </activity>
         <activity android:name="BaseActivity"  android:label="@string/app_name" />
 
-        <activity android:name="OrderInfoActivity"  android:label="@string/app_name" />
+        <activity android:name="com.magapp.order.OrderInfoActivity"  android:label="@string/app_name" />
         <activity android:name="com.magapp.invoice.InvoiceInfoActivity"  android:label="@string/label_invoice_info" />
         <activity android:name="com.magapp.invoice.InvoiceCreateActivity"/>
         <activity android:name="com.magapp.shipment.ShipmentCreateActivity"/>

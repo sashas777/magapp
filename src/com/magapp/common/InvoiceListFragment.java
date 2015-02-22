@@ -1,4 +1,9 @@
-package com.magapp.invoice;
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
+package com.magapp.common;
 
 import android.app.ListFragment;
 import android.content.Intent;
@@ -13,6 +18,7 @@ import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
 import com.magapp.creditmemo.CreditMemoInfoActivity;
 import com.magapp.interfaces.ActivityLoadInterface;
+import com.magapp.invoice.InvoiceInfoActivity;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
 import com.magapp.shipment.ShipmentInfoActivity;
@@ -61,9 +67,9 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 	 
 		public void onPreExecute(){
             ((ActivityLoadInterface)getActivity()).showProgressBar();
-		};  
+		}
 
-		 @Override
+    @Override
 		 public void doPostExecute(Object[] result) {
             ((ActivityLoadInterface)getActivity()).hideProgressBar();
 			AddIvoices(result);
@@ -159,7 +165,8 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 	  public void onListItemClick(ListView l, View v, int position, long id) {
 
 		  String selected = ((TextView) v.findViewById(R.id.increment_id)).getText().toString();
-		  if (!selected.isEmpty()) {
+
+          if (!selected.isEmpty()) {
               Intent screen = null;
               if (api_point.equals("sales_order_invoice.list")) {
                   screen = new Intent(getActivity(), InvoiceInfoActivity.class);

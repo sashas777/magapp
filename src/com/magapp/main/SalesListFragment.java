@@ -1,30 +1,32 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.main;
+
+import android.app.DatePickerDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.ListFragment;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.*;
+import android.widget.DatePicker;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import com.magapp.common.InvoiceListAdapter;
+import com.magapp.connect.RequestArrayInterface;
+import com.magapp.connect.RequestArrayTask;
+import com.magapp.order.OrderInfoActivity;
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import android.app.FragmentManager;
-import android.app.ListFragment;
-import android.text.TextUtils;
-import android.view.*;
-import android.widget.ListView;
-import android.widget.TextView;
-import com.magapp.invoice.InvoiceListAdapter;
-
-import android.app.DatePickerDialog;
-import android.app.Fragment;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View.OnClickListener;
-import android.widget.DatePicker;
-import android.widget.ProgressBar;
-
-import com.magapp.connect.RequestArrayInterface;
-import com.magapp.connect.RequestArrayTask;
-import org.apache.commons.lang3.text.WordUtils;
 
 
 public class SalesListFragment extends ListFragment implements RequestArrayInterface {
@@ -107,9 +109,9 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 	public void onPreExecute(){		
 		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
 		progressBar.setVisibility(View.VISIBLE);
-	};  
+	}
 
-	 @Override
+    @Override
 	 public void doPostExecute(Object[] result) {		
 		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
 		progressBar.setVisibility(View.INVISIBLE); 	

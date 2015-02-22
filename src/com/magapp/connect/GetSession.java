@@ -1,8 +1,11 @@
-package com.magapp.connect;
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
 
-import android.view.View;
+package com.magapp.connect;
 
 public interface GetSession {
 	 void SessionReturned(String result, Boolean status);
-	 void ShowProgressBar();	 
+
 }

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.order;
 
 import android.app.Fragment;
@@ -8,12 +13,12 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.*;
 import android.widget.Toast;
+import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.creditmemo.CreditMemoCreateActivity;
 import com.magapp.invoice.InvoiceCreateActivity;
 import com.magapp.main.LoginActivity;
-import com.magapp.main.OrderInfoActivity;
 import com.magapp.main.R;
 import com.magapp.main.SalesListFragment;
 import com.magapp.shipment.ShipmentCreateActivity;

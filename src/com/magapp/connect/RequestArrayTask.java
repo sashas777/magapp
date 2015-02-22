@@ -1,22 +1,21 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.connect;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.util.Log;
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
-import com.magapp.connect.LoginTask.FinishLogin;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
+import java.net.URI;
+import java.util.Vector;
 
 public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> implements GetSession {
 
@@ -39,9 +38,9 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 	protected void onPreExecute() {
 		super.onPreExecute();
 		RequestCallBack.onPreExecute();		
-	};		
-	
-	protected Object[] doInBackground(Vector... params) {
+	}
+
+    protected Object[] doInBackground(Vector... params) {
 	
 		Object[] result_info;
 		stored_params=params;
@@ -71,7 +70,7 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 			HandleError((XMLRPCException) result[0]);
 		} else {
 
-			RequestCallBack.doPostExecute(result);	
+			RequestCallBack.doPostExecute(result,api_route);
 		}
 	}	
 	
@@ -94,10 +93,6 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 		 }else {
 			 RequestCallBack.RequestFailed(result);
 		 }
-	}
-	
-	public void ShowProgressBar(){
-		
 	}
 
     public boolean isOnline() {

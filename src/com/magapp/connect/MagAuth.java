@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.connect;
 
 import android.accounts.Account;
@@ -19,15 +24,11 @@ import java.util.regex.Pattern;
 public class MagAuth implements FinishLogin{
  	
 	private  String   accountType = "com.magapp.main";
-    private  static String   static_accountType = "com.magapp.main";
 	private  String desired_preferense_file = "magapp";
-    private  static String static_desired_preferense_file = "magapp";
 	private  static String url;
-	private  static String api_session;
 	private  String api_username = null;
 	private  String api_password = null;
-    private  static String static_api_username = null;
-    private  static String static_api_password = null;
+
     private Context activity;
 	private LoginTask task;
 	SharedPreferences settings;
@@ -46,12 +47,7 @@ public class MagAuth implements FinishLogin{
             login();
         }
 	}
- /*
-    public MagAuth(Context act ) {
-        activity=act;
-        getCredentials();
-    }
-*/
+
 
     public String getCredentials(){
         String selected_account_name = settings.getString("selected_account_name", null);
@@ -97,10 +93,10 @@ public class MagAuth implements FinishLogin{
 	}	
 	
 	public void onFinishLoginPreExecute(){			 
-		  GetSessionCallBack.ShowProgressBar();		 	            
-	};  
 
-	 @Override
+	}
+
+    @Override
 	 public void doFinishLoginPostExecute(Object session) {
 	 if (session instanceof XMLRPCException) {		 	 
 		 	XMLRPCException exp=(XMLRPCException) session;

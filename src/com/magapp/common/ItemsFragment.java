@@ -1,4 +1,9 @@
-package com.magapp.order;
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
+package com.magapp.common;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -105,19 +110,19 @@ public class ItemsFragment extends  Fragment {
 
             /*Configurable & Bundle Items & Grouped*/
             if (item_data.get("has_children")!=null && !item_data.get("has_children").toString().isEmpty()) {
-                ((View) vi.findViewById(R.id.Separator)).getLayoutParams().height = 0;
+                vi.findViewById(R.id.Separator).getLayoutParams().height = 0;
                 parent_id=item_data.get("item_id").toString();
             }
 
             if (item_data.get("parent_item_id")!=null && !item_data.get("parent_item_id").toString().isEmpty()) {
                 ((TextView) vi.findViewById(R.id.ProductName)).setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
-                ((View) vi.findViewById(R.id.Separator)).getLayoutParams().height = 0;
+                vi.findViewById(R.id.Separator).getLayoutParams().height = 0;
                 parent_id=item_data.get("parent_item_id").toString();
             }
 
             if (!parent_id.isEmpty() && item_data.get("parent_item_id").toString().isEmpty() && item_iterator!=1 ) {
                 parent_id="";
-                ((View) vi.findViewById(R.id.SeparatorTop)).getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getActivity().getResources().getDisplayMetrics());
+                vi.findViewById(R.id.SeparatorTop).getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getActivity().getResources().getDisplayMetrics());
             }
 
             /*Configurable & Bundle Items & Grouped*/
@@ -125,7 +130,7 @@ public class ItemsFragment extends  Fragment {
 				((TextView) vi.findViewById(R.id.ProductOptions)).setHeight(0);
 
 			if (items_coint<2 || items_coint==item_iterator)
-				((View) vi.findViewById(R.id.Separator)).getLayoutParams().height=0;
+				vi.findViewById(R.id.Separator).getLayoutParams().height=0;
 
 			list.addView(vi);
 			item_iterator++;

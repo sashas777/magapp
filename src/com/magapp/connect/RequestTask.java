@@ -1,22 +1,21 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.connect;
 
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.util.Log;
 import org.xmlrpc.android.XMLRPCClient;
 import org.xmlrpc.android.XMLRPCException;
 
-import com.magapp.connect.LoginTask.FinishLogin;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
+import java.net.URI;
+import java.util.Vector;
 
 public class RequestTask extends  AsyncTask<Vector, Void, Object> implements GetSession {
 
@@ -39,9 +38,9 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 	protected void onPreExecute() {
 		super.onPreExecute();
 		RequestCallBack.onPreExecute();		
-	};		
-	
-	protected Object doInBackground(Vector... params) {
+	}
+
+    protected Object doInBackground(Vector... params) {
 	
 		Object result_info;
 		stored_params=params;
@@ -55,7 +54,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 
 			String session_id = settings.getString("session_id", null);
 
-			result_info = (Object) client.callEx("call", new Object[] {session_id, api_route, params[0] });
+			result_info = client.callEx("call", new Object[] {session_id, api_route, params[0] });
 			return result_info;
 		} catch (XMLRPCException e) {
 			Log.e("Sashas", e.getMessage());
@@ -69,7 +68,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 		if (result instanceof XMLRPCException) {			 
 			HandleError((XMLRPCException) result);
 		} else {
-			RequestCallBack.doPostExecute(result);
+			RequestCallBack.doPostExecute(result,api_route);
 		}
 	}	
 	
@@ -94,10 +93,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 			 RequestCallBack.RequestFailed(result);
 		 }
 	}
-	
-	public void ShowProgressBar(){
-		
-	}
+
 
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
