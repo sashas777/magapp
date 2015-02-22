@@ -48,6 +48,7 @@
         <activity android:name="com.magapp.shipment.ShipmentInfoActivity"/>
         <activity android:name="com.magapp.creditmemo.CreditMemoCreateActivity"/>
         <activity android:name="com.magapp.creditmemo.CreditMemoInfoActivity"/>
+        <activity android:name="com.magapp.shipment.ScanTrackingActivity"/>
 
 
         <service android:name="NewOrderService"></service>

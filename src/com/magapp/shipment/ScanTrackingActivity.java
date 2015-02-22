@@ -5,14 +5,15 @@
 
 package com.magapp.shipment;
 
-import android.app.Fragment;
+import android.app.Activity;
+import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.view.*;
-import android.widget.Spinner;
+import android.view.Menu;
+import android.view.MenuItem;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.magapp.main.R;
@@ -21,11 +22,9 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScanTrackingFragment extends  Fragment  implements ZXingScannerView.ResultHandler {
+public class ScanTrackingActivity extends Activity implements ZXingScannerView.ResultHandler {
 
-	public View rootView;
-    private String shipment_increment_id;
-    private Spinner carriersListView;
+    private String shipment_increment_id, carrier_title, carrier;
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -34,10 +33,15 @@ public class ScanTrackingFragment extends  Fragment  implements ZXingScannerView
     private boolean mAutoFocus;
     private ArrayList<Integer> mSelectedIndices;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        shipment_increment_id=getArguments().getString("increment_id");
-        mScannerView = new ZXingScannerView(getActivity());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle vars = getIntent().getExtras();
+        shipment_increment_id = vars.getString("increment_id");
+        carrier_title= vars.getString("carrier_title");
+        carrier= vars.getString("carrier");
+
         if(savedInstanceState != null) {
             mFlash = savedInstanceState.getBoolean(FLASH_STATE, false);
             mAutoFocus = savedInstanceState.getBoolean(AUTO_FOCUS_STATE, true);
@@ -48,25 +52,31 @@ public class ScanTrackingFragment extends  Fragment  implements ZXingScannerView
             mSelectedIndices = null;
         }
 
+        mScannerView = new ZXingScannerView(this);
         setupFormats();
+        setContentView(mScannerView);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mScannerView.setResultHandler(this);
         mScannerView.startCamera();
         mScannerView.setFlash(mFlash);
         mScannerView.setAutoFocus(mAutoFocus);
-
-        return mScannerView;
-	}
-
-    @Override
-    public void onCreate(Bundle state) {
-
-        super.onCreate(state);
-        setHasOptionsMenu(true);
     }
 
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(FLASH_STATE, mFlash);
+        outState.putBoolean(AUTO_FOCUS_STATE, mAutoFocus);
+        outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem menuItem;
 
         if(mFlash) {
@@ -76,6 +86,7 @@ public class ScanTrackingFragment extends  Fragment  implements ZXingScannerView
         }
         MenuItemCompat.setShowAsAction(menuItem, MenuItem.SHOW_AS_ACTION_ALWAYS);
 
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -97,45 +108,21 @@ public class ScanTrackingFragment extends  Fragment  implements ZXingScannerView
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
-        mScannerView.setFlash(mFlash);
-        mScannerView.setAutoFocus(mAutoFocus);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(FLASH_STATE, mFlash);
-        outState.putBoolean(AUTO_FOCUS_STATE, mAutoFocus);
-        outState.putIntegerArrayList(SELECTED_FORMATS, mSelectedIndices);
-    }
-
-    @Override
     public void handleResult(Result rawResult) {
         try {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(getActivity().getApplicationContext(), notification);
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
             r.play();
         } catch (Exception e) {}
 
-       // mScannerView.stopCamera();
 
-        Bundle params = new Bundle();
-        params.putString("shipment_increment_id", shipment_increment_id);
-        params.putString("tracking_number", rawResult.getText());
+        Intent ShipmentInfo = new Intent(this, ShipmentInfoActivity.class);
+        ShipmentInfo.putExtra("increment_id", shipment_increment_id);
+        ShipmentInfo.putExtra("tracking_number", rawResult.getText());
+        ShipmentInfo.putExtra("carrier",carrier );
+        ShipmentInfo.putExtra("carrier_title",carrier_title );
 
-        Fragment add_tracking_fragment = new AddTrackingFragment();
-        add_tracking_fragment.setArguments(params);
-
-        getActivity().getFragmentManager().beginTransaction()
-                .replace(R.id.container, add_tracking_fragment)
-                 .addToBackStack("add_tracking_fragment")
-                .commit();
-        mScannerView.startCamera();
-        /*Log.e("Sashas", "Contents = " + rawResult.getText() + ", Format = " + rawResult.getBarcodeFormat().toString()); */
+        startActivity(ShipmentInfo);
     }
 
     public void setupFormats() {
@@ -160,4 +147,6 @@ public class ScanTrackingFragment extends  Fragment  implements ZXingScannerView
         super.onPause();
         mScannerView.stopCamera();
     }
+
+	
 }

@@ -35,7 +35,7 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
 		rootView = inflater.inflate(R.layout.tracking_item_add, null);
 
-        shipment_increment_id=getArguments().getString("shipment_increment_id");
+        shipment_increment_id=getArguments().getString("increment_id");
 
         carriersListView = (Spinner) rootView.findViewById(R.id.carrier);
         List<String> carriersList = new ArrayList<String>();
@@ -61,6 +61,10 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
             String tracking_number = getArguments().getString("tracking_number");
             TextView tracking_number_value = ((TextView) rootView.findViewById(R.id.tracking_number));
             tracking_number_value.setText(tracking_number);
+
+            if (getArguments().getString("carrier")!=null) {
+                carriersListView.setSelection(Integer.parseInt(getArguments().getString("carrier")));
+            }
         }
 
         return rootView;
@@ -71,7 +75,7 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         String tracking_number=((TextView) rootView.findViewById(R.id.tracking_number)).getText().toString();
         String carrier_title=((TextView) rootView.findViewById(R.id.carrier_title)).getText().toString();
 
-        if (tracking_number==null || tracking_number.isEmpty() || carrier_title==null || carrier_title.isEmpty()) {
+        if (tracking_number.isEmpty() || tracking_number.isEmpty()   || carrier_title.isEmpty()) {
             ((ActivityLoadInterface)getActivity()).ShowMessage("Please fill all fields");
         }
 
@@ -79,7 +83,7 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
             case 0:
                 carrier_code="dhl";
                 break;
-            case 10:
+            case 1:
                 carrier_code="fedex";
                 break;
             case 2:
@@ -108,15 +112,15 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
     public void scanTracking() {
 
-        Fragment scanTracking = new ScanTrackingFragment();
-        Bundle params = new Bundle();
-        params.putString("increment_id", shipment_increment_id);
-        scanTracking.setArguments(params);
 
-        getActivity().getFragmentManager().beginTransaction()
-                .replace(R.id.container, scanTracking)
-                .addToBackStack("add_tracking_fragment")
-                .commit();
+        Intent ScanTracking = new Intent(getActivity(), ScanTrackingActivity.class);
+        ScanTracking.putExtra("increment_id", shipment_increment_id);
+        ScanTracking.putExtra("carrier", Integer.toString(carriersListView.getSelectedItemPosition()));
+        ScanTracking.putExtra("carrier_title", ((TextView) rootView.findViewById(R.id.carrier_title)).getText().toString());
+
+        getActivity().startActivity(ScanTracking);
+        getActivity().finish();
+
     }
 
     @Override
@@ -132,7 +136,10 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
         switch (pos) {
             default:
-                carrier_title.setText(parent.getItemAtPosition(pos).toString());
+                if (getArguments().getString("carrier_title")!=null)
+                    carrier_title.setText(getArguments().getString("carrier_title"));
+                else
+                    carrier_title.setText(parent.getItemAtPosition(pos).toString());
                 break;
         }
     }

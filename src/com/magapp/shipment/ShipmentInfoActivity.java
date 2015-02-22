@@ -48,10 +48,28 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
 
         Bundle vars = getIntent().getExtras();
         shipment_increment_id = vars.getString("increment_id");
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment screen = new ShipmentInfoFragment();
+        String tracking_number= vars.getString("tracking_number");
 
+
+        FragmentManager fragmentManager = getFragmentManager();
         Bundle params=new Bundle();
+        Fragment screen;
+
+        if (tracking_number!=null) {
+            params.putString("tracking_number", tracking_number);
+
+            if (vars.getString("carrier")!=null)
+                params.putString("carrier", vars.getString("carrier"));
+
+            if (vars.getString("carrier_title")!=null)
+                params.putString("carrier_title", vars.getString("carrier_title"));
+
+            screen = new AddTrackingFragment();
+        }else {
+            screen = new ShipmentInfoFragment();
+        }
+
+
         params.putString("increment_id", shipment_increment_id);
         params.putString("api_point","magapp_sales_order_shipment.info");
         screen.setArguments(params);
@@ -130,7 +148,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
 
             case R.id.add_track:
                 params = new Bundle();
-                params.putString("shipment_increment_id", shipment_increment_id);
+                params.putString("increment_id", shipment_increment_id);
                 Fragment add_tracking_fragment =  new AddTrackingFragment();
                 add_tracking_fragment.setArguments(params);
                 FragmentTransaction mFragmentTransaction =  getFragmentManager().beginTransaction();
