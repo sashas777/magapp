@@ -25,14 +25,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.magapp.main" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="Shipemnt Info - Tracking reverse order">
-      <change type="DELETED" beforePath="C:\Users\Sashas\workspace\magapp\src\Login\AccountsAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Sashas\workspace\magapp\src\Login\AccountsFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Sashas\workspace\magapp\src\Login\AddAccountFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Sashas\workspace\magapp\src\Login\LoginFragment.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/main/LoginActivity.java" afterPath="$PROJECT_DIR$/src/com/magapp/main/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/connect/MagAuth.java" afterPath="$PROJECT_DIR$/src/com/magapp/connect/MagAuth.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/main/NavigationDrawerFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/main/NavigationDrawerFragment.java" />
+    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="Refactor of Login actions">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="magapp.iws" />
@@ -101,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/magapp/connect/MagAuth.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.21981777" vertical-offset="589" max-vertical-offset="2890">
-              <caret line="61" column="11" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
+              <caret line="59" column="11" selection-start-line="59" selection-start-column="11" selection-end-line="59" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -1299,12 +1292,6 @@
       <option name="number" value="Default" />
       <updated>1422131500408</updated>
     </task>
-    <task id="LOCAL-00010" summary="Fixes 2">
-      <created>1422774236491</created>
-      <option name="number" value="00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1422774236491</updated>
-    </task>
     <task id="LOCAL-00011" summary="Update for New Order Service">
       <created>1423025524664</created>
       <option name="number" value="00011" />
@@ -1593,7 +1580,13 @@
       <option name="project" value="LOCAL" />
       <updated>1424593867658</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Refactor of Login actions">
+      <created>1424593947800</created>
+      <option name="number" value="00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1424593947800</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1646,7 +1639,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Comments All Workflow" />
     <MESSAGE value="Shipment List" />
     <MESSAGE value="Make Shipment Workflow&#10;" />
     <MESSAGE value="Create Invoice Optimization &amp; Create Shipment&#10;" />
@@ -1671,7 +1663,8 @@
     <MESSAGE value="Scan Barcode Finished" />
     <MESSAGE value="Add tracking success sback screen" />
     <MESSAGE value="Shipemnt Info - Tracking reverse order" />
-    <option name="LAST_COMMIT_MESSAGE" value="Shipemnt Info - Tracking reverse order" />
+    <MESSAGE value="Refactor of Login actions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor of Login actions" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -2125,7 +2118,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/magapp/connect/MagAuth.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21981777" vertical-offset="589" max-vertical-offset="2890">
-          <caret line="61" column="11" selection-start-line="61" selection-start-column="11" selection-end-line="61" selection-end-column="11" />
+          <caret line="59" column="11" selection-start-line="59" selection-start-column="11" selection-end-line="59" selection-end-column="11" />
           <folding />
         </state>
       </provider>
