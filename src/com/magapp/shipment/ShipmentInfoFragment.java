@@ -60,7 +60,7 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
     }
 
     @Override
-    public void doPostExecute(Object result) {
+    public void doPostExecute(Object result, String result_api_point) {
         ((ActivityLoadInterface) getActivity()).hideProgressBar();
         if (result instanceof HashMap) {
             HashMap map = (HashMap) result;

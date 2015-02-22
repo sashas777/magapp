@@ -7,7 +7,7 @@ package com.magapp.connect;
 
 public interface RequestArrayInterface { 
 	
-  void doPostExecute(Object[] result,String api_route);
+  void doPostExecute(Object[] result,String result_api_point);
   void onPreExecute();
   void RequestFailed(String error);	
   

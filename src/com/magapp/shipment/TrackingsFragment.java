@@ -43,7 +43,7 @@ public class TrackingsFragment extends  Fragment  implements View.OnClickListene
         shipment_increment_id=getArguments().getString("shipment_increment_id");
 
 		for (int j = items.size() - 1; j >= 0; j--) {
-            Object item =(Object) items.get(j);
+            Object item = items.get(j);
 		    HashMap item_data = (HashMap) item;
 			/*Carrier Code*/
 			String  carrier_code=item_data.get("carrier_code").toString();
@@ -119,10 +119,10 @@ public class TrackingsFragment extends  Fragment  implements View.OnClickListene
 
     public void onPreExecute(){
         ((ActivityLoadInterface)getActivity()).showProgressBar();
-    };
+    }
 
     @Override
-    public void doPostExecute(Object result) {
+    public void doPostExecute(Object result, String result_api_point) {
         ((ActivityLoadInterface)getActivity()).hideProgressBar();
         LinearLayout list = (LinearLayout)rootView.findViewById(R.id.container);
         list.removeView(general_clicked_wrapper);

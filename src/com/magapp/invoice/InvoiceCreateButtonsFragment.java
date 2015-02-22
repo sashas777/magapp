@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.invoice;
 
 import android.app.Fragment;
@@ -74,10 +79,10 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
 
     public void onPreExecute(){
         ((ActivityLoadInterface)getActivity()).showProgressBar();
-    };
+    }
 
     @Override
-    public void doPostExecute(Object result) {
+    public void doPostExecute(Object result, String result_api_point) {
         ((ActivityLoadInterface)getActivity()).hideProgressBar();
         ((ActivityCreateInterface)getActivity()).ShowSuccess(result.toString());
     }

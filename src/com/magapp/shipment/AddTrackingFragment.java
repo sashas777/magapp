@@ -170,10 +170,10 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
     public void onPreExecute(){
         ((ActivityLoadInterface)getActivity()).showProgressBar();
-    };
+    }
 
     @Override
-    public void doPostExecute(Object result) {
+    public void doPostExecute(Object result, String result_api_point) {
         ((ActivityLoadInterface)getActivity()).hideProgressBar();
         ((ActivityLoadInterface)getActivity()).ShowMessage("The tracking number has been added");
         Intent ShipmentInfo = new Intent(getActivity(), ShipmentInfoActivity.class);

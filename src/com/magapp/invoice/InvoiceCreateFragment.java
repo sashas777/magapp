@@ -56,7 +56,7 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
     }
 
     @Override
-    public void doPostExecute(Object result) {
+    public void doPostExecute(Object result, String result_api_point) {
         ((ActivityLoadInterface)getActivity()).hideProgressBar();
         HashMap map = (HashMap) result;
         FillData(map);

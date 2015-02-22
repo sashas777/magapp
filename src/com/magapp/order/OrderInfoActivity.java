@@ -10,6 +10,7 @@ import android.app.ActionBar.OnNavigationListener;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,13 +18,17 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.magapp.common.InvoiceListFragment;
+import com.magapp.connect.RequestInterface;
+import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
+import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
-public class OrderInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface {
+public class OrderInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface, RequestInterface {
 
 	private String order_increment_id,status;
 	private Integer order_id;
@@ -55,10 +60,17 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
         Refresh();
 	}
 
+    /* Execute all tasks when activity loads*/
     public void Refresh(){
-        FragmentManager fragmentManager = getFragmentManager();
-        Fragment screen = new OrderInfoFragment();
-        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("order_info_activity").commit();
+        Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
+        RequestTask task;
+        HashMap<String, String> map_filter = new HashMap<String, String>();
+        map_filter.put("order_increment_id", order_increment_id);
+        params.add(map_filter);
+        task = new RequestTask(this, this,"magapp_sales_order.info");
+        task.execute(params);
+
+
     }
 
     /*@todo Get rid of it */
@@ -81,13 +93,6 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
     }
     public String  getStatus( ){ return status;}
 
-	public Integer GetOrderId(){
-		return order_id;
-	}
-
-	public String GetOrderIncrementId(){
-		return order_increment_id;
-	}
 
 	/* Additional for actionbar */
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -140,8 +145,36 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+        Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
+        RequestTask task;
+        HashMap<String, String> map_filter = new HashMap<String, String>();
+
 		switch (item.getItemId()) {
-			/* Need to specify back in each fragment */
+
+            case R.id.hold:
+                map_filter.put("order_increment_id", order_increment_id);
+                params.add(map_filter);
+                task = new RequestTask(this, this,"sales_order.hold");
+                task.execute(params);
+                ShowMessage("The Order #"+ order_increment_id +" has been put on hold.");
+                return true;
+
+            case R.id.unhold:
+                map_filter.put("order_increment_id", order_increment_id);
+                params.add(map_filter);
+                task = new RequestTask(this, this,"sales_order.unhold");
+                task.execute(params);
+                ShowMessage("The Order #"+ order_increment_id +" has been released from holding status.");
+                return true;
+
+            case R.id.cancel:
+                map_filter.put("order_increment_id", order_increment_id);
+                params.add(map_filter);
+                task = new RequestTask(this,this,"sales_order.cancel");
+                task.execute(params);
+                ShowMessage("The Order #"+ order_increment_id +" has been cancelled.");
+                return true;
+
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -160,6 +193,42 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
     public void hideProgressBar(){
         LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.GONE);
+    }
+
+    public void onPreExecute() {
+        showProgressBar();
+    }
+
+    @Override
+    public void doPostExecute(Object result, String result_api_point) {
+        hideProgressBar();
+
+        if(result instanceof HashMap) {
+            HashMap map = (HashMap) result;
+            FragmentManager fragmentManager = getFragmentManager();
+            Fragment screen = null;
+            if (result_api_point.equals("magapp_sales_order.info")) {
+
+                screen = new OrderInfoFragment();
+                Bundle params=new Bundle();
+                params.putSerializable("order",map);
+                screen.setArguments(params);
+            }
+
+            fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("order_info_activity").commit();
+
+        }else {
+            Refresh();
+        }
+    }
+
+
+    public void RequestFailed(String error) {
+        ShowMessage(error);
+        hideProgressBar();
+        Intent Login = new Intent(this, LoginActivity.class);
+        startActivity(Login);
+        finish();
     }
  
 }

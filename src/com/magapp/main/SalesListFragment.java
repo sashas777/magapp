@@ -112,7 +112,7 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 	}
 
     @Override
-	 public void doPostExecute(Object[] result) {		
+	 public void doPostExecute(Object[] result, String result_api_point) {
 		ProgressBar progressBar =(ProgressBar) rootView.findViewById(R.id.progressBar1);
 		progressBar.setVisibility(View.INVISIBLE); 	
 		SortRows(result);

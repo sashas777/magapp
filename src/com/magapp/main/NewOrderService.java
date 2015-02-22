@@ -82,7 +82,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 	}
 
     @Override
-	 public void doPostExecute(Object[] result) {			
+	 public void doPostExecute(Object[] result, String result_api_point) {
 		 PrepareOrdersData(result);
 	 }		
 

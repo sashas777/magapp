@@ -70,7 +70,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 		}
 
     @Override
-		 public void doPostExecute(Object[] result) {
+		 public void doPostExecute(Object[] result, String result_api_point ) {
             ((ActivityLoadInterface)getActivity()).hideProgressBar();
 			AddIvoices(result);
 		 }			

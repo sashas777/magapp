@@ -1,43 +1,33 @@
+/*
+ * Copyright (c) 2015.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.main;
 
-import java.text.DecimalFormat;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ValueFormatter;
+import com.github.mikephil.charting.utils.YLabels;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 
-import com.github.mikephil.charting.utils.YLabels;
-import com.github.mikephil.charting.utils.ValueFormatter;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TimeZone;
+import java.util.Vector;
 
 public class HomeFragment extends Fragment  implements RequestInterface{
 
@@ -94,10 +84,10 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	public void onPreExecute(){		
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
 		progressBar.setVisibility(View.VISIBLE);
-	};  
+	}
 
-	 @Override
-	 public void doPostExecute(Object result) {		
+    @Override
+	 public void doPostExecute(Object result, String result_api_point) {
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
 		progressBar.setVisibility(View.INVISIBLE); 	 		
 		SetChartData(result);
@@ -183,7 +173,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		for (int i = 0; i < x_obj.length; i++) {
 			java.util.Date date = new java.util.Date(((Number) x_obj[i]).longValue() * 1000);
 			xVals.add(OrdersDateFormat.format(date) + "   ");
-			vals1.add(new Entry(  (int) new Double(y_obj[i].toString()).intValue(), i));
+			vals1.add(new Entry(new Double(y_obj[i].toString()).intValue(), i));
 		}
 
 		/* Amounts */

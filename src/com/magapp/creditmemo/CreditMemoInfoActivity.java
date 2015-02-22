@@ -191,7 +191,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
     }
 
     @Override
-    public void doPostExecute(Object result) {
+    public void doPostExecute(Object result, String result_api_point) {
         hideProgressBar();
         if(result instanceof HashMap) {
             HashMap map = (HashMap) result;
