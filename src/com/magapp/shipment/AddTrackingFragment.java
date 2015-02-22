@@ -8,7 +8,6 @@ package com.magapp.shipment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -179,7 +178,8 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         ((ActivityLoadInterface)getActivity()).ShowMessage("The tracking number has been added");
         Intent ShipmentInfo = new Intent(getActivity(), ShipmentInfoActivity.class);
         ShipmentInfo.putExtra("increment_id", shipment_increment_id);
-        NavUtils.navigateUpTo(getActivity(), ShipmentInfo);
+        getActivity().startActivity(ShipmentInfo);
+        getActivity().finish();
     }
 
 
