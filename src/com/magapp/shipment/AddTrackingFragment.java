@@ -62,9 +62,13 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
             TextView tracking_number_value = ((TextView) rootView.findViewById(R.id.tracking_number));
             tracking_number_value.setText(tracking_number);
 
-            if (getArguments().getString("carrier")!=null) {
+            if (getArguments().getString("carrier")!=null)
                 carriersListView.setSelection(Integer.parseInt(getArguments().getString("carrier")));
-            }
+
+            if (getArguments().getString("notify_customer")!=null)
+                ((CheckBox) rootView.findViewById(R.id.notify_customer)).setChecked(true);
+            else
+                ((CheckBox) rootView.findViewById(R.id.notify_customer)).setChecked(false);
         }
 
         return rootView;
@@ -74,6 +78,7 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         String carrier_code="custom";
         String tracking_number=((TextView) rootView.findViewById(R.id.tracking_number)).getText().toString();
         String carrier_title=((TextView) rootView.findViewById(R.id.carrier_title)).getText().toString();
+        boolean notify_customer=((CheckBox) rootView.findViewById(R.id.notify_customer)).isChecked();
 
         if (tracking_number.isEmpty() || tracking_number.isEmpty()   || carrier_title.isEmpty()) {
             ((ActivityLoadInterface)getActivity()).ShowMessage("Please fill all fields");
@@ -106,7 +111,9 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         params.add(carrier_code);
         params.add(carrier_title);
         params.add(tracking_number);
-        task = new RequestTask(this, getActivity(),"sales_order_shipment.addTrack");
+        params.add(notify_customer);
+
+        task = new RequestTask(this, getActivity(),"magapp_sales_order_shipment.addtrack");
         task.execute(params);
     }
 
@@ -117,6 +124,7 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         ScanTracking.putExtra("increment_id", shipment_increment_id);
         ScanTracking.putExtra("carrier", Integer.toString(carriersListView.getSelectedItemPosition()));
         ScanTracking.putExtra("carrier_title", ((TextView) rootView.findViewById(R.id.carrier_title)).getText().toString());
+        ScanTracking.putExtra("notify_customer", ((CheckBox) rootView.findViewById(R.id.notify_customer)).isChecked());
 
         getActivity().startActivity(ScanTracking);
         getActivity().finish();

@@ -64,6 +64,9 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
             if (vars.getString("carrier_title")!=null)
                 params.putString("carrier_title", vars.getString("carrier_title"));
 
+            if (vars.getString("notify_customer")!=null)
+                params.putString("notify_customer", vars.getString("notify_customer"));
+
             screen = new AddTrackingFragment();
         }else {
             screen = new ShipmentInfoFragment();

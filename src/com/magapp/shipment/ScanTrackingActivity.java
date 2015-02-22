@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ScanTrackingActivity extends Activity implements ZXingScannerView.ResultHandler {
 
-    private String shipment_increment_id, carrier_title, carrier;
+    private String shipment_increment_id, carrier_title, carrier, notify_customer;
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String SELECTED_FORMATS = "SELECTED_FORMATS";
@@ -41,6 +41,7 @@ public class ScanTrackingActivity extends Activity implements ZXingScannerView.R
         shipment_increment_id = vars.getString("increment_id");
         carrier_title= vars.getString("carrier_title");
         carrier= vars.getString("carrier");
+        notify_customer=vars.getString("notify_customer");
 
         if(savedInstanceState != null) {
             mFlash = savedInstanceState.getBoolean(FLASH_STATE, false);
@@ -121,6 +122,7 @@ public class ScanTrackingActivity extends Activity implements ZXingScannerView.R
         ShipmentInfo.putExtra("tracking_number", rawResult.getText());
         ShipmentInfo.putExtra("carrier",carrier );
         ShipmentInfo.putExtra("carrier_title",carrier_title );
+        ShipmentInfo.putExtra("notify_customer",notify_customer );
 
         startActivity(ShipmentInfo);
     }
