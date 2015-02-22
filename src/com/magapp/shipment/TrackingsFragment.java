@@ -42,7 +42,8 @@ public class TrackingsFragment extends  Fragment  implements View.OnClickListene
 		ArrayList items = getArguments().getParcelableArrayList("items");
         shipment_increment_id=getArguments().getString("shipment_increment_id");
 
-		for (Object item : items) {
+		for (int j = items.size() - 1; j >= 0; j--) {
+            Object item =(Object) items.get(j);
 		    HashMap item_data = (HashMap) item;
 			/*Carrier Code*/
 			String  carrier_code=item_data.get("carrier_code").toString();
