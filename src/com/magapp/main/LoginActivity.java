@@ -1,8 +1,5 @@
 package com.magapp.main;
 
-import Login.AccountsFragment;
-import Login.AddAccountFragment;
-import Login.LoginFragment;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -14,6 +11,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
+import com.magapp.login.AccountsFragment;
+import com.magapp.login.AddAccountFragment;
+import com.magapp.login.LoginFragment;
 import io.fabric.sdk.android.Fabric;
 
 

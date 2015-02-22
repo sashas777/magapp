@@ -1,10 +1,5 @@
 package com.magapp.connect;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.xmlrpc.android.XMLRPCException;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
@@ -13,9 +8,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.magapp.connect.LoginTask.FinishLogin;
 import com.magapp.main.NewOrderService;
+import org.xmlrpc.android.XMLRPCException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MagAuth implements FinishLogin{
@@ -59,7 +57,7 @@ public class MagAuth implements FinishLogin{
         String selected_account_name = settings.getString("selected_account_name", null);
         AccountManager manager = AccountManager.get(activity);
         Account[] accounts = manager.getAccountsByType(accountType);
-		/* Login with account specified */
+		/* com.magapp.login with account specified */
         for (int i = 0; i < accounts.length; i++) {
             Account account = accounts[i];
             if (selected_account_name.equals(account.name)) {

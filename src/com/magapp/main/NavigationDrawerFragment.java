@@ -1,7 +1,5 @@
 package com.magapp.main;
 
-import Login.AccountsFragment;
-import Login.AddAccountFragment;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -13,15 +11,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.magapp.login.AccountsFragment;
+import com.magapp.login.AddAccountFragment;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation
