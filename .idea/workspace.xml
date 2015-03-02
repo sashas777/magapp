@@ -25,13 +25,9 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.magapp.main" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="Order Info  Refactoring">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_v13_21_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/common/InvoiceListFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/common/InvoiceListFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/order/OrderInfoActivity.java" afterPath="$PROJECT_DIR$/src/com/magapp/order/OrderInfoActivity.java" />
+    <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="Order Info Tabs removed">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/magapp.iml" afterPath="$PROJECT_DIR$/magapp.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v13_21_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v13_21_0_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="magapp.iws" />
@@ -59,14 +55,14 @@
       <file leaf-file-name="OrderInfoFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.7494407" vertical-offset="1020" max-vertical-offset="4981">
-              <caret line="152" column="25" selection-start-line="152" selection-start-column="25" selection-end-line="152" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.4753915" vertical-offset="3043" max-vertical-offset="4318">
+              <caret line="204" column="13" selection-start-line="204" selection-start-column="13" selection-end-line="204" selection-end-column="13" />
               <folding>
-                <element signature="e#0#11238#0" expanded="true" />
+                <element signature="e#0#9903#0" expanded="true" />
                 <element signature="imports" expanded="true" />
-                <element signature="e#7468#7477#0" expanded="true" />
-                <element signature="e#9424#9449#0" expanded="true" />
-                <element signature="e#9535#9551#0" expanded="true" />
+                <element signature="e#6133#6142#0" expanded="true" />
+                <element signature="e#8089#8114#0" expanded="true" />
+                <element signature="e#8200#8216#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -75,12 +71,12 @@
       <file leaf-file-name="OrderInfoActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/magapp/order/OrderInfoActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1288" max-vertical-offset="4029">
-              <caret line="208" column="13" selection-start-line="208" selection-start-column="13" selection-end-line="208" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3961">
+              <caret line="134" column="44" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5115#5140#0" expanded="true" />
-                <element signature="e#5226#5242#0" expanded="true" />
+                <element signature="e#4936#4961#0" expanded="true" />
+                <element signature="e#5047#5063#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,8 +100,10 @@
         <entry file="file://$PROJECT_DIR$/src/com/magapp/common/InvoiceListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="2427" max-vertical-offset="3026">
-              <caret line="191" column="74" selection-start-line="191" selection-start-column="74" selection-end-line="191" selection-end-column="74" />
-              <folding />
+              <caret line="190" column="74" selection-start-line="190" selection-start-column="74" selection-end-line="190" selection-end-column="74" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -596,7 +594,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="1424652949692" />
+        <entry key="$PROJECT_DIR$" value="1425265861304" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -867,11 +865,11 @@
         <option value="$PROJECT_DIR$/src/com/magapp/shipment/TrackingsFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/shipment/AddTrackingFragment.java" />
         <option value="$PROJECT_DIR$/src/com/magapp/common/InvoiceListFragment.java" />
-        <option value="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/com/magapp/order/TabsPagerAdapter.java" />
         <option value="$PROJECT_DIR$/res/layout/order_info_activity.xml" />
         <option value="$PROJECT_DIR$/src/com/magapp/order/OrderInfoActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java" />
       </list>
     </option>
   </component>
@@ -1076,24 +1074,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="magapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="magapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1373,12 +1353,6 @@
       <created>1422131500408</created>
       <option name="number" value="Default" />
       <updated>1422131500408</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Sales Order List Listview">
-      <created>1423368057642</created>
-      <option name="number" value="00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1423368057642</updated>
     </task>
     <task id="LOCAL-00015" summary="Sales Order List Filter Label">
       <created>1423370142831</created>
@@ -1668,7 +1642,13 @@
       <option name="project" value="LOCAL" />
       <updated>1424646161294</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Order Info Tabs removed">
+      <created>1425265861957</created>
+      <option name="number" value="00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1425265861958</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1725,7 +1705,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Shipment Info rev.1" />
     <MESSAGE value="Shipment Info rev.2" />
     <MESSAGE value="Shipment Info rev.3" />
     <MESSAGE value="Shipment Info rev.4" />
@@ -1750,7 +1729,8 @@
     <MESSAGE value="Release 2.4" />
     <MESSAGE value="folders refactoring" />
     <MESSAGE value="Order Info  Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Order Info  Refactoring" />
+    <MESSAGE value="Order Info Tabs removed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Order Info Tabs removed" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1940,6 +1920,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="986">
           <caret line="58" column="65" selection-start-line="58" selection-start-column="56" selection-end-line="58" selection-end-column="65" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1947,6 +1928,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1666">
           <caret line="20" column="89" selection-start-line="20" selection-start-column="89" selection-end-line="20" selection-end-column="89" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1961,6 +1943,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="788" max-vertical-offset="1666">
           <caret line="20" column="87" selection-start-line="20" selection-start-column="77" selection-end-line="20" selection-end-column="87" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2129,8 +2112,10 @@
     <entry file="file://$PROJECT_DIR$/src/com/magapp/common/InvoiceListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2427" max-vertical-offset="3026">
-          <caret line="191" column="74" selection-start-line="191" selection-start-column="74" selection-end-line="191" selection-end-column="74" />
-          <folding />
+          <caret line="190" column="74" selection-start-line="190" selection-start-column="74" selection-end-line="190" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2146,26 +2131,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magapp/order/OrderInfoActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1288" max-vertical-offset="4029">
-          <caret line="208" column="13" selection-start-line="208" selection-start-column="13" selection-end-line="208" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3961">
+          <caret line="134" column="44" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5115#5140#0" expanded="true" />
-            <element signature="e#5226#5242#0" expanded="true" />
+            <element signature="e#4936#4961#0" expanded="true" />
+            <element signature="e#5047#5063#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/magapp/order/OrderInfoFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7494407" vertical-offset="1020" max-vertical-offset="4981">
-          <caret line="152" column="25" selection-start-line="152" selection-start-column="25" selection-end-line="152" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.4753915" vertical-offset="3043" max-vertical-offset="4318">
+          <caret line="204" column="13" selection-start-line="204" selection-start-column="13" selection-end-line="204" selection-end-column="13" />
           <folding>
-            <element signature="e#0#11238#0" expanded="true" />
+            <element signature="e#0#9903#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#7468#7477#0" expanded="true" />
-            <element signature="e#9424#9449#0" expanded="true" />
-            <element signature="e#9535#9551#0" expanded="true" />
+            <element signature="e#6133#6142#0" expanded="true" />
+            <element signature="e#8089#8114#0" expanded="true" />
+            <element signature="e#8200#8216#0" expanded="true" />
           </folding>
         </state>
       </provider>

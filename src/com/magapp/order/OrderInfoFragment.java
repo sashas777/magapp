@@ -50,22 +50,6 @@ public class OrderInfoFragment extends Fragment /*implements RequestInterface */
         return rootView;
     }
 
-    public void Refresh() {
-       /* Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
-        RequestTask task;
-        HashMap<String, String> map_filter = new HashMap<String, String>();
-        map_filter.put("order_increment_id", order_increment_id);
-        params.add(map_filter);
-        task = new RequestTask(this, getActivity(),"magapp_sales_order.info");
-        task.execute(params);*/
-    }
-
-/*
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("order", "order");
-    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -87,30 +71,7 @@ public class OrderInfoFragment extends Fragment /*implements RequestInterface */
 
         super.onCreateOptionsMenu(menu, inflater);
     }
-/*
-    public void onPreExecute() {
-        ((OrderInfoActivity)getActivity()).showProgressBar();
-    }
 
-    @Override
-    public void doPostExecute(Object result) {
-        ((OrderInfoActivity)getActivity()).hideProgressBar();
-        if(result instanceof HashMap) {
-            HashMap map = (HashMap) result;
-            FillData(map);
-        }else {
-            Refresh();
-        }
-    }
-
-
-    public void RequestFailed(String error) {
-        ((OrderInfoActivity) getActivity()).ShowMessage(error);
-        ((OrderInfoActivity)getActivity()).hideProgressBar();
-        Intent Login = new Intent(getActivity(), LoginActivity.class);
-        getActivity().startActivity(Login);
-        getActivity().finish();
-    }*/
 
     public void FillData(HashMap order) {
 
