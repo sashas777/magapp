@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Vector;
 
-public class OrderInfoFragment extends Fragment /*implements RequestInterface */{
+public class OrderInfoFragment extends Fragment {
 
 
     public View rootView;
@@ -44,7 +44,6 @@ public class OrderInfoFragment extends Fragment /*implements RequestInterface */
 
         HashMap order = (HashMap) getArguments().getSerializable("order");
         FillData(order);
-
 
         setHasOptionsMenu(true);
         return rootView;

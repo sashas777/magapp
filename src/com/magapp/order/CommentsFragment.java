@@ -7,6 +7,7 @@ package com.magapp.order;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,7 +165,7 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
             /*Status*/
             ((TextView) vi.findViewById(R.id.card_title)).setText(created_at_date_string+comment_status);
 
-            ((TextView) vi.findViewById(R.id.comment_value)).setText(comment_data.get("comment").toString());
+            ((TextView) vi.findViewById(R.id.comment_value)).setText(Html.fromHtml(comment_data.get("comment").toString()));
 
             current_view.addView(vi);
         }
