@@ -7,11 +7,11 @@ package com.magapp.order;
 
 import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -28,13 +28,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class OrderInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface, RequestInterface {
+public class OrderInfoActivity extends FragmentActivity implements OnNavigationListener, ActivityLoadInterface, RequestInterface {
 
 	private String order_increment_id,status;
 	private Integer order_id;
     private ArrayList<HashMap> comments;
 
-	public Integer menu_id = -1; 
+	public Integer menu_id = -1;
+
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,6 +59,8 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
 		Bundle vars = getIntent().getExtras();
 		order_increment_id = vars.getString("order_increment_id");
         Refresh();
+
+
 	}
 
     /* Execute all tasks when activity loads*/
@@ -70,8 +73,8 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
         task = new RequestTask(this, this,"magapp_sales_order.info");
         task.execute(params);
 
-
     }
+
 
     /*@todo Get rid of it */
 	public void  setOrderId(Integer order_id_val){
@@ -105,7 +108,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
         Bundle params = new Bundle();
 		switch (itemPosition) {
 		case 0:
-			screen = new OrderInfoFragment();		
+            Refresh();
 			break;
 		case 1:
 			screen = new InvoiceListFragment();
@@ -138,9 +141,9 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
             break;
 		}
 		
-		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
+		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("order_info_activity").commit();
 
-		return false;
+        return false;
 	}
 
 	@Override
@@ -208,16 +211,15 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
             FragmentManager fragmentManager = getFragmentManager();
             Fragment screen = null;
             if (result_api_point.equals("magapp_sales_order.info")) {
-
                 screen = new OrderInfoFragment();
                 Bundle params=new Bundle();
                 params.putSerializable("order",map);
                 screen.setArguments(params);
             }
 
-            fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("order_info_activity").commit();
+            fragmentManager.beginTransaction().replace(R.id.container, screen).commit();
 
-        }else {
+        } else {
             Refresh();
         }
     }
@@ -230,5 +232,7 @@ public class OrderInfoActivity extends Activity implements OnNavigationListener,
         startActivity(Login);
         finish();
     }
+
+
  
 }

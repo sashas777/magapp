@@ -11,6 +11,8 @@
 
 
 
+
+
 buildscript {
     repositories {
         mavenCentral()
@@ -45,6 +47,7 @@ dependencies {
     }
     compile 'me.dm7.barcodescanner:zxing:1.6'
     compile 'org.apache.commons:commons-lang3:3.0.+'
+    compile 'com.android.support:support-v13:21.0.0'
 }
 
 android {

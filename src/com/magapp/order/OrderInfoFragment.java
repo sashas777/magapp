@@ -5,6 +5,7 @@
 
 package com.magapp.order;
 
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -43,6 +44,8 @@ public class OrderInfoFragment extends Fragment /*implements RequestInterface */
 
         HashMap order = (HashMap) getArguments().getSerializable("order");
         FillData(order);
+
+
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -56,6 +59,13 @@ public class OrderInfoFragment extends Fragment /*implements RequestInterface */
         task = new RequestTask(this, getActivity(),"magapp_sales_order.info");
         task.execute(params);*/
     }
+
+/*
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("order", "order");
+    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
