@@ -1,18 +1,18 @@
 -- Merging decision tree log ---
 manifest
-ADDED from AndroidManifest.xml:2:1
+ADDED from AndroidManifest.xml:7:1
 	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
+		ADDED from AndroidManifest.xml:7:11
 	package
-		ADDED from AndroidManifest.xml:3:5
+		ADDED from AndroidManifest.xml:8:5
 	android:versionName
-		ADDED from AndroidManifest.xml:5:5
+		ADDED from AndroidManifest.xml:10:5
 	android:versionCode
-		ADDED from AndroidManifest.xml:4:5
+		ADDED from AndroidManifest.xml:9:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 uses-sdk
-ADDED from AndroidManifest.xml:7:5
+ADDED from AndroidManifest.xml:12:5
 MERGED from com.android.support:support-v4:21.0.3:15:5
 MERGED from com.crashlytics.sdk.android:crashlytics:2.2.0:7:5
 MERGED from com.crashlytics.sdk.android:answers:1.1.0:7:5
@@ -23,53 +23,55 @@ MERGED from io.fabric.sdk.android:fabric:1.1.0:7:5
 MERGED from me.dm7.barcodescanner:zxing:1.6:7:5
 MERGED from me.dm7.barcodescanner:core:1.6:7:5
 MERGED from com.android.support:support-v4:21.0.3:15:5
+MERGED from com.android.support:support-v13:21.0.0:15:5
+MERGED from com.android.support:support-v4:21.0.3:15:5
 	android:targetSdkVersion
-		ADDED from AndroidManifest.xml:9:9
+		ADDED from AndroidManifest.xml:14:9
 	android:minSdkVersion
-		ADDED from AndroidManifest.xml:8:9
+		ADDED from AndroidManifest.xml:13:9
 uses-permission#android.permission.INTERNET
-ADDED from AndroidManifest.xml:11:5
+ADDED from AndroidManifest.xml:16:5
 MERGED from com.crashlytics.sdk.android:crashlytics:2.2.0:11:5
 	android:name
-		ADDED from AndroidManifest.xml:11:22
+		ADDED from AndroidManifest.xml:16:22
 uses-permission#android.permission.AUTHENTICATE_ACCOUNTS
-ADDED from AndroidManifest.xml:12:5
+ADDED from AndroidManifest.xml:17:5
 	android:name
-		ADDED from AndroidManifest.xml:12:22
+		ADDED from AndroidManifest.xml:17:22
 uses-permission#android.permission.WRITE_SYNC_SETTINGS
-ADDED from AndroidManifest.xml:13:5
+ADDED from AndroidManifest.xml:18:5
 	android:name
-		ADDED from AndroidManifest.xml:13:22
+		ADDED from AndroidManifest.xml:18:22
 uses-permission#android.permission.GET_ACCOUNTS
-ADDED from AndroidManifest.xml:14:5
+ADDED from AndroidManifest.xml:19:5
 	android:name
-		ADDED from AndroidManifest.xml:14:22
+		ADDED from AndroidManifest.xml:19:22
 uses-permission#android.permission.MANAGE_ACCOUNTS
-ADDED from AndroidManifest.xml:15:2
+ADDED from AndroidManifest.xml:20:2
 	android:name
-		ADDED from AndroidManifest.xml:15:19
+		ADDED from AndroidManifest.xml:20:19
 uses-permission#android.permission.USE_CREDENTIALS
-ADDED from AndroidManifest.xml:16:2
+ADDED from AndroidManifest.xml:21:2
 	android:name
-		ADDED from AndroidManifest.xml:16:19
+		ADDED from AndroidManifest.xml:21:19
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
-ADDED from AndroidManifest.xml:17:2
+ADDED from AndroidManifest.xml:22:2
 	android:name
-		ADDED from AndroidManifest.xml:17:19
+		ADDED from AndroidManifest.xml:22:19
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from AndroidManifest.xml:18:2
+ADDED from AndroidManifest.xml:23:2
 	android:name
-		ADDED from AndroidManifest.xml:18:19
+		ADDED from AndroidManifest.xml:23:19
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from AndroidManifest.xml:19:2
+ADDED from AndroidManifest.xml:24:2
 	android:name
-		ADDED from AndroidManifest.xml:19:19
+		ADDED from AndroidManifest.xml:24:19
 uses-permission#android.permission.CAMERA
-ADDED from AndroidManifest.xml:20:5
+ADDED from AndroidManifest.xml:25:5
 	android:name
-		ADDED from AndroidManifest.xml:20:22
+		ADDED from AndroidManifest.xml:25:22
 application
-ADDED from AndroidManifest.xml:21:5
+ADDED from AndroidManifest.xml:26:5
 MERGED from com.android.support:support-v4:21.0.3:16:5
 MERGED from com.crashlytics.sdk.android:crashlytics:2.2.0:13:5
 MERGED from com.crashlytics.sdk.android:answers:1.1.0:11:5
@@ -80,111 +82,113 @@ MERGED from io.fabric.sdk.android:fabric:1.1.0:11:5
 MERGED from me.dm7.barcodescanner:zxing:1.6:11:5
 MERGED from me.dm7.barcodescanner:core:1.6:11:5
 MERGED from com.android.support:support-v4:21.0.3:16:5
+MERGED from com.android.support:support-v13:21.0.0:16:5
+MERGED from com.android.support:support-v4:21.0.3:16:5
 	android:label
-		ADDED from AndroidManifest.xml:28:9
+		ADDED from AndroidManifest.xml:33:9
 	android:allowBackup
-		ADDED from AndroidManifest.xml:22:9
-	android:icon
 		ADDED from AndroidManifest.xml:27:9
+	android:icon
+		ADDED from AndroidManifest.xml:32:9
 	android:theme
-		ADDED from AndroidManifest.xml:29:9
+		ADDED from AndroidManifest.xml:34:9
 	android:hardwareAccelerated
-		ADDED from AndroidManifest.xml:26:9
+		ADDED from AndroidManifest.xml:31:9
 	android:allowClearUserData
-		ADDED from AndroidManifest.xml:25:9
+		ADDED from AndroidManifest.xml:30:9
 	android:vmSafeMode
-		ADDED from AndroidManifest.xml:24:9
+		ADDED from AndroidManifest.xml:29:9
 service#com.magapp.main.AuthenticatationService
-ADDED from AndroidManifest.xml:30:3
+ADDED from AndroidManifest.xml:35:3
 	android:exported
-		ADDED from AndroidManifest.xml:30:51
+		ADDED from AndroidManifest.xml:35:51
 	android:name
-		ADDED from AndroidManifest.xml:30:12
+		ADDED from AndroidManifest.xml:35:12
 intent-filter#android.accounts.AccountAuthenticator
-ADDED from AndroidManifest.xml:31:7
+ADDED from AndroidManifest.xml:36:7
 action#android.accounts.AccountAuthenticator
-ADDED from AndroidManifest.xml:32:11
+ADDED from AndroidManifest.xml:37:11
 	android:name
-		ADDED from AndroidManifest.xml:32:19
+		ADDED from AndroidManifest.xml:37:19
 meta-data#android.accounts.AccountAuthenticator
-ADDED from AndroidManifest.xml:34:7
+ADDED from AndroidManifest.xml:39:7
 	android:resource
-		ADDED from AndroidManifest.xml:34:73
+		ADDED from AndroidManifest.xml:39:73
 	android:name
-		ADDED from AndroidManifest.xml:34:18
+		ADDED from AndroidManifest.xml:39:18
 activity#com.magapp.main.LoginActivity
-ADDED from AndroidManifest.xml:36:9
+ADDED from AndroidManifest.xml:41:9
 	android:name
-		ADDED from AndroidManifest.xml:36:19
+		ADDED from AndroidManifest.xml:41:19
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:37:14
+ADDED from AndroidManifest.xml:42:14
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:38:18
+ADDED from AndroidManifest.xml:43:18
 	android:name
-		ADDED from AndroidManifest.xml:38:26
+		ADDED from AndroidManifest.xml:43:26
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:39:17
+ADDED from AndroidManifest.xml:44:17
 	android:name
-		ADDED from AndroidManifest.xml:39:27
+		ADDED from AndroidManifest.xml:44:27
 activity#com.magapp.main.BaseActivity
-ADDED from AndroidManifest.xml:42:9
-	android:label
-		ADDED from AndroidManifest.xml:42:48
-	android:name
-		ADDED from AndroidManifest.xml:42:19
-activity#com.magapp.order.OrderInfoActivity
-ADDED from AndroidManifest.xml:44:9
-	android:label
-		ADDED from AndroidManifest.xml:44:53
-	android:name
-		ADDED from AndroidManifest.xml:44:19
-activity#com.magapp.invoice.InvoiceInfoActivity
-ADDED from AndroidManifest.xml:45:9
-	android:label
-		ADDED from AndroidManifest.xml:45:74
-	android:name
-		ADDED from AndroidManifest.xml:45:19
-activity#com.magapp.invoice.InvoiceCreateActivity
-ADDED from AndroidManifest.xml:46:9
-	android:name
-		ADDED from AndroidManifest.xml:46:19
-activity#com.magapp.shipment.ShipmentCreateActivity
 ADDED from AndroidManifest.xml:47:9
+	android:label
+		ADDED from AndroidManifest.xml:47:48
 	android:name
 		ADDED from AndroidManifest.xml:47:19
-activity#com.magapp.shipment.ShipmentInfoActivity
-ADDED from AndroidManifest.xml:48:9
-	android:name
-		ADDED from AndroidManifest.xml:48:19
-activity#com.magapp.creditmemo.CreditMemoCreateActivity
+activity#com.magapp.order.OrderInfoActivity
 ADDED from AndroidManifest.xml:49:9
+	android:label
+		ADDED from AndroidManifest.xml:49:70
 	android:name
 		ADDED from AndroidManifest.xml:49:19
-activity#com.magapp.creditmemo.CreditMemoInfoActivity
+activity#com.magapp.invoice.InvoiceInfoActivity
 ADDED from AndroidManifest.xml:50:9
+	android:label
+		ADDED from AndroidManifest.xml:50:74
 	android:name
 		ADDED from AndroidManifest.xml:50:19
-activity#com.magapp.shipment.ScanTrackingActivity
+activity#com.magapp.invoice.InvoiceCreateActivity
 ADDED from AndroidManifest.xml:51:9
 	android:name
 		ADDED from AndroidManifest.xml:51:19
-service#com.magapp.main.NewOrderService
+activity#com.magapp.shipment.ShipmentCreateActivity
+ADDED from AndroidManifest.xml:52:9
+	android:name
+		ADDED from AndroidManifest.xml:52:19
+activity#com.magapp.shipment.ShipmentInfoActivity
+ADDED from AndroidManifest.xml:53:9
+	android:name
+		ADDED from AndroidManifest.xml:53:19
+activity#com.magapp.creditmemo.CreditMemoCreateActivity
 ADDED from AndroidManifest.xml:54:9
 	android:name
-		ADDED from AndroidManifest.xml:54:18
-receiver#com.magapp.main.BootBroadReceiv
+		ADDED from AndroidManifest.xml:54:19
+activity#com.magapp.creditmemo.CreditMemoInfoActivity
 ADDED from AndroidManifest.xml:55:9
 	android:name
 		ADDED from AndroidManifest.xml:55:19
+activity#com.magapp.shipment.ScanTrackingActivity
+ADDED from AndroidManifest.xml:56:9
+	android:name
+		ADDED from AndroidManifest.xml:56:19
+service#com.magapp.main.NewOrderService
+ADDED from AndroidManifest.xml:59:9
+	android:name
+		ADDED from AndroidManifest.xml:59:18
+receiver#com.magapp.main.BootBroadReceiv
+ADDED from AndroidManifest.xml:60:9
+	android:name
+		ADDED from AndroidManifest.xml:60:19
 intent-filter#android.intent.action.BOOT_COMPLETED
-ADDED from AndroidManifest.xml:56:13
+ADDED from AndroidManifest.xml:61:13
 action#android.intent.action.BOOT_COMPLETED
-ADDED from AndroidManifest.xml:57:17
+ADDED from AndroidManifest.xml:62:17
 	android:name
-		ADDED from AndroidManifest.xml:57:25
+		ADDED from AndroidManifest.xml:62:25
 meta-data#com.crashlytics.ApiKey
-ADDED from AndroidManifest.xml:63:9
+ADDED from AndroidManifest.xml:68:9
 	android:name
-		ADDED from AndroidManifest.xml:64:13
+		ADDED from AndroidManifest.xml:69:13
 	android:value
-		ADDED from AndroidManifest.xml:65:13
+		ADDED from AndroidManifest.xml:70:13

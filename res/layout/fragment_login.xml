@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -73,7 +78,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center_vertical|center_horizontal">    
+    android:gravity="center_vertical|center_horizontal">
 	    <ProgressBar
 	        android:id="@+id/progressBar1"
 	        style="?android:attr/progressBarStyleLarge"

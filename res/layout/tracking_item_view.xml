@@ -87,6 +87,9 @@
                 <Button
                         style="?android:attr/buttonStyle"
                         android:layout_width="wrap_content"
+                        android:background="@drawable/shape"
+                        android:textColor="#FFFFFF"
+                        android:padding="8dp"
                         android:layout_height="wrap_content"
                         android:text="@string/remove"
                         android:id="@+id/remove"
