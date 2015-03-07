@@ -116,17 +116,23 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	     editor.commit();
 
 
-        MagAuth auth=new MagAuth(this,getActivity());
+        MagAuth auth=new MagAuth(this,getActivity(),1);
         auth.setSession(getActivity(),null);
-		 FragmentManager fragmentManager = getFragmentManager();  	  
+		/* FragmentManager fragmentManager = getFragmentManager();
 		 fragmentManager.beginTransaction()
          .replace(R.id.container,new LoginFragment())           
          .addToBackStack(null)
-         .commit();
+         .commit(); */
 		 
 	}
 
     public void SessionReturned(String ses, Boolean status){
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container,new LoginFragment())
+                .addToBackStack(null)
+                .commit();
+
     }
     public void ShowProgressBar() { }
 	

@@ -81,7 +81,7 @@ public class RequestArrayTask extends  AsyncTask<Vector, Void, Object[]> impleme
 		editor.commit();
 		/* Set session null */
         if (!error_obj.getMessage().toString().equals("No internet connection")) {
-            MagAuth auth = new MagAuth(this, activity);
+            MagAuth auth = new MagAuth(this, activity,1);
         }else{
             RequestCallBack.RequestFailed(error_obj.getMessage().toString());
         }

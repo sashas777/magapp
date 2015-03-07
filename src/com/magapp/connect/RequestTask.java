@@ -79,7 +79,7 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 		editor.commit();
 		/* Set session null */
         if (!error_obj.getMessage().toString().equals("No internet connection")) {
-            MagAuth auth = new MagAuth(this, activity);
+            MagAuth auth = new MagAuth(this, activity,1);
         }else {
             RequestCallBack.RequestFailed("No internet connection");
         }

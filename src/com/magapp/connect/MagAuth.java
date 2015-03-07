@@ -36,10 +36,15 @@ public class MagAuth implements FinishLogin{
 	GetSession GetSessionCallBack;
 	
 	
-	public MagAuth(GetSession callback, Context act ) {
+	public MagAuth(GetSession callback, Context act, int cleansession ) {
 		GetSessionCallBack = callback;
 		activity=act;
 		settings = activity.getSharedPreferences(desired_preferense_file, 0);
+
+        if (cleansession==1) {
+            setSession(activity,null);
+        }
+
 		if (getSession()!=null && isOnline())
 			GetSessionCallBack.SessionReturned(getSession(), true);
 		else {

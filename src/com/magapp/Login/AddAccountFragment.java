@@ -93,7 +93,7 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 	            AccountName.setBackgroundColor(Color.parseColor("#F2DEDE"));  
 	            ShowMessage("Please specify account name");
 	            
-	      }else if ( store_url.length() < 1 || store_url.equals("http://") || !store_url.substring(0, 7).equals("http://") ) {  
+	      }else if ( store_url.length() < 1 || store_url.equals("http://")  ) {
 	            hasErrors = true;  
 	            StoreUrl.setBackgroundColor(Color.parseColor("#F2DEDE"));  
 	            ShowMessage("Store Url is not correct");

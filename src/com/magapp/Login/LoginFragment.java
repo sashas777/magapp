@@ -46,7 +46,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			LoginButton.setOnClickListener(this);
 			AddAccountButton.setOnClickListener(this);
 
-			auth=new MagAuth(this,getActivity());
+			auth=new MagAuth(this,getActivity(),0);
 
 			return rootView;
 	}
@@ -122,7 +122,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	}
 		 
 	public void LoginAction(){ 
-	      auth=new MagAuth(this,getActivity()); 
+	      auth=new MagAuth(this,getActivity(),0);
 	}
 
 }
