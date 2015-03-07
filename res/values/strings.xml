@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <resources>
 
     <string name="app_name">Magento Manager</string>
@@ -83,5 +88,11 @@
     <string name="choose_formats">Choose Formats</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
+
+    <string name="list_no_items">There are no items for this order yet.</string>
+    <string name="no_internet">No Internet Connection.</string>
+
+    <string name="credit_memo">Credit Memo</string>
+
 
 </resources>

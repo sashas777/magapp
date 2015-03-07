@@ -143,7 +143,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 
              if (invoices.length<1) {
                  HashMap<String, String> list_map = new HashMap<String, String>();
-                 list_map.put("invoice_number","There are no items for this order yet.");
+                 list_map.put("invoice_number",getActivity().getResources().getString(R.string.list_no_items));
                  list_map.put("description","");
                  list_map.put("increment_id","");
                  InvoiceList.add(list_map);
