@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2016.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.main;
 
 import android.accounts.Account;
@@ -15,7 +20,6 @@ import com.magapp.login.AccountsFragment;
 import com.magapp.login.AddAccountFragment;
 import com.magapp.login.LoginFragment;
 import io.fabric.sdk.android.Fabric;
-
 
 public class LoginActivity extends Activity {
 

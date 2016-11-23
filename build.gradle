@@ -1,38 +1,24 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
-apply plugin: 'android'
+
+apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
     jcenter()
-    mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
     /* https://maven.fabric.io/public */
  /* https://twittersdk.artifactoryonline.com/twittersdk/public/  */
@@ -46,8 +32,8 @@ dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile 'com.android.support:support-v4:18.0.+'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
-    compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
-        transitive = true;
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true
     }
     compile 'me.dm7.barcodescanner:zxing:1.6'
     compile 'org.apache.commons:commons-lang3:3.0.+'
@@ -55,12 +41,18 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
-
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 25
+        jackOptions {
+            enabled true
+        }
+    }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
