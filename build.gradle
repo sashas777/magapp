@@ -25,7 +25,7 @@ repositories {
 }
 
 def computeVersionName() {
-    return "2.7"
+    return "3"
 }
 
 dependencies {
