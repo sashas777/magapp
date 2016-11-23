@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -85,7 +85,6 @@ public class InvoiceCreateFragment extends Fragment  implements RequestInterface
         }
         params.putSerializable("items", items_array);
         params.putString("api_point",api_point);
-
 
         Fragment items_card =new ItemsFragment();
         items_card.setArguments(params);

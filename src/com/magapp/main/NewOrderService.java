@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -10,6 +10,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
@@ -24,6 +26,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 
 	NotificationManager nm;
 	final String LOG_TAG = "Sashas";
+	private static final int NOTIFY_ID = 101;
 
 	Timer timer;
 	TimerTask tTask;
@@ -105,23 +108,30 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 		String order_status = order.get("status").toString();
 		String order_amount = order.get("amount").toString();
 		Integer order_id = Integer.parseInt(order.get("order_id").toString());
-		// 1nd part
-		Notification notif = new Notification(R.drawable.ic_launcher, "New Order #"+increment_id, System.currentTimeMillis());
 
-		// set activity
-		Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
-		OrderInfo.putExtra("order_increment_id", increment_id);
+		/*New Way*/
+		Intent notificationIntent = new Intent(this, OrderInfoActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(this,
+				0, notificationIntent,
+				PendingIntent.FLAG_CANCEL_CURRENT);
 
-		PendingIntent pIntent = PendingIntent.getActivity(this, 0, OrderInfo, PendingIntent.FLAG_UPDATE_CURRENT);
+		Resources res = this.getResources();
+		Notification.Builder builder = new Notification.Builder(this);
 
-		// 2nd part
-		notif.setLatestEventInfo(this, "Order #" + increment_id, "Status: " + order_status + " | Amount: " + order_amount, pIntent);
+		builder.setContentIntent(contentIntent)
+				.setSmallIcon(R.drawable.ic_launcher)
+				.setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.ic_launcher))
+				.setTicker("New Order #"+increment_id)
+				.setWhen(System.currentTimeMillis())
+				.setAutoCancel(true)
+				.setContentTitle("New Order #"+increment_id)
+				.setContentText("Status: " + order_status + " | Amount: " + order_amount);
 
-		// set flag
-		notif.flags |= Notification.FLAG_AUTO_CANCEL;
-		notif.defaults |= Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE;
-		// send
-		nm.notify(order_id, notif);
+		Notification notification = builder.build();
+		notification.defaults |= Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE;
+		NotificationManager notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+		notificationManager.notify(NOTIFY_ID, notification);
+
 	}
 
 }

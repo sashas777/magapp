@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -47,6 +47,8 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         boolean email=((CheckBox) rootView.findViewById(R.id.email)).isChecked();
         /*Get comment Value*/
         String comment = ((ActivityCreateInterface)getActivity()).getComment();
+        if ( comment==null ||  comment.trim().equals("null") ||  comment.isEmpty() || comment.trim().length() <= 0)
+            comment="";
         /*Items*/
         HashMap itemsQty=((ActivityCreateInterface)getActivity()).GetOrderItemsIdQty();
         /*Items*/
