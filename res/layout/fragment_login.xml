@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2015.  Sashas IT  Support
+  ~ Copyright (c) 2016.  Sashas IT  Support
   ~ http://www.sashas.org
   -->
 
@@ -9,26 +9,17 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:gravity="top"
-    tools:context="com.example.sashasmagentomanager.LoginActivity" >
+    tools:context="com.magapp.main.LoginActivity" >
  
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
          android:layout_alignParentTop="true"
-       android:scaleType="fitStart"
+       android:scaleType="fitXY"
         android:src="@drawable/login_background" />
-    
-    <ImageView
-        android:id="@+id/Logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/imageViewDescription"
-        android:src="@drawable/logo2" />
 
-    <TextView
+	<TextView
         android:id="@+id/WelcomeMessage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
