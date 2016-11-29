@@ -67,6 +67,10 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="9cfb95c672c2379dffe45a75d4897c4ac81439b3" />
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="9cfb95c672c2379dffe45a75d4897c4ac81439b3"
+        />
     </application>
  
 </manifest>
