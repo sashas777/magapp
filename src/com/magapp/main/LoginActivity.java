@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.login.AccountsFragment;
@@ -72,10 +73,14 @@ public class LoginActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.accounts:
 			screen = new AccountsFragment();
+			mTracker.setScreenName("AccountsFragment");
+			mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 			break;
 
 		case R.id.add_account:
 			screen = new AddAccountFragment();
+			mTracker.setScreenName("AddAccountFragment");
+			mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 			break;
 
 		default:
@@ -88,7 +93,14 @@ public class LoginActivity extends Activity {
 		return false;
 	}
 
-	public void ShowMessage(String text) {
+    @Override
+    protected void onResume() {
+        mTracker.setScreenName("LoginActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        super.onResume();
+    }
+
+    public void ShowMessage(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
 

@@ -51,7 +51,7 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		 AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
 		 mTracker = application.getDefaultTracker();
 
-         mTracker.setScreenName("Image~Acounts");
+         mTracker.setScreenName("AccountsFragment");
          mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 			dataList = (ListView) rootView.findViewById(R.id.AccountsList);
