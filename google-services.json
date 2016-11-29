@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "175768821656",
+    "project_id": "magento-manager"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175768821656:android:f21e4e3fd0e37973",
+        "android_client_info": {
+          "package_name": "com.magapp.main"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBks1vhDIl79wxHqZ86mKEvWLSBHj1HcWY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-15906461-5"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

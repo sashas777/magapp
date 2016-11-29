@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -40,7 +40,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
 
-			rootView  = inflater.inflate(R.layout.fragment_login, null);		 
+			rootView  = inflater.inflate(R.layout.fragment_login, null);
+
 			Button LoginButton = (Button) rootView.findViewById(R.id.LoginWithAccount);
 			Button AddAccountButton = (Button) rootView.findViewById(R.id.AddAccount);
 			LoginButton.setOnClickListener(this);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -17,6 +17,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
 import com.magapp.main.R;
@@ -34,11 +37,23 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	 private String desired_preferense_file="magapp";	 
 	 private ArrayList<HashMap<String, String>> AccountList;	 
 	 private AccountsAdapter adapter;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
+
 	 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
 
 			rootView  = inflater.inflate(R.layout.fragment_accounts, null);
+
+		 AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+		 mTracker = application.getDefaultTracker();
+
+         mTracker.setScreenName("Image~Acounts");
+         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 			dataList = (ListView) rootView.findViewById(R.id.AccountsList);
 			 			
 			AccountList = new ArrayList<HashMap<String, String>>(); 

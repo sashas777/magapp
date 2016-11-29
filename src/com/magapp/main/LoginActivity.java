@@ -16,6 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.login.AccountsFragment;
 import com.magapp.login.AddAccountFragment;
 import com.magapp.login.LoginFragment;
@@ -26,14 +28,19 @@ public class LoginActivity extends Activity {
  
 	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
-
+	/**
+	 * The {@link Tracker} used to record screen views.
+	 */
+	private Tracker mTracker;
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
 		setContentView(R.layout.activity_login);
- 
+		AnalyticsApplication application = (AnalyticsApplication) getApplication();
+		mTracker = application.getDefaultTracker();
+
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new LoginFragment();
 		fragmentManager.beginTransaction().replace(R.id.container, screen)

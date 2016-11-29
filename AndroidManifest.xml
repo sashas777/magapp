@@ -24,6 +24,7 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <application
+        android:name="com.magapp.analytics.AnalyticsApplication"
         android:allowBackup="true"
         android:vmSafeMode="true"
         android:allowClearUserData="true"
@@ -61,7 +62,9 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+        <application android:name="AnalyticsApplication">
 
+        </application>
          
         
         <meta-data
