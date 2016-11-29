@@ -20,8 +20,6 @@ apply plugin: 'io.fabric'
 repositories {
     jcenter()
     maven { url 'https://maven.fabric.io/public' }
-    /* https://maven.fabric.io/public */
- /* https://twittersdk.artifactoryonline.com/twittersdk/public/  */
 }
 
 def computeVersionName() {
