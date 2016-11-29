@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-  <stroke 
-    
-    android:color="#FFFFFF"/>
+  <stroke
+    android:width="2px"
+    android:color="#ffffff"/>
   <gradient 
       
     android:angle="225"           
-    android:startColor="#F77C16"
-    android:endColor="#F98721"/>
+    android:startColor="#D37C2B"
+    android:endColor="#D37C2B"/>
 <corners
-    android:bottomLeftRadius="7dp"
-    android:bottomRightRadius="7dp"
-    android:topLeftRadius="7dp"
-   android:topRightRadius="7dp" />
+    android:bottomLeftRadius="0dp"
+    android:bottomRightRadius="0dp"
+    android:topLeftRadius="0dp"
+   android:topRightRadius="0dp" />
 </shape>
