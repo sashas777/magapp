@@ -50,7 +50,6 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 
 		 AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
 		 mTracker = application.getDefaultTracker();
-
          mTracker.setScreenName("AccountsFragment");
          mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
@@ -89,6 +88,9 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		 Integer selected_index=-1;
 		 
 		 if ( accounts.length==0) {
+             mTracker.setScreenName("AddAccountFragment");
+             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 			 FragmentManager fragmentManager = getFragmentManager();  	  
 			 fragmentManager.beginTransaction()
 	         .replace(R.id.container,new AddAccountFragment())           
@@ -115,6 +117,9 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
  
 	 @Override
 		public void onResume() {
+
+         mTracker.setScreenName("AccountsFragment");
+         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 			 super.onResume(); 
 			 getActivity().invalidateOptionsMenu();
 		    return; 
@@ -142,6 +147,11 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	}
 
     public void SessionReturned(String ses, Boolean status){
+
+
+        mTracker.setScreenName("AccountsFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container,new LoginFragment())
@@ -195,7 +205,7 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		 dataList.invalidateViews();
 		 getActivity().invalidateOptionsMenu();
 		 if ( accounts.length==0) {
-			 FragmentManager fragmentManager = getFragmentManager();  	  
+			 FragmentManager fragmentManager = getFragmentManager();
 			 fragmentManager.beginTransaction()
 	         .replace(R.id.container,new AddAccountFragment())           
 	         .addToBackStack(null)

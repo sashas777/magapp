@@ -18,6 +18,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
 import com.magapp.main.BaseActivity;
@@ -35,12 +38,19 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	private String url;
 	private ProgressBar progressBar;
 	private MagAuth auth;
-
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 	
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
 
-			rootView  = inflater.inflate(R.layout.fragment_login, null);
+		rootView  = inflater.inflate(R.layout.fragment_login, null);
+         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+         mTracker = application.getDefaultTracker();
+         mTracker.setScreenName("LoginFragment");
+         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 			Button LoginButton = (Button) rootView.findViewById(R.id.LoginWithAccount);
 			Button AddAccountButton = (Button) rootView.findViewById(R.id.AddAccount);
@@ -80,12 +90,18 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	 
 	 @Override
 	 public void onResume() {
+
+         mTracker.setScreenName("LoginFragment");
+         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 			super.onResume(); 
 			getActivity().invalidateOptionsMenu();
 		    return; 
 		}
 
-	 public void ShowSales() {	 	
+	 public void ShowSales() {
+         mTracker.setScreenName("BaseActivity");
+         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 		 Intent Base = new Intent(getActivity(),BaseActivity.class);
 
 		 this.startActivity(Base);
@@ -115,6 +131,11 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		default:
 			break;
 		}
+
+
+        mTracker.setScreenName("AddAccountFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 		 fragmentManager.beginTransaction()
          .replace(R.id.container,screen)           
          .addToBackStack(null)

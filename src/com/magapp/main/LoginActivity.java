@@ -29,21 +29,29 @@ public class LoginActivity extends Activity {
  
 	private String accountType = "com.magapp.main";
 	private String desired_preferense_file = "magapp";
-	/**
-	 * The {@link Tracker} used to record screen views.
-	 */
-	private Tracker mTracker;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Fabric.with(this, new Crashlytics());
 		setContentView(R.layout.activity_login);
-		AnalyticsApplication application = (AnalyticsApplication) getApplication();
-		mTracker = application.getDefaultTracker();
+        // [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // [END shared_tracker]
+
 
 		FragmentManager fragmentManager = getFragmentManager();
-		Fragment screen = new LoginFragment();
+
+        mTracker.setScreenName("LoginFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        Fragment screen = new LoginFragment();
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
 				.addToBackStack(null).commit(); 
 	}
@@ -99,6 +107,8 @@ public class LoginActivity extends Activity {
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         super.onResume();
     }
+
+
 
     public void ShowMessage(String text) {
 		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();

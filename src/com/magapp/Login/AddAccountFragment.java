@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -20,6 +20,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.main.R;
 
 public class AddAccountFragment  extends Fragment    implements  OnClickListener  {
@@ -28,13 +31,23 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 	View rootView;
 	 
 	 private String accountType = "com.magapp.main";
-	 private String desired_preferense_file="magapp";	 
-	 
+	 private String desired_preferense_file="magapp";
+	/**
+	 * The {@link Tracker} used to record screen views.
+	 */
+	private Tracker mTracker;
 	 
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
 
-			rootView  = inflater.inflate(R.layout.fragment_add_account, null);		 
+			rootView  = inflater.inflate(R.layout.fragment_add_account, null);
+
+		 AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+		 mTracker = application.getDefaultTracker();
+		 mTracker.setScreenName("AddAccountFragment");
+		 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+
 			Button SaveAccButton = (Button) rootView.findViewById(R.id.save_acc);
 		    SaveAccButton.setOnClickListener(this);
 			Button BackButton = (Button) rootView.findViewById(R.id.create_account_back_screen);
@@ -60,6 +73,8 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 			break;
 		case R.id.create_account_back_screen: {	
 			 if ( accounts.length==0) {
+				 mTracker.setScreenName("LoginFragment");
+				 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 				 FragmentManager fragmentManager = getFragmentManager();  	  
 				 fragmentManager.beginTransaction()
 		         .replace(R.id.container,new LoginFragment())           
@@ -124,7 +139,10 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 	      editor.putString("selected_account_name", account_name);
 	      editor.commit();
 		  ShowMessage("Account has been added.");
- 
+
+		  mTracker.setScreenName("AccountsFragment");
+		  mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 		  FragmentManager fragmentManager = getFragmentManager();  	  
       	  Fragment screen=new AccountsFragment();
       	 fragmentManager.beginTransaction()
