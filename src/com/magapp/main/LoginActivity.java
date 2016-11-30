@@ -44,12 +44,12 @@ public class LoginActivity extends Activity {
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
         // [END shared_tracker]
-
+        mTracker.setScreenName("LoginFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 		FragmentManager fragmentManager = getFragmentManager();
 
-        mTracker.setScreenName("LoginFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 
         Fragment screen = new LoginFragment();
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
