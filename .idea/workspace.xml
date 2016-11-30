@@ -40,11 +40,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5ce4528-9d9e-451f-a469-3655b29a4af7" name="Default" comment="GA - Login">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/magapp/Login/AccountsAdapter.java" afterPath="$PROJECT_DIR$/src/com/magapp/login/AccountsAdapter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/magapp/Login/AccountsFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/login/AccountsFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/magapp/Login/AddAccountFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/login/AddAccountFragment.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/com/magapp/Login/LoginFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/login/LoginFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/Login/AccountsFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/Login/AccountsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/Login/AddAccountFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/Login/AddAccountFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/Login/LoginFragment.java" afterPath="$PROJECT_DIR$/src/com/magapp/Login/LoginFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/magapp/main/LoginActivity.java" afterPath="$PROJECT_DIR$/src/com/magapp/main/LoginActivity.java" />
     </list>
     <ignored path="magapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -114,12 +114,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AccountsFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/magapp/Login/AccountsFragment.java">
+      <file leaf-file-name="AccountsFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/magapp/login/AccountsFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="650">
-              <caret line="231" column="13" lean-forward="false" selection-start-line="231" selection-start-column="13" selection-end-line="231" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="84">
+              <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#7964#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -136,11 +138,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/magapp/main/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
-              <caret line="115" column="0" lean-forward="false" selection-start-line="115" selection-start-column="0" selection-end-line="118" selection-end-column="26" />
+            <state relative-caret-position="204">
+              <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -170,7 +172,7 @@
         </entry>
       </file>
       <file leaf-file-name="LoginFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/magapp/Login/LoginFragment.java">
+        <entry file="file://$PROJECT_DIR$/src/com/magapp/login/LoginFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="514">
               <caret line="148" column="26" lean-forward="false" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
@@ -182,7 +184,7 @@
         </entry>
       </file>
       <file leaf-file-name="AddAccountFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/magapp/Login/AddAccountFragment.java">
+        <entry file="file://$PROJECT_DIR$/src/com/magapp/login/AddAccountFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="412">
               <caret line="160" column="35" lean-forward="false" selection-start-line="160" selection-start-column="35" selection-end-line="160" selection-end-column="35" />
@@ -1502,7 +1504,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Login" />
+              <option name="myItemId" value="login" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1934,13 +1936,6 @@
       <option name="presentableId" value="Default" />
       <updated>1422131500408</updated>
     </task>
-    <task id="LOCAL-00030" summary="Request Task API  Point Adjustment">
-      <created>1423715056035</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1423715056035</updated>
-    </task>
     <task id="LOCAL-00031" summary="Order Hold, Unhold, Cancel &amp; Changes">
       <created>1423716771642</created>
       <option name="number" value="00031" />
@@ -2277,7 +2272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1480541664905</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="GA - Login">
+      <created>1480542328131</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1480542328131</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2371,10 +2373,17 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/magapp/login/AccountsFragment.java</url>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2704,7 +2713,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/Login/AccountsAdapter.java">
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/login/AccountsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
@@ -2773,15 +2782,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/main/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="115" column="0" lean-forward="false" selection-start-line="115" selection-start-column="0" selection-end-line="118" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/Login/AddAccountFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/login/AddAccountFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
           <caret line="160" column="35" lean-forward="false" selection-start-line="160" selection-start-column="35" selection-end-line="160" selection-end-column="35" />
@@ -2791,7 +2792,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/Login/LoginFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/login/LoginFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="514">
           <caret line="148" column="26" lean-forward="false" selection-start-line="148" selection-start-column="26" selection-end-line="148" selection-end-column="26" />
@@ -2801,10 +2802,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/magapp/Login/AccountsFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/login/AccountsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="650">
-          <caret line="231" column="13" lean-forward="false" selection-start-line="231" selection-start-column="13" selection-end-line="231" selection-end-column="13" />
+        <state relative-caret-position="84">
+          <caret line="5" column="14" lean-forward="false" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#7964#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/magapp/main/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="29" lean-forward="true" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
           <folding />
         </state>
       </provider>
