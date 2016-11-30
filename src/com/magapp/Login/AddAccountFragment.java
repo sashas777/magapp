@@ -57,6 +57,13 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 
 	 @Override
 		public void onResume() {
+		 mTracker.setScreenName("AddAccountFragment");
+		 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+		 mTracker.send(new HitBuilders.EventBuilder()
+				 .setCategory("Resume")
+				 .setAction("AddAccountFragment")
+				 .build());
+
 			 super.onResume(); 
 			 getActivity().invalidateOptionsMenu();
 		    return; 
@@ -75,13 +82,23 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 			 if ( accounts.length==0) {
 				 mTracker.setScreenName("LoginFragment");
 				 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+				 mTracker.send(new HitBuilders.EventBuilder()
+						 .setCategory("Click")
+						 .setAction("LoginFragment")
+						 .build());
+
 				 FragmentManager fragmentManager = getFragmentManager();  	  
 				 fragmentManager.beginTransaction()
 		         .replace(R.id.container,new LoginFragment())           
 		         .addToBackStack(null)
 		         .commit();				
-			 }else 
-				 getFragmentManager().popBackStack();	
+			 }else {
+				 mTracker.send(new HitBuilders.EventBuilder()
+						 .setCategory("Back")
+						 .setAction("AddAccountFragment::popBackStack")
+						 .build());
+				 getFragmentManager().popBackStack();
+			 }
 		}
 			break;
 		default:
@@ -139,9 +156,14 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 	      editor.putString("selected_account_name", account_name);
 	      editor.commit();
 		  ShowMessage("Account has been added.");
+		  mTracker.send(new HitBuilders.EventBuilder()
+				  .setCategory("Account")
+				  .setAction("Added")
+				  .build());
 
 		  mTracker.setScreenName("AccountsFragment");
 		  mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 
 		  FragmentManager fragmentManager = getFragmentManager();  	  
       	  Fragment screen=new AccountsFragment();

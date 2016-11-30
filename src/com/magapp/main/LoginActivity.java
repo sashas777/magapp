@@ -83,13 +83,21 @@ public class LoginActivity extends Activity {
 			screen = new AccountsFragment();
 			mTracker.setScreenName("AccountsFragment");
 			mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Options")
+                    .setAction("AccountsFragment")
+                    .build());
 			break;
 
 		case R.id.add_account:
 			screen = new AddAccountFragment();
 			mTracker.setScreenName("AddAccountFragment");
 			mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-			break;
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Options")
+                    .setAction("AddAccountFragment")
+                    .build());
+            break;
 
 		default:
 			break;
@@ -105,6 +113,10 @@ public class LoginActivity extends Activity {
     protected void onResume() {
         mTracker.setScreenName("LoginActivity");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Resume")
+                .setAction("LoginActivity")
+                .build());
         super.onResume();
     }
 

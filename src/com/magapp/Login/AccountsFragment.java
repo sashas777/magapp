@@ -91,6 +91,7 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
              mTracker.setScreenName("AddAccountFragment");
              mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
+
 			 FragmentManager fragmentManager = getFragmentManager();  	  
 			 fragmentManager.beginTransaction()
 	         .replace(R.id.container,new AddAccountFragment())           
@@ -120,6 +121,11 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 
          mTracker.setScreenName("AccountsFragment");
          mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+         mTracker.send(new HitBuilders.EventBuilder()
+                 .setCategory("Resume")
+                 .setAction("AccountsFragment")
+                 .build());
+
 			 super.onResume(); 
 			 getActivity().invalidateOptionsMenu();
 		    return; 
@@ -133,6 +139,12 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
 	     SharedPreferences.Editor editor = settings.edit();
 	     editor.putString("selected_account_name", AccountNames[dataList.getCheckedItemPosition()]);
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Click")
+                .setAction("AccountSelect")
+                .build());
+
 	     editor.commit();
 
 
@@ -151,6 +163,11 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 
         mTracker.setScreenName("AccountsFragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Session")
+                .setAction("AccountsFragment::SessionReturned")
+                .build());
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -204,7 +221,17 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 		 adapter.notifyDataSetChanged();
 		 dataList.invalidateViews();
 		 getActivity().invalidateOptionsMenu();
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Account")
+                .setAction("Remove")
+                .build());
+
 		 if ( accounts.length==0) {
+
+		     mTracker.setScreenName("AddAccountFragment");
+             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
 			 FragmentManager fragmentManager = getFragmentManager();
 			 fragmentManager.beginTransaction()
 	         .replace(R.id.container,new AddAccountFragment())           

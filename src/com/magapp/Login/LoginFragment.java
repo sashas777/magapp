@@ -93,6 +93,10 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 
          mTracker.setScreenName("LoginFragment");
          mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+         mTracker.send(new HitBuilders.EventBuilder()
+                 .setCategory("Resume")
+                 .setAction("LoginFragment")
+                 .build());
 			super.onResume(); 
 			getActivity().invalidateOptionsMenu();
 		    return; 
@@ -101,8 +105,12 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	 public void ShowSales() {
          mTracker.setScreenName("BaseActivity");
          mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+         mTracker.send(new HitBuilders.EventBuilder()
+                 .setCategory("Activity")
+                 .setAction("BaseActivity")
+                 .build());
 
-		 Intent Base = new Intent(getActivity(),BaseActivity.class);
+         Intent Base = new Intent(getActivity(),BaseActivity.class);
 
 		 this.startActivity(Base);
 		 getActivity().finish();
@@ -135,6 +143,11 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 
         mTracker.setScreenName("AddAccountFragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Click")
+                .setAction("AddAccountFragment")
+                .build());
+
 
 		 fragmentManager.beginTransaction()
          .replace(R.id.container,screen)           
