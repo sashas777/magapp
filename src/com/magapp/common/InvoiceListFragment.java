@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -56,7 +56,7 @@ public class InvoiceListFragment extends ListFragment implements RequestArrayInt
 
 			Vector task_params = new Vector();
 			HashMap map_filter = new HashMap(); 
-			map_filter.put("order_id ", order_id);
+			map_filter.put("order_id", order_id);
             task_params.add(map_filter);
 			task = new RequestArrayTask(this, getActivity(),api_point);
 			task.execute(task_params);
