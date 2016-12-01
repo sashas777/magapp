@@ -93,5 +93,9 @@
 
     <string name="credit_memo">Credit Memo</string>
 
-
+    <string name="tfhours">Last 24 Hours</string>
+    <string name="week">Last 7 Days</string>
+    <string name="month">Current Month</string>
+    <string name="ytd">YTD</string>
+    <string name="twoytd">2YTD</string>
 </resources>
