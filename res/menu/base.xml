@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.magapp.main.BaseActivity" >
@@ -6,4 +11,18 @@
     <item android:id="@+id/accounts" android:title="@string/accounts" android:showAsAction="never"></item>
     <item android:id="@+id/add_account" android:title="@string/add_account" android:showAsAction="never"></item>
     <item android:id="@+id/date_range" android:title="@string/date_range" android:showAsAction="never" android:visible="false"></item>
+    <item
+        android:id="@+id/action_period"
+        android:icon="@drawable/ic_settings_white_48dp"
+        android:title="@string/add_account_api_key"
+        android:orderInCategory="90"
+        android:showAsAction="always">
+        <menu>
+            <item android:id="@+id/tfhours"   android:title="@string/tfhours" android:showAsAction="never"></item>
+            <item android:id="@+id/week" android:title="@string/week" android:showAsAction="never"></item>
+            <item android:id="@+id/month" android:title="@string/month" android:showAsAction="never"></item>
+            <item android:id="@+id/ytd" android:title="@string/ytd" android:showAsAction="never"></item>
+            <item android:id="@+id/twoytd" android:title="@string/twoytd" android:showAsAction="never"></item>
+        </menu>
+    </item>
 </menu>
