@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -77,7 +78,7 @@ public class LoginActivity extends Activity {
 
 		FragmentManager fragmentManager = getFragmentManager();
 		Fragment screen = new Fragment();
-
+		Log.e("Sashas","LoginActivity:onOptionsItemSelected");
 		switch (item.getItemId()) {
 		case R.id.accounts:
 			screen = new AccountsFragment();
@@ -100,7 +101,7 @@ public class LoginActivity extends Activity {
             break;
 
 		default:
-			break;
+			return super.onOptionsItemSelected(item);
 		}
 
 		fragmentManager.beginTransaction().replace(R.id.container, screen)

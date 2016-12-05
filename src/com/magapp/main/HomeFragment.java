@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -9,9 +9,8 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.view.*;
 import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 import com.github.mikephil.charting.charts.LineChart;
@@ -20,6 +19,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.ValueFormatter;
 import com.github.mikephil.charting.utils.YLabels;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 
@@ -34,7 +36,10 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	private View rootView;
 	private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hha");
 	private Object[] AmountsData, OrdersData;
-
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
 
 	@Override
@@ -77,7 +82,10 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		/*New chart*/
 
 		task.execute(params);
-
+        setHasOptionsMenu(true);
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 		return rootView;
 	}
 
@@ -91,6 +99,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
 		progressBar.setVisibility(View.INVISIBLE); 	 		
 		SetChartData(result);
+
 	 }
 	 
 	 public void RequestFailed(String error) {
@@ -256,5 +265,64 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 			return val.toString();
 		}
 	}
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item=menu.findItem(R.id.action_period);
+        if (item!=null)
+            item.setVisible(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Log.e("Sashas","HomeFragment:onOptionsItemSelected");
+        switch (item.getItemId()) {
+            case R.id.tfhours:
+                OrdersDateFormat = new SimpleDateFormat("hha");
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Chart")
+                        .setAction("24H")
+                        .build());
+                return true;
+
+            case R.id.week:
+                OrdersDateFormat = new SimpleDateFormat("MM-dd");
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Chart")
+                        .setAction("7 Days")
+                        .build());
+                return true;
+
+            case R.id.month:
+                OrdersDateFormat = new SimpleDateFormat("MM-dd");
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Chart")
+                        .setAction("Month")
+                        .build());
+                return true;
+
+            case R.id.ytd:
+                OrdersDateFormat = new SimpleDateFormat("MM-yyyy");
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Chart")
+                        .setAction("YTD")
+                        .build());
+                return true;
+
+            case R.id.twoytd:
+                OrdersDateFormat = new SimpleDateFormat("MM-yyyy");
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Chart")
+                        .setAction("2YTD")
+                        .build());
+                PrepareChartData((HashMap) OrdersData[4],(HashMap)  AmountsData[4]);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

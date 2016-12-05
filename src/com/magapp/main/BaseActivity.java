@@ -1,6 +1,9 @@
-package com.magapp.main;
+/*
+ * Copyright (c) 2016.  Sashas IT  Support
+ * http://www.sashas.org
+ */
 
-import com.magapp.connect.MagAuth;
+package com.magapp.main;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -8,6 +11,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -135,14 +139,17 @@ public class BaseActivity extends Activity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+        Log.e("Sashas","BaseActivity:onOptionsItemSelected");
+        if (id == R.id.action_settings) {
+			return true;
+		}
+		if (id == R.id.action_period) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+
 	}
 
 	public void ShowMessage(String text) {

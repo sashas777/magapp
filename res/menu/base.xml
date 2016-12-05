@@ -16,6 +16,7 @@
         android:icon="@drawable/ic_settings_white_48dp"
         android:title="@string/add_account_api_key"
         android:orderInCategory="90"
+        android:visible="false"
         android:showAsAction="always">
         <menu>
             <item android:id="@+id/tfhours"   android:title="@string/tfhours" android:showAsAction="never"></item>
