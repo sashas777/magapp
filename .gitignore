@@ -28,5 +28,10 @@ proguard/
 .idea/workspace.xml
 .idea/tasks.xml
 
+
 # OS
 .DS_Store
+
+# Maven
+log/
+target/
