@@ -11,8 +11,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.*;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -113,46 +113,6 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 
 
 
-	public void AddOrdersSpinner() {
-	 	Spinner OrdersPlotOptions = (Spinner) rootView
-				.findViewById(R.id.OrdersPlotOptions);
-		String[] plot_item_data = new String[] { "Last 24 Hours", "Last 7 Days", "Current Month", "YTD", "2YTD" };
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.custom_spinner_row, plot_item_data);
-		dataAdapter.setDropDownViewResource(R.layout.custom_spinner_row);
-		OrdersPlotOptions.setAdapter(dataAdapter);
-
-		OrdersPlotOptions.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
-
-				if (OrdersData != null) {
-					switch (position) {
-						case 0:
-							OrdersDateFormat = new SimpleDateFormat("hha");
-							break;
-						case 1:
-							OrdersDateFormat = new SimpleDateFormat("MM-dd");
-							break;
-						case 2:
-							OrdersDateFormat = new SimpleDateFormat("MM-dd");
-							break;
-						case 3:
-							OrdersDateFormat = new SimpleDateFormat("MM-yyyy");
-							break;
-						case 4:
-							OrdersDateFormat = new SimpleDateFormat("MM-yyyy");
-							break;
-					}
-					PrepareChartData((HashMap) OrdersData[position],(HashMap)  AmountsData[position]);
-				}
-
-			}
-
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-	}
-
 	public void PrepareChartData(HashMap orders_info_obj, HashMap amounts_info_obj) {
 
 		TextView Revenue = (TextView) rootView.findViewById(R.id.OrdersRevenueValue);
@@ -247,10 +207,10 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 
 	public void SetChartData(Object data) {
 		HashMap data_map = (HashMap) data;
-
 		OrdersData = (Object[]) data_map.get("orders");
-		AddOrdersSpinner();
 		AmountsData = (Object[]) data_map.get("amounts");
+        OrdersDateFormat = new SimpleDateFormat("hha");
+        PrepareChartData((HashMap) OrdersData[0],(HashMap)  AmountsData[0]);
 	}
 	public class IntegerValueFormatter implements ValueFormatter {
 		@Override
@@ -285,6 +245,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("24H")
                         .build());
+				PrepareChartData((HashMap) OrdersData[0],(HashMap)  AmountsData[0]);
                 return true;
 
             case R.id.week:
@@ -293,6 +254,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("7 Days")
                         .build());
+				PrepareChartData((HashMap) OrdersData[1],(HashMap)  AmountsData[1]);
                 return true;
 
             case R.id.month:
@@ -301,6 +263,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("Month")
                         .build());
+				PrepareChartData((HashMap) OrdersData[2],(HashMap)  AmountsData[2]);
                 return true;
 
             case R.id.ytd:
@@ -309,6 +272,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("YTD")
                         .build());
+				PrepareChartData((HashMap) OrdersData[3],(HashMap)  AmountsData[3]);
                 return true;
 
             case R.id.twoytd:

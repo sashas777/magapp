@@ -69,7 +69,7 @@ public class BaseActivity extends Activity implements
 			break;
 
 		}
-	 
+        Log.e("Sashas","BaseActivity:onNavigationDrawerItemSelected");
 		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack(null).commit();
 
 		/*
@@ -140,14 +140,20 @@ public class BaseActivity extends Activity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		int id = item.getItemId();
+
         Log.e("Sashas","BaseActivity:onOptionsItemSelected");
-        if (id == R.id.action_settings) {
-			return true;
-		}
-		if (id == R.id.action_period) {
-			return true;
-		}
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_period:
+                return true;
+            case R.id.twoytd:
+                return false;
+            default:
+               break;
+        }
+
 		return super.onOptionsItemSelected(item);
 
 	}

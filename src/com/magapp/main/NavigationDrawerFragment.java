@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2016.  Sashas IT  Support
+ * http://www.sashas.org
+ */
+
 package com.magapp.main;
 
 import android.app.ActionBar;
@@ -11,6 +16,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -258,7 +264,7 @@ public class NavigationDrawerFragment extends Fragment {
 			inflater.inflate(R.menu.global, menu);
 			showGlobalContextActionBar();
 		}
-
+		Log.e("Sashas","NavigationDrawerFragment:onCreateOptionsMenu");
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -267,9 +273,9 @@ public class NavigationDrawerFragment extends Fragment {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
+		Log.e("Sashas","NavigationDrawerFragment:onOptionsItemSelected");
 
-		FragmentManager fragmentManager = getFragmentManager();
-		Fragment screen = new Fragment();
+		Fragment screen = null;
 
 		switch (item.getItemId()) {
 		case R.id.settings: {
@@ -285,9 +291,12 @@ public class NavigationDrawerFragment extends Fragment {
 		default:
 			break;
 		}
+        if (screen!=null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, screen)
+                    .addToBackStack(null).commit();
+        }
 
-		fragmentManager.beginTransaction().replace(R.id.container, screen)
-				.addToBackStack(null).commit();
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -312,7 +321,7 @@ public class NavigationDrawerFragment extends Fragment {
 	 * Callbacks interface that all activities using this fragment must
 	 * implement.
 	 */
-	public static interface NavigationDrawerCallbacks {
+	public interface NavigationDrawerCallbacks {
 		/**
 		 * Called when an item in the navigation drawer is selected.
 		 */
