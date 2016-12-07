@@ -156,6 +156,7 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 	      editor.putString("selected_account_name", account_name);
 	      editor.commit();
 		  ShowMessage("Account has been added.");
+		  /*GA*/
 		  mTracker.send(new HitBuilders.EventBuilder()
 				  .setCategory("Account")
 				  .setAction("Added")
@@ -163,7 +164,7 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 
 		  mTracker.setScreenName("AccountsFragment");
 		  mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
+		  /*GA*/
 
 		  FragmentManager fragmentManager = getFragmentManager();  	  
       	  Fragment screen=new AccountsFragment();

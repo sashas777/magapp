@@ -50,8 +50,6 @@ public class LoginActivity extends Activity {
 
 		FragmentManager fragmentManager = getFragmentManager();
 
-
-
         Fragment screen = new LoginFragment();
 		fragmentManager.beginTransaction().replace(R.id.container, screen)
 				.addToBackStack(null).commit(); 

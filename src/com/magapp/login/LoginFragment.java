@@ -52,14 +52,15 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
          mTracker.setScreenName("LoginFragment");
          mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-			Button LoginButton = (Button) rootView.findViewById(R.id.LoginWithAccount);
-			Button AddAccountButton = (Button) rootView.findViewById(R.id.AddAccount);
-			LoginButton.setOnClickListener(this);
-			AddAccountButton.setOnClickListener(this);
+		Button LoginButton = (Button) rootView.findViewById(R.id.LoginWithAccount);
+		Button AddAccountButton = (Button) rootView.findViewById(R.id.AddAccount);
+		LoginButton.setOnClickListener(this);
+		AddAccountButton.setOnClickListener(this);
+		ShowProgressBar();
 
-			auth=new MagAuth(this,getActivity(),0);
+		auth=new MagAuth(this,getActivity(),0);
 
-			return rootView;
+		return rootView;
 	}
 	 
 	 public void SessionReturned(String ses, Boolean status){
