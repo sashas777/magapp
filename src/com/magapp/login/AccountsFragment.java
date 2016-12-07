@@ -194,21 +194,29 @@ public class AccountsFragment  extends Fragment    implements  OnItemClickListen
 	      switch(item.getItemId()) {
 	          case R.id.menu_delete:
 	        	  	RemoveAccount(info.position);
-	        	  	//Log.e("Sashas", "checked: " + info.position);
 	                return true;
+			  case R.id.menu_edit:
+				  FragmentManager fragmentManager = getFragmentManager();
+                  Bundle params = new Bundle();
+                  params.putString("account", AccountNames[info.position]);
+                  Fragment screen = new AddAccountFragment();
+                  screen.setArguments(params);
+				  fragmentManager.beginTransaction()
+						  .replace(R.id.container,screen)
+						  .addToBackStack(null)
+						  .commit();
+				  return true;
 	          default:
 	                return super.onContextItemSelected(item);
 	      }
 	}
 	
 	public void RemoveAccount(int position) {
-	 
-		 String name_for_delete=AccountNames[position];
-		 
+
 		 AccountManager manager = AccountManager.get(getActivity());	
 		 Account[]  accounts = manager.getAccountsByType(accountType);		 	 		
 		 manager.removeAccount(accounts[position], null, null);
-		  
+
 		 if (dataList.getCheckedItemPosition()==position) {
 			 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
 		     SharedPreferences.Editor editor = settings.edit();

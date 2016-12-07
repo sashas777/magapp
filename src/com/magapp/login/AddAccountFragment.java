@@ -40,19 +40,48 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		      Bundle savedInstanceState) {
 
-			rootView  = inflater.inflate(R.layout.fragment_add_account, null);
+         rootView  = inflater.inflate(R.layout.fragment_add_account, null);
 
 		 AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
 		 mTracker = application.getDefaultTracker();
 		 mTracker.setScreenName("AddAccountFragment");
 		 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
+		String  accountName=getArguments().getString("account","");
+        EditText formAccName = (EditText) rootView.findViewById(R.id.AccountName);
+        EditText formUrl = (EditText) rootView.findViewById(R.id.url);
+        EditText formUsername = (EditText) rootView.findViewById(R.id.username);
+        EditText formPassword = (EditText) rootView.findViewById(R.id.password);
+        Button SaveAccButton = (Button) rootView.findViewById(R.id.save_acc);
 
-			Button SaveAccButton = (Button) rootView.findViewById(R.id.save_acc);
-		    SaveAccButton.setOnClickListener(this);
-			Button BackButton = (Button) rootView.findViewById(R.id.create_account_back_screen);
-			BackButton.setOnClickListener(this);
-			return rootView;
+        if (!accountName.isEmpty()) {
+            AccountManager manager = AccountManager.get(getActivity());
+            Account[] accounts = manager.getAccountsByType(accountType);
+            for (int i = 0; i < accounts.length; i++) {
+                Account account = accounts[i];
+                if (accountName.equals(account.name)) {
+                    formAccName.setText(account.name);
+                    formAccName.setEnabled(false);
+                    formUrl.setText(manager.getUserData(account, "store_url"));
+                    formUsername.setText(manager.getUserData(account, "username"));
+                    formPassword.setText(manager.getPassword(account));
+                    break;
+                }
+            }
+            SaveAccButton.setText("Save Changes");
+        }  else {
+            formAccName.setText(accountName);
+            formAccName.setEnabled(true);
+            formUrl.setText(accountName);
+            formUsername.setText(accountName);
+            formPassword.setText(accountName);
+            SaveAccButton.setText("Add Account");
+        }
+
+		SaveAccButton.setOnClickListener(this);
+		Button BackButton = (Button) rootView.findViewById(R.id.create_account_back_screen);
+		BackButton.setOnClickListener(this);
+		return rootView;
 	}
 
 	 @Override
@@ -145,17 +174,33 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 		   /*Accounts*/
 		  AccountManager manager = AccountManager.get(getActivity());	
 		  Account[]  accounts = manager.getAccountsByType(accountType);
-		  final Bundle extraData = new Bundle();
-		    extraData.putString("username", username);
-		    extraData.putString("store_url", store_url);		    
-		  final Account account = new Account(account_name, accountType);
-		  manager.addAccountExplicitly(account, password, extraData);
+		  String  savedAccount=getArguments().getString("account","");
+          if (!savedAccount.isEmpty()) {
+              for (int i = 0; i < accounts.length; i++) {
+                  Account account = accounts[i];
+                  if (savedAccount.equals(account.name)) {
+                      manager.setUserData(account,"store_url",store_url);
+                      manager.setUserData(account,"username",username);
+                      manager.setPassword(account,password);
+                      break;
+                  }
+              }
+              ShowMessage("Account has been updated.");
+          } else {
+              final Bundle extraData = new Bundle();
+              extraData.putString("username", username);
+              extraData.putString("store_url", store_url);
+              final Account account = new Account(account_name, accountType);
+              manager.addAccountExplicitly(account, password, extraData);
+              ShowMessage("Account has been added.");
+          }
 
 		  SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
 	      SharedPreferences.Editor editor = settings.edit();
 	      editor.putString("selected_account_name", account_name);
 	      editor.commit();
-		  ShowMessage("Account has been added.");
+
+
 		  /*GA*/
 		  mTracker.send(new HitBuilders.EventBuilder()
 				  .setCategory("Account")

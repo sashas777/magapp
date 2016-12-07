@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menu_delete" android:title="@string/menu_delete"   android:showAsAction="never"></item>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
 
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menu_edit" android:title="@string/menu_edit" android:showAsAction="never"></item>
+    <item android:id="@+id/menu_delete" android:title="@string/menu_delete" android:showAsAction="never"></item>
 </menu>
