@@ -1,3 +1,8 @@
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,22 +12,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.sashasmagentomanager.LoginActivity" >
-
-    <ImageView
-        android:id="@+id/Logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/imageViewDescription"
-        android:src="@drawable/logo" />
+    tools:context="com.magapp.main.LoginActivity" >
 
     <TextView
         android:id="@+id/WelcomeMessage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Logo"
+
         android:layout_marginTop="24dp"
         android:gravity="top|center"
         android:text="@string/add_account_title"
