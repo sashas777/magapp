@@ -27,6 +27,12 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+
 def computeVersionName() {
     return "3"
 }
@@ -42,6 +48,7 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.0.+'
     compile 'com.android.support:support-v13:21.0.0'
     compile 'com.google.android.gms:play-services-analytics:9.2.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 }
 
 android {

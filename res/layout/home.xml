@@ -10,14 +10,14 @@
                 android:layout_height="match_parent">
 
         <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/chart2"
+                android:id="@+id/amountsChart"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:layout_weight="1"
-                android:layout_above="@+id/chart" android:layout_alignParentStart="true"/>
+                android:layout_above="@+id/ordersChart" android:layout_alignParentStart="true"/>
 
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart"
+            android:id="@+id/ordersChart"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_weight="1"
