@@ -55,7 +55,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 25
         jackOptions {
             enabled true
@@ -65,11 +65,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     lintOptions {
         checkReleaseBuilds false
     }
-
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -93,6 +91,7 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
-
     apply plugin: 'com.google.gms.google-services'
+    productFlavors {
+    }
 }

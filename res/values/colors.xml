@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <resources>
     <color name="separator">#ddd</color>
+    <color name="white">#ffffff</color>
+    <color name="chart_totals">#040404</color>
+    <color name="orange">#ea7601</color>
+
 </resources>

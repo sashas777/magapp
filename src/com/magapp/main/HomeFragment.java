@@ -65,7 +65,10 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 	public void onPreExecute(){		
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
 		progressBar.setVisibility(View.VISIBLE);
-		createChart("amounts");
+        rootView.findViewById(R.id.amountsChart).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.ordersChart).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.OrdersStats).setVisibility(View.INVISIBLE);
+        createChart("amounts");
         createChart("orders");
 	}
 
@@ -74,7 +77,9 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
 		progressBar.setVisibility(View.INVISIBLE); 	 		
 		SetChartData(result);
-
+        rootView.findViewById(R.id.amountsChart).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.ordersChart).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.OrdersStats).setVisibility(View.VISIBLE);
 	 }
 	 
 	 public void RequestFailed(String error) {
@@ -96,27 +101,6 @@ public class HomeFragment extends Fragment  implements RequestInterface{
              chart = (LineChart) rootView.findViewById(R.id.ordersChart);
          }
 
-         YAxis YAxisLeft = chart.getAxisLeft();
-         YAxisLeft.setAxisMinimum(0f);
-         YAxisLeft.setDrawGridLines(false);
-         if (code.equals("amounts")) {
-             YAxisLeft.setValueFormatter(new CurrencyValueFormatter());
-         }
-         YAxisLeft.setGranularity(1f);
-
-         YAxis YAxisRight = chart.getAxisRight();
-         YAxisRight.setEnabled(false);
-
-         chart.setDrawBorders(false);
-         chart.setScaleEnabled(false);
-         chart.setDragEnabled(false);
-         chart.setTouchEnabled(false);
-         chart.setPinchZoom(false);
-         chart.setDrawGridBackground(false);
-         Description chartDescription= new Description();
-         chartDescription.setEnabled(false);
-         chart.setDescription(chartDescription);
-         chart.setBackgroundColor(Color.WHITE);
      }
 
 
@@ -163,20 +147,22 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setValueFormatter(new DateValueFormatter(xVals));
+
         LineDataSet chartDataSet;
         if (code.equals("amounts")){
             chartDataSet = new LineDataSet(yVals, "Amounts");
         } else {
             chartDataSet = new LineDataSet(yVals, "Orders");
         }
-        chartDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        chartDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         chartDataSet.setCubicIntensity(0.2f);
         chartDataSet.setDrawFilled(true);
         chartDataSet.setDrawCircles(false);
         chartDataSet.setLineWidth(2f);
-        chartDataSet.setHighLightColor(Color.rgb(244, 117, 117));
-        chartDataSet.setColor(Color.rgb(234, 118, 1));
-        chartDataSet.setFillColor(Color.rgb(244, 117, 117));
+        chartDataSet.setHighLightColor(getResources().getColor(R.color.orange));
+        chartDataSet.setColor(getResources().getColor(R.color.orange));
+        chartDataSet.setFillColor(getResources().getColor(R.color.orange));
+        chartDataSet.setFillAlpha(255);
         chartDataSet.setDrawValues(false);
 
         LineData chartData = new LineData(chartDataSet);
@@ -184,6 +170,41 @@ public class HomeFragment extends Fragment  implements RequestInterface{
         chart.fitScreen();
         chart.setScaleMinima(0, 0);
         chart.animateXY(2000, 2000);
+        chart.resetViewPortOffsets();
+        chart.setExtraLeftOffset(5);
+        chart.setExtraRightOffset(5);
+
+        /*Default Char Properties*/
+
+        YAxis YAxisLeft = chart.getAxisLeft();
+        YAxisLeft.setAxisMinimum(0f);
+        YAxisLeft.setDrawGridLines(false);
+        if (code.equals("amounts")) {
+            YAxisLeft.setValueFormatter(new CurrencyValueFormatter());
+        }
+        YAxisLeft.setGranularity(1f);
+
+        YAxis YAxisRight = chart.getAxisRight();
+        //  YAxisRight.setEnabled(false);
+        YAxisRight.setAxisMinimum(0f);
+        YAxisRight.setDrawGridLines(false);
+        if (code.equals("amounts")) {
+            YAxisRight.setValueFormatter(new CurrencyValueFormatter());
+        }
+        YAxisRight.setGranularity(1f);
+
+        chart.setDrawBorders(false);
+        chart.setScaleEnabled(false);
+        chart.setDragEnabled(false);
+        chart.setTouchEnabled(false);
+        chart.setPinchZoom(false);
+        chart.setDrawGridBackground(false);
+        Description chartDescription= new Description();
+        chartDescription.setEnabled(false);
+        chart.setDescription(chartDescription);
+        chart.setBackgroundColor(Color.WHITE);
+        /*Default Chart Properties*/
+
         chart.invalidate();
     }
 
