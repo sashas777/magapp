@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -12,6 +12,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
+import org.xmlrpc.android.XMLRPCException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -205,7 +207,7 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
     @Override
     public void doPostExecute(Object result, String result_api_point) {
         hideProgressBar();
-
+        Log.e("Sashas","OrderInfoActivity::doPostExecute");
         if(result instanceof HashMap) {
             HashMap map = (HashMap) result;
             FragmentManager fragmentManager = getFragmentManager();
@@ -219,7 +221,9 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
 
             fragmentManager.beginTransaction().replace(R.id.container, screen).commit();
 
-        } else {
+        } else if (result instanceof XMLRPCException) {
+            ShowMessage(((XMLRPCException) result).getMessage());
+        }else {
             Refresh();
         }
     }

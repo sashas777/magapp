@@ -111,6 +111,7 @@ public class NewOrderService extends Service  implements RequestArrayInterface{
 
 		/*New Way*/
 		Intent notificationIntent = new Intent(this, OrderInfoActivity.class);
+		notificationIntent.putExtra("order_increment_id",increment_id);
 		PendingIntent contentIntent = PendingIntent.getActivity(this,
 				0, notificationIntent,
 				PendingIntent.FLAG_CANCEL_CURRENT);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
+ * Copyright (c) 2016.  Sashas IT  Support
  * http://www.sashas.org
  */
 
@@ -57,28 +57,53 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
 			result_info = client.callEx("call", new Object[] {session_id, api_route, params[0] });
 			return result_info;
 		} catch (XMLRPCException e) {
+            Log.e("Sashas", "RequestTask::doInBackground::XMLRPCException");
 			Log.e("Sashas", e.getMessage());
-			return e;
-		}
+            cancel(true);
+            return e;
+		}catch (Exception e) {
+            Log.e("Sashas", "RequestTask::doInBackground::Exception");
+            Log.e("Sashas", e.getMessage());
+            cancel(true);
+            return e;
+        }
 	}
 
-	@Override
+    @Override
+    protected void onCancelled(Object result) {
+        Log.e("Sashas", "RequestTask::onCancelled");
+        if (result instanceof XMLRPCException) {
+            HandleError((XMLRPCException) result);
+        }
+    }
+
+    @Override
 	protected void onPostExecute(Object result) {
-		 
+        Log.e("Sashas", "RequestTask::onPostExecute");
 		if (result instanceof XMLRPCException) {			 
 			HandleError((XMLRPCException) result);
-		} else {
-			RequestCallBack.doPostExecute(result,api_route);
+		}  else if (result instanceof Exception)  {
+            Log.e("Sashas", "RequestTask::onPostExecute::Exception");
+            HandleError((Exception) result);
+        } else {
+            Log.e("Sashas", "RequestTask::onPostExecute::doPostExecute");
+            RequestCallBack.doPostExecute(result,api_route );
+            //MagAuth auth = new MagAuth(this, activity,1);
 		}
 	}	
 	
-	public void HandleError(XMLRPCException error_obj) {
-	 	/* Set session null */
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putString("session_id", null);
-		editor.commit();
+	public void HandleError(Exception error_obj) {
+        Log.e("Sashas", "RequestTask::HandleError");
+        /*@todo change behavior*/
+        /* Set session null */
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("session_id", null);
+        editor.commit();
 		/* Set session null */
-        if (!error_obj.getMessage().toString().equals("No internet connection")) {
+		if (error_obj.getMessage().toString().indexOf("code")>0) {
+            RequestCallBack.RequestFailed(error_obj.getMessage().toString());
+        } else if (!error_obj.getMessage().toString().equals("No internet connection")) {
+            Log.e("Sashas", "RequestTask::HandleError::MagAuth");
             MagAuth auth = new MagAuth(this, activity,1);
         }else {
             RequestCallBack.RequestFailed("No internet connection");
@@ -98,10 +123,9 @@ public class RequestTask extends  AsyncTask<Vector, Void, Object> implements Get
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
+        Log.e("Sashas","RequestTask::isOnline");
+        Log.e("Sashas",netInfo.toString());
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 	
 }

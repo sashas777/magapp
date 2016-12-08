@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
 		 
 		Vector params = new Vector();		 	 
 		task = new RequestTask(this, getActivity(),"magapp_dashboard.charts");
-
+        Log.e("Sashas","HomeFragment:onCreateView");
 		task.execute(params);
         setHasOptionsMenu(true);
         // Obtain the shared Tracker instance.

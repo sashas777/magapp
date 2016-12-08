@@ -46,8 +46,10 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 		 mTracker = application.getDefaultTracker();
 		 mTracker.setScreenName("AddAccountFragment");
 		 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-		String  accountName=getArguments().getString("account","");
+		 String  accountName="";
+		 if (getArguments() != null) {
+			 accountName=getArguments().getString("account","");
+		 }
         EditText formAccName = (EditText) rootView.findViewById(R.id.AccountName);
         EditText formUrl = (EditText) rootView.findViewById(R.id.url);
         EditText formUsername = (EditText) rootView.findViewById(R.id.username);
@@ -174,7 +176,10 @@ public class AddAccountFragment  extends Fragment    implements  OnClickListener
 		   /*Accounts*/
 		  AccountManager manager = AccountManager.get(getActivity());	
 		  Account[]  accounts = manager.getAccountsByType(accountType);
-		  String  savedAccount=getArguments().getString("account","");
+		  String  savedAccount="";
+		  if (getArguments() != null) {
+			  savedAccount=getArguments().getString("account","");
+		  }
           if (!savedAccount.isEmpty()) {
               for (int i = 0; i < accounts.length; i++) {
                   Account account = accounts[i];
