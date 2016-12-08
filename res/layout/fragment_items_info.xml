@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="wrap_content"
@@ -6,7 +11,7 @@
               android:gravity="fill_horizontal"
               android:minWidth="2dp"
               android:orientation="vertical"
-              tools:context=".OrderInfoActivity"
+              tools:context="com.magapp.order.OrderInfoActivity"
               android:fillViewport="true">
 
     <com.magapp.main.NowLayout

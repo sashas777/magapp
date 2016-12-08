@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -14,24 +19,23 @@
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone"
-            >
-    <ProgressBar
-            android:id="@+id/progressBar1"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:indeterminate="false"
-            android:indeterminateBehavior="cycle"
-            />
+    >
+        <ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:indeterminate="false"
+                android:indeterminateBehavior="cycle"
+        />
     </LinearLayout>
-	   <FrameLayout    
-	        android:id="@+id/container"   
-	        android:layout_width="fill_parent"
+    <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="fill_parent"
             android:background="#ffffff"
-	    	android:layout_height="fill_parent">
-	</FrameLayout>
-
+            android:layout_height="fill_parent">
+    </FrameLayout>
 
 
 </LinearLayout>

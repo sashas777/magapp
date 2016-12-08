@@ -62,12 +62,13 @@ public class LoginActivity extends Activity {
 		Account[] accounts = manager.getAccountsByType(accountType);
 
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.login_menu, menu);
+		inflater.inflate(R.menu.base, menu);
 		MenuItem item_down = menu.findItem(R.id.accounts);
 		if (accounts.length == 0)
 			item_down.setVisible(false);
 		else
 			item_down.setVisible(true);
+		menu.findItem(R.id.settings).setVisible(false);
 		return true;
 	}
 
@@ -75,7 +76,7 @@ public class LoginActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		FragmentManager fragmentManager = getFragmentManager();
-		Fragment screen = new Fragment();
+		Fragment screen;
 		Log.e("Sashas","LoginActivity:onOptionsItemSelected");
 		switch (item.getItemId()) {
 		case R.id.accounts:

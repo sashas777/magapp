@@ -4,137 +4,137 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.magapp.main.LoginActivity" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                tools:context="com.magapp.main.LoginActivity">
 
     <TextView
-        android:id="@+id/WelcomeMessage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+            android:id="@+id/WelcomeMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
 
-        android:layout_marginTop="24dp"
-        android:gravity="top|center"
-        android:text="@string/add_account_title"
-        android:textSize="18sp" />
+            android:layout_marginTop="24dp"
+            android:gravity="top|center"
+            android:text="@string/add_account_title"
+            android:textSize="18sp"/>
 
     <EditText
-        android:id="@+id/AccountName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/AccountNameTitle"
-        android:layout_below="@id/AccountNameTitle"
-        android:ems="10"
-        android:inputType="textNoSuggestions" />
+            android:id="@+id/AccountName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/AccountNameTitle"
+            android:layout_below="@id/AccountNameTitle"
+            android:ems="10"
+            android:inputType="textNoSuggestions"/>
 
     <TextView
-        android:id="@+id/AccountNameTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/WelcomeMessage"
-        android:layout_marginTop="30dp"
-        android:labelFor="@id/AccountName"
-        android:text="@string/add_account_name"
-        android:textSize="18sp" >
+            android:id="@+id/AccountNameTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/WelcomeMessage"
+            android:layout_marginTop="30dp"
+            android:labelFor="@id/AccountName"
+            android:text="@string/add_account_name"
+            android:textSize="18sp">
 
-        <requestFocus />
+        <requestFocus/>
     </TextView>
 
     <TextView
-        android:id="@+id/WebsiteUrlTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/AccountNameTitle"
-        android:layout_below="@+id/AccountName"
-        android:layout_marginTop="10dp"
-        android:labelFor="@id/url"
-        android:text="@string/add_account_store_url"
-        android:textSize="18sp" />
+            android:id="@+id/WebsiteUrlTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/AccountNameTitle"
+            android:layout_below="@+id/AccountName"
+            android:layout_marginTop="10dp"
+            android:labelFor="@id/url"
+            android:text="@string/add_account_store_url"
+            android:textSize="18sp"/>
 
     <EditText
-        android:id="@+id/url"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/AccountNameTitle"
-        android:layout_below="@id/WebsiteUrlTitle"
-        android:ems="10"
-        android:inputType="textPassword|textUri"
-        android:text="@string/add_account_url_placeholder" />
+            android:id="@+id/url"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/AccountNameTitle"
+            android:layout_below="@id/WebsiteUrlTitle"
+            android:ems="10"
+            android:inputType="textPassword|textUri"
+            android:text="@string/add_account_url_placeholder"/>
 
     <EditText
-        android:id="@+id/username"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/AccountNameTitle"
-        android:layout_below="@+id/UsernameTitle"
-        android:ems="10"
-        android:inputType="text" />
+            android:id="@+id/username"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/AccountNameTitle"
+            android:layout_below="@+id/UsernameTitle"
+            android:ems="10"
+            android:inputType="text"/>
 
     <TextView
-        android:id="@+id/UsernameTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/AccountNameTitle"
-        android:layout_below="@+id/url"
-        android:layout_marginTop="10dp"
-        android:labelFor="@id/username"
-        android:text="@string/add_account_username"
-        android:textSize="18sp" />
+            android:id="@+id/UsernameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/AccountNameTitle"
+            android:layout_below="@+id/url"
+            android:layout_marginTop="10dp"
+            android:labelFor="@id/username"
+            android:text="@string/add_account_username"
+            android:textSize="18sp"/>
 
     <EditText
-        android:id="@+id/password"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/url"
-        android:layout_below="@+id/ApiKeyTitle"
-        android:ems="10"
-        android:inputType="textPassword" />
+            android:id="@+id/password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/url"
+            android:layout_below="@+id/ApiKeyTitle"
+            android:ems="10"
+            android:inputType="textPassword"/>
 
     <TextView
-        android:id="@+id/ApiKeyTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/AccountNameTitle"
-        android:layout_below="@+id/username"
-        android:layout_marginTop="10dp"
-        android:labelFor="@id/password"
-        android:text="@string/add_account_api_key"
-        android:textSize="18sp" />
+            android:id="@+id/ApiKeyTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/AccountNameTitle"
+            android:layout_below="@+id/username"
+            android:layout_marginTop="10dp"
+            android:labelFor="@id/password"
+            android:text="@string/add_account_api_key"
+            android:textSize="18sp"/>
 
     <Button
-        android:id="@+id/save_acc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/password" 
-        android:layout_marginTop="10dp"
-        android:background="@drawable/shape"
-        android:gravity="left"
-        android:padding="15dp"
-        android:layout_toLeftOf="@+id/create_account_back_screen"
-        android:text="@string/save_button_field"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+            android:id="@+id/save_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape"
+            android:gravity="left"
+            android:padding="15dp"
+            android:layout_toLeftOf="@+id/create_account_back_screen"
+            android:text="@string/save_button_field"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"/>
 
     <Button
-        android:id="@+id/create_account_back_screen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/save_acc"
-        android:layout_alignBottom="@+id/save_acc"         
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/shape"
-        android:gravity="right"
-        android:padding="15dp"
-        android:text="@string/back_button_field"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+            android:id="@+id/create_account_back_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/save_acc"
+            android:layout_alignBottom="@+id/save_acc"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shape"
+            android:gravity="right"
+            android:padding="15dp"
+            android:text="@string/back_button_field"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"/>
 
 </RelativeLayout>

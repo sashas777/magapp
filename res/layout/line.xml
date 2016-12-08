@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent">
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <solid android:color="#ffffff" />
     <stroke android:width="0.5px" android:color="#CCCCCC" />

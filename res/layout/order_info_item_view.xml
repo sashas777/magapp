@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="?android:attr/listPreferredItemHeight"
@@ -18,7 +23,6 @@
             android:gravity="center_vertical|left"
             android:text="@string/no_invoices"
             android:textSize="14sp"/>
-
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,38 +49,33 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:singleLine="false"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" android:maxLines="1"/>
 
             <TextView
                     android:id="@+id/ProductOptions"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:singleLine="false"
-                    android:textSize="10sp"/>
+                    android:textSize="12sp" android:maxLines="1"/>
             <TextView
                     android:id="@+id/ProductPrice"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:singleLine="true"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" android:maxLines="1"/>
             <TextView
                     android:id="@+id/ProductQty"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:singleLine="true"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" android:maxLines="1"/>
 
             <TextView
                     android:id="@+id/ProductTotals"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="marquee"
-                    android:singleLine="false"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" android:maxLines="1"/>
 
             <TextView
                     android:id="@+id/order_item_id"
@@ -93,9 +92,9 @@
 
     </LinearLayout>
     <View
-        android:id="@+id/Separator"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/separator"/>
+            android:id="@+id/Separator"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@color/separator"/>
 
 </LinearLayout>

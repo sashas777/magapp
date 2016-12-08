@@ -10,15 +10,15 @@
                 android:background="@color/white"
                 android:layout_height="match_parent">
 
-        <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/amountsChart"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"/>
+    <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/amountsChart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
 
     <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/ordersChart"
@@ -40,7 +40,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:indeterminate="false"
             android:translationZ="2dp"
-            android:indeterminateBehavior="cycle" />
+            android:indeterminateBehavior="cycle"/>
     <TableLayout
             android:id="@+id/OrdersStats"
             android:layout_width="match_parent"
@@ -55,67 +55,68 @@
             android:layout_below="@+id/ordersChart"
             android:layout_centerHorizontal="true">
 
-                <TableRow android:layout_gravity="center|center_horizontal"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent">
+        <TableRow android:layout_gravity="center|center_horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-                        <TextView
-                                android:id="@+id/OrdersRevenueTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:paddingLeft="2dp"
-                                android:layout_weight="1"
-                                android:text="@string/Revenue"
-                                android:maxLines="1"
-                                android:typeface="sans"
-                                />
+            <TextView
+                    android:id="@+id/OrdersRevenueTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="2dp"
+                    android:layout_weight="1"
+                    android:text="@string/Revenue"
+                    android:maxLines="1"
+                    android:typeface="sans"
+            />
 
-                    <TextView
-                            android:id="@+id/OrdersTaxTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|center_horizontal"
-                            android:layout_weight="1"
-                            android:text="@string/Tax"
-                            android:maxLines="1"
-                            android:typeface="sans"
-                           />
+            <TextView
+                    android:id="@+id/OrdersTaxTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    android:text="@string/Tax"
+                    android:maxLines="1"
+                    android:typeface="sans"
+            />
 
-                    <TextView
-                            android:id="@+id/OrdersShippingTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|center_horizontal"
-                            android:layout_weight="1"
-                            android:text="@string/Shipping"
-                            android:typeface="sans" android:maxLines="1"
-                            />
+            <TextView
+                    android:id="@+id/OrdersShippingTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    android:text="@string/Shipping"
+                    android:typeface="sans" android:maxLines="1"
+            />
 
-                        <TextView
-                                android:id="@+id/OrdersQtyTitle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center|center_horizontal"
-                                android:layout_weight="1"
-                                android:text="@string/Qty"
-                                android:typeface="sans" android:maxLines="1"
-                               />
-                </TableRow>
+            <TextView
+                    android:id="@+id/OrdersQtyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    android:text="@string/Qty"
+                    android:typeface="sans" android:maxLines="1"
+            />
+        </TableRow>
 
-        <TableRow android:layout_gravity="center|center_horizontal" android:layout_width="match_parent" android:layout_height="match_parent">
+        <TableRow android:layout_gravity="center|center_horizontal" android:layout_width="match_parent"
+                  android:layout_height="match_parent">
 
-                <TextView
-                        android:id="@+id/OrdersRevenueValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_horizontal"
-                        android:layout_weight="1"
-                        android:text="@string/PricePlaceholder"
-                        android:maxLines="1"
-                        android:typeface="sans"
-                        android:textColor="@color/orange"
-                        />
+            <TextView
+                    android:id="@+id/OrdersRevenueValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    android:text="@string/PricePlaceholder"
+                    android:maxLines="1"
+                    android:typeface="sans"
+                    android:textColor="@color/orange"
+            />
 
             <TextView
                     android:id="@+id/OrdersTaxValue"
@@ -127,7 +128,7 @@
                     android:maxLines="1"
                     android:textColor="@color/orange"
                     android:typeface="sans"
-                   />
+            />
 
             <TextView
                     android:id="@+id/OrdersShippingValue"
@@ -139,20 +140,19 @@
                     android:maxLines="1"
                     android:typeface="sans"
                     android:textColor="@color/orange"
-                    />
+            />
 
-                <TextView
-                        android:id="@+id/OrdersQtyValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|center_horizontal"
-                        android:layout_weight="1"
-                        android:text="@string/NumberPlaceholder"
-                        android:typeface="sans" android:maxLines="1"
-                        android:textColor="@color/orange"/>
+            <TextView
+                    android:id="@+id/OrdersQtyValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_weight="1"
+                    android:text="@string/NumberPlaceholder"
+                    android:typeface="sans" android:maxLines="1"
+                    android:textColor="@color/orange"/>
         </TableRow>
     </TableLayout>
-
 
 
 </RelativeLayout>

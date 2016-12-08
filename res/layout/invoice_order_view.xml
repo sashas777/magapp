@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:background="#ffffff"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:background="#ffffff"
+              android:orientation="vertical"
+              android:layout_height="match_parent">
 
     <FrameLayout
             android:id="@+id/items"

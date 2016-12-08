@@ -1,10 +1,15 @@
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#cccc"
-    android:choiceMode="singleChoice"
-    android:divider="@android:color/transparent"
-    android:dividerHeight="0dp"
-    tools:context="com.magapp.main.NavigationDrawerFragment" />
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="#cccc"
+          android:choiceMode="singleChoice"
+          android:divider="@android:color/transparent"
+          android:dividerHeight="0dp"
+          tools:context="com.magapp.main.NavigationDrawerFragment"/>
 

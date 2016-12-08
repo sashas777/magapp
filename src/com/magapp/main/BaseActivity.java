@@ -88,7 +88,7 @@ public class BaseActivity extends Activity implements
 			mTitle = getString(R.string.sales);
 			break;
 		case 3:
-			mTitle = getString(R.string.title_section3);
+			mTitle = getString(R.string.settings);
 			break;
 		}
 	}
@@ -144,8 +144,6 @@ public class BaseActivity extends Activity implements
         Log.e("Sashas","BaseActivity:onOptionsItemSelected");
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
             case R.id.action_period:
                 return true;
             case R.id.twoytd:

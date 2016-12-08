@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:id="@android:id/text1"
-     android:color="#FFFFFF" 
- 	style="?android:attr/spinnerDropDownItemStyle"
- 	android:textColor="#ffffff"
-    android:singleLine="true"
-    android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:ellipsize="marquee" /> 
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@android:id/text1"
+          android:color="#FFFFFF"
+          style="?android:attr/spinnerDropDownItemStyle"
+          android:textColor="#ffffff"
+          android:singleLine="true"
+          android:layout_width="fill_parent"
+          android:layout_height="?android:attr/listPreferredItemHeight"
+          android:ellipsize="marquee"/>
        

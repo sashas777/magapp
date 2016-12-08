@@ -1,68 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-	android:orientation="vertical"
-    android:layout_height="match_parent"
-    android:layout_gravity="top"
-    android:fillViewport="true" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent"
+              android:layout_gravity="top"
+              android:fillViewport="true">
 
     <com.magapp.main.NowLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff">
 
-		<LinearLayout android:layout_width="fill_parent"
-					  android:layout_height="wrap_content"
-					  android:background="#ffffff"
-					  android:orientation="vertical">
-			<RelativeLayout
-					style="@style/nowCardStyleTitle"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:gravity="fill_horizontal"
-					android:minWidth="2dp"
-					tools:context=".OrderInfoActivity">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:background="#ffffff"
+                      android:orientation="vertical">
+            <RelativeLayout
+                    style="@style/nowCardStyleTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_horizontal"
+                    android:minWidth="2dp"
+                    tools:context=".OrderInfoActivity">
 
-				<TextView
-						android:id="@+id/totals_title"
-						style="@style/CardTitle"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:layout_alignParentLeft="true"
-						android:layout_alignParentRight="true"
-						android:layout_alignParentTop="true"
-						android:layout_marginLeft="0dp"
-						android:layout_marginTop="0dp"
-						android:layout_weight="1"
-						android:paddingLeft="3dp"
-						android:paddingTop="1dp"
-						android:text="@string/totals_slide_title" />
+                <TextView
+                        android:id="@+id/totals_title"
+                        style="@style/CardTitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:text="@string/totals_slide_title"/>
 
-					</RelativeLayout>
+            </RelativeLayout>
 
-         <RelativeLayout
-             style="@style/nowCardStyle"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:gravity="fill_horizontal"
-             android:minWidth="2dp"
-             tools:context=".OrderInfoActivity" >
+            <RelativeLayout
+                    style="@style/nowCardStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="fill_horizontal"
+                    android:minWidth="2dp"
+                    tools:context=".OrderInfoActivity">
 
 
-            <TableLayout
-	           android:id="@+id/totals_table"
-	           android:layout_width="fill_parent"
-	           android:layout_height="fill_parent"
-			   android:layout_alignParentLeft="true"
-			   android:layout_alignParentStart="true"
-			   android:layout_alignParentTop="true"
-					>
-	           </TableLayout>
+                <TableLayout
+                        android:id="@+id/totals_table"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                >
+                </TableLayout>
 
-    </RelativeLayout>
-</LinearLayout>
-        
+            </RelativeLayout>
+        </LinearLayout>
+
     </com.magapp.main.NowLayout>
 
 </LinearLayout>

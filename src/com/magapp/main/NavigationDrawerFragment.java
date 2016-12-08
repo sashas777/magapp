@@ -112,7 +112,7 @@ public class NavigationDrawerFragment extends Fragment {
 				android.R.layout.simple_list_item_activated_1,
 				android.R.id.text1, new String[] { getString(R.string.home),
 						getString(R.string.sales),
-						getString(R.string.title_section3), }));
+						getString(R.string.settings), }));
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
@@ -261,7 +261,7 @@ public class NavigationDrawerFragment extends Fragment {
 		// showGlobalContextActionBar, which controls the top-left area of the
 		// action bar.
 		if (mDrawerLayout != null && isDrawerOpen()) {
-			inflater.inflate(R.menu.global, menu);
+			inflater.inflate(R.menu.base, menu);
 			showGlobalContextActionBar();
 		}
 		Log.e("Sashas","NavigationDrawerFragment:onCreateOptionsMenu");

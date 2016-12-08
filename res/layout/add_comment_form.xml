@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016.  Sashas IT  Support
+  ~ http://www.sashas.org
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="fill_parent"
@@ -11,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
-            >
+    >
 
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
@@ -50,7 +55,7 @@
                     android:orientation="vertical"
                     tools:context=".OrderInfoActivity">
 
-               <EditText
+                <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textMultiLine"
@@ -60,21 +65,21 @@
                         android:id="@+id/comment_value"/>
 
 
-                    <CheckBox
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/notify_customer"
-                            android:id="@+id/notify_customer"/>
+                <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/notify_customer"
+                        android:id="@+id/notify_customer"/>
                 <CheckBox
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/append_comments"
                         android:id="@+id/include_comments"/>
-                    <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/add_comment"
-                            android:id="@+id/submit" android:layout_gravity="center_horizontal"/>
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_comment"
+                        android:id="@+id/submit" android:layout_gravity="center_horizontal"/>
 
 
             </LinearLayout>
