@@ -51,6 +51,8 @@
 
  	<string name="login_with_existing">LOGIN</string>
  	<string name="add_select_account">ADD A STORE</string>
+    <string name="download_extension">get extension</string>
+    <string name="try_again">Try Again</string>
  	<string name="back_button_field">Back</string>
  	<string name="no_invoices">There are no invoices for this order yet.</string>
  	<string name="invoice">Invoice</string>

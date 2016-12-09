@@ -12,6 +12,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,11 +24,16 @@ import com.google.android.gms.analytics.Tracker;
 import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
+import com.magapp.connect.RequestInterface;
+import com.magapp.connect.RequestTask;
 import com.magapp.main.BaseActivity;
 import com.magapp.main.R;
 import org.xmlrpc.android.XMLRPCClient;
 
-public class LoginFragment  extends Fragment    implements  OnClickListener, GetSession  {
+import java.util.HashMap;
+import java.util.Vector;
+
+public class LoginFragment  extends Fragment    implements  OnClickListener, GetSession,RequestInterface {
 	
 	 
 	View rootView;	 
@@ -58,6 +64,11 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		AddAccountButton.setOnClickListener(this);
 		ShowProgressBar();
 
+        rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.AddAccount).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.extensionUpdate).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.checkAgain).setVisibility(View.INVISIBLE);
+
 		auth=new MagAuth(this,getActivity(),0);
 
 		return rootView;
@@ -73,10 +84,8 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 			 String store_url = settings.getString("store_url", null);
 			 url=store_url;
 
-			 /*Log.e("Sashas", "returned - " + session);*/
-            /* @todo something happening when click back  and then on the icon.*/
-			/*  auth.makeToast("You are logged in"); */
-			 ShowSales();
+		 	 /* Check extension version*/
+             checkVersion();
 		 }else {
 			 auth.makeToast(ses);
 		 }
@@ -128,32 +137,66 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 		case R.id.LoginWithAccount:{
 			if ( accounts.length==0) {
 				screen=new AddAccountFragment();
-			}else{
+                mTracker.setScreenName("AddAccountFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Click")
+                        .setAction("AddAccountFragment")
+                        .build());
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container,screen)
+                        .addToBackStack(null)
+                        .commit();
+            }else{
 				LoginAction();
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Click")
+                        .setAction("LoginAction")
+                        .build());
 				return;
 			}
 		}						 
 			break;
 		case R.id.AddAccount:
 			screen=new AddAccountFragment();
-			break;
+            mTracker.setScreenName("AddAccountFragment");
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Click")
+                    .setAction("AddAccountFragment")
+                    .build());
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container,screen)
+                    .addToBackStack(null)
+                    .commit();
+            break;
+         case R.id.extensionUpdate:
+            /*@todo open link*/
+             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+             mTracker.send(new HitBuilders.EventBuilder()
+                     .setCategory("Click")
+                     .setAction("ExtensionUpdate")
+                     .build());
+             break;
+             case R.id.checkAgain:
+                 checkVersion();
+                 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                 mTracker.send(new HitBuilders.EventBuilder()
+                         .setCategory("Click")
+                         .setAction("CheckVersionAgain")
+                         .build());
+                 break;
+
 		default:
 			break;
 		}
 
 
-        mTracker.setScreenName("AddAccountFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Click")
-                .setAction("AddAccountFragment")
-                .build());
 
 
-		 fragmentManager.beginTransaction()
-         .replace(R.id.container,screen)           
-         .addToBackStack(null)
-         .commit();      
+
+
 			 
 	}
 		 
@@ -161,4 +204,49 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 	      auth=new MagAuth(this,getActivity(),0);
 	}
 
+	public void checkVersion(){
+        Vector params = new Vector();
+        RequestTask task;
+        task = new RequestTask(this, getActivity(),"magapp.api_version");
+        task.execute(params);
+
+    }
+
+    @Override
+    public void doPostExecute(Object result, String result_api_point) {
+
+        if (progressBar!=null)
+            progressBar.setVisibility(View.INVISIBLE);
+        if(result instanceof HashMap) {
+            HashMap versionMap = (HashMap) result;
+            if (versionMap.get("version")=="1.2.0") {
+                rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.AddAccount).setVisibility(View.VISIBLE);
+                rootView.findViewById(R.id.extensionUpdate).setVisibility(View.INVISIBLE);
+                rootView.findViewById(R.id.checkAgain).setVisibility(View.INVISIBLE);
+                ShowSales();
+            } else {
+                RequestFailed("Please install/update the extension at your Magento store.");
+            }
+
+        } else {
+            Log.e("Sashas","LoginFragment::doPostExecute::else");
+        }
+    }
+
+    @Override
+    public void onPreExecute() {
+        ShowProgressBar();
+    }
+
+    @Override
+    public void RequestFailed(String error) {
+        if (progressBar!=null)
+            progressBar.setVisibility(View.INVISIBLE);
+        auth.makeToast("Please install/update the extension at your Magento store.");
+        rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.AddAccount).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.extensionUpdate).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.checkAgain).setVisibility(View.VISIBLE);
+    }
 }

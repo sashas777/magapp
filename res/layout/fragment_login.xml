@@ -37,10 +37,32 @@
             android:background="@drawable/shape"
             android:text="@string/login_with_existing"
             android:elevation="0dp"
-            android:textAppearance="@android:style/TextAppearance.Material.Inverse"
             android:textAllCaps="true"
             android:textColor="@android:color/white"
             android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/extensionUpdate"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="75dp"
+        android:paddingRight="75dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_above="@+id/AddAccount"
+        android:layout_centerVertical="false"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/shape"
+        android:text="@string/download_extension"
+        android:elevation="0dp"
+        android:visibility="invisible"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
 
     <Button
             android:id="@+id/AddAccount"
@@ -58,6 +80,22 @@
             android:text="@string/add_select_account"
             android:textColor="#FFFFFF"/>
 
+    <Button
+        android:id="@+id/checkAgain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="false"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/shape"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:padding="17dp"
+        android:visibility="invisible"
+        android:text="@string/try_again"
+        android:textColor="#FFFFFF"/>
 
     <RelativeLayout
             android:orientation="vertical"
