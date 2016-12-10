@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.order;
@@ -14,6 +19,9 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.*;
 import android.widget.Toast;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestTask;
 import com.magapp.creditmemo.CreditMemoCreateActivity;
@@ -31,17 +39,22 @@ public class OrderInfoFragment extends Fragment {
 
 
     public View rootView;
-    private Boolean can_invoice=false, can_hold=false,can_unhold=false,can_creditmemo=false, can_ship=false, can_cancel=false;
-    private Boolean can_comment=false;
+    private Boolean can_invoice = false, can_hold = false, can_unhold = false, can_creditmemo = false, can_ship = false, can_cancel = false;
+    private Boolean can_comment = false;
     private String order_increment_id;
     private Integer order_id;
     private Bundle order_items = new Bundle();
-
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.order_info_fragment, null);
-
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
         HashMap order = (HashMap) getArguments().getSerializable("order");
         FillData(order);
 
@@ -102,7 +115,7 @@ public class OrderInfoFragment extends Fragment {
         main_info_card = new MainInfoFragment();
         main_info_card.setArguments(params);
         mFragmentTransaction.add(R.id.main_info_card, main_info_card);
-			/* Main Info */
+            /* Main Info */
 			/* Account Info */
         params = new Bundle();
         if (order.get("customer_is_guest").toString().equals("1"))
@@ -175,7 +188,7 @@ public class OrderInfoFragment extends Fragment {
         params = new Bundle();
         Object[] totals = (Object[]) order.get("totals");
         params.putSerializable("totals", totals);
-        Fragment totals_card =  new TotalsFragment();
+        Fragment totals_card = new TotalsFragment();
         totals_card.setArguments(params);
         mFragmentTransaction.add(R.id.totals_card, totals_card);
 			/* Totals */
@@ -183,9 +196,9 @@ public class OrderInfoFragment extends Fragment {
 
         /*Comments*/
         Object[] order_comments = (Object[]) order.get("status_history");
-        ((OrderInfoActivity)getActivity()).setComments(order_comments);
-        String order_status=(String) order.get("status");
-        ((OrderInfoActivity)getActivity()).setStatus(order_status);
+        ((OrderInfoActivity) getActivity()).setComments(order_comments);
+        String order_status = (String) order.get("status");
+        ((OrderInfoActivity) getActivity()).setStatus(order_status);
         /*Comments*/
 
 			/*Menu Items*/
@@ -209,10 +222,16 @@ public class OrderInfoFragment extends Fragment {
 
         switch (item.getItemId()) {
             case android.R.id.home:
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Home")
+                        .build());
                 NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(), SalesListFragment.class));
                 return true;
 
             case R.id.invoice:
+                mTracker.setScreenName("InvoiceCreateActivity");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent InvoiceOrder = new Intent(getActivity(), InvoiceCreateActivity.class);
                 InvoiceOrder.putExtra("order_id", order_id);
                 InvoiceOrder.putExtra("order_items", order_items);
@@ -222,6 +241,8 @@ public class OrderInfoFragment extends Fragment {
                 return true;
 
             case R.id.ship:
+                mTracker.setScreenName("ShipmentCreateActivity");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent ShipOrder = new Intent(getActivity(), ShipmentCreateActivity.class);
                 ShipOrder.putExtra("order_id", order_id);
                 ShipOrder.putExtra("order_items", order_items);
@@ -230,6 +251,8 @@ public class OrderInfoFragment extends Fragment {
                 return true;
 
             case R.id.creditmemo:
+                mTracker.setScreenName("CreditMemoCreateActivity");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent RefundOrder = new Intent(getActivity(), CreditMemoCreateActivity.class);
                 RefundOrder.putExtra("order_id", order_id);
                 RefundOrder.putExtra("order_items", order_items);

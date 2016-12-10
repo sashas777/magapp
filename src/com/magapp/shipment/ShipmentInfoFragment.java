@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.shipment;
@@ -13,6 +18,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
@@ -29,21 +37,31 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
 
 
     public View rootView;
-    String shipment_increment_id,api_point;
+    String shipment_increment_id, api_point;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.order_info_fragment, null);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
-        shipment_increment_id=getArguments().getString("increment_id");
-        api_point=getArguments().getString("api_point");
+        shipment_increment_id = getArguments().getString("increment_id");
+        api_point = getArguments().getString("api_point");
 
         Refresh();
-       // setHasOptionsMenu(true);
+        // setHasOptionsMenu(true);
         return rootView;
     }
 
     public void Refresh() {
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Refresh")
+                .setAction("ShipmentInfoFragment")
+                .build());
         Vector params = new Vector();
         RequestTask task;
         HashMap map_filter = new HashMap();
@@ -95,39 +113,36 @@ public class ShipmentInfoFragment extends Fragment implements RequestInterface {
             items_array.add(item_data);
         }
         params.putSerializable("items", items_array);
-        Fragment items_card =  new ItemsFragment();
+        Fragment items_card = new ItemsFragment();
         items_card.setArguments(params);
         mFragmentTransaction.add(R.id.items_card, items_card);
-			/* Items */
+            /* Items */
 			/* Trackings */
-            params = new Bundle();
-            ArrayList<HashMap> trackings_array = new ArrayList<HashMap>();
-            Object[] tracking_items = (Object[]) shipment.get("tracks");
-            for (Object track_item : tracking_items) {
-                HashMap track_item_data = (HashMap) track_item;
-                trackings_array.add(track_item_data);
-            }
-            params.putSerializable("items", trackings_array);
-            params.putString("shipment_increment_id", shipment_increment_id);
-            Fragment trackings_card =  new TrackingsFragment();
-            trackings_card.setArguments(params);
-            mFragmentTransaction.add(R.id.totals_card, trackings_card);
+        params = new Bundle();
+        ArrayList<HashMap> trackings_array = new ArrayList<HashMap>();
+        Object[] tracking_items = (Object[]) shipment.get("tracks");
+        for (Object track_item : tracking_items) {
+            HashMap track_item_data = (HashMap) track_item;
+            trackings_array.add(track_item_data);
+        }
+        params.putSerializable("items", trackings_array);
+        params.putString("shipment_increment_id", shipment_increment_id);
+        Fragment trackings_card = new TrackingsFragment();
+        trackings_card.setArguments(params);
+        mFragmentTransaction.add(R.id.totals_card, trackings_card);
 			/* Trackings */
         mFragmentTransaction.commit();
 
         /* Set Comments*/
-            Object[] shipment_comments = (Object[]) shipment.get("comments");
-            ((ActivityInfoInterface) getActivity()).setComments(shipment_comments);
+        Object[] shipment_comments = (Object[]) shipment.get("comments");
+        ((ActivityInfoInterface) getActivity()).setComments(shipment_comments);
         /* Set Comments*/
 
 		/*Options Menu*/
-       // getActivity().invalidateOptionsMenu();
+        // getActivity().invalidateOptionsMenu();
 		/*Options Menu*/
 
     }
-
-
-
 
 
 }

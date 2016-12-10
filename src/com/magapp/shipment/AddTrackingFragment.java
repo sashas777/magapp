@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.shipment;
@@ -14,6 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
@@ -24,17 +32,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-public class AddTrackingFragment extends  Fragment  implements View.OnClickListener, RequestInterface, AdapterView.OnItemSelectedListener  {
+public class AddTrackingFragment extends Fragment implements View.OnClickListener, RequestInterface, AdapterView.OnItemSelectedListener {
 
-	public View rootView;
+    public View rootView;
     private String shipment_increment_id;
     private Spinner carriersListView;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		rootView = inflater.inflate(R.layout.tracking_item_add, null);
+        rootView = inflater.inflate(R.layout.tracking_item_add, null);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
-        shipment_increment_id=getArguments().getString("increment_id");
+        shipment_increment_id = getArguments().getString("increment_id");
 
         carriersListView = (Spinner) rootView.findViewById(R.id.carrier);
         List<String> carriersList = new ArrayList<String>();
@@ -43,7 +57,7 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         carriersList.add("United Parcel Service");
         carriersList.add("United States Postal Service");
         carriersList.add("Custom Value");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, carriersList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, carriersList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         carriersListView.setAdapter(dataAdapter);
 
@@ -56,68 +70,74 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
         CapitalEditText();
 
-        if (getArguments().getString("tracking_number")!=null) {
+        if (getArguments().getString("tracking_number") != null) {
             String tracking_number = getArguments().getString("tracking_number");
             TextView tracking_number_value = ((TextView) rootView.findViewById(R.id.tracking_number));
             tracking_number_value.setText(tracking_number);
 
-            if (getArguments().getString("carrier")!=null)
+            if (getArguments().getString("carrier") != null)
                 carriersListView.setSelection(Integer.parseInt(getArguments().getString("carrier")));
 
-            if (getArguments().getString("notify_customer")!=null)
+            if (getArguments().getString("notify_customer") != null)
                 ((CheckBox) rootView.findViewById(R.id.notify_customer)).setChecked(true);
             else
                 ((CheckBox) rootView.findViewById(R.id.notify_customer)).setChecked(false);
         }
 
         return rootView;
-	}
+    }
 
-    public void addTracking(){
-        String carrier_code="custom";
-        String tracking_number=((TextView) rootView.findViewById(R.id.tracking_number)).getText().toString();
-        String carrier_title=((TextView) rootView.findViewById(R.id.carrier_title)).getText().toString();
-        boolean notify_customer=((CheckBox) rootView.findViewById(R.id.notify_customer)).isChecked();
+    public void addTracking() {
+        String carrier_code = "custom";
+        String tracking_number = ((TextView) rootView.findViewById(R.id.tracking_number)).getText().toString();
+        String carrier_title = ((TextView) rootView.findViewById(R.id.carrier_title)).getText().toString();
+        boolean notify_customer = ((CheckBox) rootView.findViewById(R.id.notify_customer)).isChecked();
 
-        if (tracking_number.isEmpty() || tracking_number.isEmpty()   || carrier_title.isEmpty()) {
-            ((ActivityLoadInterface)getActivity()).ShowMessage("Please fill all fields");
+        if (tracking_number.isEmpty() || tracking_number.isEmpty() || carrier_title.isEmpty()) {
+            ((ActivityLoadInterface) getActivity()).ShowMessage("Please fill all fields");
         }
 
         switch (carriersListView.getSelectedItemPosition()) {
             case 0:
-                carrier_code="dhl";
+                carrier_code = "dhl";
                 break;
             case 1:
-                carrier_code="fedex";
+                carrier_code = "fedex";
                 break;
             case 2:
-                carrier_code="ups";
+                carrier_code = "ups";
                 break;
-             case 3:
-                carrier_code="usps";
+            case 3:
+                carrier_code = "usps";
                 break;
             default:
-                carrier_code="custom";
+                carrier_code = "custom";
                 break;
         }
 
 
-       Vector params = new Vector();
+        Vector params = new Vector();
         RequestTask task;
-        HashMap map_tracking= new HashMap();
+        HashMap map_tracking = new HashMap();
         map_tracking.put("shipmentIncrementId", shipment_increment_id);
         params.add(map_tracking);
         params.add(carrier_code);
         params.add(carrier_title);
         params.add(tracking_number);
         params.add(notify_customer);
-
-        task = new RequestTask(this, getActivity(),"magapp_sales_order_shipment.addtrack");
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("addTracking")
+                .build());
+        task = new RequestTask(this, getActivity(), "magapp_sales_order_shipment.addtrack");
         task.execute(params);
     }
 
     public void scanTracking() {
-
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("scanTracking")
+                .build());
 
         Intent ScanTracking = new Intent(getActivity(), ScanTrackingActivity.class);
         ScanTracking.putExtra("increment_id", shipment_increment_id);
@@ -132,18 +152,22 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
     @Override
     public void onResume() {
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Resume")
+                .setAction("AddTrackingFragment")
+                .build());
         super.onResume();
-        String tracking_number=getArguments().getString("tracking_number");
-        TextView tracking_number_value=((TextView) rootView.findViewById(R.id.tracking_number));
+        String tracking_number = getArguments().getString("tracking_number");
+        TextView tracking_number_value = ((TextView) rootView.findViewById(R.id.tracking_number));
         tracking_number_value.setText(tracking_number);
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
-        TextView carrier_title=((TextView) rootView.findViewById(R.id.carrier_title));
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        TextView carrier_title = ((TextView) rootView.findViewById(R.id.carrier_title));
 
         switch (pos) {
             default:
-                if (getArguments().getString("carrier_title")!=null)
+                if (getArguments().getString("carrier_title") != null)
                     carrier_title.setText(getArguments().getString("carrier_title"));
                 else
                     carrier_title.setText(parent.getItemAtPosition(pos).toString());
@@ -168,14 +192,16 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
         }
     }
 
-    public void onPreExecute(){
-        ((ActivityLoadInterface)getActivity()).showProgressBar();
+    public void onPreExecute() {
+        ((ActivityLoadInterface) getActivity()).showProgressBar();
     }
 
     @Override
     public void doPostExecute(Object result, String result_api_point) {
-        ((ActivityLoadInterface)getActivity()).hideProgressBar();
-        ((ActivityLoadInterface)getActivity()).ShowMessage("The tracking number has been added");
+        ((ActivityLoadInterface) getActivity()).hideProgressBar();
+        ((ActivityLoadInterface) getActivity()).ShowMessage("The tracking number has been added");
+        mTracker.setScreenName("ShipmentInfoActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         Intent ShipmentInfo = new Intent(getActivity(), ShipmentInfoActivity.class);
         ShipmentInfo.putExtra("increment_id", shipment_increment_id);
         getActivity().startActivity(ShipmentInfo);
@@ -184,18 +210,22 @@ public class AddTrackingFragment extends  Fragment  implements View.OnClickListe
 
 
     public void RequestFailed(String error) {
-        ((ActivityLoadInterface)getActivity()).hideProgressBar();
-        ((ActivityLoadInterface)getActivity()).ShowMessage(error);
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("RequestFailed")
+                .setAction("AddTrackingFragment::RequestFailed")
+                .build());
+        ((ActivityLoadInterface) getActivity()).hideProgressBar();
+        ((ActivityLoadInterface) getActivity()).ShowMessage(error);
     }
 
-    public void CapitalEditText(){
+    public void CapitalEditText() {
         ((TextView) rootView.findViewById(R.id.tracking_number)).addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
 
             @Override

@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.creditmemo;
@@ -20,6 +25,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityInfoInterface;
@@ -39,16 +47,23 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
     private String order_increment_id, api_point;
     private ArrayList<HashMap> comments;
     private HashMap creditmemo_info;
-    private Boolean can_cancel=false;
+    private Boolean can_cancel = false;
 
     String[] actions = new String[]{"Credit Memo", "Comments"};
     private CharSequence mTitle;
     public Integer menu_id = -1;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // [END shared_tracker]
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
@@ -58,7 +73,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         Bundle vars = getIntent().getExtras();
         creditmemo_increment_id = vars.getString("increment_id");
 
-        api_point="magapp_sales_order_creditmemo.info";
+        api_point = "magapp_sales_order_creditmemo.info";
         Refresh();
     }
 
@@ -68,7 +83,11 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         HashMap<String, String> map_filter = new HashMap<String, String>();
         map_filter.put("increment_id", creditmemo_increment_id);
         params.add(map_filter);
-        task = new RequestTask(this, this,api_point);
+        task = new RequestTask(this, this, api_point);
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("CreditMemoInfoActivity::Refresh")
+                .build());
         task.execute(params);
     }
 
@@ -76,19 +95,21 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new CreditMemoInfoFragment();
-        Bundle params=new Bundle();
+        Bundle params = new Bundle();
         params.putString("increment_id", creditmemo_increment_id);
-        params.putString("api_point",api_point);
-        creditmemo_info=creditmemo;
+        params.putString("api_point", api_point);
+        creditmemo_info = creditmemo;
         params.putSerializable("item", creditmemo);
 
         Object[] creditmemo_comments = (Object[]) creditmemo.get("comments");
         setComments(creditmemo_comments);
 
-        can_cancel=(creditmemo.get("can_cancel").toString().equals("1"));
+        can_cancel = (creditmemo.get("can_cancel").toString().equals("1"));
         invalidateOptionsMenu();
 
         screen.setArguments(params);
+        mTracker.setScreenName("CreditMemoInfoFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("creditmemo_info_activity").commit();
     }
 
@@ -107,7 +128,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
     }
 
     /*For comments?*/
-    public void setComments(Object[] comments_obj){
+    public void setComments(Object[] comments_obj) {
         comments = new ArrayList<HashMap>();
         for (Object comment_item : comments_obj) {
             HashMap item_data = (HashMap) comment_item;
@@ -115,7 +136,9 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         }
     }
 
-    public ArrayList  getComments(){ return comments;}
+    public ArrayList getComments() {
+        return comments;
+    }
 
     /* Additional for actionbar */
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -125,7 +148,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         }
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new Fragment();
-        Bundle params=new Bundle();
+        Bundle params = new Bundle();
 
         switch (itemPosition) {
             case 0:
@@ -134,9 +157,11 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
 
             case 1:
                 screen = new CommentsFragment();
-                params.putString("status",  "");
+                mTracker.setScreenName("CommentsFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                params.putString("status", "");
                 params.putString("increment_id", creditmemo_increment_id);
-                params.putString("api_point","order_creditmemo.addComment");
+                params.putString("api_point", "order_creditmemo.addComment");
                 params.putSerializable("comments", comments);
                 screen.setArguments(params);
                 break;
@@ -152,6 +177,8 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         Bundle params;
         switch (item.getItemId()) {
             case android.R.id.home:
+                mTracker.setScreenName("OrderInfoActivity");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
@@ -162,9 +189,9 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
                 HashMap<String, String> map_filter = new HashMap<String, String>();
                 map_filter.put("creditmemoIncrementId", creditmemo_increment_id);
                 task_params.add(map_filter);
-                RequestTask task = new RequestTask(this, this,"order_creditmemo.cancel");
+                RequestTask task = new RequestTask(this, this, "order_creditmemo.cancel");
                 task.execute(task_params);
-                ShowMessage("The Order #"+ order_increment_id +" has been released from holding status.");
+                ShowMessage("The Order #" + order_increment_id + " has been released from holding status.");
                 return true;
 
         }
@@ -175,12 +202,12 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
-    public void showProgressBar(){
-        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar1);
+    public void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressBar(){
+    public void hideProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
     }
@@ -193,10 +220,10 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
     @Override
     public void doPostExecute(Object result, String result_api_point) {
         hideProgressBar();
-        if(result instanceof HashMap) {
+        if (result instanceof HashMap) {
             HashMap map = (HashMap) result;
             FillData(map);
-        }else {
+        } else {
             Refresh();
         }
     }
@@ -209,5 +236,5 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         startActivity(Login);
         finish();
     }
-	
+
 }

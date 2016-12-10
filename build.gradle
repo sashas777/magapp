@@ -34,7 +34,7 @@ allprojects {
 }
 
 def computeVersionName() {
-    return "3"
+    return "3.1"
 }
 
 dependencies {

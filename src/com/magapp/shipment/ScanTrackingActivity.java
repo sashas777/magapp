@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.shipment;
@@ -39,11 +44,11 @@ public class ScanTrackingActivity extends Activity implements ZXingScannerView.R
 
         Bundle vars = getIntent().getExtras();
         shipment_increment_id = vars.getString("increment_id");
-        carrier_title= vars.getString("carrier_title");
-        carrier= vars.getString("carrier");
-        notify_customer=vars.getString("notify_customer");
+        carrier_title = vars.getString("carrier_title");
+        carrier = vars.getString("carrier");
+        notify_customer = vars.getString("notify_customer");
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mFlash = savedInstanceState.getBoolean(FLASH_STATE, false);
             mAutoFocus = savedInstanceState.getBoolean(AUTO_FOCUS_STATE, true);
             mSelectedIndices = savedInstanceState.getIntegerArrayList(SELECTED_FORMATS);
@@ -80,7 +85,7 @@ public class ScanTrackingActivity extends Activity implements ZXingScannerView.R
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem menuItem;
 
-        if(mFlash) {
+        if (mFlash) {
             menuItem = menu.add(Menu.NONE, R.id.menu_flash, 0, R.string.flash_on);
         } else {
             menuItem = menu.add(Menu.NONE, R.id.menu_flash, 0, R.string.flash_off);
@@ -96,7 +101,7 @@ public class ScanTrackingActivity extends Activity implements ZXingScannerView.R
         switch (item.getItemId()) {
             case R.id.menu_flash:
                 mFlash = !mFlash;
-                if(mFlash) {
+                if (mFlash) {
                     item.setTitle(R.string.flash_on);
                 } else {
                     item.setTitle(R.string.flash_off);
@@ -114,32 +119,33 @@ public class ScanTrackingActivity extends Activity implements ZXingScannerView.R
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
             r.play();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
 
         Intent ShipmentInfo = new Intent(this, ShipmentInfoActivity.class);
         ShipmentInfo.putExtra("increment_id", shipment_increment_id);
         ShipmentInfo.putExtra("tracking_number", rawResult.getText());
-        ShipmentInfo.putExtra("carrier",carrier );
-        ShipmentInfo.putExtra("carrier_title",carrier_title );
-        ShipmentInfo.putExtra("notify_customer",notify_customer );
+        ShipmentInfo.putExtra("carrier", carrier);
+        ShipmentInfo.putExtra("carrier_title", carrier_title);
+        ShipmentInfo.putExtra("notify_customer", notify_customer);
 
         startActivity(ShipmentInfo);
     }
 
     public void setupFormats() {
         List<BarcodeFormat> formats = new ArrayList<BarcodeFormat>();
-        if(mSelectedIndices == null || mSelectedIndices.isEmpty()) {
+        if (mSelectedIndices == null || mSelectedIndices.isEmpty()) {
             mSelectedIndices = new ArrayList<Integer>();
-            for(int i = 0; i < ZXingScannerView.ALL_FORMATS.size(); i++) {
+            for (int i = 0; i < ZXingScannerView.ALL_FORMATS.size(); i++) {
                 mSelectedIndices.add(i);
             }
         }
 
-        for(int index : mSelectedIndices) {
+        for (int index : mSelectedIndices) {
             formats.add(ZXingScannerView.ALL_FORMATS.get(index));
         }
-        if(mScannerView != null) {
+        if (mScannerView != null) {
             mScannerView.setFormats(formats);
         }
     }
@@ -150,5 +156,5 @@ public class ScanTrackingActivity extends Activity implements ZXingScannerView.R
         mScannerView.stopCamera();
     }
 
-	
+
 }

@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2016.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.main;
@@ -34,97 +39,97 @@ import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.Vector;
 
-public class HomeFragment extends Fragment  implements RequestInterface{
+public class HomeFragment extends Fragment implements RequestInterface {
 
-	private View rootView;
-	private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hha");
-	private Object[] AmountsData, OrdersData;
+    private View rootView;
+    private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hha");
+    private Object[] AmountsData, OrdersData;
     /**
      * The {@link Tracker} used to record screen views.
      */
     private Tracker mTracker;
 
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.home, null);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.home, null);
 
-		RequestTask task;
-		 
-		Vector params = new Vector();		 	 
-		task = new RequestTask(this, getActivity(),"magapp_dashboard.charts");
-        Log.e("Sashas","HomeFragment:onCreateView");
-		task.execute(params);
+        RequestTask task;
+
+        Vector params = new Vector();
+        task = new RequestTask(this, getActivity(), "magapp_dashboard.charts");
+        Log.e("Sashas", "HomeFragment:onCreateView");
+        task.execute(params);
         setHasOptionsMenu(true);
         // Obtain the shared Tracker instance.
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
         mTracker = application.getDefaultTracker();
-		return rootView;
-	}
+        return rootView;
+    }
 
-	public void onPreExecute(){		
-		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1); 
-		progressBar.setVisibility(View.VISIBLE);
+    public void onPreExecute() {
+        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.amountsChart).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.ordersChart).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.OrdersStats).setVisibility(View.INVISIBLE);
         createChart("amounts");
         createChart("orders");
-	}
+    }
 
     @Override
-	 public void doPostExecute(Object result, String result_api_point) {
-		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
-		progressBar.setVisibility(View.INVISIBLE); 	 		
-		SetChartData(result);
+    public void doPostExecute(Object result, String result_api_point) {
+        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.INVISIBLE);
+        SetChartData(result);
         rootView.findViewById(R.id.amountsChart).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.ordersChart).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.OrdersStats).setVisibility(View.VISIBLE);
-	 }
-	 
-	 public void RequestFailed(String error) {
-		((BaseActivity)getActivity()).ShowMessage(error);
-		ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);  
-		progressBar.setVisibility(View.INVISIBLE); 			
-		Intent Login = new Intent(getActivity(), LoginActivity.class);
-		this.startActivity(Login);
-		getActivity().finish();		 
-	 }
+    }
 
-	 public void createChart(String code){
+    public void RequestFailed(String error) {
+        ((BaseActivity) getActivity()).ShowMessage(error);
+        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.INVISIBLE);
+        Intent Login = new Intent(getActivity(), LoginActivity.class);
+        this.startActivity(Login);
+        getActivity().finish();
+    }
 
-	    LineChart chart;
+    public void createChart(String code) {
 
-	     if (code.equals("amounts")) {
-             chart = (LineChart) rootView.findViewById(R.id.amountsChart);
-         } else {
-             chart = (LineChart) rootView.findViewById(R.id.ordersChart);
-         }
-
-     }
-
-
-	public void PrepareChartData(HashMap ordersInfoObj, HashMap amountsInfoObj) {
-
-		TextView Revenue = (TextView) rootView.findViewById(R.id.OrdersRevenueValue);
-		TextView Tax = (TextView) rootView.findViewById(R.id.OrdersTaxValue);
-		TextView Shipping = (TextView) rootView.findViewById(R.id.OrdersShippingValue);
-		TextView Qty = (TextView) rootView.findViewById(R.id.OrdersQtyValue);
-        Object[] totalsObj = (Object[]) ordersInfoObj.get("totals");
-		updateChart("amounts",amountsInfoObj);
-        updateChart("orders",ordersInfoObj);
-
-		Revenue.setText(totalsObj[0].toString());
-		Tax.setText(totalsObj[1].toString());
-		Shipping.setText(totalsObj[2].toString());
-		Qty.setText(totalsObj[3].toString());
-	}
-
-	public void updateChart(String code,HashMap chartInfo) {
         LineChart chart;
-        if (code.equals("amounts")){
+
+        if (code.equals("amounts")) {
             chart = (LineChart) rootView.findViewById(R.id.amountsChart);
-        } else{
+        } else {
+            chart = (LineChart) rootView.findViewById(R.id.ordersChart);
+        }
+
+    }
+
+
+    public void PrepareChartData(HashMap ordersInfoObj, HashMap amountsInfoObj) {
+
+        TextView Revenue = (TextView) rootView.findViewById(R.id.OrdersRevenueValue);
+        TextView Tax = (TextView) rootView.findViewById(R.id.OrdersTaxValue);
+        TextView Shipping = (TextView) rootView.findViewById(R.id.OrdersShippingValue);
+        TextView Qty = (TextView) rootView.findViewById(R.id.OrdersQtyValue);
+        Object[] totalsObj = (Object[]) ordersInfoObj.get("totals");
+        updateChart("amounts", amountsInfoObj);
+        updateChart("orders", ordersInfoObj);
+
+        Revenue.setText(totalsObj[0].toString());
+        Tax.setText(totalsObj[1].toString());
+        Shipping.setText(totalsObj[2].toString());
+        Qty.setText(totalsObj[3].toString());
+    }
+
+    public void updateChart(String code, HashMap chartInfo) {
+        LineChart chart;
+        if (code.equals("amounts")) {
+            chart = (LineChart) rootView.findViewById(R.id.amountsChart);
+        } else {
             chart = (LineChart) rootView.findViewById(R.id.ordersChart);
         }
 
@@ -138,10 +143,10 @@ public class HomeFragment extends Fragment  implements RequestInterface{
         for (int i = 0; i < xObj.length; i++) {
             java.util.Date date = new java.util.Date(((Number) xObj[i]).longValue() * 1000);
             xVals.add(OrdersDateFormat.format(date));
-            if (code.equals("amounts")){
-                yVals.add(new Entry(  i, Float.valueOf(yObj[i].toString())));
-            } else{
-                yVals.add(new Entry(i,new Double(yObj[i].toString()).intValue()));
+            if (code.equals("amounts")) {
+                yVals.add(new Entry(i, Float.valueOf(yObj[i].toString())));
+            } else {
+                yVals.add(new Entry(i, new Double(yObj[i].toString()).intValue()));
             }
         }
 
@@ -149,7 +154,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
         xAxis.setValueFormatter(new DateValueFormatter(xVals));
 
         LineDataSet chartDataSet;
-        if (code.equals("amounts")){
+        if (code.equals("amounts")) {
             chartDataSet = new LineDataSet(yVals, "Amounts");
         } else {
             chartDataSet = new LineDataSet(yVals, "Orders");
@@ -199,7 +204,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
         chart.setTouchEnabled(false);
         chart.setPinchZoom(false);
         chart.setDrawGridBackground(false);
-        Description chartDescription= new Description();
+        Description chartDescription = new Description();
         chartDescription.setEnabled(false);
         chart.setDescription(chartDescription);
         chart.setBackgroundColor(Color.WHITE);
@@ -208,18 +213,18 @@ public class HomeFragment extends Fragment  implements RequestInterface{
         chart.invalidate();
     }
 
-	public void SetChartData(Object data) {
-		HashMap data_map = (HashMap) data;
-		OrdersData = (Object[]) data_map.get("orders");
-		AmountsData = (Object[]) data_map.get("amounts");
+    public void SetChartData(Object data) {
+        HashMap data_map = (HashMap) data;
+        OrdersData = (Object[]) data_map.get("orders");
+        AmountsData = (Object[]) data_map.get("amounts");
         OrdersDateFormat = new SimpleDateFormat("hha");
-        PrepareChartData((HashMap) OrdersData[0],(HashMap)  AmountsData[0]);
-	}
+        PrepareChartData((HashMap) OrdersData[0], (HashMap) AmountsData[0]);
+    }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item=menu.findItem(R.id.action_period);
-        if (item!=null)
+        MenuItem item = menu.findItem(R.id.action_period);
+        if (item != null)
             item.setVisible(true);
 
     }
@@ -227,7 +232,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Log.e("Sashas","HomeFragment:onOptionsItemSelected");
+        Log.e("Sashas", "HomeFragment:onOptionsItemSelected");
         switch (item.getItemId()) {
             case R.id.tfhours:
                 OrdersDateFormat = new SimpleDateFormat("hha");
@@ -235,7 +240,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("24H")
                         .build());
-				PrepareChartData((HashMap) OrdersData[0],(HashMap)  AmountsData[0]);
+                PrepareChartData((HashMap) OrdersData[0], (HashMap) AmountsData[0]);
                 return true;
 
             case R.id.week:
@@ -244,7 +249,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("7 Days")
                         .build());
-				PrepareChartData((HashMap) OrdersData[1],(HashMap)  AmountsData[1]);
+                PrepareChartData((HashMap) OrdersData[1], (HashMap) AmountsData[1]);
                 return true;
 
             case R.id.month:
@@ -253,7 +258,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("Month")
                         .build());
-				PrepareChartData((HashMap) OrdersData[2],(HashMap)  AmountsData[2]);
+                PrepareChartData((HashMap) OrdersData[2], (HashMap) AmountsData[2]);
                 return true;
 
             case R.id.ytd:
@@ -262,7 +267,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("YTD")
                         .build());
-				PrepareChartData((HashMap) OrdersData[3],(HashMap)  AmountsData[3]);
+                PrepareChartData((HashMap) OrdersData[3], (HashMap) AmountsData[3]);
                 return true;
 
             case R.id.twoytd:
@@ -271,7 +276,7 @@ public class HomeFragment extends Fragment  implements RequestInterface{
                         .setCategory("Chart")
                         .setAction("2YTD")
                         .build());
-                PrepareChartData((HashMap) OrdersData[4],(HashMap)  AmountsData[4]);
+                PrepareChartData((HashMap) OrdersData[4], (HashMap) AmountsData[4]);
                 return true;
 
             default:

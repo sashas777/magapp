@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.creditmemo;
@@ -24,15 +29,15 @@ public class CreditMemoInfoFragment extends Fragment {
 
 
     public View rootView;
-    String shipment_increment_id,api_point;
+    String shipment_increment_id, api_point;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.order_info_fragment, null);
 
-        shipment_increment_id=getArguments().getString("increment_id");
-        api_point=getArguments().getString("api_point");
-        HashMap item= (HashMap) getArguments().getSerializable("item");
+        shipment_increment_id = getArguments().getString("increment_id");
+        api_point = getArguments().getString("api_point");
+        HashMap item = (HashMap) getArguments().getSerializable("item");
 
         FillData(item);
 
@@ -56,10 +61,10 @@ public class CreditMemoInfoFragment extends Fragment {
             items_array.add(item_data);
         }
         params.putSerializable("items", items_array);
-        Fragment items_card =  new ItemsFragment();
+        Fragment items_card = new ItemsFragment();
         items_card.setArguments(params);
         mFragmentTransaction.add(R.id.items_card, items_card);
-		/* Totals */
+        /* Totals */
         params = new Bundle();
         Object[] totals = (Object[]) creditmemo.get("totals");
         params.putSerializable("totals", totals);
@@ -69,9 +74,6 @@ public class CreditMemoInfoFragment extends Fragment {
 		/* Totals */
         mFragmentTransaction.commit();
     }
-
-
-
 
 
 }

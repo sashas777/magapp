@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.shipment;
@@ -17,6 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.R;
@@ -35,11 +43,19 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
     String[] actions = new String[]{"Shipment", "Comments"};
     private CharSequence mTitle;
     public Integer menu_id = -1;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-
+        // [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // [END shared_tracker]
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
@@ -48,33 +64,37 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
 
         Bundle vars = getIntent().getExtras();
         shipment_increment_id = vars.getString("increment_id");
-        String tracking_number= vars.getString("tracking_number");
+        String tracking_number = vars.getString("tracking_number");
 
 
         FragmentManager fragmentManager = getFragmentManager();
-        Bundle params=new Bundle();
+        Bundle params = new Bundle();
         Fragment screen;
 
-        if (tracking_number!=null) {
+        if (tracking_number != null) {
             params.putString("tracking_number", tracking_number);
 
-            if (vars.getString("carrier")!=null)
+            if (vars.getString("carrier") != null)
                 params.putString("carrier", vars.getString("carrier"));
 
-            if (vars.getString("carrier_title")!=null)
+            if (vars.getString("carrier_title") != null)
                 params.putString("carrier_title", vars.getString("carrier_title"));
 
-            if (vars.getString("notify_customer")!=null)
+            if (vars.getString("notify_customer") != null)
                 params.putString("notify_customer", vars.getString("notify_customer"));
 
             screen = new AddTrackingFragment();
-        }else {
+            mTracker.setScreenName("AddTrackingFragment");
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        } else {
+            mTracker.setScreenName("ShipmentInfoFragment");
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
             screen = new ShipmentInfoFragment();
         }
 
 
         params.putString("increment_id", shipment_increment_id);
-        params.putString("api_point","magapp_sales_order_shipment.info");
+        params.putString("api_point", "magapp_sales_order_shipment.info");
         screen.setArguments(params);
 
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("shipment_info_activity").commit();
@@ -96,7 +116,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
     }
 
     /*For comments?*/
-    public void setComments(Object[] comments_obj){
+    public void setComments(Object[] comments_obj) {
         comments = new ArrayList<HashMap>();
         for (Object comment_item : comments_obj) {
             HashMap item_data = (HashMap) comment_item;
@@ -104,7 +124,9 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         }
     }
 
-    public ArrayList  getComments(){ return comments;}
+    public ArrayList getComments() {
+        return comments;
+    }
 
     /* Additional for actionbar */
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -114,21 +136,25 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         }
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new Fragment();
-        Bundle params=new Bundle();
+        Bundle params = new Bundle();
 
         switch (itemPosition) {
             case 0:
+                mTracker.setScreenName("ShipmentInfoFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new ShipmentInfoFragment();
                 params.putString("increment_id", shipment_increment_id);
-                params.putString("api_point","magapp_sales_order_shipment.info");
+                params.putString("api_point", "magapp_sales_order_shipment.info");
                 screen.setArguments(params);
                 break;
 
             case 1:
+                mTracker.setScreenName("CommentsFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new CommentsFragment();
-                params.putString("status",  "");
+                params.putString("status", "");
                 params.putString("increment_id", shipment_increment_id);
-                params.putString("api_point","sales_order_shipment.addComment");
+                params.putString("api_point", "sales_order_shipment.addComment");
                 params.putSerializable("comments", comments);
                 screen.setArguments(params);
                 break;
@@ -144,17 +170,21 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         Bundle params;
         switch (item.getItemId()) {
             case android.R.id.home:
+                mTracker.setScreenName("OrderInfoActivity");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
                 return true;
 
             case R.id.add_track:
+                mTracker.setScreenName("AddTrackingFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 params = new Bundle();
                 params.putString("increment_id", shipment_increment_id);
-                Fragment add_tracking_fragment =  new AddTrackingFragment();
+                Fragment add_tracking_fragment = new AddTrackingFragment();
                 add_tracking_fragment.setArguments(params);
-                FragmentTransaction mFragmentTransaction =  getFragmentManager().beginTransaction();
+                FragmentTransaction mFragmentTransaction = getFragmentManager().beginTransaction();
 
                 mFragmentTransaction.replace(R.id.container, add_tracking_fragment).addToBackStack("shipment_info_activity").commit();
                 return true;
@@ -167,14 +197,14 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
-    public void showProgressBar(){
-        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar1);
+    public void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressBar(){
+    public void hideProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
-    }	
-	
+    }
+
 }

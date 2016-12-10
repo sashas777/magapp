@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2015.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.invoice;
@@ -19,6 +24,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.R;
@@ -28,9 +36,9 @@ import com.magapp.order.OrderInfoActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class InvoiceInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface,ActivityInfoInterface {
+public class InvoiceInfoActivity extends Activity implements OnNavigationListener, ActivityLoadInterface, ActivityInfoInterface {
 
-   // private int order_id;
+    // private int order_id;
     private String invoice_increment_id;
     private String order_increment_id;
     private ArrayList<HashMap> comments;
@@ -38,11 +46,19 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
     String[] actions = new String[]{"Invoice", "Comments"};
     private CharSequence mTitle;
     public Integer menu_id = -1;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-
+        // [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // [END shared_tracker]
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
@@ -50,14 +66,16 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle vars = getIntent().getExtras();
-      //  order_id = vars.getInt("order_id");
+        //  order_id = vars.getInt("order_id");
         invoice_increment_id = vars.getString("increment_id");
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new InvoiceInfoFragment();
         Bundle params = new Bundle();
         params.putString("increment_id", invoice_increment_id);
-        params.putString("api_point","magapp_sales_order_invoice.info");
+        params.putString("api_point", "magapp_sales_order_invoice.info");
         screen.setArguments(params);
+        mTracker.setScreenName("InvoiceInfoFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_info_activity").commit();
 
     }
@@ -67,7 +85,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         order_increment_id = order_increment_id_val;
     }
 
-    public void setComments(Object[] comments_obj){
+    public void setComments(Object[] comments_obj) {
         comments = new ArrayList<HashMap>();
         for (Object comment_item : comments_obj) {
             HashMap item_data = (HashMap) comment_item;
@@ -75,7 +93,9 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         }
     }
 
-    public ArrayList  getComments( ){ return comments;}
+    public ArrayList getComments() {
+        return comments;
+    }
 
     /* Additional for actionbar */
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
@@ -88,17 +108,21 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         Bundle params = new Bundle();
         switch (itemPosition) {
             case 0:
+                mTracker.setScreenName("InvoiceInfoFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new InvoiceInfoFragment();
                 params.putString("increment_id", invoice_increment_id);
-                params.putString("api_point","magapp_sales_order_invoice.info");
+                params.putString("api_point", "magapp_sales_order_invoice.info");
                 screen.setArguments(params);
                 break;
 
             case 1:
                 screen = new CommentsFragment();
-                params.putString("status",  "");
+                mTracker.setScreenName("CommentsFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                params.putString("status", "");
                 params.putString("increment_id", invoice_increment_id);
-                params.putString("api_point","sales_order_invoice.addComment");
+                params.putString("api_point", "sales_order_invoice.addComment");
                 params.putSerializable("comments", comments);
                 screen.setArguments(params);
                 break;
@@ -113,6 +137,8 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                mTracker.setScreenName("OrderInfoActivity");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
@@ -125,14 +151,14 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
-    public void showProgressBar(){
-        ProgressBar progressBar =(ProgressBar) findViewById(R.id.progressBar1);
+    public void showProgressBar() {
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressBar(){
+    public void hideProgressBar() {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
-    }	
-	
+    }
+
 }

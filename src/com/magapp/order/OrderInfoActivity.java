@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2016.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.order;
@@ -18,6 +23,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.common.InvoiceListFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
@@ -32,24 +40,31 @@ import java.util.Vector;
 
 public class OrderInfoActivity extends FragmentActivity implements OnNavigationListener, ActivityLoadInterface, RequestInterface {
 
-	private String order_increment_id,status;
-	private Integer order_id;
+    private String order_increment_id, status;
+    private Integer order_id;
     private ArrayList<HashMap> comments;
 
-	public Integer menu_id = -1;
+    public Integer menu_id = -1;
+    /**
+     * The {@link Tracker} used to record screen views.
+     */
+    private Tracker mTracker;
 
-
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.orderinfo);
-
-		getActionBar().setDisplayShowTitleEnabled(false);
-		getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.orderinfo);
+        // [START shared_tracker]
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        // [END shared_tracker]
+        getActionBar().setDisplayShowTitleEnabled(false);
+        getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<String> mSpinnerAdapter;
         mSpinnerAdapter = new ArrayAdapter<>(getBaseContext(), R.layout.custom_spinner_row_white, new ArrayList<String>());
 
         getActionBar().setListNavigationCallbacks(mSpinnerAdapter, this);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSpinnerAdapter.add("Order");
         mSpinnerAdapter.add("Invoice");
@@ -58,32 +73,36 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
         mSpinnerAdapter.add("Comments");
         mSpinnerAdapter.notifyDataSetChanged();
 
-		Bundle vars = getIntent().getExtras();
-		order_increment_id = vars.getString("order_increment_id");
+        Bundle vars = getIntent().getExtras();
+        order_increment_id = vars.getString("order_increment_id");
         Refresh();
 
 
-	}
+    }
 
     /* Execute all tasks when activity loads*/
-    public void Refresh(){
+    public void Refresh() {
         Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
         RequestTask task;
         HashMap<String, String> map_filter = new HashMap<String, String>();
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Refresh")
+                .build());
         map_filter.put("order_increment_id", order_increment_id);
         params.add(map_filter);
-        task = new RequestTask(this, this,"magapp_sales_order.info");
+        task = new RequestTask(this, this, "magapp_sales_order.info");
         task.execute(params);
 
     }
 
 
     /*@todo Get rid of it */
-	public void  setOrderId(Integer order_id_val){
-		order_id=order_id_val;
-	}
+    public void setOrderId(Integer order_id_val) {
+        order_id = order_id_val;
+    }
 
-    public void setComments(Object[] comments_obj){
+    public void setComments(Object[] comments_obj) {
         comments = new ArrayList<HashMap>();
         for (Object comment_item : comments_obj) {
             HashMap item_data = (HashMap) comment_item;
@@ -91,111 +110,136 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
         }
     }
 
-    public ArrayList  getComments( ){ return comments;}
-
-    public void setStatus(String status_val){
-        status=status_val;
+    public ArrayList getComments() {
+        return comments;
     }
-    public String  getStatus( ){ return status;}
+
+    public void setStatus(String status_val) {
+        status = status_val;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 
 
-	/* Additional for actionbar */
-	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-		if (menu_id == -1) {
-			menu_id = 0;
-			return false;
-		}
-		FragmentManager fragmentManager = getFragmentManager();
-		Fragment screen = new Fragment();
+    /* Additional for actionbar */
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        if (menu_id == -1) {
+            menu_id = 0;
+            return false;
+        }
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment screen = new Fragment();
         Bundle params = new Bundle();
-		switch (itemPosition) {
-		case 0:
-            Refresh();
-			break;
-		case 1:
-			screen = new InvoiceListFragment();
-            params.putInt("order_id", order_id);
-            params.putString("entity_name", "Invoice");
-            params.putString("api_point","sales_order_invoice.list");
-            screen.setArguments(params);
-			break;
-        case 2:
-            screen = new InvoiceListFragment();
-            params.putInt("order_id", order_id);
-            params.putString("entity_name", "Shipment");
-            params.putString("api_point","sales_order_shipment.list");
-            screen.setArguments(params);
-            break;
-        case 3:
-            screen = new InvoiceListFragment();
-            params.putInt("order_id", order_id);
-            params.putString("entity_name", "Credit Memo");
-            params.putString("api_point","order_creditmemo.list");
-            screen.setArguments(params);
-            break;
-		case 4:
-            screen = new CommentsFragment();
-            params.putString("status", status);
-            params.putString("increment_id", order_increment_id);
-            params.putString("api_point","sales_order.addComment");
-            params.putSerializable("comments", comments);
-            screen.setArguments(params);
-            break;
-		}
-		
-		fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("order_info_activity").commit();
+        switch (itemPosition) {
+            case 0:
+                Refresh();
+                break;
+            case 1:
+                mTracker.setScreenName("InvoiceListFragment::sales_order_invoice.list");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                screen = new InvoiceListFragment();
+                params.putInt("order_id", order_id);
+                params.putString("entity_name", "Invoice");
+                params.putString("api_point", "sales_order_invoice.list");
+                screen.setArguments(params);
+                break;
+            case 2:
+                mTracker.setScreenName("InvoiceListFragment::sales_order_shipment.list");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                screen = new InvoiceListFragment();
+                params.putInt("order_id", order_id);
+                params.putString("entity_name", "Shipment");
+                params.putString("api_point", "sales_order_shipment.list");
+                screen.setArguments(params);
+                break;
+            case 3:
+                mTracker.setScreenName("InvoiceListFragment::order_creditmemo.list");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                screen = new InvoiceListFragment();
+                params.putInt("order_id", order_id);
+                params.putString("entity_name", "Credit Memo");
+                params.putString("api_point", "order_creditmemo.list");
+                screen.setArguments(params);
+                break;
+            case 4:
+                mTracker.setScreenName("CommentsFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                screen = new CommentsFragment();
+                params.putString("status", status);
+                params.putString("increment_id", order_increment_id);
+                params.putString("api_point", "sales_order.addComment");
+                params.putSerializable("comments", comments);
+                screen.setArguments(params);
+                break;
+        }
+
+        fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("order_info_activity").commit();
 
         return false;
-	}
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
         RequestTask task;
         HashMap<String, String> map_filter = new HashMap<String, String>();
 
-		switch (item.getItemId()) {
+        switch (item.getItemId()) {
 
             case R.id.hold:
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Hold")
+                        .build());
                 map_filter.put("order_increment_id", order_increment_id);
                 params.add(map_filter);
-                task = new RequestTask(this, this,"sales_order.hold");
+                task = new RequestTask(this, this, "sales_order.hold");
                 task.execute(params);
-                ShowMessage("The Order #"+ order_increment_id +" has been put on hold.");
+                ShowMessage("The Order #" + order_increment_id + " has been put on hold.");
                 return true;
 
             case R.id.unhold:
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("UnHold")
+                        .build());
                 map_filter.put("order_increment_id", order_increment_id);
                 params.add(map_filter);
-                task = new RequestTask(this, this,"sales_order.unhold");
+                task = new RequestTask(this, this, "sales_order.unhold");
                 task.execute(params);
-                ShowMessage("The Order #"+ order_increment_id +" has been released from holding status.");
+                ShowMessage("The Order #" + order_increment_id + " has been released from holding status.");
                 return true;
 
             case R.id.cancel:
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("OrderCancel")
+                        .build());
                 map_filter.put("order_increment_id", order_increment_id);
                 params.add(map_filter);
-                task = new RequestTask(this,this,"sales_order.cancel");
+                task = new RequestTask(this, this, "sales_order.cancel");
                 task.execute(params);
-                ShowMessage("The Order #"+ order_increment_id +" has been cancelled.");
+                ShowMessage("The Order #" + order_increment_id + " has been cancelled.");
                 return true;
 
-			default:
-				return super.onOptionsItemSelected(item);
-		}
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
-	}
+    }
 
-	public void ShowMessage(String text) {
-		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-	}
+    public void ShowMessage(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
 
-    public void showProgressBar(){
-        LinearLayout Progress =(LinearLayout) findViewById(R.id.linlaHeaderProgress);
+    public void showProgressBar() {
+        LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressBar(){
+    public void hideProgressBar() {
         LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.GONE);
     }
@@ -207,15 +251,17 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
     @Override
     public void doPostExecute(Object result, String result_api_point) {
         hideProgressBar();
-        Log.e("Sashas","OrderInfoActivity::doPostExecute");
-        if(result instanceof HashMap) {
+        Log.e("Sashas", "OrderInfoActivity::doPostExecute");
+        if (result instanceof HashMap) {
             HashMap map = (HashMap) result;
             FragmentManager fragmentManager = getFragmentManager();
             Fragment screen = null;
             if (result_api_point.equals("magapp_sales_order.info")) {
+                mTracker.setScreenName("OrderInfoFragment");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new OrderInfoFragment();
-                Bundle params=new Bundle();
-                params.putSerializable("order",map);
+                Bundle params = new Bundle();
+                params.putSerializable("order", map);
                 screen.setArguments(params);
             }
 
@@ -223,7 +269,7 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
 
         } else if (result instanceof XMLRPCException) {
             ShowMessage(((XMLRPCException) result).getMessage());
-        }else {
+        } else {
             Refresh();
         }
     }
@@ -238,5 +284,4 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
     }
 
 
- 
 }

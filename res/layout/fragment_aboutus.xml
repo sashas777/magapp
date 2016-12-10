@@ -1,0 +1,61 @@
+<!--
+  ~ @category     Sashas
+  ~ @package      com.magapp
+  ~ @author       Sashas IT Support <support@sashas.org>
+  ~ @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
+  ~
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="top"
+                tools:context="com.magapp.main.LoginActivity">
+
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/login_background"/>
+    <TextView
+            android:text="@string/aboutus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="115dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:id="@+id/AboutUs"/>
+
+
+    <Button
+            android:id="@+id/sendEmail"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="75dp"
+            android:paddingRight="75dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_below="@+id/AboutUs"
+            android:layout_centerVertical="false"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/shape"
+            android:text="@string/send"
+
+
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+
+
+</RelativeLayout>

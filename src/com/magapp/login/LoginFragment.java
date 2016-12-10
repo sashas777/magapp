@@ -1,10 +1,10 @@
 /*
- * @category    Sashas
- * @package     Sashas_magapp
- * @author        Sashas IT Support <support@sashas.org>
- * @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
- * @license        http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
- * @link              https://play.google.com/store/apps/details?id=com.magapp.main
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
  */
 
@@ -50,9 +50,9 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
     private ProgressBar progressBar;
     private MagAuth auth;
 
-    private String maggapp_api_version = "1.2.1";
+    private String maggapp_api_version = "1.2.0";
     private String magapp_url = "http://www.extensions.sashas.org/magento-android-manager.html";
-    private String magapp_api_point="magapp.version";
+    private String magapp_api_point = "magapp.version";
     /**
      * The {@link Tracker} used to record screen views.
      */
@@ -199,8 +199,6 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
             default:
                 break;
         }
-
-
     }
 
     public void LoginAction() {
@@ -212,7 +210,6 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
         RequestTask task;
         task = new RequestTask(this, getActivity(), magapp_api_point);
         task.execute(params);
-
     }
 
     @Override
@@ -227,6 +224,7 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
                     .setCategory("Version")
                     .setAction(versionMap.get("version").toString())
                     .build());
+            Log.e("Sashas", "LoginFragment::doPostExecute::version::" + versionMap.get("version").toString());
             if (versionMap.get("version").equals(maggapp_api_version)) {
                 rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);
                 rootView.findViewById(R.id.AddAccount).setVisibility(View.VISIBLE);
@@ -234,7 +232,7 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
                 rootView.findViewById(R.id.checkAgain).setVisibility(View.INVISIBLE);
                 ShowSales();
             } else {
-                RequestFailed("Please install/update the extension at your Magento store.");
+                RequestFailed(getResources().getString(R.string.magapp_update));
             }
 
         } else {
@@ -251,7 +249,7 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
     public void RequestFailed(String error) {
         if (progressBar != null)
             progressBar.setVisibility(View.INVISIBLE);
-        auth.makeToast("Please install/update the extension at your Magento store.");
+        auth.makeToast(getResources().getString(R.string.magapp_update));
         rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.AddAccount).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.extensionUpdate).setVisibility(View.VISIBLE);

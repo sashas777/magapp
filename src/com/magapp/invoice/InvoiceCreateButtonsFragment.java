@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2016.  Sashas IT  Support
- * http://www.sashas.org
+ * @category     Sashas
+ * @package      com.magapp
+ * @author       Sashas IT Support <support@sashas.org>
+ * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link         https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.invoice;
@@ -22,17 +27,16 @@ import java.util.HashMap;
 import java.util.Vector;
 
 
-public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnClickListener, RequestInterface {
+public class InvoiceCreateButtonsFragment extends Fragment implements View.OnClickListener, RequestInterface {
     public View rootView;
-    private String order_increment_id,api_point;
+    private String order_increment_id, api_point;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        rootView  = inflater.inflate(R.layout.invoice_create_buttons, null);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.invoice_create_buttons, null);
 
-        order_increment_id=getArguments().getString("order_increment_id");
-        api_point=getArguments().getString("api_point");
+        order_increment_id = getArguments().getString("order_increment_id");
+        api_point = getArguments().getString("api_point");
 
         Button submitBtn = (Button) rootView.findViewById(R.id.submit);
         submitBtn.setOnClickListener(this);
@@ -42,15 +46,15 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
 
     public void SubmitInvoice() {
         /* Add Comment*/
-        boolean add_comment=((CheckBox) rootView.findViewById(R.id.comments)).isChecked();
+        boolean add_comment = ((CheckBox) rootView.findViewById(R.id.comments)).isChecked();
         /*Email*/
-        boolean email=((CheckBox) rootView.findViewById(R.id.email)).isChecked();
+        boolean email = ((CheckBox) rootView.findViewById(R.id.email)).isChecked();
         /*Get comment Value*/
-        String comment = ((ActivityCreateInterface)getActivity()).getComment();
-        if ( comment==null ||  comment.trim().equals("null") ||  comment.isEmpty() || comment.trim().length() <= 0)
-            comment="";
+        String comment = ((ActivityCreateInterface) getActivity()).getComment();
+        if (comment == null || comment.trim().equals("null") || comment.isEmpty() || comment.trim().length() <= 0)
+            comment = "";
         /*Items*/
-        HashMap itemsQty=((ActivityCreateInterface)getActivity()).GetOrderItemsIdQty();
+        HashMap itemsQty = ((ActivityCreateInterface) getActivity()).GetOrderItemsIdQty();
         /*Items*/
 
         Vector params = new Vector();
@@ -65,7 +69,7 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         params.add((email) ? 1 : 0);
         params.add((add_comment) ? 1 : 0);
 
-        task = new RequestTask(this, getActivity(),api_point);
+        task = new RequestTask(this, getActivity(), api_point);
         task.execute(params);
     }
 
@@ -79,23 +83,21 @@ public class InvoiceCreateButtonsFragment extends Fragment  implements View.OnCl
         }
     }
 
-    public void onPreExecute(){
-        ((ActivityLoadInterface)getActivity()).showProgressBar();
+    public void onPreExecute() {
+        ((ActivityLoadInterface) getActivity()).showProgressBar();
     }
 
     @Override
     public void doPostExecute(Object result, String result_api_point) {
-        ((ActivityLoadInterface)getActivity()).hideProgressBar();
-        ((ActivityCreateInterface)getActivity()).ShowSuccess(result.toString());
+        ((ActivityLoadInterface) getActivity()).hideProgressBar();
+        ((ActivityCreateInterface) getActivity()).ShowSuccess(result.toString());
     }
 
 
     public void RequestFailed(String error) {
-        ((ActivityLoadInterface)getActivity()).hideProgressBar();
-        ((ActivityLoadInterface)getActivity()).ShowMessage(error);
+        ((ActivityLoadInterface) getActivity()).hideProgressBar();
+        ((ActivityLoadInterface) getActivity()).ShowMessage(error);
     }
-
-
 
 
 }
