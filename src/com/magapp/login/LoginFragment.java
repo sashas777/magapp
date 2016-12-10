@@ -1,6 +1,11 @@
 /*
- * Copyright (c) 2016.  Sashas IT  Support
- * http://www.sashas.org
+ * @category    Sashas
+ * @package     Sashas_magapp
+ * @author        Sashas IT Support <support@sashas.org>
+ * @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license        http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ * @link              https://play.google.com/store/apps/details?id=com.magapp.main
+ *
  */
 
 package com.magapp.login;
@@ -11,13 +16,13 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -33,110 +38,135 @@ import org.xmlrpc.android.XMLRPCClient;
 import java.util.HashMap;
 import java.util.Vector;
 
-public class LoginFragment  extends Fragment    implements  OnClickListener, GetSession,RequestInterface {
-	
-	 
-	View rootView;	 
-	private String accountType = "com.magapp.main";
-	private String desired_preferense_file="magapp";	 
-	private XMLRPCClient client;
-	private String session=null;
-	private String url;
-	private ProgressBar progressBar;
-	private MagAuth auth;
+public class LoginFragment extends Fragment implements OnClickListener, GetSession, RequestInterface {
+
+
+    View rootView;
+    private String accountType = "com.magapp.main";
+    private String desired_preferense_file = "magapp";
+    private XMLRPCClient client;
+    private String session = null;
+    private String url;
+    private ProgressBar progressBar;
+    private MagAuth auth;
+
+    private String maggapp_api_version = "1.2.1";
+    private String magapp_url = "http://www.extensions.sashas.org/magento-android-manager.html";
+    private String magapp_api_point="magapp.version";
     /**
      * The {@link Tracker} used to record screen views.
      */
     private Tracker mTracker;
-	
-	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		      Bundle savedInstanceState) {
 
-		rootView  = inflater.inflate(R.layout.fragment_login, null);
-         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-         mTracker = application.getDefaultTracker();
-         mTracker.setScreenName("LoginFragment");
-         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-		Button LoginButton = (Button) rootView.findViewById(R.id.LoginWithAccount);
-		Button AddAccountButton = (Button) rootView.findViewById(R.id.AddAccount);
-		LoginButton.setOnClickListener(this);
-		AddAccountButton.setOnClickListener(this);
-		ShowProgressBar();
+        rootView = inflater.inflate(R.layout.fragment_login, null);
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+        mTracker.setScreenName("LoginFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+
+        rootView.findViewById(R.id.LoginWithAccount).setOnClickListener(this);
+        rootView.findViewById(R.id.AddAccount).setOnClickListener(this);
+        rootView.findViewById(R.id.extensionUpdate).setOnClickListener(this);
+        rootView.findViewById(R.id.checkAgain).setOnClickListener(this);
+        ShowProgressBar();
 
         rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.AddAccount).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.extensionUpdate).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.checkAgain).setVisibility(View.INVISIBLE);
 
-		auth=new MagAuth(this,getActivity(),0);
+        auth = new MagAuth(this, getActivity(), 0);
 
-		return rootView;
-	}
-	 
-	 public void SessionReturned(String ses, Boolean status){
+        return rootView;
+    }
 
-         if (progressBar!=null)
-		    progressBar.setVisibility(View.INVISIBLE);
-		 if (status) {
-			 session=ses;
-			 SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
-			 String store_url = settings.getString("store_url", null);
-			 url=store_url;
+    public void SessionReturned(String ses, Boolean status) {
 
-		 	 /* Check extension version*/
-             checkVersion();
-		 }else {
-			 auth.makeToast(ses);
-		 }
-	 }
-	 
-	 public void ShowProgressBar() {
-		  progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-		  progressBar.setVisibility(View.VISIBLE);		 
-	 }
-	 
- 
-	 
-	 @Override
-	 public void onResume() {
+        if (progressBar != null)
+            progressBar.setVisibility(View.INVISIBLE);
+        if (status) {
+            session = ses;
+            SharedPreferences settings = getActivity().getSharedPreferences(desired_preferense_file, 0);
+            String store_url = settings.getString("store_url", null);
+            url = store_url;
+            checkVersion();
+        } else {
+            auth.makeToast(ses);
+        }
+    }
 
-         mTracker.setScreenName("LoginFragment");
-         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-         mTracker.send(new HitBuilders.EventBuilder()
-                 .setCategory("Resume")
-                 .setAction("LoginFragment")
-                 .build());
-			super.onResume(); 
-			getActivity().invalidateOptionsMenu();
-		    return; 
-		}
+    public void ShowProgressBar() {
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
-	 public void ShowSales() {
-         mTracker.setScreenName("BaseActivity");
-         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-         mTracker.send(new HitBuilders.EventBuilder()
-                 .setCategory("Activity")
-                 .setAction("BaseActivity")
-                 .build());
 
-         Intent Base = new Intent(getActivity(),BaseActivity.class);
+    @Override
+    public void onResume() {
 
-		 this.startActivity(Base);
-		 getActivity().finish();
-	  }
- 
-	@Override
-	public void onClick(View v) {
-		 FragmentManager fragmentManager = getFragmentManager();  	  
-     	 Fragment screen=new Fragment();
-     	 AccountManager manager = AccountManager.get(getActivity());	
-     	 Account[]  accounts = manager.getAccountsByType(accountType);
-     	 
-		 switch (v.getId()) {
-		case R.id.LoginWithAccount:{
-			if ( accounts.length==0) {
-				screen=new AddAccountFragment();
+        mTracker.setScreenName("LoginFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Resume")
+                .setAction("LoginFragment")
+                .build());
+        super.onResume();
+        getActivity().invalidateOptionsMenu();
+        return;
+    }
+
+    public void ShowSales() {
+        mTracker.setScreenName("BaseActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Activity")
+                .setAction("BaseActivity")
+                .build());
+
+        Intent Base = new Intent(getActivity(), BaseActivity.class);
+
+        this.startActivity(Base);
+        getActivity().finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        FragmentManager fragmentManager = getFragmentManager();
+        Fragment screen = new Fragment();
+        AccountManager manager = AccountManager.get(getActivity());
+        Account[] accounts = manager.getAccountsByType(accountType);
+
+        switch (v.getId()) {
+            case R.id.LoginWithAccount: {
+                if (accounts.length == 0) {
+                    screen = new AddAccountFragment();
+                    mTracker.setScreenName("AddAccountFragment");
+                    mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Click")
+                            .setAction("AddAccountFragment")
+                            .build());
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.container, screen)
+                            .addToBackStack(null)
+                            .commit();
+                } else {
+                    LoginAction();
+                    mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                    mTracker.send(new HitBuilders.EventBuilder()
+                            .setCategory("Click")
+                            .setAction("LoginAction")
+                            .build());
+                    return;
+                }
+            }
+            break;
+            case R.id.AddAccount:
+                screen = new AddAccountFragment();
                 mTracker.setScreenName("AddAccountFragment");
                 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 mTracker.send(new HitBuilders.EventBuilder()
@@ -144,70 +174,43 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
                         .setAction("AddAccountFragment")
                         .build());
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container,screen)
+                        .replace(R.id.container, screen)
                         .addToBackStack(null)
                         .commit();
-            }else{
-				LoginAction();
+                break;
+            case R.id.extensionUpdate:
                 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 mTracker.send(new HitBuilders.EventBuilder()
                         .setCategory("Click")
-                        .setAction("LoginAction")
+                        .setAction("ExtensionUpdate")
                         .build());
-				return;
-			}
-		}						 
-			break;
-		case R.id.AddAccount:
-			screen=new AddAccountFragment();
-            mTracker.setScreenName("AddAccountFragment");
-            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-            mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Click")
-                    .setAction("AddAccountFragment")
-                    .build());
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container,screen)
-                    .addToBackStack(null)
-                    .commit();
-            break;
-         case R.id.extensionUpdate:
-            /*@todo open link*/
-             mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-             mTracker.send(new HitBuilders.EventBuilder()
-                     .setCategory("Click")
-                     .setAction("ExtensionUpdate")
-                     .build());
-             break;
-             case R.id.checkAgain:
-                 checkVersion();
-                 mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-                 mTracker.send(new HitBuilders.EventBuilder()
-                         .setCategory("Click")
-                         .setAction("CheckVersionAgain")
-                         .build());
-                 break;
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(magapp_url));
+                startActivity(intent);
+                break;
+            case R.id.checkAgain:
+                checkVersion();
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Click")
+                        .setAction("CheckVersionAgain")
+                        .build());
+                break;
 
-		default:
-			break;
-		}
+            default:
+                break;
+        }
 
 
+    }
 
+    public void LoginAction() {
+        auth = new MagAuth(this, getActivity(), 0);
+    }
 
-
-
-			 
-	}
-		 
-	public void LoginAction(){ 
-	      auth=new MagAuth(this,getActivity(),0);
-	}
-
-	public void checkVersion(){
+    public void checkVersion() {
         Vector params = new Vector();
         RequestTask task;
-        task = new RequestTask(this, getActivity(),"magapp.api_version");
+        task = new RequestTask(this, getActivity(), magapp_api_point);
         task.execute(params);
 
     }
@@ -215,11 +218,16 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
     @Override
     public void doPostExecute(Object result, String result_api_point) {
 
-        if (progressBar!=null)
+        if (progressBar != null)
             progressBar.setVisibility(View.INVISIBLE);
-        if(result instanceof HashMap) {
+
+        if (result instanceof HashMap) {
             HashMap versionMap = (HashMap) result;
-            if (versionMap.get("version")=="1.2.0") {
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory("Version")
+                    .setAction(versionMap.get("version").toString())
+                    .build());
+            if (versionMap.get("version").equals(maggapp_api_version)) {
                 rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);
                 rootView.findViewById(R.id.AddAccount).setVisibility(View.VISIBLE);
                 rootView.findViewById(R.id.extensionUpdate).setVisibility(View.INVISIBLE);
@@ -230,7 +238,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
             }
 
         } else {
-            Log.e("Sashas","LoginFragment::doPostExecute::else");
+            Log.e("Sashas", "LoginFragment::doPostExecute::else");
         }
     }
 
@@ -241,7 +249,7 @@ public class LoginFragment  extends Fragment    implements  OnClickListener, Get
 
     @Override
     public void RequestFailed(String error) {
-        if (progressBar!=null)
+        if (progressBar != null)
             progressBar.setVisibility(View.INVISIBLE);
         auth.makeToast("Please install/update the extension at your Magento store.");
         rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.INVISIBLE);

@@ -1,6 +1,11 @@
 <!--
-  ~ Copyright (c) 2016.  Sashas IT  Support
-  ~ http://www.sashas.org
+  ~ @category    Sashas
+  ~ @package     Sashas_magapp
+  ~ @author        Sashas IT Support <support@sashas.org>
+  ~ @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license        http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link              https://play.google.com/store/apps/details?id=com.magapp.main
+  ~
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,10 +23,19 @@
             android:id="@+id/WelcomeMessage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="10dp"
             android:gravity="top|center"
             android:text="@string/add_account_title"
+            android:textSize="18sp"/>
+
+    <TextView
+            android:id="@+id/WelcomeMessagePath"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/WelcomeMessage"
+            android:layout_marginTop="5dp"
+            android:gravity="top|center"
+            android:text="@string/add_account_path"
             android:textSize="18sp"/>
 
     <EditText
@@ -37,7 +51,7 @@
             android:id="@+id/AccountNameTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/WelcomeMessage"
+            android:layout_below="@+id/WelcomeMessagePath"
             android:layout_marginTop="30dp"
             android:labelFor="@id/AccountName"
             android:text="@string/add_account_name"

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2016.  Sashas IT  Support
-  ~ http://www.sashas.org
+  ~ @category    Sashas
+  ~ @package     Sashas_magapp
+  ~ @author        Sashas IT Support <support@sashas.org>
+  ~ @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license        http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link              https://play.google.com/store/apps/details?id=com.magapp.main
+  ~
   -->
 
 <resources>
@@ -38,8 +43,8 @@
  	<string name="NumberPlaceholder">0</string>
  	<string name="accounts">Accounts</string>
  	<string name="add_account">Add Account</string>
- 	<string name="add_account_title">Please fill out magento account information below</string>
- 	
+ 	<string name="add_account_title">Please Add information about your store. You can find it at the:</string>
+    <string name="add_account_path">System->Configuration->Magento Manager</string>
  	<string name="add_account_store_url">Store Url:</string>
  	<string name="add_account_username">Username:</string>
  	<string name="add_account_api_key">Api Key:</string>

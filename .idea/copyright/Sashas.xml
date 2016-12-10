@@ -1,9 +1,6 @@
 <component name="CopyrightManager">
   <copyright>
-    <option name="notice" value="Copyright (c) &amp;#36;today.year.  Sashas IT  Support&#10;http://www.sashas.org" />
-    <option name="keyword" value="Copyright" />
-    <option name="allowReplaceKeyword" value="" />
     <option name="myName" value="Sashas" />
-    <option name="myLocal" value="true" />
+    <option name="notice" value="@category    Sashas&#10;@package     Sashas_magapp&#10;@author        Sashas IT Support &lt;support@sashas.org&gt;&#10;@copyright   2007-&amp;#36;today.year Sashas IT Support Inc. (http://www.sashas.org)&#10;@license        http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)&#10;@link              https://play.google.com/store/apps/details?id=com.magapp.main&#10;" />
   </copyright>
 </component>
