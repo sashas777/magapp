@@ -18,7 +18,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
-import com.magapp.connect.LoginTask.FinishLogin;
 import com.magapp.main.NewOrderService;
 import org.xmlrpc.android.XMLRPCException;
 
@@ -26,7 +25,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class MagAuth implements FinishLogin {
+public class MagAuth implements FinishLoginInterface {
 
     private String accountType = "com.magapp.main";
     private String desired_preferense_file = "magapp";

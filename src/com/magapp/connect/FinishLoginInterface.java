@@ -9,11 +9,11 @@
  */
 
 package com.magapp.connect;
+
 /**
- * @todo refactor names and dependacies
+ * Created by Sashas on 12/14/2016.
  */
-
-public interface GetSession {
-    void SessionReturned(String result, Boolean status);
-
+public interface FinishLoginInterface {
+        void doFinishLoginPostExecute(Object result);
+        void onFinishLoginPreExecute();
 }

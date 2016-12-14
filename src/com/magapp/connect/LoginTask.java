@@ -18,18 +18,12 @@ import java.net.URI;
 
 public class LoginTask extends AsyncTask<Void, Void, Object> {
 
-    interface FinishLogin {
-        void doFinishLoginPostExecute(Object result);
-
-        void onFinishLoginPreExecute();
-    }
-
-    FinishLogin FinishLoginCallBack;
+    FinishLoginInterface FinishLoginCallBack;
     String api_url;
     String api_username = null;
     String api_password = null;
 
-    LoginTask(FinishLogin callback, String username, String password, String url) {
+    LoginTask(FinishLoginInterface callback, String username, String password, String url) {
         FinishLoginCallBack = callback;
         api_username = username;
         api_password = password;
