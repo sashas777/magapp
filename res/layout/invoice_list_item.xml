@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2016.  Sashas IT  Support
-  ~ http://www.sashas.org
+  ~ @category     Sashas
+  ~ @package      com.magapp
+  ~ @author       Sashas IT Support <support@sashas.org>
+  ~ @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
+  ~
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,8 +33,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:ellipsize="marquee"
-            android:singleLine="true"
-            android:textSize="12sp"/>
+            android:textSize="12sp" android:maxLines="1"/>
 
     <TextView
             android:layout_below="@id/InvoiceDescription"
@@ -39,8 +43,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:ellipsize="marquee"
-            android:singleLine="true"
-            android:textSize="12sp"/>
+            android:textSize="12sp" android:maxLines="1"/>
     <TextView
             android:id="@+id/increment_id"
             android:layout_width="wrap_content"

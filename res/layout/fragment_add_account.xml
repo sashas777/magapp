@@ -1,10 +1,10 @@
 <!--
-  ~ @category    Sashas
-  ~ @package     Sashas_magapp
-  ~ @author        Sashas IT Support <support@sashas.org>
-  ~ @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
-  ~ @license        http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
-  ~ @link              https://play.google.com/store/apps/details?id=com.magapp.main
+  ~ @category     Sashas
+  ~ @package      com.magapp
+  ~ @author       Sashas IT Support <support@sashas.org>
+  ~ @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
   ~
   -->
 
@@ -12,7 +12,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFFFFF"
+                android:background="@color/white"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"

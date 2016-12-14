@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2016.  Sashas IT  Support
-  ~ http://www.sashas.org
+  ~ @category     Sashas
+  ~ @package      com.magapp
+  ~ @author       Sashas IT Support <support@sashas.org>
+  ~ @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
+  ~
   -->
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
           android:color="#FFFFFF"
           style="?android:attr/spinnerDropDownItemStyle"
-          android:singleLine="true"
-          android:textSize="12dp"
+          android:textSize="12sp"
           android:layout_height="36dp"
           android:gravity="left|center_vertical"
           android:layout_width="fill_parent"
 
           android:ellipsize="marquee"
-/>
+          android:maxLines="1"/>

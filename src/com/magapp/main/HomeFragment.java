@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment implements RequestInterface {
      */
     private Tracker mTracker;
 
-
+    private MenuItem chartPeriod;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.home, null);
@@ -73,18 +73,25 @@ public class HomeFragment extends Fragment implements RequestInterface {
         rootView.findViewById(R.id.amountsChart).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.ordersChart).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.OrdersStats).setVisibility(View.INVISIBLE);
+        if (chartPeriod != null)
+            chartPeriod.setVisible(false);
         createChart("amounts");
         createChart("orders");
     }
 
     @Override
     public void doPostExecute(Object result, String result_api_point) {
-        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
-        progressBar.setVisibility(View.INVISIBLE);
-        SetChartData(result);
+        if (isAdded()) {
+            ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+            progressBar.setVisibility(View.INVISIBLE);
+            SetChartData(result);
+            if (chartPeriod != null)
+                chartPeriod.setVisible(false);
+        }
         rootView.findViewById(R.id.amountsChart).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.ordersChart).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.OrdersStats).setVisibility(View.VISIBLE);
+
     }
 
     public void RequestFailed(String error) {
@@ -225,7 +232,7 @@ public class HomeFragment extends Fragment implements RequestInterface {
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.action_period);
         if (item != null)
-            item.setVisible(true);
+            chartPeriod = item;
 
     }
 

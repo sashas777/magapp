@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ @category     Sashas
+  ~ @package      com.magapp
+  ~ @author       Sashas IT Support <support@sashas.org>
+  ~ @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
+  ~
+  -->
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -6,7 +16,7 @@
     <LinearLayout
             android:layout_width="fill_parent"
             android:id="@+id/wrapper_container"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#ffffff"
             android:orientation="vertical"
             android:gravity="center">
