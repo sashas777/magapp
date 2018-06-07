@@ -3,7 +3,7 @@
   ~ @category     Sashas
   ~ @package      com.magapp
   ~ @author       Sashas IT Support <support@sashas.org>
-  ~ @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
   ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
   ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
   ~
@@ -15,8 +15,8 @@
           android:versionName="3.2">
 
     <uses-sdk
-            android:minSdkVersion="19"
-            android:targetSdkVersion="25"/>
+        android:minSdkVersion="26"
+        android:targetSdkVersion="26" />
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"></uses-permission>
@@ -67,10 +67,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <application android:name="AnalyticsApplication">
-
-        </application>
-
 
         <meta-data
                 android:name="com.crashlytics.ApiKey"
@@ -80,5 +76,4 @@
                 android:value="9cfb95c672c2379dffe45a75d4897c4ac81439b3"
         />
     </application>
-
 </manifest>

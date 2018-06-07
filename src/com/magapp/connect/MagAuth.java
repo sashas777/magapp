@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -18,11 +18,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
+
 import com.magapp.main.NewOrderService;
-import org.xmlrpc.android.XMLRPCException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import de.timroes.axmlrpc.XMLRPCException;
 
 
 public class MagAuth implements FinishLoginInterface {

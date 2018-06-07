@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -15,9 +15,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -68,25 +73,27 @@ public class HomeFragment extends Fragment implements RequestInterface {
     }
 
     public void onPreExecute() {
-        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        ProgressBar progressBar = rootView.findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.amountsChart).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.ordersChart).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.OrdersStats).setVisibility(View.INVISIBLE);
+
         if (chartPeriod != null)
-            chartPeriod.setVisible(false);
+            chartPeriod.setVisible(true);
         createChart("amounts");
         createChart("orders");
     }
 
+
     @Override
     public void doPostExecute(Object result, String result_api_point) {
         if (isAdded()) {
-            ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+            ProgressBar progressBar = rootView.findViewById(R.id.progressBar1);
             progressBar.setVisibility(View.INVISIBLE);
             SetChartData(result);
             if (chartPeriod != null)
-                chartPeriod.setVisible(false);
+                chartPeriod.setVisible(true);
         }
         rootView.findViewById(R.id.amountsChart).setVisibility(View.VISIBLE);
         rootView.findViewById(R.id.ordersChart).setVisibility(View.VISIBLE);
@@ -96,7 +103,7 @@ public class HomeFragment extends Fragment implements RequestInterface {
 
     public void RequestFailed(String error) {
         ((BaseActivity) getActivity()).ShowMessage(error);
-        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        ProgressBar progressBar = rootView.findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
         Intent Login = new Intent(getActivity(), LoginActivity.class);
         this.startActivity(Login);
@@ -108,9 +115,9 @@ public class HomeFragment extends Fragment implements RequestInterface {
         LineChart chart;
 
         if (code.equals("amounts")) {
-            chart = (LineChart) rootView.findViewById(R.id.amountsChart);
+            chart = rootView.findViewById(R.id.amountsChart);
         } else {
-            chart = (LineChart) rootView.findViewById(R.id.ordersChart);
+            chart = rootView.findViewById(R.id.ordersChart);
         }
 
     }
@@ -118,10 +125,10 @@ public class HomeFragment extends Fragment implements RequestInterface {
 
     public void PrepareChartData(HashMap ordersInfoObj, HashMap amountsInfoObj) {
 
-        TextView Revenue = (TextView) rootView.findViewById(R.id.OrdersRevenueValue);
-        TextView Tax = (TextView) rootView.findViewById(R.id.OrdersTaxValue);
-        TextView Shipping = (TextView) rootView.findViewById(R.id.OrdersShippingValue);
-        TextView Qty = (TextView) rootView.findViewById(R.id.OrdersQtyValue);
+        TextView Revenue = rootView.findViewById(R.id.OrdersRevenueValue);
+        TextView Tax = rootView.findViewById(R.id.OrdersTaxValue);
+        TextView Shipping = rootView.findViewById(R.id.OrdersShippingValue);
+        TextView Qty = rootView.findViewById(R.id.OrdersQtyValue);
         Object[] totalsObj = (Object[]) ordersInfoObj.get("totals");
         updateChart("amounts", amountsInfoObj);
         updateChart("orders", ordersInfoObj);
@@ -135,9 +142,9 @@ public class HomeFragment extends Fragment implements RequestInterface {
     public void updateChart(String code, HashMap chartInfo) {
         LineChart chart;
         if (code.equals("amounts")) {
-            chart = (LineChart) rootView.findViewById(R.id.amountsChart);
+            chart = rootView.findViewById(R.id.amountsChart);
         } else {
-            chart = (LineChart) rootView.findViewById(R.id.ordersChart);
+            chart = rootView.findViewById(R.id.ordersChart);
         }
 
         ArrayList<String> xVals = new ArrayList<String>();

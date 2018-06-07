@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.gturri:aXMLRPC:master-SNAPSHOT@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.gturri/aXMLRPC/master-SNAPSHOT/6586496d7ac30fbcb60d21cacf29a9b78756dec4/aXMLRPC-master-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.gturri/aXMLRPC/master-SNAPSHOT/2cd5c433c5adc9e7a2ebfcb7c1775ba72714aab9/aXMLRPC-master-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

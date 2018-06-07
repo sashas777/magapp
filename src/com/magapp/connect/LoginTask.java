@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -11,10 +11,12 @@
 package com.magapp.connect;
 
 import android.os.AsyncTask;
-import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
 
-import java.net.URI;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import de.timroes.axmlrpc.XMLRPCClient;
+import de.timroes.axmlrpc.XMLRPCException;
 
 public class LoginTask extends AsyncTask<Void, Void, Object> {
 
@@ -37,7 +39,13 @@ public class LoginTask extends AsyncTask<Void, Void, Object> {
 
     protected Object doInBackground(Void... params) {
         String session = "";
-        URI uri = URI.create(api_url);
+        URL uri = null;
+        try {
+            uri = new URL(api_url);
+        } catch (MalformedURLException e) {
+            return e;
+        }
+
         XMLRPCClient client = new XMLRPCClient(uri);
         try {
             session = (String) client.call("login", api_username, api_password);

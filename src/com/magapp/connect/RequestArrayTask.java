@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -16,11 +16,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
 
-import java.net.URI;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Vector;
+
+import de.timroes.axmlrpc.XMLRPCClient;
+import de.timroes.axmlrpc.XMLRPCException;
+import de.timroes.axmlrpc.XMLRPCServerException;
 
 public class RequestArrayTask extends AsyncTask<Vector, Void, Object[]> implements GetSession {
 
@@ -46,10 +49,15 @@ public class RequestArrayTask extends AsyncTask<Vector, Void, Object[]> implemen
 
     protected Object[] doInBackground(Vector... params) {
 
-        Object[] result_info;
+        Object result_info;
         stored_params = params;
         String store_url = settings.getString("store_url", null);
-        URI uri = URI.create(store_url);
+        URL uri = null;
+        try {
+            uri = new URL(store_url);
+        } catch (MalformedURLException e) {
+            Log.e("Sashas", "RequestArrayTask::doInBackground:MalformedURLException " + e.getMessage());
+        }
         XMLRPCClient client = new XMLRPCClient(uri);
 
         try {
@@ -59,10 +67,18 @@ public class RequestArrayTask extends AsyncTask<Vector, Void, Object[]> implemen
 
             String session_id = settings.getString("session_id", null);
 
-            result_info = (Object[]) client.callEx("call", new Object[]{session_id, api_route, params[0]});
-            return result_info;
+            result_info = client.call("call", session_id, api_route, params[0]);
+            Log.e("Sashas", result_info.toString());
+            return new Object[]{result_info};
+        } catch (XMLRPCServerException e) {
+            Log.e("Sashas", "RequestArrayTask::doInBackground:XMLRPCServerException " + e.getMessage());
+            return new Object[]{e};
         } catch (XMLRPCException e) {
-            Log.e("Sashas", e.getMessage());
+            Log.e("Sashas", "RequestArrayTask::doInBackground:XMLRPCException " + e.getMessage());
+            e.printStackTrace();
+            return new Object[]{e};
+        } catch (Exception e) {
+            Log.e("Sashas", "RequestArrayTask::doInBackground:XMLRPCException " + e.getMessage());
             return new Object[]{e};
         }
     }

@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -16,11 +16,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import org.xmlrpc.android.XMLRPCClient;
-import org.xmlrpc.android.XMLRPCException;
 
-import java.net.URI;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Vector;
+
+import de.timroes.axmlrpc.XMLRPCClient;
+import de.timroes.axmlrpc.XMLRPCException;
+import de.timroes.axmlrpc.XMLRPCServerException;
 
 public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetSession {
 
@@ -49,7 +52,15 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
         Object result_info;
         stored_params = params;
         String store_url = settings.getString("store_url", null);
-        URI uri = URI.create(store_url);
+        URL uri = null;
+        try {
+            uri = new URL(store_url);
+        } catch (MalformedURLException e) {
+            Log.e("Sashas", "RequestTask::doInBackground::MalformedURLException");
+            Log.e("Sashas", e.getMessage());
+            cancel(true);
+        }
+
         XMLRPCClient client = new XMLRPCClient(uri);
 
         try {
@@ -58,8 +69,13 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
 
             String session_id = settings.getString("session_id", null);
 
-            result_info = client.callEx("call", new Object[]{session_id, api_route, params[0]});
+            result_info = client.call("call", session_id, api_route, params[0]);
             return result_info;
+        } catch (XMLRPCServerException ex) {
+            Log.e("Sashas", "RequestTask::doInBackground::XMLRPCServerException");
+            Log.e("Sashas", ex.getMessage());
+            cancel(true);
+            return ex;
         } catch (XMLRPCException e) {
             Log.e("Sashas", "RequestTask::doInBackground::XMLRPCException");
             Log.e("Sashas", e.getMessage());

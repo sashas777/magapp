@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.magapp.analytics.AnalyticsApplication;
@@ -32,11 +33,12 @@ import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.LoginActivity;
 import com.magapp.main.R;
-import org.xmlrpc.android.XMLRPCException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
+
+import de.timroes.axmlrpc.XMLRPCException;
 
 public class OrderInfoActivity extends FragmentActivity implements OnNavigationListener, ActivityLoadInterface, RequestInterface {
 
@@ -235,12 +237,12 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
     }
 
     public void showProgressBar() {
-        LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
+        LinearLayout Progress = findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
-        LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
+        LinearLayout Progress = findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.GONE);
     }
 

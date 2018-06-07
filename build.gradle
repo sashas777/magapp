@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -13,12 +13,13 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
-
+        maven { url "https://jitpack.io" }
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:3.1.2'
         classpath 'io.fabric.tools:gradle:1.+'
-        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.google.gms:google-services:3.2.1'
     }
 }
 
@@ -43,28 +44,26 @@ def computeVersionName() {
 }
 
 dependencies {
-    compile fileTree(include: '*.jar', dir: 'libs')
-    compile 'com.android.support:support-v4:18.0.+'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    /*implementation 'com.android.support:support-v4:18.0.+'-*/
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.3@aar') {
         transitive = true
     }
-    compile 'me.dm7.barcodescanner:zxing:1.6'
-    compile 'org.apache.commons:commons-lang3:3.0.+'
-    compile 'com.android.support:support-v13:21.0.0'
-    compile 'com.google.android.gms:play-services-analytics:9.2.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    implementation 'me.dm7.barcodescanner:zxing:1.6'
+    implementation 'org.apache.commons:commons-lang3:3.0.+'
+    /*implementation 'com.android.support:support-v13:21.0.0' */
+    implementation 'com.google.android.gms:play-services-analytics:10.2.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    implementation 'com.github.gturri:aXMLRPC:master-SNAPSHOT'
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 25
-        jackOptions {
-            enabled true
-        }
+        minSdkVersion 24
+        targetSdkVersion 27
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -96,7 +95,6 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
-    apply plugin: 'com.google.gms.google-services'
     productFlavors {
     }
 }
