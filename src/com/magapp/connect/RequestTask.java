@@ -61,7 +61,7 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
             cancel(true);
         }
 
-        XMLRPCClient client = new XMLRPCClient(uri);
+        XMLRPCClient client = new XMLRPCClient(uri, XMLRPCClient.FLAGS_NIL);
 
         try {
             if (!isOnline())
@@ -71,11 +71,11 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
 
             result_info = client.call("call", session_id, api_route, params[0]);
             return result_info;
-        } catch (XMLRPCServerException ex) {
+        } catch (XMLRPCServerException e) {
             Log.e("Sashas", "RequestTask::doInBackground::XMLRPCServerException");
-            Log.e("Sashas", ex.getMessage());
+            Log.e("Sashas", e.getMessage());
             cancel(true);
-            return ex;
+            return e;
         } catch (XMLRPCException e) {
             Log.e("Sashas", "RequestTask::doInBackground::XMLRPCException");
             Log.e("Sashas", e.getMessage());

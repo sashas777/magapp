@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
     private ProgressBar progressBar;
     private MagAuth auth;
 
-    private String maggapp_api_version = "1.2.0";
+    private String maggapp_api_version = "1.2.1";
     private String magapp_url = "http://www.extensions.sashas.org/magento-android-manager.html";
     private String magapp_api_point = "magapp.version";
     /**

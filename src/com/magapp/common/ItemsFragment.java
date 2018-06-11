@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.magapp.main.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -37,14 +38,14 @@ public class ItemsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_items_info, null);
 
 		/* Items list */
-        LinearLayout list = (LinearLayout) rootView.findViewById(R.id.items_list);
+        LinearLayout list = rootView.findViewById(R.id.items_list);
         /* Items list */
 
         ArrayList items = getArguments().getParcelableArrayList("items");
         String api_point = getArguments().getString("api_point");
         int items_coint = items.size();
         int item_iterator = 1;
-        String parent_id = "";
+        String parent_id = null;
         for (Object item : items) {
             HashMap item_data = (HashMap) item;
 
@@ -125,8 +126,9 @@ public class ItemsFragment extends Fragment {
                 parent_id = item_data.get("parent_item_id").toString();
             }
 
-            if (!parent_id.isEmpty() && item_data.get("parent_item_id").toString().isEmpty() && item_iterator != 1) {
-                parent_id = "";
+            /*@todo reanalyze and refactor */
+            if (parent_id != null && !parent_id.isEmpty() && item_data.get("parent_item_id") != null && !item_data.get("parent_item_id").toString().isEmpty() && item_iterator != 1) {
+                parent_id = null;
                 vi.findViewById(R.id.SeparatorTop).getLayoutParams().height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getActivity().getResources().getDisplayMetrics());
             }
 

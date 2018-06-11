@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -16,11 +16,17 @@ import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.magapp.analytics.AnalyticsApplication;
@@ -28,13 +34,23 @@ import com.magapp.common.InvoiceListAdapter;
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
 import com.magapp.order.OrderInfoActivity;
+
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.Vector;
 
 
 public class SalesListFragment extends ListFragment implements RequestArrayInterface {
@@ -124,13 +140,13 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 
 
     public void onPreExecute() {
-        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        ProgressBar progressBar = rootView.findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void doPostExecute(Object[] result, String result_api_point) {
-        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        ProgressBar progressBar = rootView.findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
         SortRows(result);
     }
@@ -138,7 +154,7 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 
     public void RequestFailed(String error) {
         ((BaseActivity) getActivity()).ShowMessage(error);
-        ProgressBar progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar1);
+        ProgressBar progressBar = rootView.findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
         Intent Login = new Intent(getActivity(), LoginActivity.class);
         this.startActivity(Login);

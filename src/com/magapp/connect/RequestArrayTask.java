@@ -49,7 +49,7 @@ public class RequestArrayTask extends AsyncTask<Vector, Void, Object[]> implemen
 
     protected Object[] doInBackground(Vector... params) {
 
-        Object result_info;
+        Object[] result_info;
         stored_params = params;
         String store_url = settings.getString("store_url", null);
         URL uri = null;
@@ -58,18 +58,15 @@ public class RequestArrayTask extends AsyncTask<Vector, Void, Object[]> implemen
         } catch (MalformedURLException e) {
             Log.e("Sashas", "RequestArrayTask::doInBackground:MalformedURLException " + e.getMessage());
         }
-        XMLRPCClient client = new XMLRPCClient(uri);
+        XMLRPCClient client = new XMLRPCClient(uri, XMLRPCClient.FLAGS_NIL);
 
         try {
             if (!isOnline())
                 throw new XMLRPCException("No internet connection");
 
-
             String session_id = settings.getString("session_id", null);
-
-            result_info = client.call("call", session_id, api_route, params[0]);
-            Log.e("Sashas", result_info.toString());
-            return new Object[]{result_info};
+            result_info = (Object[]) client.call("call", session_id, api_route, params[0]);
+            return result_info;
         } catch (XMLRPCServerException e) {
             Log.e("Sashas", "RequestArrayTask::doInBackground:XMLRPCServerException " + e.getMessage());
             return new Object[]{e};
