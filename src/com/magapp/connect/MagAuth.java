@@ -92,15 +92,16 @@ public class MagAuth implements FinishLoginInterface {
             task = new LoginTask(this, api_username, api_password, url);
             task.execute();
         } else if (!isOnline() && !(activity instanceof NewOrderService)) {
-            Log.e("Sashas", "No Internet Connection.");
+            Log.d("Sashas", "No Internet Connection.");
             makeToast("Oops. No network connection.");
         } else if ((api_password == null || url == null) && !(activity instanceof NewOrderService)) {
-            makeToast("Please magento account settings");
+            Log.d("Sashas", "No accounts");
+            task = new LoginTask(this, api_username, api_password, url);
+            task.execute();
         } else if (!(activity instanceof NewOrderService)) {
-            makeToast("Please select default magento account");
-            Log.e("Sashas", "Default Account Not Choosed.");
+            makeToast("Please select default account");
+            Log.d("Sashas", "Default account not chosen.");
         }
-
     }
 
     public void onFinishLoginPreExecute() {
@@ -154,10 +155,16 @@ public class MagAuth implements FinishLoginInterface {
     }
 
     public boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+        ConnectivityManager cm =
+                (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        Log.d("Sashas", String.valueOf(activeNetwork.getType()));
+        return isConnected;
     }
+
 
     public String HandleError(XMLRPCException error_obj) {
 

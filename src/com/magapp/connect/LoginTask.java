@@ -41,13 +41,22 @@ public class LoginTask extends AsyncTask<Void, Void, Object> {
         String session = "";
         URL uri = null;
         try {
+            if (api_url == null) {
+                throw new Exception("Please add a store");
+            }
+            if (api_username == null || api_password == null) {
+                throw new Exception("Please add a store");
+            }
             uri = new URL(api_url);
         } catch (MalformedURLException e) {
+            return e;
+        } catch (Exception e) {
             return e;
         }
 
         XMLRPCClient client = new XMLRPCClient(uri);
         try {
+
             session = (String) client.call("login", api_username, api_password);
             return session;
         } catch (XMLRPCException e) {
