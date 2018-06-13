@@ -27,9 +27,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.common.InvoiceListAdapter;
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
@@ -63,17 +60,11 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
     private int month;
     private int day;
     private String magapp_api_point = "magapp.version";
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_sales_list, null);
         setHasOptionsMenu(true);
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
         OrderList = new ArrayList<HashMap<String, String>>();
 
         adapter = new InvoiceListAdapter(getActivity(), OrderList);
@@ -129,10 +120,6 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.date_range) {
-            mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Action")
-                    .setAction("SalesDateSelector")
-                    .build());
             selectDate();
         }
         return super.onOptionsItemSelected(item);
@@ -208,10 +195,6 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
 
     @Override
     public void onResume() {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Resume")
-                .setAction("SalesListFragment")
-                .build());
         super.onResume();
         return;
     }
@@ -225,10 +208,6 @@ public class SalesListFragment extends ListFragment implements RequestArrayInter
     public boolean ShowOrderInfo(String OrderId) {
         if (OrderId.isEmpty())
             return false;
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("ShowOrderInfo")
-                .build());
         Intent OrderInfo = new Intent(getActivity(), OrderInfoActivity.class);
         OrderInfo.putExtra("order_increment_id", OrderId);
         getActivity().startActivity(OrderInfo);

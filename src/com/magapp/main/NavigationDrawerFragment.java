@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -22,13 +22,16 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.login.AccountsFragment;
 import com.magapp.login.AddAccountFragment;
 
@@ -69,10 +72,6 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     public NavigationDrawerFragment() {
     }
@@ -93,11 +92,6 @@ public class NavigationDrawerFragment extends Fragment {
                     .getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
-
         // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
     }
@@ -293,24 +287,16 @@ public class NavigationDrawerFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.settings: {
-                mTracker.setScreenName("SettingsFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new SettingsFragment();
                 break;
             }
             case R.id.accounts:
-                mTracker.setScreenName("AccountsFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new AccountsFragment();
                 break;
             case R.id.add_account:
-                mTracker.setScreenName("AddAccountFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new AddAccountFragment();
                 break;
             case R.id.about:
-                mTracker.setScreenName("FragmentAboutUs");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new FragmentAboutUs();
                 break;
             default:

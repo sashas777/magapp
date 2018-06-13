@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -15,11 +15,14 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
@@ -40,17 +43,11 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface {
 
     private Boolean can_cancel = false, can_capture = false;
     String invoice_increment_id, api_point;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.order_info_fragment, null);
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
+
         if (savedInstanceState != null) {
             invoice_increment_id = savedInstanceState.getString("increment_id");
             api_point = savedInstanceState.getString("api_point");
@@ -70,10 +67,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface {
         HashMap map_filter = new HashMap();
         map_filter.put("invoiceIncrementId", invoice_increment_id);
         params.add(map_filter);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("InvoiceInfoFragment::Refresh")
-                .build());
+
         task = new RequestTask(this, getActivity(), api_point);
         task.execute(params);
     }
@@ -169,10 +163,6 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface {
                 params.add(map_filter);
                 task = new RequestTask(this, getActivity(), "sales_order_invoice.cancel");
                 task.execute(params);
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("CancelInvoice")
-                        .build());
                 ShowMessage("The Invoice #" + invoice_increment_id + " has been cancelled.");
                 return true;
 
@@ -181,10 +171,7 @@ public class InvoiceInfoFragment extends Fragment implements RequestInterface {
                 params.add(map_filter);
                 task = new RequestTask(this, getActivity(), "sales_order_invoice.capture");
                 task.execute(params);
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("CaptureInvoice")
-                        .build());
+
                 ((ActivityLoadInterface) getActivity()).ShowMessage("The Invoice #" + invoice_increment_id + " has been captured.");
                 return true;
 

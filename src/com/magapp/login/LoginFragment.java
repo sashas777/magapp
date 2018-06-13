@@ -25,9 +25,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
 import com.magapp.connect.RequestInterface;
@@ -55,21 +52,12 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
     private String maggapp_api_version = "1.2.1";
     private String magapp_url = "http://www.extensions.sashas.org/magento-android-manager.html";
     private String magapp_api_point = "magapp.version";
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_login, null);
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        mTracker.setScreenName("LoginFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-
         rootView.findViewById(R.id.LoginWithAccount).setOnClickListener(this);
         rootView.findViewById(R.id.AddAccount).setOnClickListener(this);
         rootView.findViewById(R.id.extensionUpdate).setOnClickListener(this);
@@ -110,25 +98,12 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
     @Override
     public void onResume() {
 
-        mTracker.setScreenName("LoginFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Resume")
-                .setAction("LoginFragment")
-                .build());
         super.onResume();
         getActivity().invalidateOptionsMenu();
         return;
     }
 
     public void ShowSales() {
-        mTracker.setScreenName("BaseActivity");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Activity")
-                .setAction("BaseActivity")
-                .build());
-
         Intent Base = new Intent(getActivity(), BaseActivity.class);
 
         this.startActivity(Base);
@@ -146,56 +121,29 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
             case R.id.LoginWithAccount: {
                 if (accounts.length == 0) {
                     screen = new AddAccountFragment();
-                    mTracker.setScreenName("AddAccountFragment");
-                    mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-                    mTracker.send(new HitBuilders.EventBuilder()
-                            .setCategory("Click")
-                            .setAction("AddAccountFragment")
-                            .build());
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, screen)
                             .addToBackStack(null)
                             .commit();
                 } else {
                     LoginAction();
-                    mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-                    mTracker.send(new HitBuilders.EventBuilder()
-                            .setCategory("Click")
-                            .setAction("LoginAction")
-                            .build());
                     return;
                 }
             }
             break;
             case R.id.AddAccount:
                 screen = new AddAccountFragment();
-                mTracker.setScreenName("AddAccountFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Click")
-                        .setAction("AddAccountFragment")
-                        .build());
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, screen)
                         .addToBackStack(null)
                         .commit();
                 break;
             case R.id.extensionUpdate:
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Click")
-                        .setAction("ExtensionUpdate")
-                        .build());
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(magapp_url));
                 startActivity(intent);
                 break;
             case R.id.checkAgain:
                 checkVersion();
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Click")
-                        .setAction("CheckVersionAgain")
-                        .build());
                 break;
 
             default:
@@ -222,10 +170,6 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
 
         if (result instanceof HashMap) {
             HashMap versionMap = (HashMap) result;
-            mTracker.send(new HitBuilders.EventBuilder()
-                    .setCategory("Version")
-                    .setAction(versionMap.get("version").toString())
-                    .build());
             Log.e("Sashas", "LoginFragment::doPostExecute::version::" + versionMap.get("version").toString());
             if (versionMap.get("version").equals(maggapp_api_version)) {
                 rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);

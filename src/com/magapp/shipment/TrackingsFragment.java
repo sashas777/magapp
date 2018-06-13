@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -20,9 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
@@ -31,27 +29,24 @@ import com.magapp.main.R;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.TimeZone;
+import java.util.Vector;
 
 public class TrackingsFragment extends Fragment implements View.OnClickListener, RequestInterface {
 
     public View rootView;
     private LinearLayout general_clicked_wrapper;
     private String shipment_increment_id;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.linear_comments, null);
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-
 
 		/* Items list */
-        LinearLayout list = (LinearLayout) rootView.findViewById(R.id.container);
+        LinearLayout list = rootView.findViewById(R.id.container);
         /* Items list */
 
         ArrayList items = getArguments().getParcelableArrayList("items");
@@ -84,12 +79,12 @@ public class TrackingsFragment extends Fragment implements View.OnClickListener,
 
             ((TextView) vi.findViewById(R.id.tracking_title)).setText(title);
 
-            TextView tacking_element = ((TextView) vi.findViewById(R.id.tracking_number));
+            TextView tacking_element = vi.findViewById(R.id.tracking_number);
             tacking_element.setText(Html.fromHtml(tracking_number));
             tacking_element.setMovementMethod(LinkMovementMethod.getInstance());
 
             ((TextView) vi.findViewById(R.id.tracking_id)).setText(tracking_id);
-            Button removeBtn = (Button) vi.findViewById(R.id.remove);
+            Button removeBtn = vi.findViewById(R.id.remove);
             removeBtn.setOnClickListener(this);
 			/*Date*/
             DateFormat created_at_format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -116,10 +111,6 @@ public class TrackingsFragment extends Fragment implements View.OnClickListener,
 
         switch (view.getId()) {
             case R.id.remove:
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("removeTracking")
-                        .build());
                 View wrapper_text = ((View) view.getParent());
                 general_clicked_wrapper = (LinearLayout) wrapper_text.getParent().getParent().getParent();
                 String track_id = ((TextView) wrapper_text.findViewById(R.id.tracking_id)).getText().toString();
@@ -143,12 +134,9 @@ public class TrackingsFragment extends Fragment implements View.OnClickListener,
     @Override
     public void doPostExecute(Object result, String result_api_point) {
         ((ActivityLoadInterface) getActivity()).hideProgressBar();
-        LinearLayout list = (LinearLayout) rootView.findViewById(R.id.container);
+        LinearLayout list = rootView.findViewById(R.id.container);
         list.removeView(general_clicked_wrapper);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("AddTracking")
-                .build());
+
         ((ActivityLoadInterface) getActivity()).ShowMessage("Tracking number has been removed");
     }
 

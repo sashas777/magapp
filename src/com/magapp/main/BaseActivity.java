@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -15,14 +15,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class BaseActivity extends Activity implements
         NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -32,32 +30,36 @@ public class BaseActivity extends Activity implements
      * navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
+
     /**
      * Used to store the last screen title. For use in
      * {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
     public Integer menu_id;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
         // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
-        mTracker.setScreenName("HomeFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "screen");
+        params.putString(FirebaseAnalytics.Param.ITEM_NAME, "HomeFragment");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, params);
+
+
+
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, findViewById(R.id.drawer_layout));
 
     }
 
@@ -78,8 +80,7 @@ public class BaseActivity extends Activity implements
                 screen = new HomeFragment();
                 break;
             case 1:
-                mTracker.setScreenName("SalesListFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
                 screen = new SalesListFragment();
                 break;
             case 2:

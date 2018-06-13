@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -10,8 +10,12 @@
 
 package com.magapp.shipment;
 
-import android.app.*;
+import android.app.ActionBar;
 import android.app.ActionBar.OnNavigationListener;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -22,9 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.R;
@@ -43,19 +45,10 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
     String[] actions = new String[]{"Shipment", "Comments"};
     private CharSequence mTitle;
     public Integer menu_id = -1;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
@@ -84,11 +77,7 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
                 params.putString("notify_customer", vars.getString("notify_customer"));
 
             screen = new AddTrackingFragment();
-            mTracker.setScreenName("AddTrackingFragment");
-            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         } else {
-            mTracker.setScreenName("ShipmentInfoFragment");
-            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
             screen = new ShipmentInfoFragment();
         }
 
@@ -140,8 +129,6 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
 
         switch (itemPosition) {
             case 0:
-                mTracker.setScreenName("ShipmentInfoFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new ShipmentInfoFragment();
                 params.putString("increment_id", shipment_increment_id);
                 params.putString("api_point", "magapp_sales_order_shipment.info");
@@ -149,8 +136,6 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
                 break;
 
             case 1:
-                mTracker.setScreenName("CommentsFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new CommentsFragment();
                 params.putString("status", "");
                 params.putString("increment_id", shipment_increment_id);
@@ -170,16 +155,12 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
         Bundle params;
         switch (item.getItemId()) {
             case android.R.id.home:
-                mTracker.setScreenName("OrderInfoActivity");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
                 return true;
 
             case R.id.add_track:
-                mTracker.setScreenName("AddTrackingFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 params = new Bundle();
                 params.putString("increment_id", shipment_increment_id);
                 Fragment add_tracking_fragment = new AddTrackingFragment();
@@ -198,12 +179,12 @@ public class ShipmentInfoActivity extends Activity implements OnNavigationListen
     }
 
     public void showProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        ProgressBar progressBar = findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        ProgressBar progressBar = findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
     }
 

@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -25,9 +25,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityInfoInterface;
@@ -52,18 +51,14 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
     String[] actions = new String[]{"Credit Memo", "Comments"};
     private CharSequence mTitle;
     public Integer menu_id = -1;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
@@ -84,10 +79,8 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         map_filter.put("increment_id", creditmemo_increment_id);
         params.add(map_filter);
         task = new RequestTask(this, this, api_point);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("CreditMemoInfoActivity::Refresh")
-                .build());
+
+
         task.execute(params);
     }
 
@@ -108,8 +101,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         invalidateOptionsMenu();
 
         screen.setArguments(params);
-        mTracker.setScreenName("CreditMemoInfoFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("creditmemo_info_activity").commit();
     }
 
@@ -157,8 +149,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
 
             case 1:
                 screen = new CommentsFragment();
-                mTracker.setScreenName("CommentsFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
                 params.putString("status", "");
                 params.putString("increment_id", creditmemo_increment_id);
                 params.putString("api_point", "order_creditmemo.addComment");
@@ -177,8 +168,7 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
         Bundle params;
         switch (item.getItemId()) {
             case android.R.id.home:
-                mTracker.setScreenName("OrderInfoActivity");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
@@ -203,12 +193,12 @@ public class CreditMemoInfoActivity extends Activity implements OnNavigationList
     }
 
     public void showProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        ProgressBar progressBar = findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        ProgressBar progressBar = findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
     }
 

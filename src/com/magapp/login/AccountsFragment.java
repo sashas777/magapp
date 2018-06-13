@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -16,15 +16,18 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.*;
+import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.connect.GetSession;
 import com.magapp.connect.MagAuth;
 import com.magapp.main.R;
@@ -42,10 +45,6 @@ public class AccountsFragment extends Fragment implements OnItemClickListener, G
     private String desired_preferense_file = "magapp";
     private ArrayList<HashMap<String, String>> AccountList;
     private AccountsAdapter adapter;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,12 +52,7 @@ public class AccountsFragment extends Fragment implements OnItemClickListener, G
 
         rootView = inflater.inflate(R.layout.fragment_accounts, null);
 
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        mTracker.setScreenName("AccountsFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-        dataList = (ListView) rootView.findViewById(R.id.AccountsList);
+        dataList = rootView.findViewById(R.id.AccountsList);
 
         AccountList = new ArrayList<HashMap<String, String>>();
 
@@ -93,8 +87,6 @@ public class AccountsFragment extends Fragment implements OnItemClickListener, G
         Integer selected_index = -1;
 
         if (accounts.length == 0) {
-            mTracker.setScreenName("AddAccountFragment");
-            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -124,12 +116,6 @@ public class AccountsFragment extends Fragment implements OnItemClickListener, G
     @Override
     public void onResume() {
 
-        mTracker.setScreenName("AccountsFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Resume")
-                .setAction("AccountsFragment")
-                .build());
 
         super.onResume();
         getActivity().invalidateOptionsMenu();
@@ -145,10 +131,6 @@ public class AccountsFragment extends Fragment implements OnItemClickListener, G
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("selected_account_name", AccountNames[dataList.getCheckedItemPosition()]);
 
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Click")
-                .setAction("AccountSelect")
-                .build());
 
         editor.commit();
 
@@ -166,13 +148,7 @@ public class AccountsFragment extends Fragment implements OnItemClickListener, G
     public void SessionReturned(String ses, Boolean status) {
 
 
-        mTracker.setScreenName("AccountsFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Session")
-                .setAction("AccountsFragment::SessionReturned")
-                .build());
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -237,15 +213,9 @@ public class AccountsFragment extends Fragment implements OnItemClickListener, G
         dataList.invalidateViews();
         getActivity().invalidateOptionsMenu();
 
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Account")
-                .setAction("Remove")
-                .build());
 
         if (accounts.length == 0) {
 
-            mTracker.setScreenName("AddAccountFragment");
-            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()

@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -25,9 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.main.R;
 
 public class AddAccountFragment extends Fragment implements OnClickListener {
@@ -37,29 +35,21 @@ public class AddAccountFragment extends Fragment implements OnClickListener {
 
     private String accountType = "com.magapp.main";
     private String desired_preferense_file = "magapp";
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_add_account, null);
 
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        mTracker.setScreenName("AddAccountFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         String accountName = "";
         if (getArguments() != null) {
             accountName = getArguments().getString("account", "");
         }
-        EditText formAccName = (EditText) rootView.findViewById(R.id.AccountName);
-        EditText formUrl = (EditText) rootView.findViewById(R.id.url);
-        EditText formUsername = (EditText) rootView.findViewById(R.id.username);
-        EditText formPassword = (EditText) rootView.findViewById(R.id.password);
-        Button SaveAccButton = (Button) rootView.findViewById(R.id.save_acc);
+        EditText formAccName = rootView.findViewById(R.id.AccountName);
+        EditText formUrl = rootView.findViewById(R.id.url);
+        EditText formUsername = rootView.findViewById(R.id.username);
+        EditText formPassword = rootView.findViewById(R.id.password);
+        Button SaveAccButton = rootView.findViewById(R.id.save_acc);
 
         if (!accountName.isEmpty()) {
             AccountManager manager = AccountManager.get(getActivity());
@@ -86,20 +76,13 @@ public class AddAccountFragment extends Fragment implements OnClickListener {
         }
 
         SaveAccButton.setOnClickListener(this);
-        Button BackButton = (Button) rootView.findViewById(R.id.create_account_back_screen);
+        Button BackButton = rootView.findViewById(R.id.create_account_back_screen);
         BackButton.setOnClickListener(this);
         return rootView;
     }
 
     @Override
     public void onResume() {
-        mTracker.setScreenName("AddAccountFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Resume")
-                .setAction("AddAccountFragment")
-                .build());
-
         super.onResume();
         getActivity().invalidateOptionsMenu();
         return;
@@ -116,23 +99,12 @@ public class AddAccountFragment extends Fragment implements OnClickListener {
                 break;
             case R.id.create_account_back_screen: {
                 if (accounts.length == 0) {
-                    mTracker.setScreenName("LoginFragment");
-                    mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-                    mTracker.send(new HitBuilders.EventBuilder()
-                            .setCategory("Click")
-                            .setAction("LoginFragment")
-                            .build());
-
                     FragmentManager fragmentManager = getFragmentManager();
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, new LoginFragment())
                             .addToBackStack(null)
                             .commit();
                 } else {
-                    mTracker.send(new HitBuilders.EventBuilder()
-                            .setCategory("Back")
-                            .setAction("AddAccountFragment::popBackStack")
-                            .build());
                     getFragmentManager().popBackStack();
                 }
             }
@@ -147,10 +119,10 @@ public class AddAccountFragment extends Fragment implements OnClickListener {
     public void AddAccount() {
         boolean hasErrors = false;
 
-        TextView AccountName = (TextView) rootView.findViewById(R.id.AccountName);
-        TextView ApiUsername = (TextView) rootView.findViewById(R.id.username);
-        TextView ApiPass = (TextView) rootView.findViewById(R.id.password);
-        EditText StoreUrl = (EditText) rootView.findViewById(R.id.url);
+        TextView AccountName = rootView.findViewById(R.id.AccountName);
+        TextView ApiUsername = rootView.findViewById(R.id.username);
+        TextView ApiPass = rootView.findViewById(R.id.password);
+        EditText StoreUrl = rootView.findViewById(R.id.url);
         String username = ApiUsername.getText().toString();
         String password = ApiPass.getText().toString();
         String store_url = StoreUrl.getText().toString();
@@ -209,17 +181,6 @@ public class AddAccountFragment extends Fragment implements OnClickListener {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("selected_account_name", account_name);
         editor.commit();
-
-
-		  /*GA*/
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Account")
-                .setAction("Added")
-                .build());
-
-        mTracker.setScreenName("AccountsFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-		  /*GA*/
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen = new AccountsFragment();
