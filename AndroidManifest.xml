@@ -16,7 +16,7 @@
 
     <uses-sdk
         android:minSdkVersion="26"
-        android:targetSdkVersion="26" />
+        android:targetSdkVersion="27" />
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"></uses-permission>
@@ -29,7 +29,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <application
-            android:name="com.magapp.analytics.AnalyticsApplication"
             android:allowBackup="true"
             android:vmSafeMode="true"
             android:allowClearUserData="true"

@@ -30,9 +30,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.chart.CurrencyValueFormatter;
 import com.magapp.chart.DateValueFormatter;
 import com.magapp.connect.RequestInterface;
@@ -49,10 +46,6 @@ public class HomeFragment extends Fragment implements RequestInterface {
     private View rootView;
     private SimpleDateFormat OrdersDateFormat = new SimpleDateFormat("hha");
     private Object[] AmountsData, OrdersData;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     private MenuItem chartPeriod;
     @Override
@@ -66,9 +59,6 @@ public class HomeFragment extends Fragment implements RequestInterface {
         Log.e("Sashas", "HomeFragment:onCreateView");
         task.execute(params);
         setHasOptionsMenu(true);
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
         return rootView;
     }
 
@@ -250,46 +240,26 @@ public class HomeFragment extends Fragment implements RequestInterface {
         switch (item.getItemId()) {
             case R.id.tfhours:
                 OrdersDateFormat = new SimpleDateFormat("hha");
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Chart")
-                        .setAction("24H")
-                        .build());
                 PrepareChartData((HashMap) OrdersData[0], (HashMap) AmountsData[0]);
                 return true;
 
             case R.id.week:
                 OrdersDateFormat = new SimpleDateFormat("MM-dd");
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Chart")
-                        .setAction("7 Days")
-                        .build());
                 PrepareChartData((HashMap) OrdersData[1], (HashMap) AmountsData[1]);
                 return true;
 
             case R.id.month:
                 OrdersDateFormat = new SimpleDateFormat("MM-dd");
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Chart")
-                        .setAction("Month")
-                        .build());
                 PrepareChartData((HashMap) OrdersData[2], (HashMap) AmountsData[2]);
                 return true;
 
             case R.id.ytd:
                 OrdersDateFormat = new SimpleDateFormat("MM-yyyy");
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Chart")
-                        .setAction("YTD")
-                        .build());
                 PrepareChartData((HashMap) OrdersData[3], (HashMap) AmountsData[3]);
                 return true;
 
             case R.id.twoytd:
                 OrdersDateFormat = new SimpleDateFormat("MM-yyyy");
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Chart")
-                        .setAction("2YTD")
-                        .build());
                 PrepareChartData((HashMap) OrdersData[4], (HashMap) AmountsData[4]);
                 return true;
 

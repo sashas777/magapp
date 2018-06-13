@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -16,20 +16,28 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.R;
+
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.TimeZone;
+import java.util.Vector;
 
 public class CommentsFragment extends Fragment implements View.OnClickListener, RequestInterface {
 
@@ -37,19 +45,14 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
     private LayoutInflater inf;
     private String increment_id, status, api_point;
     private ArrayList comments;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         inf = inflater;
         rootView = inflater.inflate(R.layout.linear_comments, null);
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
+
         Bundle params = getArguments();
         status = params.getString("status");
         increment_id = params.getString("increment_id");
@@ -58,7 +61,7 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
 
         addCommentForm();
 
-        Button submitBtn = (Button) rootView.findViewById(R.id.submit);
+        Button submitBtn = rootView.findViewById(R.id.submit);
         submitBtn.setOnClickListener(this);
 
         Addcomments();
@@ -69,17 +72,13 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.submit:
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("AddComment")
-                        .build());
                 addCommentTask();
                 break;
         }
     }
 
     public void addCommentForm() {
-        LinearLayout current_view = (LinearLayout) rootView.findViewById(R.id.container);
+        LinearLayout current_view = rootView.findViewById(R.id.container);
         View vi = inf.inflate(R.layout.add_comment_form, null);
         if (!status.isEmpty())
             ((CheckBox) vi.findViewById(R.id.include_comments)).setHeight(0);
@@ -113,7 +112,7 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
     }
 
     public void Addcomment() {
-        LinearLayout current_view = (LinearLayout) rootView.findViewById(R.id.container);
+        LinearLayout current_view = rootView.findViewById(R.id.container);
         View vi = inf.inflate(R.layout.comment_item_view, null);
 
         boolean notify = ((CheckBox) rootView.findViewById(R.id.notify_customer)).isChecked();
@@ -150,7 +149,7 @@ public class CommentsFragment extends Fragment implements View.OnClickListener, 
     public void Addcomments() {
 
 
-        LinearLayout current_view = (LinearLayout) rootView.findViewById(R.id.container);
+        LinearLayout current_view = rootView.findViewById(R.id.container);
 
         for (Object comment : comments) {
             HashMap comment_data = (HashMap) comment;

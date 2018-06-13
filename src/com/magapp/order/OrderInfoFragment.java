@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -17,11 +17,14 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.common.ItemsFragment;
 import com.magapp.connect.RequestTask;
 import com.magapp.creditmemo.CreditMemoCreateActivity;
@@ -44,17 +47,11 @@ public class OrderInfoFragment extends Fragment {
     private String order_increment_id;
     private Integer order_id;
     private Bundle order_items = new Bundle();
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.order_info_fragment, null);
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
         HashMap order = (HashMap) getArguments().getSerializable("order");
         FillData(order);
 
@@ -222,16 +219,10 @@ public class OrderInfoFragment extends Fragment {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Home")
-                        .build());
                 NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(), SalesListFragment.class));
                 return true;
 
             case R.id.invoice:
-                mTracker.setScreenName("InvoiceCreateActivity");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent InvoiceOrder = new Intent(getActivity(), InvoiceCreateActivity.class);
                 InvoiceOrder.putExtra("order_id", order_id);
                 InvoiceOrder.putExtra("order_items", order_items);
@@ -241,8 +232,6 @@ public class OrderInfoFragment extends Fragment {
                 return true;
 
             case R.id.ship:
-                mTracker.setScreenName("ShipmentCreateActivity");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent ShipOrder = new Intent(getActivity(), ShipmentCreateActivity.class);
                 ShipOrder.putExtra("order_id", order_id);
                 ShipOrder.putExtra("order_items", order_items);
@@ -251,8 +240,6 @@ public class OrderInfoFragment extends Fragment {
                 return true;
 
             case R.id.creditmemo:
-                mTracker.setScreenName("CreditMemoCreateActivity");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent RefundOrder = new Intent(getActivity(), CreditMemoCreateActivity.class);
                 RefundOrder.putExtra("order_id", order_id);
                 RefundOrder.putExtra("order_items", order_items);

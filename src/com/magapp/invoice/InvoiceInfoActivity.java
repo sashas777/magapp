@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -24,9 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.interfaces.ActivityInfoInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.main.R;
@@ -46,19 +44,11 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
     String[] actions = new String[]{"Invoice", "Comments"};
     private CharSequence mTitle;
     public Integer menu_id = -1;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
+
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         SpinnerAdapter mSpinnerAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.custom_spinner_row_white, actions);
@@ -74,8 +64,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         params.putString("increment_id", invoice_increment_id);
         params.putString("api_point", "magapp_sales_order_invoice.info");
         screen.setArguments(params);
-        mTracker.setScreenName("InvoiceInfoFragment");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         fragmentManager.beginTransaction().replace(R.id.container, screen).addToBackStack("invoice_info_activity").commit();
 
     }
@@ -108,8 +97,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
         Bundle params = new Bundle();
         switch (itemPosition) {
             case 0:
-                mTracker.setScreenName("InvoiceInfoFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
                 screen = new InvoiceInfoFragment();
                 params.putString("increment_id", invoice_increment_id);
                 params.putString("api_point", "magapp_sales_order_invoice.info");
@@ -118,8 +106,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
 
             case 1:
                 screen = new CommentsFragment();
-                mTracker.setScreenName("CommentsFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
                 params.putString("status", "");
                 params.putString("increment_id", invoice_increment_id);
                 params.putString("api_point", "sales_order_invoice.addComment");
@@ -137,8 +124,7 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mTracker.setScreenName("OrderInfoActivity");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
@@ -152,12 +138,12 @@ public class InvoiceInfoActivity extends Activity implements OnNavigationListene
     }
 
     public void showProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        ProgressBar progressBar = findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        ProgressBar progressBar = findViewById(R.id.progressBar1);
         progressBar.setVisibility(View.INVISIBLE);
     }
 

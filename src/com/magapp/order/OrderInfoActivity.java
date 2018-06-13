@@ -24,9 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
 import com.magapp.common.InvoiceListFragment;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
@@ -47,19 +44,11 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
     private ArrayList<HashMap> comments;
 
     public Integer menu_id = -1;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
+
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<String> mSpinnerAdapter;
@@ -87,10 +76,7 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
         Vector<HashMap<String, String>> params = new Vector<HashMap<String, String>>();
         RequestTask task;
         HashMap<String, String> map_filter = new HashMap<String, String>();
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Refresh")
-                .build());
+
         map_filter.put("order_increment_id", order_increment_id);
         params.add(map_filter);
         task = new RequestTask(this, this, "magapp_sales_order.info");
@@ -139,8 +125,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
                 Refresh();
                 break;
             case 1:
-                mTracker.setScreenName("InvoiceListFragment::sales_order_invoice.list");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new InvoiceListFragment();
                 params.putInt("order_id", order_id);
                 params.putString("entity_name", "Invoice");
@@ -148,8 +132,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
                 screen.setArguments(params);
                 break;
             case 2:
-                mTracker.setScreenName("InvoiceListFragment::sales_order_shipment.list");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new InvoiceListFragment();
                 params.putInt("order_id", order_id);
                 params.putString("entity_name", "Shipment");
@@ -157,8 +139,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
                 screen.setArguments(params);
                 break;
             case 3:
-                mTracker.setScreenName("InvoiceListFragment::order_creditmemo.list");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new InvoiceListFragment();
                 params.putInt("order_id", order_id);
                 params.putString("entity_name", "Credit Memo");
@@ -166,8 +146,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
                 screen.setArguments(params);
                 break;
             case 4:
-                mTracker.setScreenName("CommentsFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new CommentsFragment();
                 params.putString("status", status);
                 params.putString("increment_id", order_increment_id);
@@ -191,10 +169,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
         switch (item.getItemId()) {
 
             case R.id.hold:
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Hold")
-                        .build());
                 map_filter.put("order_increment_id", order_increment_id);
                 params.add(map_filter);
                 task = new RequestTask(this, this, "sales_order.hold");
@@ -203,10 +177,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
                 return true;
 
             case R.id.unhold:
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("UnHold")
-                        .build());
                 map_filter.put("order_increment_id", order_increment_id);
                 params.add(map_filter);
                 task = new RequestTask(this, this, "sales_order.unhold");
@@ -215,10 +185,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
                 return true;
 
             case R.id.cancel:
-                mTracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("OrderCancel")
-                        .build());
                 map_filter.put("order_increment_id", order_increment_id);
                 params.add(map_filter);
                 task = new RequestTask(this, this, "sales_order.cancel");
@@ -259,8 +225,6 @@ public class OrderInfoActivity extends FragmentActivity implements OnNavigationL
             FragmentManager fragmentManager = getFragmentManager();
             Fragment screen = null;
             if (result_api_point.equals("magapp_sales_order.info")) {
-                mTracker.setScreenName("OrderInfoFragment");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 screen = new OrderInfoFragment();
                 Bundle params = new Bundle();
                 params.putSerializable("order", map);

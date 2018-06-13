@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -21,9 +21,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+
 import com.magapp.interfaces.ActivityCreateInterface;
 import com.magapp.interfaces.ActivityLoadInterface;
 import com.magapp.invoice.InvoiceCreateCommentFragment;
@@ -40,20 +38,12 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
     private String order_increment_id;
     private Bundle order_items = new Bundle();
     private String comment;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.orderinfo);
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
         Bundle vars = getIntent().getExtras();
         order_id = vars.getInt("order_id");
         order_increment_id = vars.getString("order_increment_id");
@@ -76,8 +66,6 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mTracker.setScreenName("OrderInfoActivity");
-                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
                 Intent OrderInfo = new Intent(this, OrderInfoActivity.class);
                 OrderInfo.putExtra("order_increment_id", order_increment_id);
                 NavUtils.navigateUpTo(this, OrderInfo);
@@ -97,7 +85,7 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
 
     public HashMap GetOrderItemsIdQty() {
         HashMap<String, String> hashMap = new HashMap<String, String>();
-        LinearLayout list = (LinearLayout) findViewById(R.id.items_list);
+        LinearLayout list = findViewById(R.id.items_list);
         for (int i = 0; i < list.getChildCount(); ++i) {
             View nextChild = list.getChildAt(i);
             String order_item_qty = ((TextView) nextChild.findViewById(R.id.order_item_qty)).getText().toString();
@@ -112,12 +100,12 @@ public class ShipmentCreateActivity extends Activity implements InvoiceCreateCom
     }
 
     public void showProgressBar() {
-        LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
+        LinearLayout Progress = findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressBar() {
-        LinearLayout Progress = (LinearLayout) findViewById(R.id.linlaHeaderProgress);
+        LinearLayout Progress = findViewById(R.id.linlaHeaderProgress);
         Progress.setVisibility(View.GONE);
     }
 

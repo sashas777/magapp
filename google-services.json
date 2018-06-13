@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "175768821656",
-    "project_id": "magento-manager"
+    "firebase_url": "https://magento-manager.firebaseio.com",
+    "project_id": "magento-manager",
+    "storage_bucket": "magento-manager.appspot.com"
   },
   "client": [
     {
@@ -11,7 +13,28 @@
           "package_name": "com.magapp.main"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "175768821656-73qucci5l7trksa1kkai0jhsj1jvdqa8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.magapp.main",
+            "certificate_hash": "210a1f44167a1635a7245cfdf6198a5e3c686d68"
+          }
+        },
+        {
+          "client_id": "175768821656-canvmctj8iu6k3rnpjjh95cso6sl4uju.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "175768821656-18parorlpv9lsvnq5pg7c5tkotit245g.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "175768821656-18parorlpv9lsvnq5pg7c5tkotit245g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBks1vhDIl79wxHqZ86mKEvWLSBHj1HcWY"
@@ -29,7 +52,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

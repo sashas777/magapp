@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -18,10 +18,13 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.magapp.analytics.AnalyticsApplication;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.interfaces.ActivityLoadInterface;
@@ -37,20 +40,13 @@ public class AddTrackingFragment extends Fragment implements View.OnClickListene
     public View rootView;
     private String shipment_increment_id;
     private Spinner carriersListView;
-    /**
-     * The {@link Tracker} used to record screen views.
-     */
-    private Tracker mTracker;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.tracking_item_add, null);
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-
         shipment_increment_id = getArguments().getString("increment_id");
 
-        carriersListView = (Spinner) rootView.findViewById(R.id.carrier);
+        carriersListView = rootView.findViewById(R.id.carrier);
         List<String> carriersList = new ArrayList<String>();
         carriersList.add("DHL");
         carriersList.add("Federal Express");
@@ -61,9 +57,9 @@ public class AddTrackingFragment extends Fragment implements View.OnClickListene
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         carriersListView.setAdapter(dataAdapter);
 
-        Button addTrackingBtn = (Button) rootView.findViewById(R.id.add_tracking);
+        Button addTrackingBtn = rootView.findViewById(R.id.add_tracking);
         addTrackingBtn.setOnClickListener(this);
-        Button scanTrackingBtn = (Button) rootView.findViewById(R.id.scan_tracking);
+        Button scanTrackingBtn = rootView.findViewById(R.id.scan_tracking);
         scanTrackingBtn.setOnClickListener(this);
 
         carriersListView.setOnItemSelectedListener(this);
@@ -72,7 +68,7 @@ public class AddTrackingFragment extends Fragment implements View.OnClickListene
 
         if (getArguments().getString("tracking_number") != null) {
             String tracking_number = getArguments().getString("tracking_number");
-            TextView tracking_number_value = ((TextView) rootView.findViewById(R.id.tracking_number));
+            TextView tracking_number_value = rootView.findViewById(R.id.tracking_number);
             tracking_number_value.setText(tracking_number);
 
             if (getArguments().getString("carrier") != null)
@@ -125,20 +121,11 @@ public class AddTrackingFragment extends Fragment implements View.OnClickListene
         params.add(carrier_title);
         params.add(tracking_number);
         params.add(notify_customer);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("addTracking")
-                .build());
         task = new RequestTask(this, getActivity(), "magapp_sales_order_shipment.addtrack");
         task.execute(params);
     }
 
     public void scanTracking() {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("scanTracking")
-                .build());
-
         Intent ScanTracking = new Intent(getActivity(), ScanTrackingActivity.class);
         ScanTracking.putExtra("increment_id", shipment_increment_id);
         ScanTracking.putExtra("carrier", Integer.toString(carriersListView.getSelectedItemPosition()));
@@ -152,18 +139,14 @@ public class AddTrackingFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onResume() {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Resume")
-                .setAction("AddTrackingFragment")
-                .build());
         super.onResume();
         String tracking_number = getArguments().getString("tracking_number");
-        TextView tracking_number_value = ((TextView) rootView.findViewById(R.id.tracking_number));
+        TextView tracking_number_value = rootView.findViewById(R.id.tracking_number);
         tracking_number_value.setText(tracking_number);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        TextView carrier_title = ((TextView) rootView.findViewById(R.id.carrier_title));
+        TextView carrier_title = rootView.findViewById(R.id.carrier_title);
 
         switch (pos) {
             default:
@@ -200,8 +183,7 @@ public class AddTrackingFragment extends Fragment implements View.OnClickListene
     public void doPostExecute(Object result, String result_api_point) {
         ((ActivityLoadInterface) getActivity()).hideProgressBar();
         ((ActivityLoadInterface) getActivity()).ShowMessage("The tracking number has been added");
-        mTracker.setScreenName("ShipmentInfoActivity");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         Intent ShipmentInfo = new Intent(getActivity(), ShipmentInfoActivity.class);
         ShipmentInfo.putExtra("increment_id", shipment_increment_id);
         getActivity().startActivity(ShipmentInfo);
@@ -210,10 +192,6 @@ public class AddTrackingFragment extends Fragment implements View.OnClickListene
 
 
     public void RequestFailed(String error) {
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("RequestFailed")
-                .setAction("AddTrackingFragment::RequestFailed")
-                .build());
         ((ActivityLoadInterface) getActivity()).hideProgressBar();
         ((ActivityLoadInterface) getActivity()).ShowMessage(error);
     }
