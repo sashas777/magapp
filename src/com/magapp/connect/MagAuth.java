@@ -43,17 +43,22 @@ public class MagAuth implements FinishLoginInterface {
 
 
     public MagAuth(GetSession callback, Context act, int cleansession) {
+        Log.d("Sashas", this.getClass().getName() + ":MagAuth");
         GetSessionCallBack = callback;
         activity = act;
         settings = activity.getSharedPreferences(desired_preferense_file, 0);
 
         if (cleansession == 1) {
+            Log.d("Sashas", this.getClass().getName() + ":MagAuth:cleansession=1");
             setSession(activity, null);
         }
 
-        if (getSession() != null && isOnline())
+        if (getSession() != null && isOnline()) {
+            Log.d("Sashas", this.getClass().getName() + ":MagAuth:getSession!=null && isOnline");
             GetSessionCallBack.SessionReturned(getSession(), true);
+        }
         else {
+            Log.d("Sashas", this.getClass().getName() + ":MagAuth:getSession==null || !isOnline");
             setSession(activity, null);
             login();
         }
@@ -110,6 +115,7 @@ public class MagAuth implements FinishLoginInterface {
 
     @Override
     public void doFinishLoginPostExecute(Object session) {
+        Log.d("Sashas", this.getClass().getName() + ":doFinishLoginPostExecute");
         if (session instanceof XMLRPCException) {
             XMLRPCException exp = (XMLRPCException) session;
             String res = HandleError(exp);
@@ -122,6 +128,7 @@ public class MagAuth implements FinishLoginInterface {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("session_id", session.toString());
             editor.commit();
+            Log.d("Sashas", this.getClass().getName() + ":doFinishLoginPostExecute:session_saved");
 			/* api_session=session.toString(); */
             GetSessionCallBack.SessionReturned(session.toString(), true);
         }
@@ -140,6 +147,7 @@ public class MagAuth implements FinishLoginInterface {
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("session_id", ses);
         editor.commit();
+        Log.d("Sashas", this.getClass().getName() + ":MagAuth:setSession " + ses);
     }
 
 
@@ -161,7 +169,7 @@ public class MagAuth implements FinishLoginInterface {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
-        Log.d("Sashas", String.valueOf(activeNetwork.getType()));
+        Log.d("Sashas", "Network type: " + String.valueOf(activeNetwork.getType()));
         return isConnected;
     }
 

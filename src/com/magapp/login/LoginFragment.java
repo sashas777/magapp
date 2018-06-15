@@ -24,9 +24,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.magapp.connect.GetSession;
-import com.magapp.connect.MagAuth;
 import com.magapp.connect.RequestInterface;
 import com.magapp.connect.RequestTask;
 import com.magapp.main.BaseActivity;
@@ -47,16 +47,15 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
     private String session = null;
     private String url;
     private ProgressBar progressBar;
-    private MagAuth auth;
 
-    private String maggapp_api_version = "1.2.1";
+    private String maggapp_api_version = "1.2";
     private String magapp_url = "http://www.extensions.sashas.org/magento-android-manager.html";
     private String magapp_api_point = "magapp.version";
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Log.d("Sashas", this.getClass().getName() + "::onCreateView");
         rootView = inflater.inflate(R.layout.fragment_login, null);
         rootView.findViewById(R.id.LoginWithAccount).setOnClickListener(this);
         rootView.findViewById(R.id.AddAccount).setOnClickListener(this);
@@ -69,13 +68,14 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
         rootView.findViewById(R.id.extensionUpdate).setVisibility(View.INVISIBLE);
         rootView.findViewById(R.id.checkAgain).setVisibility(View.INVISIBLE);
 
-        auth = new MagAuth(this, getActivity(), 0);
+        checkVersion();
 
         return rootView;
     }
 
+    /* @todo remove */
     public void SessionReturned(String ses, Boolean status) {
-
+        Log.e("Sashas", "LoginFragment::SessionReturned - TO BE REMOVED");
         if (progressBar != null)
             progressBar.setVisibility(View.INVISIBLE);
         if (status) {
@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
             url = store_url;
             checkVersion();
         } else {
-            auth.makeToast(ses);
+            Toast.makeText(getActivity(), ses, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -94,10 +94,9 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
         progressBar.setVisibility(View.VISIBLE);
     }
 
-
     @Override
     public void onResume() {
-
+        Log.d("Sashas", this.getClass().getName() + "::onResume");
         super.onResume();
         getActivity().invalidateOptionsMenu();
         return;
@@ -120,13 +119,15 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
         switch (v.getId()) {
             case R.id.LoginWithAccount: {
                 if (accounts.length == 0) {
+                    Log.d("Sashas", this.getClass().getName() + ":LoginWithAccount:NoAccounts");
                     screen = new AddAccountFragment();
                     fragmentManager.beginTransaction()
                             .replace(R.id.container, screen)
                             .addToBackStack(null)
                             .commit();
                 } else {
-                    LoginAction();
+                    Log.d("Sashas", this.getClass().getName() + ":LoginWithAccount:Login");
+                    checkVersion();
                     return;
                 }
             }
@@ -152,10 +153,12 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
     }
 
     public void LoginAction() {
-        auth = new MagAuth(this, getActivity(), 0);
+        //auth = new MagAuth(this, getActivity(), 0);
+        ShowSales();
     }
 
     public void checkVersion() {
+        Log.d("Sashas", this.getClass().getName() + "::checkVersion");
         Vector params = new Vector();
         RequestTask task;
         task = new RequestTask(this, getActivity(), magapp_api_point);
@@ -170,8 +173,8 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
 
         if (result instanceof HashMap) {
             HashMap versionMap = (HashMap) result;
-            Log.e("Sashas", "LoginFragment::doPostExecute::version::" + versionMap.get("version").toString());
-            if (versionMap.get("version").equals(maggapp_api_version)) {
+            Log.d("Sashas", "LoginFragment:doPostExecute::version:" + versionMap.get("version").toString());
+            if (versionMap.get("version").toString().compareTo(maggapp_api_version) > -1) {
                 rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);
                 rootView.findViewById(R.id.AddAccount).setVisibility(View.VISIBLE);
                 rootView.findViewById(R.id.extensionUpdate).setVisibility(View.INVISIBLE);
@@ -182,7 +185,7 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
             }
 
         } else {
-            Log.e("Sashas", "LoginFragment::doPostExecute::else");
+            Log.e("Sashas", "LoginFragment:doPostExecute::else");
         }
     }
 
@@ -193,12 +196,15 @@ public class LoginFragment extends Fragment implements OnClickListener, GetSessi
 
     @Override
     public void RequestFailed(String error) {
+        Log.d("Sashas", this.getClass().getName() + "::RequestFailed");
         if (progressBar != null)
             progressBar.setVisibility(View.INVISIBLE);
-        auth.makeToast(getResources().getString(R.string.magapp_update));
-        rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.INVISIBLE);
-        rootView.findViewById(R.id.AddAccount).setVisibility(View.INVISIBLE);
-        rootView.findViewById(R.id.extensionUpdate).setVisibility(View.VISIBLE);
-        rootView.findViewById(R.id.checkAgain).setVisibility(View.VISIBLE);
+        Log.d("Sashas", this.getClass().getName() + " " + error);
+        Toast.makeText(getActivity().getBaseContext(), error, Toast.LENGTH_SHORT).show();
+
+        rootView.findViewById(R.id.LoginWithAccount).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.AddAccount).setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.extensionUpdate).setVisibility(View.INVISIBLE);
+        rootView.findViewById(R.id.checkAgain).setVisibility(View.INVISIBLE);
     }
 }

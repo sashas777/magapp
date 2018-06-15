@@ -19,6 +19,7 @@ import android.util.Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Vector;
 
 import de.timroes.axmlrpc.XMLRPCClient;
@@ -65,6 +66,7 @@ public class RequestArrayTask extends AsyncTask<Vector, Void, Object[]> implemen
                 throw new XMLRPCException("No internet connection");
 
             String session_id = settings.getString("session_id", null);
+            Log.d("Sashas", session_id + " " + store_url + api_route + " " + Arrays.toString(params));
             result_info = (Object[]) client.call("call", session_id, api_route, params[0]);
             return result_info;
         } catch (XMLRPCServerException e) {

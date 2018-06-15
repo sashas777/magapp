@@ -183,7 +183,7 @@ public class AddAccountFragment extends Fragment implements OnClickListener {
         editor.commit();
 
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment screen = new AccountsFragment();
+        Fragment screen = new LoginFragment();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, screen)
                 .addToBackStack(null)

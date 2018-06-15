@@ -36,19 +36,24 @@ public class LoginActivity extends Activity {
     private String desired_preferense_file = "magapp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e("Sashas", "LoginActivity:onCreate");
+        Log.d("Sashas", "LoginActivity:onCreate");
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_login);
         FragmentManager fragmentManager = getFragmentManager();
-
         Fragment screen = new LoginFragment();
         fragmentManager.beginTransaction().replace(R.id.container, screen).commit();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    protected void onPause() {
+        Log.d("Sashas", this.getClass().getName() + ":onPause");
+        super.onPause();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("Sashas", "LoginActivity:onCreateOptionsMenu");
         AccountManager manager = AccountManager.get(this);
         Account[] accounts = manager.getAccountsByType(accountType);
 
@@ -68,7 +73,7 @@ public class LoginActivity extends Activity {
 
         FragmentManager fragmentManager = getFragmentManager();
         Fragment screen;
-        Log.e("Sashas", "LoginActivity:onOptionsItemSelected");
+        Log.d("Sashas", "LoginActivity:onOptionsItemSelected");
         switch (item.getItemId()) {
             case R.id.accounts:
                 screen = new AccountsFragment();

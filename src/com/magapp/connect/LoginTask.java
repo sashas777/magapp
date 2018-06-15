@@ -11,6 +11,7 @@
 package com.magapp.connect;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -56,8 +57,9 @@ public class LoginTask extends AsyncTask<Void, Void, Object> {
 
         XMLRPCClient client = new XMLRPCClient(uri);
         try {
-
+            Log.d("Sashas", this.getClass().getName() + "login " + api_username);
             session = (String) client.call("login", api_username, api_password);
+            Log.d("Sashas", this.getClass().getName() + ":Session " + session);
             return session;
         } catch (XMLRPCException e) {
             return e;

@@ -19,6 +19,7 @@ import android.util.Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Vector;
 
 import de.timroes.axmlrpc.XMLRPCClient;
@@ -56,9 +57,8 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
         try {
             uri = new URL(store_url);
         } catch (MalformedURLException e) {
-            Log.e("Sashas", "RequestTask::doInBackground::MalformedURLException");
-            Log.e("Sashas", e.getMessage());
-            cancel(true);
+            Log.e("Sashas", this.getClass().getName() + ":doInBackground:MalformedURLException");
+            return e;
         }
 
         XMLRPCClient client = new XMLRPCClient(uri, XMLRPCClient.FLAGS_NIL);
@@ -68,30 +68,35 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
                 throw new XMLRPCException("No internet connection");
 
             String session_id = settings.getString("session_id", null);
-
+            if (session_id == null) {
+                Log.d("Sashas", this.getClass().getName() + ":doInBackground:Session empty");
+                MagAuth auth = new MagAuth(this, activity, 1);
+            }
+            Log.d("Sashas", session_id + " " + store_url + api_route + " " + Arrays.toString(params));
             result_info = client.call("call", session_id, api_route, params[0]);
             return result_info;
         } catch (XMLRPCServerException e) {
-            Log.e("Sashas", "RequestTask::doInBackground::XMLRPCServerException");
+            Log.d("Sashas", "RequestTask::doInBackground::XMLRPCServerException");
+            Log.e("Sashas", String.valueOf(e.getErrorNr()));
             Log.e("Sashas", e.getMessage());
-            cancel(true);
+            //cancel(true);
             return e;
         } catch (XMLRPCException e) {
-            Log.e("Sashas", "RequestTask::doInBackground::XMLRPCException");
+            Log.d("Sashas", "RequestTask::doInBackground::XMLRPCException");
             Log.e("Sashas", e.getMessage());
-            cancel(true);
+            //cancel(true);
             return e;
         } catch (Exception e) {
-            Log.e("Sashas", "RequestTask::doInBackground::Exception");
+            Log.d("Sashas", "RequestTask::doInBackground::Exception");
             Log.e("Sashas", e.getMessage());
-            cancel(true);
+            //cancel(true);
             return e;
         }
     }
 
     @Override
     protected void onCancelled(Object result) {
-        Log.e("Sashas", "RequestTask::onCancelled");
+        Log.d("Sashas", "RequestTask::onCancelled");
         if (result instanceof XMLRPCException) {
             HandleError((XMLRPCException) result);
         }
@@ -99,14 +104,14 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
 
     @Override
     protected void onPostExecute(Object result) {
-        Log.e("Sashas", "RequestTask::onPostExecute");
+        Log.d("Sashas", "RequestTask::onPostExecute");
         if (result instanceof XMLRPCException) {
             HandleError((XMLRPCException) result);
         } else if (result instanceof Exception) {
             Log.e("Sashas", "RequestTask::onPostExecute::Exception");
             HandleError((Exception) result);
         } else {
-            Log.e("Sashas", "RequestTask::onPostExecute::doPostExecute");
+            Log.d("Sashas", "RequestTask::onPostExecute::doPostExecute");
             RequestCallBack.doPostExecute(result, api_route);
             //MagAuth auth = new MagAuth(this, activity,1);
         }
@@ -114,19 +119,23 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
 
     public void HandleError(Exception error_obj) {
         Log.e("Sashas", "RequestTask::HandleError");
-        /*@todo change behavior*/
         /* Set session null */
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("session_id", null);
         editor.commit();
         /* Set session null */
         if (error_obj.getMessage().toString().indexOf("code") > 0) {
+            Log.e("Sashas", this.getClass().getName() + ":HandleError:code");
             RequestCallBack.RequestFailed(error_obj.getMessage().toString());
-        } else if (!error_obj.getMessage().toString().equals("No internet connection")) {
-            Log.e("Sashas", "RequestTask::HandleError::MagAuth");
-            MagAuth auth = new MagAuth(this, activity, 1);
-        } else {
+        } else if (error_obj.getMessage().toString().equals("No internet connection")) {
+            Log.e("Sashas", this.getClass().getName() + ":HandleError:No internet connection");
             RequestCallBack.RequestFailed("No internet connection");
+        } else {
+            Log.e("Sashas", this.getClass().getName() + ":HandleError:Other");
+            //  MagAuth auth = new MagAuth(this, activity, 1);
+            /*@todo new message when not authorized */
+            RequestCallBack.RequestFailed(error_obj.getMessage().toString());
+
         }
 
     }
@@ -143,8 +152,8 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        Log.e("Sashas", "RequestTask::isOnline");
-        Log.e("Sashas", netInfo.toString());
+        Log.d("Sashas", "RequestTask::isOnline");
+        Log.d("Sashas", netInfo.toString());
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
