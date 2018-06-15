@@ -140,6 +140,7 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
 
     }
 
+    /*@todo check if need*/
     public void SessionReturned(String result, Boolean status) {
         if (status) {
             doInBackground(stored_params);
