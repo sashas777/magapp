@@ -29,7 +29,7 @@ import de.timroes.axmlrpc.XMLRPCServerException;
 public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetSession {
 
 
-    RequestInterface RequestCallBack;
+    private RequestInterface RequestCallBack;
     private Vector[] stored_params;
     private Context activity;
     private String desired_preferense_file = "magapp";
@@ -53,7 +53,7 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
         Object result_info;
         stored_params = params;
         String store_url = settings.getString("store_url", null);
-        URL uri = null;
+        URL uri;
         try {
             uri = new URL(store_url);
         } catch (MalformedURLException e) {
@@ -77,6 +77,13 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
             return result_info;
         } catch (XMLRPCServerException e) {
             Log.d("Sashas", "RequestTask::doInBackground::XMLRPCServerException");
+            /*Session Expired*/
+            if (e.getErrorNr() == 5) {
+                Log.d("Sashas", e.getMessage());
+                MagAuth auth = new MagAuth(this, activity, 1);
+                //@todo check if it helps
+                //cancel(true);
+            }
             Log.e("Sashas", String.valueOf(e.getErrorNr()));
             Log.e("Sashas", e.getMessage());
             //cancel(true);
@@ -117,24 +124,24 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
         }
     }
 
-    public void HandleError(Exception error_obj) {
+    private void HandleError(Exception error_obj) {
         Log.e("Sashas", "RequestTask::HandleError");
         /* Set session null */
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("session_id", null);
-        editor.commit();
+        editor.apply();
         /* Set session null */
-        if (error_obj.getMessage().toString().indexOf("code") > 0) {
+        if (error_obj.getMessage().indexOf("code") > 0) {
             Log.e("Sashas", this.getClass().getName() + ":HandleError:code");
-            RequestCallBack.RequestFailed(error_obj.getMessage().toString());
-        } else if (error_obj.getMessage().toString().equals("No internet connection")) {
+            RequestCallBack.RequestFailed(error_obj.getMessage());
+        } else if (error_obj.getMessage().equals("No internet connection")) {
             Log.e("Sashas", this.getClass().getName() + ":HandleError:No internet connection");
             RequestCallBack.RequestFailed("No internet connection");
         } else {
             Log.e("Sashas", this.getClass().getName() + ":HandleError:Other");
             //  MagAuth auth = new MagAuth(this, activity, 1);
             /*@todo new message when not authorized */
-            RequestCallBack.RequestFailed(error_obj.getMessage().toString());
+            RequestCallBack.RequestFailed(error_obj.getMessage());
 
         }
 
@@ -150,9 +157,17 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
     }
 
 
-    public boolean isOnline() {
+    private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        NetworkInfo netInfo;
+        try {
+            netInfo = cm.getActiveNetworkInfo();
+        } catch (Exception e) {
+            Log.d("Sashas", "RequestTask::isOnline::Exception");
+            Log.e("Sashas", e.getMessage());
+            netInfo = null;
+        }
+
         Log.d("Sashas", "RequestTask::isOnline");
         Log.d("Sashas", netInfo.toString());
         return netInfo != null && netInfo.isConnectedOrConnecting();
