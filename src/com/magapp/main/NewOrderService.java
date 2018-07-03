@@ -39,7 +39,7 @@ public class NewOrderService extends Service implements RequestArrayInterface {
 
     Timer timer;
     TimerTask tTask;
-    long interval = 5000;
+    long interval = 3600 * 1000;
 
     public void onCreate() {
         super.onCreate();
