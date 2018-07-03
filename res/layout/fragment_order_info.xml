@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2016.  Sashas IT  Support
-  ~ http://www.sashas.org
+  ~ @category     Sashas
+  ~ @package      com.magapp
+  ~ @author       Sashas IT Support <support@sashas.org>
+  ~ @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
+  ~
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -67,67 +72,52 @@
                         android:text="@string/order_date_field"/>
 
                 <TextView
-                        android:id="@+id/OrderStatus"
+                    android:id="@+id/created_at"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/Orderdate" />
+
+                <TextView
+                    android:id="@+id/OrderStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/Orderdate"
-                        android:layout_below="@+id/Orderdate"
+                    android:layout_below="@+id/Orderdate"
                         android:layout_marginTop="10dp"
-                        android:text="@string/order_status_field"/>
+                    android:text="@string/order_status_field" />
 
                 <TextView
-                        android:id="@+id/CustomerIp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/Orderdate"
-                        android:layout_below="@+id/OrderStatus"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/customer_ip_field"/>
+                    android:id="@+id/order_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/OrderStatus"
+                    android:layout_alignBottom="@+id/OrderStatus"
+                    android:layout_alignLeft="@+id/created_at"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/OrderStatus" />
 
                 <TextView
-                        android:id="@+id/StoreName"
+                    android:id="@+id/StoreName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/Orderdate"
-                        android:layout_below="@+id/CustomerIp"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/store_field"/>
+                    android:layout_alignLeft="@+id/Orderdate"
+                    android:layout_below="@+id/OrderStatus"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/store_field" />
 
                 <TextView
-                        android:id="@+id/created_at"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toRightOf="@+id/CustomerIp"/>
-
-                <TextView
-                        android:id="@+id/order_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/OrderStatus"
-                        android:layout_alignBottom="@+id/OrderStatus"
-                        android:layout_alignLeft="@+id/created_at"/>
-
-                <TextView
-                        android:id="@+id/ip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/CustomerIp"
-                        android:layout_alignBottom="@+id/CustomerIp"
-                        android:layout_alignLeft="@+id/created_at"/>
-
-                <TextView
-                        android:id="@+id/store"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/StoreName"
-                        android:layout_alignLeft="@+id/created_at"
-                        android:layout_below="@+id/ip"
-                        android:layout_marginTop="10dp"
-                        android:minLines="4"/>
+                    android:id="@+id/store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/StoreName"
+                    android:layout_alignLeft="@+id/created_at"
+                    android:layout_below="@+id/order_status"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/StoreName"
+                    android:minLines="4" />
 
             </RelativeLayout>
         </LinearLayout>

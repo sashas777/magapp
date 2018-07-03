@@ -2,7 +2,7 @@
  * @category     Sashas
  * @package      com.magapp
  * @author       Sashas IT Support <support@sashas.org>
- * @copyright    2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
  * @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  * @link         https://play.google.com/store/apps/details?id=com.magapp.main
  *
@@ -11,13 +11,17 @@
 package com.magapp.main;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.IBinder;
+
 import com.magapp.connect.RequestArrayInterface;
 import com.magapp.connect.RequestArrayTask;
 import com.magapp.order.OrderInfoActivity;
@@ -123,6 +127,24 @@ public class NewOrderService extends Service implements RequestArrayInterface {
 
         Resources res = this.getResources();
         Notification.Builder builder = new Notification.Builder(this);
+        /*26+ Notification Channel */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String CHANNEL_ID = "magapp_channel_1";
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            channel.enableVibration(true);
+            channel.setShowBadge(true);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            nm.createNotificationChannel(channel);
+            builder = new Notification.Builder(this, CHANNEL_ID);
+        }
+
 
         builder.setContentIntent(contentIntent)
                 .setSmallIcon(R.drawable.ic_launcher)

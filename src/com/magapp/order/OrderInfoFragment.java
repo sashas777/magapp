@@ -97,7 +97,6 @@ public class OrderInfoFragment extends Fragment {
         params = new Bundle();
         String cardt_title = order.get("order_title").toString();
         params.putString("card_title", cardt_title);
-        params.putString("ip", order.get("remote_ip").toString());
         params.putString("store_name", order.get("store_name").toString());
 
         String status = order.get("status").toString();

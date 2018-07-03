@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ @category    Sashas
-  ~ @package     Sashas_magapp
-  ~ @author        Sashas IT Support <support@sashas.org>
-  ~ @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
-  ~ @license        http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
-  ~ @link              https://play.google.com/store/apps/details?id=com.magapp.main
+  ~ @category     Sashas
+  ~ @package      com.magapp
+  ~ @author       Sashas IT Support <support@sashas.org>
+  ~ @copyright    2007-2018 Sashas IT Support Inc. (http://www.sashas.org)
+  ~ @license      http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+  ~ @link         https://play.google.com/store/apps/details?id=com.magapp.main
   ~
   -->
 
@@ -113,4 +113,6 @@
         suggestions, requests or ideas please let us know!
     </string>
     <string name="about">About</string>
+    <string name="channel_name">magapp_channel</string>
+    <string name="channel_description">Magento Store Notifications</string>
 </resources>

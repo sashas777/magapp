@@ -167,7 +167,6 @@ public class RequestTask extends AsyncTask<Vector, Void, Object> implements GetS
             Log.e("Sashas", e.getMessage());
             netInfo = null;
         }
-
         Log.d("Sashas", "RequestTask::isOnline");
         Log.d("Sashas", netInfo.toString());
         return netInfo != null && netInfo.isConnectedOrConnecting();
